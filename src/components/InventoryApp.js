@@ -10,13 +10,14 @@ import {
   Alert,
   SafeAreaView,
   StatusBar,
+  Share,
+  Linking,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
-
 
 // Language Configuration
 const defaultLanguage = {
@@ -50,6 +51,10 @@ const defaultLanguage = {
   customItem: 'Create Custom Item',
   predefinedItems: 'Select Predefined Item',
   selectItemType: 'Select Item Type',
+  dailySummary: 'Daily Sales Summary',
+  shareViaEmail: 'Share via Email',
+  shareViaText: 'Share via Text',
+  close: 'Close',
 };
 
 // Default categories and unit types
@@ -88,6 +93,7 @@ const InventoryApp = () => {
   const [showUnitTypeModal, setShowUnitTypeModal] = useState(false);
   const [showItemTypeModal, setShowItemTypeModal] = useState(false);
   const [showPredefinedItemsModal, setShowPredefinedItemsModal] = useState(false);
+  const [showReceiptModal, setShowReceiptModal] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
   const [language, setLanguage] = useState(defaultLanguage);
   const [categories, setCategories] = useState(defaultCategories);
@@ -278,24 +284,114 @@ const InventoryApp = () => {
   };
 
   const getFilteredPredefinedItems = () => {
-  let filtered = predefinedItems.filter(item =>
-    item.name.toLowerCase().includes(predefinedSearchText.toLowerCase()) &&
-    (predefinedFilterCategory === 'All' || item.category === predefinedFilterCategory)
-  );
+    let filtered = predefinedItems.filter(item =>
+      item.name.toLowerCase().includes(predefinedSearchText.toLowerCase()) &&
+      (predefinedFilterCategory === 'All' || item.category === predefinedFilterCategory)
+    );
 
-  filtered.sort((a, b) => {
-    switch (predefinedSortBy) {
-      case 'name':
-        return a.name.localeCompare(b.name);
-      case 'category':
-        return a.category.localeCompare(b.category);
-      default:
-        return 0;
+    filtered.sort((a, b) => {
+      switch (predefinedSortBy) {
+        case 'name':
+          return a.name.localeCompare(b.name);
+        case 'category':
+          return a.category.localeCompare(b.category);
+        default:
+          return 0;
+      }
+    });
+
+    return filtered;
+  };
+
+  // Receipt generation and sharing functions
+  const generateReceiptText = () => {
+    const dateStr = selectedDate.toLocaleDateString();
+    const timeStr = new Date().toLocaleTimeString();
+    
+    let receiptText = `\n${language.dailySummary}\n`;
+    receiptText += `Date: ${dateStr}\n`;
+    receiptText += `Generated: ${timeStr}\n`;
+    receiptText += `${'-'.repeat(40)}\n\n`;
+    
+    if (filteredItems.length === 0) {
+      receiptText += `No items sold on this date.\n\n`;
+    } else {
+      filteredItems.forEach((item, index) => {
+        const total = (parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2);
+        receiptText += `${index + 1}. ${item.name}\n`;
+        receiptText += `   Category: ${item.category}\n`;
+        receiptText += `   Price: $${item.price} per ${item.unitType}\n`;
+        receiptText += `   Quantity: ${item.unitsSold} ${item.unitType}\n`;
+        receiptText += `   Total: $${total}\n\n`;
+      });
     }
-  });
+    
+    receiptText += `${'-'.repeat(40)}\n`;
+    receiptText += `Daily Total: $${getDailyTotal()}\n`;
+    receiptText += `Total Items: ${filteredItems.length}\n`;
+    
+    return receiptText;
+  };
 
-  return filtered;
-};
+  const shareViaEmail = async () => {
+    const receiptText = generateReceiptText();
+    const subject = `Daily Sales Summary - ${selectedDate.toLocaleDateString()}`;
+    
+    try {
+      const mailUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(receiptText)}`;
+      const supported = await Linking.canOpenURL(mailUrl);
+      
+      if (supported) {
+        await Linking.openURL(mailUrl);
+        setShowReceiptModal(false);
+      } else {
+        // Fallback to generic share
+        await Share.share({
+          message: receiptText,
+          title: subject,
+        });
+        setShowReceiptModal(false);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Could not open email app');
+    }
+  };
+
+  const shareViaText = async () => {
+    const receiptText = generateReceiptText();
+    
+    try {
+      const smsUrl = `sms:?body=${encodeURIComponent(receiptText)}`;
+      const supported = await Linking.canOpenURL(smsUrl);
+      
+      if (supported) {
+        await Linking.openURL(smsUrl);
+        setShowReceiptModal(false);
+      } else {
+        // Fallback to generic share
+        await Share.share({
+          message: receiptText,
+        });
+        setShowReceiptModal(false);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Could not open messaging app');
+    }
+  };
+
+  const shareReceipt = async () => {
+    const receiptText = generateReceiptText();
+    
+    try {
+      await Share.share({
+        message: receiptText,
+        title: `Daily Sales Summary - ${selectedDate.toLocaleDateString()}`,
+      });
+      setShowReceiptModal(false);
+    } catch (error) {
+      console.error('Error sharing receipt:', error);
+    }
+  };
 
   // OCR Integration
   const callOCRApi = async (base64Image) => {
@@ -501,12 +597,105 @@ const InventoryApp = () => {
         <Text style={styles.addButtonText}>+ {language.addItem}</Text>
       </TouchableOpacity>
 
-      {/* Bottom Navigation Bar */}
-      <View style={styles.bottomNav}>
+      {/* Bottom Navigation Bar - Make it clickable */}
+      <TouchableOpacity 
+        style={styles.bottomNav}
+        onPress={() => setShowReceiptModal(true)}
+        activeOpacity={0.7}
+      >
         <Text style={styles.totalText}>
           {language.dailyTotal}: ${getDailyTotal()}
         </Text>
-      </View>
+        <Text style={styles.tapToViewReceipt}>
+          Tap to view receipt
+        </Text>
+      </TouchableOpacity>
+
+      {/* Receipt Modal */}
+      <Modal
+        visible={showReceiptModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowReceiptModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.receiptModalContent}>
+            <Text style={styles.receiptTitle}>{language.dailySummary}</Text>
+            <Text style={styles.receiptDate}>
+              {selectedDate.toLocaleDateString()} • {new Date().toLocaleTimeString()}
+            </Text>
+            
+            <View style={styles.receiptDivider} />
+            
+            <ScrollView style={styles.receiptItemsList}>
+              {filteredItems.length === 0 ? (
+                <Text style={styles.noReceiptItems}>No items sold on this date</Text>
+              ) : (
+                filteredItems.map((item, index) => (
+                  <View key={item.id} style={styles.receiptItem}>
+                    <View style={styles.receiptItemHeader}>
+                      <Text style={styles.receiptItemNumber}>{index + 1}.</Text>
+                      <Text style={styles.receiptItemName}>{item.name}</Text>
+                      <Text style={styles.receiptItemTotal}>
+                        ${(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
+                      </Text>
+                    </View>
+                    <View style={styles.receiptItemDetails}>
+                      <Text style={styles.receiptItemDetail}>
+                        ${item.price}/{item.unitType} × {item.unitsSold} {item.unitType}
+                      </Text>
+                      <Text style={styles.receiptItemCategory}>{item.category}</Text>
+                    </View>
+                  </View>
+                ))
+              )}
+            </ScrollView>
+            
+            <View style={styles.receiptDivider} />
+            
+            <View style={styles.receiptSummary}>
+              <View style={styles.receiptSummaryRow}>
+                <Text style={styles.receiptSummaryLabel}>Total Items:</Text>
+                <Text style={styles.receiptSummaryValue}>{filteredItems.length}</Text>
+              </View>
+              <View style={styles.receiptSummaryRow}>
+                <Text style={styles.receiptTotalLabel}>Daily Total:</Text>
+                <Text style={styles.receiptTotalValue}>${getDailyTotal()}</Text>
+              </View>
+            </View>
+            
+            <View style={styles.receiptButtonRow}>
+              <TouchableOpacity
+                style={styles.shareButton}
+                onPress={shareViaEmail}
+              >
+                <Text style={styles.shareButtonText}>📧 {language.shareViaEmail}</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={styles.shareButton}
+                onPress={shareViaText}
+              >
+                <Text style={styles.shareButtonText}>💬 {language.shareViaText}</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <TouchableOpacity
+              style={styles.genericShareButton}
+              onPress={shareReceipt}
+            >
+              <Text style={styles.genericShareButtonText}>📤 Share</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.closeReceiptButton}
+              onPress={() => setShowReceiptModal(false)}
+            >
+              <Text style={styles.closeReceiptButtonText}>{language.close}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       {/* Item Type Selection Modal */}
       <Modal
@@ -550,7 +739,6 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => {
           setShowPredefinedItemsModal(false);
-          // Reset search and filters when modal closes
           setPredefinedSearchText('');
           setPredefinedFilterCategory('All');
           setPredefinedSortBy('name');
@@ -560,7 +748,6 @@ const InventoryApp = () => {
           <View style={styles.enhancedPredefinedModalContent}>
             <Text style={styles.selectionModalTitle}>{language.predefinedItems}</Text>
             
-            {/* Search Bar */}
             <TextInput
               style={styles.predefinedSearchInput}
               placeholder="Search items..."
@@ -569,13 +756,10 @@ const InventoryApp = () => {
               clearButtonMode="while-editing"
             />
             
-            {/* Filter and Sort Row */}
             <View style={styles.predefinedFilterRow}>
-              {/* Category Filter */}
               <TouchableOpacity
                 style={styles.predefinedFilterButton}
                 onPress={() => {
-                  // Cycle through categories
                   const allCategories = ['All', ...categories];
                   const currentIndex = allCategories.indexOf(predefinedFilterCategory);
                   const nextIndex = (currentIndex + 1) % allCategories.length;
@@ -587,11 +771,9 @@ const InventoryApp = () => {
                 </Text>
               </TouchableOpacity>
               
-              {/* Sort Button */}
               <TouchableOpacity
                 style={styles.predefinedSortButton}
                 onPress={() => {
-                  // Toggle between name and category sorting
                   setPredefinedSortBy(predefinedSortBy === 'name' ? 'category' : 'name');
                 }}
               >
@@ -601,7 +783,6 @@ const InventoryApp = () => {
               </TouchableOpacity>
             </View>
             
-            {/* Items List */}
             <ScrollView style={styles.predefinedItemsList}>
               {getFilteredPredefinedItems().length === 0 ? (
                 <View style={styles.noPredefinedItemsContainer}>
@@ -631,7 +812,6 @@ const InventoryApp = () => {
               )}
             </ScrollView>
             
-            {/* Results Count */}
             <Text style={styles.resultsCount}>
               Showing {getFilteredPredefinedItems().length} of {predefinedItems.length} items
             </Text>
@@ -640,7 +820,6 @@ const InventoryApp = () => {
               style={styles.closeModalButton}
               onPress={() => {
                 setShowPredefinedItemsModal(false);
-                // Reset search and filters when modal closes
                 setPredefinedSearchText('');
                 setPredefinedFilterCategory('All');
                 setPredefinedSortBy('name');
@@ -1086,16 +1265,17 @@ const styles = StyleSheet.create({
   },
   addButton: {
     position: 'absolute',
-    bottom: 80,
+    bottom: 100, // Increased from 80 to 100 to clear the bottom nav
     right: 20,
     backgroundColor: '#2196f3',
     borderRadius: 50,
     padding: 16,
-    elevation: 4,
+    elevation: 8, // Increased elevation for better visibility
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOffset: { width: 0, height: 4 }, // Increased shadow
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    zIndex: 1000, // Added high z-index to ensure it's above other elements
   },
   addButtonText: {
     color: '#fff',
@@ -1107,12 +1287,19 @@ const styles = StyleSheet.create({
     padding: 16,
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
+    alignItems: 'center',
   },
   totalText: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#4caf50',
+  },
+  tapToViewReceipt: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 4,
+    textAlign: 'center',
   },
   modalOverlay: {
     flex: 1,
@@ -1239,6 +1426,156 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   modernSaveButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  // Receipt Modal Styles
+  receiptModalContent: {
+    width: '90%',
+    maxWidth: 400,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    maxHeight: '90%',
+  },
+  receiptTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 8,
+    color: '#333',
+  },
+  receiptDate: {
+    fontSize: 14,
+    textAlign: 'center',
+    color: '#666',
+    marginBottom: 16,
+  },
+  receiptDivider: {
+    height: 2,
+    backgroundColor: '#333',
+    marginVertical: 16,
+  },
+  receiptItemsList: {
+    maxHeight: 300,
+    marginBottom: 16,
+  },
+  noReceiptItems: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    fontStyle: 'italic',
+    marginVertical: 20,
+  },
+  receiptItem: {
+    marginBottom: 16,
+  },
+  receiptItemHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 4,
+  },
+  receiptItemNumber: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    minWidth: 20,
+  },
+  receiptItemName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    flex: 1,
+    marginLeft: 8,
+  },
+  receiptItemTotal: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#4caf50',
+    marginLeft: 8,
+  },
+  receiptItemDetails: {
+    marginLeft: 28,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  receiptItemDetail: {
+    fontSize: 14,
+    color: '#666',
+  },
+  receiptItemCategory: {
+    fontSize: 12,
+    color: '#999',
+    backgroundColor: '#f0f0f0',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  receiptSummary: {
+    marginBottom: 20,
+  },
+  receiptSummaryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  receiptSummaryLabel: {
+    fontSize: 16,
+    color: '#333',
+  },
+  receiptSummaryValue: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+  },
+  receiptTotalLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  receiptTotalValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#4caf50',
+  },
+  receiptButtonRow: {
+    flexDirection: 'row',
+    marginBottom: 12,
+    gap: 8,
+  },
+  shareButton: {
+    flex: 1,
+    backgroundColor: '#2196f3',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  shareButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  genericShareButton: {
+    backgroundColor: '#28a745',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  genericShareButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  closeReceiptButton: {
+    backgroundColor: '#6c757d',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  closeReceiptButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
