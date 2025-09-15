@@ -16,6 +16,7 @@ import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import { KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 // Language Configuration
 const defaultLanguage = {
@@ -41,11 +42,15 @@ const defaultLanguage = {
   sortByName: 'Name',
   sortByPrice: 'Price',
   sortByAmount: 'Total Amount',
+  filters: 'Filters',
+  sort: 'Sort',
+  selectCategory: 'Select Category',
+  selectSortOption: 'Select Sort Option',
 };
 
 // Default categories and unit types
 const defaultCategories = ['Food', 'Beverages', 'Electronics', 'Clothing', 'Other'];
-const defaultUnitTypes = ['lb', 'oz', 'kg', 'g', 'pieces', 'liters', 'ml'];
+const defaultUnitTypes = ['lb', 'oz', 'kg', 'g', 'pcs', 'liters', 'ml'];
 
 // CHANGE THIS TO YOUR SERVER'S ADDRESS
 const OCR_API_URL = 'http://10.0.0.125:5001/api/ocr/scan';
@@ -59,6 +64,8 @@ const InventoryApp = () => {
   const [filterCategory, setFilterCategory] = useState('All');
   const [sortBy, setSortBy] = useState('name');
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [showSortModal, setShowSortModal] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
   const [language, setLanguage] = useState(defaultLanguage);
   const [categories, setCategories] = useState(defaultCategories);
@@ -69,9 +76,16 @@ const InventoryApp = () => {
     name: '',
     price: '',
     unitsSold: '',
-    category: defaultCategories[0],
-    unitType: defaultUnitTypes[0],
+    category: defaultCategories[4], // Default to "Other"
+    unitType: defaultUnitTypes[4], // Default to "pcs"
   });
+
+  // Calculate total amount in real-time
+  const calculateTotal = () => {
+    const price = parseFloat(newItem.price) || 0;
+    const units = parseFloat(newItem.unitsSold) || 0;
+    return (price * units).toFixed(2);
+  };
 
   useEffect(() => {
     loadData();
@@ -91,7 +105,6 @@ const InventoryApp = () => {
       } else {
         setItems([]);
       }
-      // Clean old data (older than 30 days)
       cleanOldData();
     } catch (error) {
       console.error('Error loading data:', error);
@@ -182,7 +195,7 @@ const InventoryApp = () => {
     const item = {
       id: Date.now().toString(),
       ...newItem,
-      totalAmount: (parseFloat(newItem.price) * parseFloat(newItem.unitsSold)).toFixed(2),
+      totalAmount: calculateTotal(),
       timestamp: new Date().toISOString(),
     };
 
@@ -194,8 +207,8 @@ const InventoryApp = () => {
       name: '',
       price: '',
       unitsSold: '',
-      category: categories[0],
-      unitType: unitTypes[0],
+      category: defaultCategories[4],
+      unitType: defaultUnitTypes[4],
     });
     setShowAddModal(false);
   };
@@ -212,9 +225,7 @@ const InventoryApp = () => {
     ).toFixed(2);
   };
 
-  // --- OCR Integration ---
-
-  // API call to Flask backend for OCR
+  // OCR Integration
   const callOCRApi = async (base64Image) => {
     try {
       const response = await fetch(OCR_API_URL, {
@@ -294,24 +305,12 @@ const InventoryApp = () => {
     }
   };
 
-  // --- END OCR Integration ---
-
-  // processOCRResult is now only used for fallback/simulated results if you want
-  // Keep for legacy or testing if needed
-  const processOCRResult = (ocrText) => {
-    // Simple OCR text parsing - you'd implement more sophisticated parsing
-    const lines = ocrText.split('\n');
-    const name = lines[0] || '';
-    const priceMatch = ocrText.match(/price:?\s*(\d+\.?\d*)/i);
-    const quantityMatch = ocrText.match(/quantity:?\s*(\d+)/i);
-
-    setNewItem(prev => ({
-      ...prev,
-      name: name,
-      price: priceMatch ? priceMatch[1] : '',
-      unitsSold: quantityMatch ? quantityMatch[1] : '',
-    }));
-  };
+  // Filter and Sort option arrays
+  const sortOptions = [
+    { label: language.sortByName, value: 'name' },
+    { label: language.sortByPrice, value: 'price' },
+    { label: language.sortByAmount, value: 'amount' },
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -344,7 +343,7 @@ const InventoryApp = () => {
         />
       )}
 
-      {/* Search and Filters */}
+      {/* Search */}
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -354,33 +353,21 @@ const InventoryApp = () => {
         />
       </View>
 
-      <View style={styles.filtersContainer}>
-        <View style={styles.filterGroup}>
-          <Text style={styles.filterLabel}>{language.filterByCategory}</Text>
-          <Picker
-            selectedValue={filterCategory}
-            style={styles.picker}
-            onValueChange={setFilterCategory}
-          >
-            <Picker.Item label={language.all} value="All" />
-            {categories.map(cat => (
-              <Picker.Item key={cat} label={cat} value={cat} />
-            ))}
-          </Picker>
-        </View>
-
-        <View style={styles.filterGroup}>
-          <Text style={styles.filterLabel}>{language.sortBy}</Text>
-          <Picker
-            selectedValue={sortBy}
-            style={styles.picker}
-            onValueChange={setSortBy}
-          >
-            <Picker.Item label={language.sortByName} value="name" />
-            <Picker.Item label={language.sortByPrice} value="price" />
-            <Picker.Item label={language.sortByAmount} value="amount" />
-          </Picker>
-        </View>
+      {/* Filter and Sort Buttons */}
+      <View style={styles.filterSortContainer}>
+        <TouchableOpacity
+          style={styles.filterButton}
+          onPress={() => setShowFilterModal(true)}
+        >
+          <Text style={styles.filterButtonText}>{language.filters} ☰</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={styles.sortButton}
+          onPress={() => setShowSortModal(true)}
+        >
+          <Text style={styles.sortButtonText}>{language.sort} ↕</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Items List */}
@@ -454,79 +441,191 @@ const InventoryApp = () => {
         visible={showAddModal}
         animationType="slide"
         transparent={true}
+        onRequestClose={() => setShowAddModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.modalOverlay}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={styles.keyboardAvoidingView}
+            >
+              <View style={styles.modernModalContent}>
+                <Text style={styles.modernModalTitle}>{language.addItem}</Text>
+
+                <TextInput
+                  style={styles.modernInput}
+                  placeholder={language.itemName}
+                  value={newItem.name}
+                  onChangeText={(text) => setNewItem(prev => ({ ...prev, name: text }))}
+                />
+
+                <View style={styles.modernInputRow}>
+                  <TextInput
+                    style={[styles.modernInput, { flex: 1, marginRight: 8 }]}
+                    placeholder={language.price}
+                    value={newItem.price}
+                    onChangeText={(text) => setNewItem(prev => ({ ...prev, price: text }))}
+                    keyboardType="numeric"
+                  />
+                  <TextInput
+                    style={[styles.modernInput, { flex: 1, marginLeft: 8 }]}
+                    placeholder={language.unitsSold}
+                    value={newItem.unitsSold}
+                    onChangeText={(text) => setNewItem(prev => ({ ...prev, unitsSold: text }))}
+                    keyboardType="numeric"
+                  />
+                </View>
+
+                <View style={styles.modernInputRow}>
+                  <View style={[styles.modernDropdown, { flex: 1, marginRight: 8 }]}>
+                    <Picker
+                      selectedValue={newItem.category}
+                      onValueChange={(value) => setNewItem(prev => ({ ...prev, category: value }))}
+                      style={styles.modernPicker}
+                    >
+                      {categories.map(cat => (
+                        <Picker.Item key={cat} label={cat} value={cat} />
+                      ))}
+                    </Picker>
+                  </View>
+                  
+                  <View style={[styles.modernDropdown, { flex: 1, marginLeft: 8 }]}>
+                    <Picker
+                      selectedValue={newItem.unitType}
+                      onValueChange={(value) => setNewItem(prev => ({ ...prev, unitType: value }))}
+                      style={styles.modernPicker}
+                    >
+                      {unitTypes.map(unit => (
+                        <Picker.Item key={unit} label={unit} value={unit} />
+                      ))}
+                    </Picker>
+                  </View>
+                </View>
+
+                <View style={styles.totalAmountContainer}>
+                  <Text style={styles.totalAmountText}>
+                    Total Amount: ${calculateTotal()}
+                  </Text>
+                </View>
+
+                <TouchableOpacity style={styles.modernOcrButton} onPress={handleOCRScan}>
+                  <Text style={styles.modernOcrButtonText}>📷 {language.scanWithOCR}</Text>
+                </TouchableOpacity>
+
+                <View style={styles.modernButtonRow}>
+                  <TouchableOpacity
+                    style={[styles.modernButton, styles.modernCancelButton]}
+                    onPress={() => {
+                      setShowAddModal(false);
+                      setNewItem({
+                        name: '',
+                        price: '',
+                        unitsSold: '',
+                        category: defaultCategories[4],
+                        unitType: defaultUnitTypes[4],
+                      });
+                    }}
+                  >
+                    <Text style={styles.modernCancelButtonText}>{language.cancel}</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={[styles.modernButton, styles.modernSaveButton]}
+                    onPress={addItem}
+                  >
+                    <Text style={styles.modernSaveButtonText}>{language.save}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      {/* Filter Modal */}
+      <Modal
+        visible={showFilterModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowFilterModal(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>{language.addItem}</Text>
-
-            <TextInput
-              style={styles.input}
-              placeholder={language.itemName}
-              value={newItem.name}
-              onChangeText={(text) => setNewItem(prev => ({ ...prev, name: text }))}
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder={language.price}
-              value={newItem.price}
-              onChangeText={(text) => setNewItem(prev => ({ ...prev, price: text }))}
-              keyboardType="numeric"
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder={language.unitsSold}
-              value={newItem.unitsSold}
-              onChangeText={(text) => setNewItem(prev => ({ ...prev, unitsSold: text }))}
-              keyboardType="numeric"
-            />
-
-            <View style={styles.pickerContainer}>
-              <Text style={styles.pickerLabel}>{language.category}</Text>
-              <Picker
-                selectedValue={newItem.category}
-                style={styles.modalPicker}
-                onValueChange={(value) => setNewItem(prev => ({ ...prev, category: value }))}
+          <View style={styles.selectionModalContent}>
+            <Text style={styles.selectionModalTitle}>{language.selectCategory}</Text>
+            
+            <ScrollView>
+              <TouchableOpacity
+                style={[styles.selectionOption, filterCategory === 'All' && styles.selectedOption]}
+                onPress={() => {
+                  setFilterCategory('All');
+                  setShowFilterModal(false);
+                }}
               >
-                {categories.map(cat => (
-                  <Picker.Item key={cat} label={cat} value={cat} />
-                ))}
-              </Picker>
-            </View>
-
-            <View style={styles.pickerContainer}>
-              <Text style={styles.pickerLabel}>{language.unitType}</Text>
-              <Picker
-                selectedValue={newItem.unitType}
-                style={styles.modalPicker}
-                onValueChange={(value) => setNewItem(prev => ({ ...prev, unitType: value }))}
-              >
-                {unitTypes.map(unit => (
-                  <Picker.Item key={unit} label={unit} value={unit} />
-                ))}
-              </Picker>
-            </View>
-
-            <TouchableOpacity style={styles.ocrButton} onPress={handleOCRScan}>
-              <Text style={styles.ocrButtonText}>{language.scanWithOCR}</Text>
+                <Text style={[styles.selectionOptionText, filterCategory === 'All' && styles.selectedOptionText]}>
+                  {language.all}
+                </Text>
+              </TouchableOpacity>
+              
+              {categories.map(cat => (
+                <TouchableOpacity
+                  key={cat}
+                  style={[styles.selectionOption, filterCategory === cat && styles.selectedOption]}
+                  onPress={() => {
+                    setFilterCategory(cat);
+                    setShowFilterModal(false);
+                  }}
+                >
+                  <Text style={[styles.selectionOptionText, filterCategory === cat && styles.selectedOptionText]}>
+                    {cat}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+            
+            <TouchableOpacity
+              style={styles.closeModalButton}
+              onPress={() => setShowFilterModal(false)}
+            >
+              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
             </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
-            <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={[styles.modalButton, styles.cancelButton]}
-                onPress={() => setShowAddModal(false)}
-              >
-                <Text style={styles.modalButtonText}>{language.cancel}</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.modalButton, styles.saveButton]}
-                onPress={addItem}
-              >
-                <Text style={styles.modalButtonText}>{language.save}</Text>
-              </TouchableOpacity>
-            </View>
+      {/* Sort Modal */}
+      <Modal
+        visible={showSortModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowSortModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.selectionModalContent}>
+            <Text style={styles.selectionModalTitle}>{language.selectSortOption}</Text>
+            
+            <ScrollView>
+              {sortOptions.map(option => (
+                <TouchableOpacity
+                  key={option.value}
+                  style={[styles.selectionOption, sortBy === option.value && styles.selectedOption]}
+                  onPress={() => {
+                    setSortBy(option.value);
+                    setShowSortModal(false);
+                  }}
+                >
+                  <Text style={[styles.selectionOptionText, sortBy === option.value && styles.selectedOptionText]}>
+                    {option.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+            
+            <TouchableOpacity
+              style={styles.closeModalButton}
+              onPress={() => setShowSortModal(false)}
+            >
+              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -535,7 +634,6 @@ const InventoryApp = () => {
 };
 
 const styles = StyleSheet.create({
-  // ... (styles unchanged)
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
@@ -580,26 +678,37 @@ const styles = StyleSheet.create({
     padding: 12,
     fontSize: 16,
   },
-  filtersContainer: {
-    backgroundColor: '#fff',
+  filterSortContainer: {
+    backgroundColor: '#2c3e50',
     flexDirection: 'row',
-    padding: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
-  filterGroup: {
+  filterButton: {
     flex: 1,
-    marginHorizontal: 4,
+    backgroundColor: 'transparent',
+    padding: 12,
+    borderRadius: 8,
+    marginRight: 8,
+    alignItems: 'center',
   },
-  filterLabel: {
-    fontSize: 12,
+  sortButton: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    padding: 12,
+    borderRadius: 8,
+    marginLeft: 8,
+    alignItems: 'center',
+  },
+  filterButtonText: {
+    color: '#fff',
+    fontSize: 16,
     fontWeight: '600',
-    marginBottom: 4,
   },
-  picker: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 4,
+  sortButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   itemsList: {
     flex: 1,
@@ -712,74 +821,153 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  modalContent: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 20,
-    width: '90%',
-    maxHeight: '80%',
+  keyboardAvoidingView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 20,
   },
-  modalTitle: {
+  modernModalContent: {
+    width: '100%',
+    maxWidth: 400,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+    maxHeight: '90%',
+  },
+  modernModalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 24,
+    color: '#333',
+  },
+  modernInput: {
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 12,
+    padding: 16,
+    fontSize: 16,
+    marginBottom: 16,
+    backgroundColor: '#f8f9fa',
+  },
+  modernInputRow: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  modernDropdown: {
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 12,
+    backgroundColor: '#f8f9fa',
+    overflow: 'hidden',
+  },
+  modernPicker: {
+    height: 50,
+  },
+  totalAmountContainer: {
+    backgroundColor: '#f0f8ff',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  totalAmountText: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#333',
+  },
+  modernOcrButton: {
+    backgroundColor: '#28a745',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 24,
+    alignItems: 'center',
+  },
+  modernOcrButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  modernButtonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  modernButton: {
+    flex: 1,
+    padding: 16,
+    borderRadius: 12,
+    marginHorizontal: 6,
+    alignItems: 'center',
+  },
+  modernCancelButton: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  modernSaveButton: {
+    backgroundColor: '#007bff',
+  },
+  modernCancelButtonText: {
+    color: '#666',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  modernSaveButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  // Selection Modal Styles
+  selectionModalContent: {
+    width: '80%',
+    maxWidth: 300,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    maxHeight: '70%',
+  },
+  selectionModalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+    color: '#333',
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
+  selectionOption: {
+    padding: 16,
     borderRadius: 8,
-    padding: 12,
+    marginBottom: 8,
+    backgroundColor: '#f8f9fa',
+  },
+  selectedOption: {
+    backgroundColor: '#007bff',
+  },
+  selectionOptionText: {
     fontSize: 16,
-    marginBottom: 12,
+    color: '#333',
+    textAlign: 'center',
   },
-  pickerContainer: {
-    marginBottom: 12,
-  },
-  pickerLabel: {
-    fontSize: 14,
+  selectedOptionText: {
+    color: '#fff',
     fontWeight: '600',
-    marginBottom: 4,
   },
-  modalPicker: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  ocrButton: {
-    backgroundColor: '#ff9800',
+  closeModalButton: {
+    backgroundColor: '#6c757d',
     padding: 12,
     borderRadius: 8,
-    marginBottom: 20,
+    marginTop: 16,
   },
-  ocrButtonText: {
+  closeModalButtonText: {
     color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
     textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  modalButton: {
-    flex: 1,
-    padding: 12,
-    borderRadius: 8,
-    marginHorizontal: 4,
-  },
-  cancelButton: {
-    backgroundColor: '#666',
-  },
-  saveButton: {
-    backgroundColor: '#4caf50',
-  },
-  modalButtonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
   },
 });
 
