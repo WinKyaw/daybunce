@@ -102,6 +102,7 @@ const InventoryApp = () => {
   const [predefinedSearchText, setPredefinedSearchText] = useState('');
   const [predefinedFilterCategory, setPredefinedFilterCategory] = useState('All');
   const [predefinedSortBy, setPredefinedSortBy] = useState('name');
+  const [modalDebounce, setModalDebounce] = useState(false);
 
   // Add item form state
   const [newItem, setNewItem] = useState({
@@ -127,6 +128,14 @@ const InventoryApp = () => {
   useEffect(() => {
     filterAndSortItems();
   }, [items, searchText, filterCategory, sortBy]);
+
+  useEffect(() => {
+    console.log('showCategoryModal changed to:', showCategoryModal);
+  }, [showCategoryModal]);
+
+  useEffect(() => {
+    console.log('showUnitTypeModal changed to:', showUnitTypeModal);
+  }, [showUnitTypeModal]);
 
   const loadData = async () => {
     try {
@@ -194,6 +203,32 @@ const InventoryApp = () => {
 
   const formatDate = (date) => {
     return date.toISOString().split('T')[0];
+  };
+
+  const handleCategoryPress = () => {
+    if (modalDebounce) return;
+  
+    console.log('Category dropdown pressed, current showCategoryModal:', showCategoryModal);
+    setModalDebounce(true);
+    
+    setTimeout(() => {
+      setShowCategoryModal(true);
+      console.log('After setting showCategoryModal to true');
+      setModalDebounce(false);
+    }, 150);
+  };
+
+  const handleUnitTypePress = () => {
+    if (modalDebounce) return;
+  
+    console.log('Unit type dropdown pressed, current showUnitTypeModal:', showUnitTypeModal);
+    setModalDebounce(true);
+    
+    setTimeout(() => {
+      setShowUnitTypeModal(true);
+      console.log('After setting showUnitTypeModal to true');
+      setModalDebounce(false);
+    }, 150);
   };
 
   const filterAndSortItems = () => {
@@ -884,7 +919,11 @@ const InventoryApp = () => {
                   <View style={styles.modernInputRow}>
                     <TouchableOpacity
                       style={[styles.modernSelector, { flex: 1, marginRight: 8 }]}
-                      onPress={() => setShowCategoryModal(true)}
+                      onPress={() => {
+                        console.log('Category pressed - setting modal to true');
+                        setShowCategoryModal(true);
+                      }}
+                      activeOpacity={0.7}
                     >
                       <Text style={styles.modernSelectorText}>{newItem.category}</Text>
                       <Text style={styles.modernSelectorArrow}>▼</Text>
@@ -892,7 +931,11 @@ const InventoryApp = () => {
                     
                     <TouchableOpacity
                       style={[styles.modernSelector, { flex: 1, marginLeft: 8 }]}
-                      onPress={() => setShowUnitTypeModal(true)}
+                      onPress={() => {
+                        console.log('Unit type pressed - setting modal to true');
+                        setShowUnitTypeModal(true);
+                      }}
+                      activeOpacity={0.7}
                     >
                       <Text style={styles.modernSelectorText}>{newItem.unitType}</Text>
                       <Text style={styles.modernSelectorArrow}>▼</Text>
@@ -936,84 +979,94 @@ const InventoryApp = () => {
                 </View>
               </View>
             </KeyboardAvoidingView>
+
+            {/* Category Selection Modal - INSIDE Add Item Modal */}
+            {showCategoryModal && (
+              <View style={styles.overlayModalContainer}>
+                <View style={styles.overlayModalContent}>
+                  <Text style={styles.overlayModalTitle}>{language.selectCategory}</Text>
+                  
+                  <ScrollView style={styles.overlayScrollView}>
+                    {categories.map(cat => (
+                      <TouchableOpacity
+                        key={cat}
+                        style={[
+                          styles.overlayOption, 
+                          newItem.category === cat && styles.overlaySelectedOption
+                        ]}
+                        onPress={() => {
+                          console.log('Selected category:', cat);
+                          setNewItem(prev => ({ ...prev, category: cat }));
+                          setShowCategoryModal(false);
+                        }}
+                      >
+                        <Text style={[
+                          styles.overlayOptionText, 
+                          newItem.category === cat && styles.overlaySelectedOptionText
+                        ]}>
+                          {cat}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                  
+                  <TouchableOpacity
+                    style={styles.overlayCloseButton}
+                    onPress={() => {
+                      console.log('Closing category modal');
+                      setShowCategoryModal(false);
+                    }}
+                  >
+                    <Text style={styles.overlayCloseButtonText}>{language.cancel}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+
+            {/* Unit Type Selection Modal - INSIDE Add Item Modal */}
+            {showUnitTypeModal && (
+              <View style={styles.overlayModalContainer}>
+                <View style={styles.overlayModalContent}>
+                  <Text style={styles.overlayModalTitle}>{language.selectUnitType}</Text>
+                  
+                  <ScrollView style={styles.overlayScrollView}>
+                    {unitTypes.map(unit => (
+                      <TouchableOpacity
+                        key={unit}
+                        style={[
+                          styles.overlayOption, 
+                          newItem.unitType === unit && styles.overlaySelectedOption
+                        ]}
+                        onPress={() => {
+                          console.log('Selected unit type:', unit);
+                          setNewItem(prev => ({ ...prev, unitType: unit }));
+                          setShowUnitTypeModal(false);
+                        }}
+                      >
+                        <Text style={[
+                          styles.overlayOptionText, 
+                          newItem.unitType === unit && styles.overlaySelectedOptionText
+                        ]}>
+                          {unit}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                  
+                  <TouchableOpacity
+                    style={styles.overlayCloseButton}
+                    onPress={() => {
+                      console.log('Closing unit type modal');
+                      setShowUnitTypeModal(false);
+                    }}
+                  >
+                    <Text style={styles.overlayCloseButtonText}>{language.cancel}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
           </View>
         </TouchableWithoutFeedback>
-      </Modal>
-
-      {/* Category Selection Modal */}
-      <Modal
-        visible={showCategoryModal}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={() => setShowCategoryModal(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.selectionModalContent}>
-            <Text style={styles.selectionModalTitle}>{language.selectCategory}</Text>
-            
-            <ScrollView>
-              {categories.map(cat => (
-                <TouchableOpacity
-                  key={cat}
-                  style={[styles.selectionOption, newItem.category === cat && styles.selectedOption]}
-                  onPress={() => {
-                    setNewItem(prev => ({ ...prev, category: cat }));
-                    setShowCategoryModal(false);
-                  }}
-                >
-                  <Text style={[styles.selectionOptionText, newItem.category === cat && styles.selectedOptionText]}>
-                    {cat}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-            
-            <TouchableOpacity
-              style={styles.closeModalButton}
-              onPress={() => setShowCategoryModal(false)}
-            >
-              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-
-      {/* Unit Type Selection Modal */}
-      <Modal
-        visible={showUnitTypeModal}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={() => setShowUnitTypeModal(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.selectionModalContent}>
-            <Text style={styles.selectionModalTitle}>{language.selectUnitType}</Text>
-            
-            <ScrollView>
-              {unitTypes.map(unit => (
-                <TouchableOpacity
-                  key={unit}
-                  style={[styles.selectionOption, newItem.unitType === unit && styles.selectedOption]}
-                  onPress={() => {
-                    setNewItem(prev => ({ ...prev, unitType: unit }));
-                    setShowUnitTypeModal(false);
-                  }}
-                >
-                  <Text style={[styles.selectionOptionText, newItem.unitType === unit && styles.selectedOptionText]}>
-                    {unit}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-            
-            <TouchableOpacity
-              style={styles.closeModalButton}
-              onPress={() => setShowUnitTypeModal(false)}
-            >
-              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
       </Modal>
 
       {/* Filter Modal */}
@@ -1306,6 +1359,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   keyboardAvoidingView: {
     flex: 1,
@@ -1351,6 +1409,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    minHeight: 50, // Add minimum height
   },
   modernSelectorText: {
     fontSize: 16,
@@ -1774,6 +1833,65 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
     fontStyle: 'italic',
+  },
+  overlayModalContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  },
+  overlayModalContent: {
+    width: '80%',
+    maxWidth: 280,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    maxHeight: '60%',
+  },
+  overlayModalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 16,
+    color: '#333',
+  },
+  overlayScrollView: {
+    maxHeight: 200,
+    marginBottom: 16,
+  },
+  overlayOption: {
+    padding: 12,
+    borderRadius: 6,
+    marginBottom: 6,
+    backgroundColor: '#f8f9fa',
+  },
+  overlaySelectedOption: {
+    backgroundColor: '#007bff',
+  },
+  overlayOptionText: {
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+  },
+  overlaySelectedOptionText: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+  overlayCloseButton: {
+    backgroundColor: '#6c757d',
+    padding: 10,
+    borderRadius: 6,
+  },
+  overlayCloseButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
   },
 });
 
