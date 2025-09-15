@@ -12,11 +12,11 @@ import {
   StatusBar,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+
 
 // Language Configuration
 const defaultLanguage = {
@@ -46,11 +46,29 @@ const defaultLanguage = {
   sort: 'Sort',
   selectCategory: 'Select Category',
   selectSortOption: 'Select Sort Option',
+  selectUnitType: 'Select Unit Type',
+  customItem: 'Create Custom Item',
+  predefinedItems: 'Select Predefined Item',
+  selectItemType: 'Select Item Type',
 };
 
 // Default categories and unit types
 const defaultCategories = ['Food', 'Beverages', 'Electronics', 'Clothing', 'Other'];
 const defaultUnitTypes = ['lb', 'oz', 'kg', 'g', 'pcs', 'liters', 'ml'];
+
+// Predefined items with name, category, and unit type
+const predefinedItems = [
+  { id: 'apples', name: 'Apples', category: 'Food', unitType: 'lb' },
+  { id: 'bananas', name: 'Bananas', category: 'Food', unitType: 'lb' },
+  { id: 'milk', name: 'Milk', category: 'Beverages', unitType: 'liters' },
+  { id: 'bread', name: 'Bread', category: 'Food', unitType: 'pcs' },
+  { id: 'eggs', name: 'Eggs', category: 'Food', unitType: 'pcs' },
+  { id: 'chicken', name: 'Chicken Breast', category: 'Food', unitType: 'lb' },
+  { id: 'rice', name: 'Rice', category: 'Food', unitType: 'kg' },
+  { id: 'water', name: 'Water Bottles', category: 'Beverages', unitType: 'pcs' },
+  { id: 'coffee', name: 'Coffee', category: 'Beverages', unitType: 'kg' },
+  { id: 'phone', name: 'Smartphone', category: 'Electronics', unitType: 'pcs' },
+];
 
 // CHANGE THIS TO YOUR SERVER'S ADDRESS
 const OCR_API_URL = 'http://10.0.0.125:5001/api/ocr/scan';
@@ -66,10 +84,18 @@ const InventoryApp = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showUnitTypeModal, setShowUnitTypeModal] = useState(false);
+  const [showItemTypeModal, setShowItemTypeModal] = useState(false);
+  const [showPredefinedItemsModal, setShowPredefinedItemsModal] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
   const [language, setLanguage] = useState(defaultLanguage);
   const [categories, setCategories] = useState(defaultCategories);
   const [unitTypes, setUnitTypes] = useState(defaultUnitTypes);
+  const [isCustomItem, setIsCustomItem] = useState(true);
+  const [predefinedSearchText, setPredefinedSearchText] = useState('');
+  const [predefinedFilterCategory, setPredefinedFilterCategory] = useState('All');
+  const [predefinedSortBy, setPredefinedSortBy] = useState('name');
 
   // Add item form state
   const [newItem, setNewItem] = useState({
@@ -186,6 +212,32 @@ const InventoryApp = () => {
     setFilteredItems(filtered);
   };
 
+  const openAddModal = () => {
+    setShowItemTypeModal(true);
+  };
+
+  const handleItemTypeSelection = (isCustom) => {
+    setIsCustomItem(isCustom);
+    setShowItemTypeModal(false);
+    if (isCustom) {
+      setShowAddModal(true);
+    } else {
+      setShowPredefinedItemsModal(true);
+    }
+  };
+
+  const handlePredefinedItemSelection = (predefinedItem) => {
+    setNewItem({
+      name: predefinedItem.name,
+      price: '',
+      unitsSold: '',
+      category: predefinedItem.category,
+      unitType: predefinedItem.unitType,
+    });
+    setShowPredefinedItemsModal(false);
+    setShowAddModal(true);
+  };
+
   const addItem = async () => {
     if (!newItem.name || !newItem.price || !newItem.unitsSold) {
       Alert.alert('Error', 'Please fill all required fields');
@@ -224,6 +276,26 @@ const InventoryApp = () => {
       total + (parseFloat(item.price) * parseFloat(item.unitsSold)), 0
     ).toFixed(2);
   };
+
+  const getFilteredPredefinedItems = () => {
+  let filtered = predefinedItems.filter(item =>
+    item.name.toLowerCase().includes(predefinedSearchText.toLowerCase()) &&
+    (predefinedFilterCategory === 'All' || item.category === predefinedFilterCategory)
+  );
+
+  filtered.sort((a, b) => {
+    switch (predefinedSortBy) {
+      case 'name':
+        return a.name.localeCompare(b.name);
+      case 'category':
+        return a.category.localeCompare(b.category);
+      default:
+        return 0;
+    }
+  });
+
+  return filtered;
+};
 
   // OCR Integration
   const callOCRApi = async (base64Image) => {
@@ -424,7 +496,7 @@ const InventoryApp = () => {
       {/* Add Item Button */}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => setShowAddModal(true)}
+        onPress={openAddModal}
       >
         <Text style={styles.addButtonText}>+ {language.addItem}</Text>
       </TouchableOpacity>
@@ -435,6 +507,150 @@ const InventoryApp = () => {
           {language.dailyTotal}: ${getDailyTotal()}
         </Text>
       </View>
+
+      {/* Item Type Selection Modal */}
+      <Modal
+        visible={showItemTypeModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowItemTypeModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.selectionModalContent}>
+            <Text style={styles.selectionModalTitle}>{language.selectItemType}</Text>
+            
+            <TouchableOpacity
+              style={styles.customItemOption}
+              onPress={() => handleItemTypeSelection(true)}
+            >
+              <Text style={styles.customItemText}>{language.customItem}</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.predefinedItemOption}
+              onPress={() => handleItemTypeSelection(false)}
+            >
+              <Text style={styles.predefinedItemText}>{language.predefinedItems}</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.closeModalButton}
+              onPress={() => setShowItemTypeModal(false)}
+            >
+              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Predefined Items Modal */}
+      <Modal
+        visible={showPredefinedItemsModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => {
+          setShowPredefinedItemsModal(false);
+          // Reset search and filters when modal closes
+          setPredefinedSearchText('');
+          setPredefinedFilterCategory('All');
+          setPredefinedSortBy('name');
+        }}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.enhancedPredefinedModalContent}>
+            <Text style={styles.selectionModalTitle}>{language.predefinedItems}</Text>
+            
+            {/* Search Bar */}
+            <TextInput
+              style={styles.predefinedSearchInput}
+              placeholder="Search items..."
+              value={predefinedSearchText}
+              onChangeText={setPredefinedSearchText}
+              clearButtonMode="while-editing"
+            />
+            
+            {/* Filter and Sort Row */}
+            <View style={styles.predefinedFilterRow}>
+              {/* Category Filter */}
+              <TouchableOpacity
+                style={styles.predefinedFilterButton}
+                onPress={() => {
+                  // Cycle through categories
+                  const allCategories = ['All', ...categories];
+                  const currentIndex = allCategories.indexOf(predefinedFilterCategory);
+                  const nextIndex = (currentIndex + 1) % allCategories.length;
+                  setPredefinedFilterCategory(allCategories[nextIndex]);
+                }}
+              >
+                <Text style={styles.predefinedFilterText}>
+                  📂 {predefinedFilterCategory}
+                </Text>
+              </TouchableOpacity>
+              
+              {/* Sort Button */}
+              <TouchableOpacity
+                style={styles.predefinedSortButton}
+                onPress={() => {
+                  // Toggle between name and category sorting
+                  setPredefinedSortBy(predefinedSortBy === 'name' ? 'category' : 'name');
+                }}
+              >
+                <Text style={styles.predefinedSortText}>
+                  🔄 {predefinedSortBy === 'name' ? 'Name' : 'Category'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            
+            {/* Items List */}
+            <ScrollView style={styles.predefinedItemsList}>
+              {getFilteredPredefinedItems().length === 0 ? (
+                <View style={styles.noPredefinedItemsContainer}>
+                  <Text style={styles.noPredefinedItemsText}>
+                    No items found matching your search
+                  </Text>
+                </View>
+              ) : (
+                getFilteredPredefinedItems().map(item => (
+                  <TouchableOpacity
+                    key={item.id}
+                    style={styles.enhancedPredefinedItemOption}
+                    onPress={() => handlePredefinedItemSelection(item)}
+                  >
+                    <View style={styles.predefinedItemInfo}>
+                      <Text style={styles.predefinedItemName}>{item.name}</Text>
+                      <View style={styles.predefinedItemDetailsRow}>
+                        <View style={styles.predefinedCategoryBadge}>
+                          <Text style={styles.predefinedCategoryText}>{item.category}</Text>
+                        </View>
+                        <Text style={styles.predefinedUnitText}>{item.unitType}</Text>
+                      </View>
+                    </View>
+                    <Text style={styles.selectArrow}>›</Text>
+                  </TouchableOpacity>
+                ))
+              )}
+            </ScrollView>
+            
+            {/* Results Count */}
+            <Text style={styles.resultsCount}>
+              Showing {getFilteredPredefinedItems().length} of {predefinedItems.length} items
+            </Text>
+            
+            <TouchableOpacity
+              style={styles.closeModalButton}
+              onPress={() => {
+                setShowPredefinedItemsModal(false);
+                // Reset search and filters when modal closes
+                setPredefinedSearchText('');
+                setPredefinedFilterCategory('All');
+                setPredefinedSortBy('name');
+              }}
+            >
+              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       {/* Add Item Modal */}
       <Modal
@@ -452,12 +668,21 @@ const InventoryApp = () => {
               <View style={styles.modernModalContent}>
                 <Text style={styles.modernModalTitle}>{language.addItem}</Text>
 
-                <TextInput
-                  style={styles.modernInput}
-                  placeholder={language.itemName}
-                  value={newItem.name}
-                  onChangeText={(text) => setNewItem(prev => ({ ...prev, name: text }))}
-                />
+                {isCustomItem ? (
+                  <TextInput
+                    style={styles.modernInput}
+                    placeholder={language.itemName}
+                    value={newItem.name}
+                    onChangeText={(text) => setNewItem(prev => ({ ...prev, name: text }))}
+                  />
+                ) : (
+                  <View style={styles.predefinedItemDisplay}>
+                    <Text style={styles.predefinedItemDisplayName}>{newItem.name}</Text>
+                    <Text style={styles.predefinedItemDisplayDetails}>
+                      {newItem.category} • {newItem.unitType}
+                    </Text>
+                  </View>
+                )}
 
                 <View style={styles.modernInputRow}>
                   <TextInput
@@ -476,31 +701,25 @@ const InventoryApp = () => {
                   />
                 </View>
 
-                <View style={styles.modernInputRow}>
-                  <View style={[styles.modernDropdown, { flex: 1, marginRight: 8 }]}>
-                    <Picker
-                      selectedValue={newItem.category}
-                      onValueChange={(value) => setNewItem(prev => ({ ...prev, category: value }))}
-                      style={styles.modernPicker}
+                {isCustomItem && (
+                  <View style={styles.modernInputRow}>
+                    <TouchableOpacity
+                      style={[styles.modernSelector, { flex: 1, marginRight: 8 }]}
+                      onPress={() => setShowCategoryModal(true)}
                     >
-                      {categories.map(cat => (
-                        <Picker.Item key={cat} label={cat} value={cat} />
-                      ))}
-                    </Picker>
-                  </View>
-                  
-                  <View style={[styles.modernDropdown, { flex: 1, marginLeft: 8 }]}>
-                    <Picker
-                      selectedValue={newItem.unitType}
-                      onValueChange={(value) => setNewItem(prev => ({ ...prev, unitType: value }))}
-                      style={styles.modernPicker}
+                      <Text style={styles.modernSelectorText}>{newItem.category}</Text>
+                      <Text style={styles.modernSelectorArrow}>▼</Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity
+                      style={[styles.modernSelector, { flex: 1, marginLeft: 8 }]}
+                      onPress={() => setShowUnitTypeModal(true)}
                     >
-                      {unitTypes.map(unit => (
-                        <Picker.Item key={unit} label={unit} value={unit} />
-                      ))}
-                    </Picker>
+                      <Text style={styles.modernSelectorText}>{newItem.unitType}</Text>
+                      <Text style={styles.modernSelectorArrow}>▼</Text>
+                    </TouchableOpacity>
                   </View>
-                </View>
+                )}
 
                 <View style={styles.totalAmountContainer}>
                   <Text style={styles.totalAmountText}>
@@ -540,6 +759,82 @@ const InventoryApp = () => {
             </KeyboardAvoidingView>
           </View>
         </TouchableWithoutFeedback>
+      </Modal>
+
+      {/* Category Selection Modal */}
+      <Modal
+        visible={showCategoryModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowCategoryModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.selectionModalContent}>
+            <Text style={styles.selectionModalTitle}>{language.selectCategory}</Text>
+            
+            <ScrollView>
+              {categories.map(cat => (
+                <TouchableOpacity
+                  key={cat}
+                  style={[styles.selectionOption, newItem.category === cat && styles.selectedOption]}
+                  onPress={() => {
+                    setNewItem(prev => ({ ...prev, category: cat }));
+                    setShowCategoryModal(false);
+                  }}
+                >
+                  <Text style={[styles.selectionOptionText, newItem.category === cat && styles.selectedOptionText]}>
+                    {cat}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+            
+            <TouchableOpacity
+              style={styles.closeModalButton}
+              onPress={() => setShowCategoryModal(false)}
+            >
+              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Unit Type Selection Modal */}
+      <Modal
+        visible={showUnitTypeModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowUnitTypeModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.selectionModalContent}>
+            <Text style={styles.selectionModalTitle}>{language.selectUnitType}</Text>
+            
+            <ScrollView>
+              {unitTypes.map(unit => (
+                <TouchableOpacity
+                  key={unit}
+                  style={[styles.selectionOption, newItem.unitType === unit && styles.selectedOption]}
+                  onPress={() => {
+                    setNewItem(prev => ({ ...prev, unitType: unit }));
+                    setShowUnitTypeModal(false);
+                  }}
+                >
+                  <Text style={[styles.selectionOptionText, newItem.unitType === unit && styles.selectedOptionText]}>
+                    {unit}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+            
+            <TouchableOpacity
+              style={styles.closeModalButton}
+              onPress={() => setShowUnitTypeModal(false)}
+            >
+              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </Modal>
 
       {/* Filter Modal */}
@@ -860,15 +1155,40 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 16,
   },
-  modernDropdown: {
+  modernSelector: {
     borderWidth: 1,
     borderColor: '#e0e0e0',
     borderRadius: 12,
+    padding: 16,
     backgroundColor: '#f8f9fa',
-    overflow: 'hidden',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  modernPicker: {
-    height: 50,
+  modernSelectorText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  modernSelectorArrow: {
+    fontSize: 12,
+    color: '#666',
+  },
+  predefinedItemDisplay: {
+    backgroundColor: '#e8f5e8',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+    alignItems: 'center',
+  },
+  predefinedItemDisplayName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2e7d32',
+    marginBottom: 4,
+  },
+  predefinedItemDisplayDetails: {
+    fontSize: 14,
+    color: '#4caf50',
   },
   totalAmountContainer: {
     backgroundColor: '#f0f8ff',
@@ -968,6 +1288,155 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     textAlign: 'center',
+  },
+  // Item Type Selection Styles
+  customItemOption: {
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 8,
+    backgroundColor: '#e3f2fd',
+    borderWidth: 1,
+    borderColor: '#2196f3',
+  },
+  customItemText: {
+    fontSize: 16,
+    color: '#1976d2',
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  predefinedItemOption: {
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 8,
+    backgroundColor: '#f8f9fa',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  predefinedItemText: {
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  predefinedItemInfo: {
+    alignItems: 'center',
+  },
+  predefinedItemName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 4,
+  },
+  predefinedItemDetails: {
+    fontSize: 14,
+    color: '#666',
+  },
+  enhancedPredefinedModalContent: {
+    width: '90%',
+    maxWidth: 400,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    maxHeight: '85%',
+  },
+  predefinedSearchInput: {
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 12,
+    padding: 12,
+    fontSize: 16,
+    marginBottom: 16,
+    backgroundColor: '#f8f9fa',
+  },
+  predefinedFilterRow: {
+    flexDirection: 'row',
+    marginBottom: 16,
+    gap: 8,
+  },
+  predefinedFilterButton: {
+    flex: 1,
+    backgroundColor: '#e3f2fd',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#2196f3',
+  },
+  predefinedSortButton: {
+    flex: 1,
+    backgroundColor: '#fff3e0',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ff9800',
+  },
+  predefinedFilterText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#1976d2',
+  },
+  predefinedSortText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#f57c00',
+  },
+  predefinedItemsList: {
+    maxHeight: 300,
+    marginBottom: 16,
+  },
+  enhancedPredefinedItemOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 8,
+    backgroundColor: '#f8f9fa',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  predefinedItemDetailsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+    gap: 8,
+  },
+  predefinedCategoryBadge: {
+    backgroundColor: '#e8f5e8',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 12,
+  },
+  predefinedCategoryText: {
+    fontSize: 12,
+    color: '#2e7d32',
+    fontWeight: '600',
+  },
+  predefinedUnitText: {
+    fontSize: 12,
+    color: '#666',
+    fontWeight: '500',
+  },
+  selectArrow: {
+    fontSize: 20,
+    color: '#666',
+    marginLeft: 'auto',
+  },
+  noPredefinedItemsContainer: {
+    padding: 40,
+    alignItems: 'center',
+  },
+  noPredefinedItemsText: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+  },
+  resultsCount: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 16,
+    fontStyle: 'italic',
   },
 });
 
