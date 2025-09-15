@@ -28,6 +28,20 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Inventory App to access your camera to scan receipts and items."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Inventory App to access your photos to select images for processing."
+        }
+      ]
+    ]
   }
 }
