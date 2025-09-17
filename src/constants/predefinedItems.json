@@ -1,0 +1,68 @@
+[
+  {
+    "id": "apples",
+    "name": "Apples",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "bananas",
+    "name": "Bananas",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "milk",
+    "name": "Milk",
+    "category": "Beverages",
+    "unitType": "liters"
+  },
+  {
+    "id": "bread",
+    "name": "Bread",
+    "category": "Food",
+    "unitType": "pcs"
+  },
+  {
+    "id": "eggs",
+    "name": "Eggs",
+    "category": "Food",
+    "unitType": "pcs"
+  },
+  {
+    "id": "chicken",
+    "name": "Chicken Breast",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "rice",
+    "name": "Rice",
+    "category": "Food",
+    "unitType": "kg"
+  },
+  {
+    "id": "water",
+    "name": "Water Bottles",
+    "category": "Beverages",
+    "unitType": "pcs"
+  },
+  {
+    "id": "coffee",
+    "name": "Coffee",
+    "category": "Beverages",
+    "unitType": "kg"
+  },
+  {
+    "id": "phone",
+    "name": "Smartphone",
+    "category": "Electronics",
+    "unitType": "pcs"
+  },
+  {
+    "id": "tester",
+    "name": "Test Item",
+    "category": "Testing",
+    "unitType": "pcs"
+  }
+]

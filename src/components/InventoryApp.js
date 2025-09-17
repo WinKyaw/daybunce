@@ -61,19 +61,27 @@ const defaultLanguage = {
 const defaultCategories = ['Food', 'Beverages', 'Electronics', 'Clothing', 'Other'];
 const defaultUnitTypes = ['lb', 'oz', 'kg', 'g', 'pcs', 'liters', 'ml'];
 
-// Predefined items with name, category, and unit type
-const predefinedItems = [
-  { id: 'apples', name: 'Apples', category: 'Food', unitType: 'lb' },
-  { id: 'bananas', name: 'Bananas', category: 'Food', unitType: 'lb' },
-  { id: 'milk', name: 'Milk', category: 'Beverages', unitType: 'liters' },
-  { id: 'bread', name: 'Bread', category: 'Food', unitType: 'pcs' },
-  { id: 'eggs', name: 'Eggs', category: 'Food', unitType: 'pcs' },
-  { id: 'chicken', name: 'Chicken Breast', category: 'Food', unitType: 'lb' },
-  { id: 'rice', name: 'Rice', category: 'Food', unitType: 'kg' },
-  { id: 'water', name: 'Water Bottles', category: 'Beverages', unitType: 'pcs' },
-  { id: 'coffee', name: 'Coffee', category: 'Beverages', unitType: 'kg' },
-  { id: 'phone', name: 'Smartphone', category: 'Electronics', unitType: 'pcs' },
-];
+// Import predefined items from JSON file
+let defaultPredefinedItems = [];
+try {
+  defaultPredefinedItems = require('./../constants/predefinedItems.json');
+  console.log(`Loaded ${defaultPredefinedItems.length} items from predefinedItems.json`);
+} catch (error) {
+  console.warn('Could not load predefinedItems.json, using fallback data:', error);
+  // Fallback data if JSON file is not found
+  defaultPredefinedItems = [
+    { id: 'apples', name: 'Apples', category: 'Food', unitType: 'lb' },
+    { id: 'bananas', name: 'Bananas', category: 'Food', unitType: 'lb' },
+    { id: 'milk', name: 'Milk', category: 'Beverages', unitType: 'liters' },
+    { id: 'bread', name: 'Bread', category: 'Food', unitType: 'pcs' },
+    { id: 'eggs', name: 'Eggs', category: 'Food', unitType: 'pcs' },
+    { id: 'chicken', name: 'Chicken Breast', category: 'Food', unitType: 'lb' },
+    { id: 'rice', name: 'Rice', category: 'Food', unitType: 'kg' },
+    { id: 'water', name: 'Water Bottles', category: 'Beverages', unitType: 'pcs' },
+    { id: 'coffee', name: 'Coffee', category: 'Beverages', unitType: 'kg' },
+    { id: 'phone', name: 'Smartphone', category: 'Electronics', unitType: 'pcs' },
+  ];
+}
 
 // CHANGE THIS TO YOUR SERVER'S ADDRESS
 const OCR_API_URL = 'http://10.0.0.125:5001/api/ocr/scan';
@@ -103,6 +111,9 @@ const InventoryApp = () => {
   const [predefinedFilterCategory, setPredefinedFilterCategory] = useState('All');
   const [predefinedSortBy, setPredefinedSortBy] = useState('name');
   const [modalDebounce, setModalDebounce] = useState(false);
+  
+  // New state for dynamic predefined items
+  const [predefinedItems, setPredefinedItems] = useState([]);
 
   // Add item form state
   const [newItem, setNewItem] = useState({
@@ -123,19 +134,91 @@ const InventoryApp = () => {
   useEffect(() => {
     loadData();
     loadLanguageConfig();
+    loadPredefinedItems();
   }, [selectedDate]);
 
   useEffect(() => {
     filterAndSortItems();
   }, [items, searchText, filterCategory, sortBy]);
 
-  useEffect(() => {
-    console.log('showCategoryModal changed to:', showCategoryModal);
-  }, [showCategoryModal]);
+  // Load predefined items from AsyncStorage with JSON file integration
+  const loadPredefinedItems = async () => {
+    try {
+      const savedPredefinedItems = await AsyncStorage.getItem('predefinedItems');
+      if (savedPredefinedItems) {
+        const saved = JSON.parse(savedPredefinedItems);
+        
+        // Check if we need to merge with updated JSON file data
+        const jsonFileItems = defaultPredefinedItems || [];
+        const savedIds = new Set(saved.map(item => item.id));
+        
+        // Add any new items from JSON file that aren't already saved
+        const newItemsFromJson = jsonFileItems.filter(item => !savedIds.has(item.id));
+        
+        if (newItemsFromJson.length > 0) {
+          const mergedItems = [...saved, ...newItemsFromJson];
+          setPredefinedItems(mergedItems);
+          await savePredefinedItems(mergedItems);
+          console.log(`Loaded predefined items from storage and added ${newItemsFromJson.length} new items from JSON file`);
+        } else {
+          setPredefinedItems(saved);
+          console.log('Loaded predefined items from storage');
+        }
+      } else {
+        // Initialize with items from JSON file if no saved data exists
+        setPredefinedItems(defaultPredefinedItems);
+        await savePredefinedItems(defaultPredefinedItems);
+        console.log('Initialized predefined items from JSON file');
+      }
+    } catch (error) {
+      console.error('Error loading predefined items:', error);
+      setPredefinedItems(defaultPredefinedItems);
+    }
+  };
 
-  useEffect(() => {
-    console.log('showUnitTypeModal changed to:', showUnitTypeModal);
-  }, [showUnitTypeModal]);
+  // Save predefined items to AsyncStorage and optionally export to JSON format
+  const savePredefinedItems = async (items) => {
+    try {
+      await AsyncStorage.setItem('predefinedItems', JSON.stringify(items));
+      console.log('Saved predefined items to storage');
+      
+      // Optional: Log the JSON format for manual file updates
+      if (__DEV__) {
+        console.log('Current predefined items in JSON format:');
+        console.log(JSON.stringify(items, null, 2));
+      }
+    } catch (error) {
+      console.error('Error saving predefined items:', error);
+    }
+  };
+
+  // Add new item to predefined items list
+  const addToPredefinedItems = async (itemData) => {
+    try {
+      // Check if item already exists (case insensitive)
+      const existingItem = predefinedItems.find(
+        item => item.name.toLowerCase() === itemData.name.toLowerCase() &&
+                item.category === itemData.category &&
+                item.unitType === itemData.unitType
+      );
+
+      if (!existingItem) {
+        const newPredefinedItem = {
+          id: `custom_${Date.now()}`,
+          name: itemData.name,
+          category: itemData.category,
+          unitType: itemData.unitType,
+        };
+
+        const updatedPredefinedItems = [...predefinedItems, newPredefinedItem];
+        setPredefinedItems(updatedPredefinedItems);
+        await savePredefinedItems(updatedPredefinedItems);
+        console.log('Added new item to predefined items:', newPredefinedItem.name);
+      }
+    } catch (error) {
+      console.error('Error adding to predefined items:', error);
+    }
+  };
 
   const loadData = async () => {
     try {
@@ -205,32 +288,6 @@ const InventoryApp = () => {
     return date.toISOString().split('T')[0];
   };
 
-  const handleCategoryPress = () => {
-    if (modalDebounce) return;
-  
-    console.log('Category dropdown pressed, current showCategoryModal:', showCategoryModal);
-    setModalDebounce(true);
-    
-    setTimeout(() => {
-      setShowCategoryModal(true);
-      console.log('After setting showCategoryModal to true');
-      setModalDebounce(false);
-    }, 150);
-  };
-
-  const handleUnitTypePress = () => {
-    if (modalDebounce) return;
-  
-    console.log('Unit type dropdown pressed, current showUnitTypeModal:', showUnitTypeModal);
-    setModalDebounce(true);
-    
-    setTimeout(() => {
-      setShowUnitTypeModal(true);
-      console.log('After setting showUnitTypeModal to true');
-      setModalDebounce(false);
-    }, 150);
-  };
-
   const filterAndSortItems = () => {
     let filtered = items.filter(item =>
       item.name.toLowerCase().includes(searchText.toLowerCase()) &&
@@ -295,6 +352,11 @@ const InventoryApp = () => {
     const updatedItems = [...items, item];
     setItems(updatedItems);
     await saveData(updatedItems);
+
+    // If this was a custom item, add it to predefined items
+    if (isCustomItem) {
+      await addToPredefinedItems(newItem);
+    }
 
     setNewItem({
       name: '',
@@ -380,7 +442,6 @@ const InventoryApp = () => {
         await Linking.openURL(mailUrl);
         setShowReceiptModal(false);
       } else {
-        // Fallback to generic share
         await Share.share({
           message: receiptText,
           title: subject,
@@ -403,7 +464,6 @@ const InventoryApp = () => {
         await Linking.openURL(smsUrl);
         setShowReceiptModal(false);
       } else {
-        // Fallback to generic share
         await Share.share({
           message: receiptText,
         });
@@ -632,7 +692,7 @@ const InventoryApp = () => {
         <Text style={styles.addButtonText}>+ {language.addItem}</Text>
       </TouchableOpacity>
 
-      {/* Bottom Navigation Bar - Make it clickable */}
+      {/* Bottom Navigation Bar */}
       <TouchableOpacity 
         style={styles.bottomNav}
         onPress={() => setShowReceiptModal(true)}
@@ -782,6 +842,9 @@ const InventoryApp = () => {
         <View style={styles.modalOverlay}>
           <View style={styles.enhancedPredefinedModalContent}>
             <Text style={styles.selectionModalTitle}>{language.predefinedItems}</Text>
+            <Text style={styles.predefinedItemsCount}>
+              {predefinedItems.length} items available
+            </Text>
             
             <TextInput
               style={styles.predefinedSearchInput}
@@ -920,7 +983,6 @@ const InventoryApp = () => {
                     <TouchableOpacity
                       style={[styles.modernSelector, { flex: 1, marginRight: 8 }]}
                       onPress={() => {
-                        console.log('Category pressed - setting modal to true');
                         setShowCategoryModal(true);
                       }}
                       activeOpacity={0.7}
@@ -932,7 +994,6 @@ const InventoryApp = () => {
                     <TouchableOpacity
                       style={[styles.modernSelector, { flex: 1, marginLeft: 8 }]}
                       onPress={() => {
-                        console.log('Unit type pressed - setting modal to true');
                         setShowUnitTypeModal(true);
                       }}
                       activeOpacity={0.7}
@@ -995,7 +1056,6 @@ const InventoryApp = () => {
                           newItem.category === cat && styles.overlaySelectedOption
                         ]}
                         onPress={() => {
-                          console.log('Selected category:', cat);
                           setNewItem(prev => ({ ...prev, category: cat }));
                           setShowCategoryModal(false);
                         }}
@@ -1013,7 +1073,6 @@ const InventoryApp = () => {
                   <TouchableOpacity
                     style={styles.overlayCloseButton}
                     onPress={() => {
-                      console.log('Closing category modal');
                       setShowCategoryModal(false);
                     }}
                   >
@@ -1038,7 +1097,6 @@ const InventoryApp = () => {
                           newItem.unitType === unit && styles.overlaySelectedOption
                         ]}
                         onPress={() => {
-                          console.log('Selected unit type:', unit);
                           setNewItem(prev => ({ ...prev, unitType: unit }));
                           setShowUnitTypeModal(false);
                         }}
@@ -1056,7 +1114,6 @@ const InventoryApp = () => {
                   <TouchableOpacity
                     style={styles.overlayCloseButton}
                     onPress={() => {
-                      console.log('Closing unit type modal');
                       setShowUnitTypeModal(false);
                     }}
                   >
@@ -1318,17 +1375,17 @@ const styles = StyleSheet.create({
   },
   addButton: {
     position: 'absolute',
-    bottom: 100, // Increased from 80 to 100 to clear the bottom nav
+    bottom: 100,
     right: 20,
     backgroundColor: '#2196f3',
     borderRadius: 50,
     padding: 16,
-    elevation: 8, // Increased elevation for better visibility
+    elevation: 8,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 }, // Increased shadow
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    zIndex: 1000, // Added high z-index to ensure it's above other elements
+    zIndex: 1000,
   },
   addButtonText: {
     color: '#fff',
@@ -1409,7 +1466,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    minHeight: 50, // Add minimum height
+    minHeight: 50,
   },
   modernSelectorText: {
     fontSize: 16,
@@ -1489,7 +1546,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  // Receipt Modal Styles
   receiptModalContent: {
     width: '90%',
     maxWidth: 400,
@@ -1639,7 +1695,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  // Selection Modal Styles
   selectionModalContent: {
     width: '80%',
     maxWidth: 300,
@@ -1685,7 +1740,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
   },
-  // Item Type Selection Styles
   customItemOption: {
     padding: 16,
     borderRadius: 8,
@@ -1714,19 +1768,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '600',
   },
-  predefinedItemInfo: {
-    alignItems: 'center',
-  },
-  predefinedItemName: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 4,
-  },
-  predefinedItemDetails: {
-    fontSize: 14,
-    color: '#666',
-  },
   enhancedPredefinedModalContent: {
     width: '90%',
     maxWidth: 400,
@@ -1734,6 +1775,13 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 20,
     maxHeight: '85%',
+  },
+  predefinedItemsCount: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 16,
+    fontStyle: 'italic',
   },
   predefinedSearchInput: {
     borderWidth: 1,
@@ -1791,10 +1839,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e0e0e0',
   },
+  predefinedItemInfo: {
+    flex: 1,
+  },
+  predefinedItemName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 4,
+  },
   predefinedItemDetailsRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 4,
     gap: 8,
   },
   predefinedCategoryBadge: {
