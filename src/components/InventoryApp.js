@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { PanResponder, Animated, Dimensions } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
@@ -118,6 +119,9 @@ const InventoryApp = () => {
   const [bulkAddText, setBulkAddText] = useState('');
   const [bulkAddCategory, setBulkAddCategory] = useState('Other');
   const [bulkAddUnitType, setBulkAddUnitType] = useState('pcs');
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [swipedItemId, setSwipedItemId] = useState(null);
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -663,6 +667,188 @@ const InventoryApp = () => {
     }
   };
 
+  const [activeSwipeId, setActiveSwipeId] = useState(null);
+
+// Reset all swipes when modal closes
+  useEffect(() => {
+    if (!showPredefinedItemsModal) {
+      setActiveSwipeId(null);
+    }
+  }, [showPredefinedItemsModal]);
+
+  const SwipeableItem = ({ item, onSelect, onDelete }) => {
+    const [translateX] = useState(new Animated.Value(0));
+    const [isDeleteVisible, setIsDeleteVisible] = useState(false);
+
+    const panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        return Math.abs(gestureState.dx) > 10;
+      },
+      onPanResponderGrant: () => {
+        // Reset any existing animation
+        translateX.setOffset(translateX._value);
+        translateX.setValue(0);
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        // Only allow left swipe (negative values) and limit the distance
+        const newValue = Math.max(Math.min(gestureState.dx, 0), -100);
+        translateX.setValue(newValue);
+      },
+      onPanResponderRelease: (evt, gestureState) => {
+        translateX.flattenOffset();
+        
+        if (gestureState.dx < -50) {
+          // Show delete button
+          setIsDeleteVisible(true);
+          Animated.spring(translateX, {
+            toValue: -80,
+            useNativeDriver: false, // Changed to false for better compatibility
+            tension: 100,
+            friction: 8,
+          }).start();
+        } else {
+          // Hide delete button and snap back
+          resetSwipe();
+        }
+      },
+    });
+
+    const resetSwipe = () => {
+      setIsDeleteVisible(false);
+      Animated.spring(translateX, {
+        toValue: 0,
+        useNativeDriver: false,
+        tension: 100,
+        friction: 8,
+      }).start();
+    };
+
+    const handleDelete = () => {
+      // Animate out completely before deleting
+      Animated.timing(translateX, {
+        toValue: -200,
+        duration: 200,
+        useNativeDriver: false,
+      }).start(() => {
+        onDelete(item);
+      });
+    };
+
+    const handleSelect = () => {
+      if (isDeleteVisible) {
+        resetSwipe();
+      } else {
+        onSelect(item);
+      }
+    };
+
+    // Reset swipe when component unmounts or item changes
+    useEffect(() => {
+      return () => {
+        resetSwipe();
+      };
+    }, [item.id]);
+
+    return (
+      <View style={styles.swipeableContainer}>
+        {/* Delete button that appears behind the item */}
+        <View style={styles.deleteButtonBackground}>
+          <TouchableOpacity
+            style={styles.deleteButtonTouchable}
+            onPress={handleDelete}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.deleteButtonText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
+        
+        <Animated.View
+          style={[
+            styles.swipeableItemWrapper,
+            { transform: [{ translateX }] }
+          ]}
+          {...panResponder.panHandlers}
+        >
+          <TouchableOpacity
+            style={styles.enhancedPredefinedItemOption}
+            onPress={handleSelect}
+            activeOpacity={0.7}
+          >
+            <View style={styles.predefinedItemInfo}>
+              <Text style={styles.predefinedItemName}>{item.name}</Text>
+              <View style={styles.predefinedItemDetailsRow}>
+                <View style={styles.predefinedCategoryBadge}>
+                  <Text style={styles.predefinedCategoryText}>{item.category}</Text>
+                </View>
+                <Text style={styles.predefinedUnitText}>{item.unitType}</Text>
+              </View>
+            </View>
+            <Text style={styles.selectArrow}>›</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
+    );
+  };
+
+  // Delete all predefined items
+  const deleteAllPredefinedItems = async () => {
+    try {
+      setPredefinedItems([]);
+      await savePredefinedItems([]);
+      Alert.alert('Success', 'All predefined items have been deleted');
+    } catch (error) {
+      Alert.alert('Error', 'Could not delete predefined items');
+      console.error('Error deleting all predefined items:', error);
+    }
+  };
+
+  // Delete individual predefined item
+  const deleteIndividualPredefinedItem = async (itemId) => {
+    try {
+      const updatedItems = predefinedItems.filter(item => item.id !== itemId);
+      setPredefinedItems(updatedItems);
+      await savePredefinedItems(updatedItems);
+      setSwipedItemId(null); // Reset swipe state
+      Alert.alert('Success', 'Item deleted successfully');
+    } catch (error) {
+      Alert.alert('Error', 'Could not delete item');
+      console.error('Error deleting predefined item:', error);
+    }
+  };
+
+  // Show delete confirmation for all items
+  const confirmDeleteAllItems = () => {
+    Alert.alert(
+      'Delete All Items',
+      `Are you sure you want to delete all ${predefinedItems.length} predefined items? This action cannot be undone.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'Delete All', 
+          style: 'destructive',
+          onPress: deleteAllPredefinedItems 
+        }
+      ]
+    );
+  };
+
+  // Show delete confirmation for individual item
+  const confirmDeleteItem = (item) => {
+    Alert.alert(
+      'Delete Item',
+      `Are you sure you want to delete "${item.name}" from predefined items?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'Delete', 
+          style: 'destructive',
+          onPress: () => deleteIndividualPredefinedItem(item.id) 
+        }
+      ]
+    );
+  };
+
   // Receipt generation and sharing functions
   const generateReceiptText = () => {
     const dateStr = selectedDate.toLocaleDateString();
@@ -1108,6 +1294,9 @@ const InventoryApp = () => {
             <Text style={styles.predefinedItemsCount}>
               {predefinedItems.length} items available
             </Text>
+            <Text style={styles.swipeInstructions}>
+              Swipe left on any item to delete
+            </Text>
             
             <TextInput
               style={styles.predefinedSearchInput}
@@ -1153,22 +1342,15 @@ const InventoryApp = () => {
                 </View>
               ) : (
                 getFilteredPredefinedItems().map(item => (
-                  <TouchableOpacity
+                  <SwipeableItem
                     key={item.id}
-                    style={styles.enhancedPredefinedItemOption}
-                    onPress={() => handlePredefinedItemSelection(item)}
-                  >
-                    <View style={styles.predefinedItemInfo}>
-                      <Text style={styles.predefinedItemName}>{item.name}</Text>
-                      <View style={styles.predefinedItemDetailsRow}>
-                        <View style={styles.predefinedCategoryBadge}>
-                          <Text style={styles.predefinedCategoryText}>{item.category}</Text>
-                        </View>
-                        <Text style={styles.predefinedUnitText}>{item.unitType}</Text>
-                      </View>
-                    </View>
-                    <Text style={styles.selectArrow}>›</Text>
-                  </TouchableOpacity>
+                    item={item}
+                    onSelect={handlePredefinedItemSelection}
+                    onDelete={confirmDeleteItem}
+                    isActive={activeSwipeId === item.id}
+                    onSwipeStart={() => setActiveSwipeId(item.id)}
+                    onSwipeReset={() => setActiveSwipeId(null)}
+                  />
                 ))
               )}
             </ScrollView>
@@ -1217,6 +1399,13 @@ const InventoryApp = () => {
               }}
             >
               <Text style={styles.bulkAddOpenButtonText}>Bulk Add Items</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.deleteAllButton}
+              onPress={confirmDeleteAllItems}
+            >
+              <Text style={styles.deleteAllButtonText}>Delete All Items</Text>
             </TouchableOpacity>
             
             <TouchableOpacity
@@ -2214,11 +2403,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 16,
-    borderRadius: 12,
-    marginBottom: 8,
-    backgroundColor: '#f8f9fa',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+    backgroundColor: 'transparent',
   },
   predefinedItemInfo: {
     flex: 1,
@@ -2479,6 +2664,93 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  enhancedPredefinedItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  deleteItemButton: {
+    backgroundColor: '#dc3545',
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  deleteItemButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    lineHeight: 18,
+  },
+  deleteAllButton: {
+    backgroundColor: '#dc3545',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  deleteAllButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  swipeableContainer: {
+    position: 'relative',
+    marginBottom: 8,
+  },
+  swipeableItemWrapper: {
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    zIndex: 2,
+  },
+  deleteButtonBackground: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    width: 80,
+    backgroundColor: '#dc3545',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
+    zIndex: 1,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  deleteAllButton: {
+    backgroundColor: '#dc3545',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  deleteAllButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  swipeInstructions: {
+    fontSize: 12,
+    color: '#999',
+    textAlign: 'center',
+    marginBottom: 16,
+    fontStyle: 'italic',
+  },
+  deleteButtonTouchable: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
   },
 });
 
