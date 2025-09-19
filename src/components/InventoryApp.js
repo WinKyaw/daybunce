@@ -114,6 +114,10 @@ const InventoryApp = () => {
   const [predefinedFilterCategory, setPredefinedFilterCategory] = useState('All');
   const [predefinedSortBy, setPredefinedSortBy] = useState('name');
   const [modalDebounce, setModalDebounce] = useState(false);
+  const [showBulkAddModal, setShowBulkAddModal] = useState(false);
+  const [bulkAddText, setBulkAddText] = useState('');
+  const [bulkAddCategory, setBulkAddCategory] = useState('Other');
+  const [bulkAddUnitType, setBulkAddUnitType] = useState('pcs');
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -401,6 +405,262 @@ const InventoryApp = () => {
     });
 
     return filtered;
+  };
+
+  const importFromCSV = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'text/csv',
+        copyToCacheDirectory: true,
+      });
+
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        const fileUri = result.assets[0].uri;
+        const csvContent = await FileSystem.readAsStringAsync(fileUri);
+        parseCsvAndImport(csvContent);
+      }
+    } catch (error) {
+      Alert.alert('Import Error', 'Could not import CSV file');
+      console.error('CSV import error:', error);
+    }
+  };
+
+  const parseCsvAndImport = (csvContent) => {
+    try {
+      const lines = csvContent.trim().split('\n');
+      const headers = lines[0].toLowerCase().split(',').map(h => h.trim());
+      
+      const nameIndex = headers.findIndex(h => h.includes('name') || h.includes('item'));
+      const categoryIndex = headers.findIndex(h => h.includes('category') || h.includes('type'));
+      const unitIndex = headers.findIndex(h => h.includes('unit') || h.includes('measurement'));
+      
+      if (nameIndex === -1) {
+        Alert.alert('Invalid CSV', 'Could not find a "name" or "item" column');
+        return;
+      }
+
+      const importedItems = [];
+      
+      for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+        
+        if (values[nameIndex]) {
+          importedItems.push({
+            id: `csv_import_${Date.now()}_${i}`,
+            name: values[nameIndex],
+            category: values[categoryIndex] || 'Other',
+            unitType: values[unitIndex] || 'pcs'
+          });
+        }
+      }
+
+      if (importedItems.length > 0) {
+        Alert.alert(
+          'CSV Import',
+          `Found ${importedItems.length} items. Import them?`,
+          [
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'Import', onPress: () => mergePredefinedItems(importedItems) }
+          ]
+        );
+      } else {
+        Alert.alert('No Data', 'No valid items found in CSV file');
+      }
+    } catch (error) {
+      Alert.alert('Parse Error', 'Could not parse CSV file. Please check the format.');
+      console.error('CSV parse error:', error);
+    }
+  };
+
+  const downloadCSVTemplate = async () => {
+    try {
+      const csvTemplate = `name,category,unitType
+  Apples,Food,lb
+  Bananas,Food,lb
+  Milk,Beverages,liters
+  Bread,Food,pcs
+  Coffee,Beverages,kg`;
+
+      const filename = 'predefined-items-template.csv';
+      const fileUri = FileSystem.documentDirectory + filename;
+      
+      await FileSystem.writeAsStringAsync(fileUri, csvTemplate);
+      
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(fileUri);
+      } else {
+        Alert.alert('Template Ready', `Template saved: ${filename}`);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Could not create CSV template');
+    }
+  };
+
+  // Export predefined items to JSON file
+  const exportPredefinedItems = async () => {
+    try {
+      const jsonData = JSON.stringify(predefinedItems, null, 2);
+      const filename = `predefined-items-${new Date().toISOString().split('T')[0]}.json`;
+      const fileUri = FileSystem.documentDirectory + filename;
+      
+      await FileSystem.writeAsStringAsync(fileUri, jsonData);
+      
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(fileUri);
+      } else {
+        Alert.alert('Export Complete', `File saved to: ${filename}`);
+      }
+    } catch (error) {
+      Alert.alert('Export Error', 'Could not export predefined items');
+      console.error('Export error:', error);
+    }
+  };
+
+  // Import predefined items from JSON file
+  const importPredefinedItems = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'application/json',
+        copyToCacheDirectory: true,
+      });
+
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        const fileUri = result.assets[0].uri;
+        const fileContent = await FileSystem.readAsStringAsync(fileUri);
+        const importedItems = JSON.parse(fileContent);
+
+        // Validate the imported data structure
+        if (Array.isArray(importedItems) && importedItems.every(item => 
+          item.name && item.category && item.unitType
+        )) {
+          // Show confirmation dialog
+          Alert.alert(
+            'Import Confirmation',
+            `Found ${importedItems.length} items. How would you like to import them?`,
+            [
+              {
+                text: 'Cancel',
+                style: 'cancel'
+              },
+              {
+                text: 'Replace All',
+                onPress: () => replacePredefinedItems(importedItems)
+              },
+              {
+                text: 'Merge (Add New)',
+                onPress: () => mergePredefinedItems(importedItems)
+              }
+            ]
+          );
+        } else {
+          Alert.alert('Invalid File', 'The selected file does not contain valid predefined items data.');
+        }
+      }
+    } catch (error) {
+      Alert.alert('Import Error', 'Could not import predefined items. Please check the file format.');
+      console.error('Import error:', error);
+    }
+  };
+
+  // Replace all predefined items
+  const replacePredefinedItems = async (newItems) => {
+    try {
+      // Add unique IDs if missing
+      const itemsWithIds = newItems.map((item, index) => ({
+        ...item,
+        id: item.id || `imported_${Date.now()}_${index}`
+      }));
+      
+      setPredefinedItems(itemsWithIds);
+      await savePredefinedItems(itemsWithIds);
+      Alert.alert('Success', `Replaced with ${itemsWithIds.length} predefined items`);
+    } catch (error) {
+      Alert.alert('Error', 'Could not replace predefined items');
+    }
+  };
+
+  // Merge imported items with existing ones
+  const mergePredefinedItems = async (newItems) => {
+    try {
+      const existingNames = new Set(predefinedItems.map(item => 
+        `${item.name.toLowerCase()}_${item.category}_${item.unitType}`
+      ));
+      
+      const uniqueNewItems = newItems.filter(item => 
+        !existingNames.has(`${item.name.toLowerCase()}_${item.category}_${item.unitType}`)
+      ).map((item, index) => ({
+        ...item,
+        id: item.id || `imported_${Date.now()}_${index}`
+      }));
+      
+      const mergedItems = [...predefinedItems, ...uniqueNewItems];
+      setPredefinedItems(mergedItems);
+      await savePredefinedItems(mergedItems);
+      
+      Alert.alert(
+        'Success', 
+        `Added ${uniqueNewItems.length} new items (${newItems.length - uniqueNewItems.length} duplicates skipped)`
+      );
+    } catch (error) {
+      Alert.alert('Error', 'Could not merge predefined items');
+    }
+  };
+
+  const processBulkAdd = () => {
+    try {
+      const lines = bulkAddText.trim().split('\n').filter(line => line.trim());
+      const newItems = [];
+      
+      lines.forEach((line, index) => {
+        const trimmedLine = line.trim();
+        if (trimmedLine) {
+          const parts = trimmedLine.split(',').map(p => p.trim());
+          
+          newItems.push({
+            id: `bulk_${Date.now()}_${index}`,
+            name: parts[0],
+            category: parts[1] || bulkAddCategory,
+            unitType: parts[2] || bulkAddUnitType
+          });
+        }
+      });
+      
+      if (newItems.length > 0) {
+        Alert.alert(
+          'Bulk Add Confirmation',
+          `Add ${newItems.length} items to predefined items?`,
+          [
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'Add Items', onPress: () => addBulkItems(newItems) }
+          ]
+        );
+      } else {
+        Alert.alert('No Items', 'Please enter at least one item name');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Could not process bulk add');
+    }
+  };
+
+  const addBulkItems = async (newItems) => {
+    try {
+      const existingNames = new Set(predefinedItems.map(item => item.name.toLowerCase()));
+      const uniqueItems = newItems.filter(item => !existingNames.has(item.name.toLowerCase()));
+      
+      const updatedItems = [...predefinedItems, ...uniqueItems];
+      setPredefinedItems(updatedItems);
+      await savePredefinedItems(updatedItems);
+      
+      Alert.alert(
+        'Success',
+        `Added ${uniqueItems.length} items (${newItems.length - uniqueItems.length} duplicates skipped)`
+      );
+      
+      setBulkAddText('');
+      setShowBulkAddModal(false);
+    } catch (error) {
+      Alert.alert('Error', 'Could not add bulk items');
+    }
   };
 
   // Receipt generation and sharing functions
@@ -916,6 +1176,48 @@ const InventoryApp = () => {
             <Text style={styles.resultsCount}>
               Showing {getFilteredPredefinedItems().length} of {predefinedItems.length} items
             </Text>
+
+            <View style={styles.importExportButtonRow}>
+              <TouchableOpacity
+                style={styles.exportButton}
+                onPress={exportPredefinedItems}
+              >
+                <Text style={styles.exportButtonText}>Export Items</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.importButton}
+                onPress={importPredefinedItems}
+              >
+                <Text style={styles.importButtonText}>Import JSON</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.importExportButtonRow}>
+              <TouchableOpacity
+                style={styles.csvImportButton}
+                onPress={importFromCSV}
+              >
+                <Text style={styles.csvImportButtonText}>Import CSV</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.templateButton}
+                onPress={downloadCSVTemplate}
+              >
+                <Text style={styles.templateButtonText}>CSV Template</Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity
+              style={styles.bulkAddOpenButton}
+              onPress={() => {
+                setShowPredefinedItemsModal(false);
+                setShowBulkAddModal(true);
+              }}
+            >
+              <Text style={styles.bulkAddOpenButtonText}>Bulk Add Items</Text>
+            </TouchableOpacity>
             
             <TouchableOpacity
               style={styles.closeModalButton}
@@ -1213,6 +1515,82 @@ const InventoryApp = () => {
             >
               <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
             </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Bulk Add Modal */}
+      <Modal
+        visible={showBulkAddModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowBulkAddModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.bulkAddModalContent}>
+            <Text style={styles.bulkAddTitle}>Bulk Add Items</Text>
+            <Text style={styles.bulkAddInstructions}>
+              Enter one item per line. You can use formats like:
+              {'\n'}- Apple
+              {'\n'}- Banana, Food, lb
+              {'\n'}- Coffee, Beverages, kg
+            </Text>
+            
+            <TextInput
+              style={styles.bulkAddTextArea}
+              multiline={true}
+              numberOfLines={8}
+              placeholder="Enter item names (one per line)..."
+              value={bulkAddText}
+              onChangeText={setBulkAddText}
+              textAlignVertical="top"
+            />
+            
+            <View style={styles.bulkAddDefaults}>
+              <Text style={styles.bulkAddDefaultsLabel}>Default values for items without category/unit:</Text>
+              <View style={styles.bulkAddDefaultsRow}>
+                <TouchableOpacity
+                  style={styles.bulkAddDefaultSelector}
+                  onPress={() => {
+                    const currentIndex = categories.indexOf(bulkAddCategory);
+                    const nextIndex = (currentIndex + 1) % categories.length;
+                    setBulkAddCategory(categories[nextIndex]);
+                  }}
+                >
+                  <Text style={styles.bulkAddDefaultText}>Category: {bulkAddCategory}</Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity
+                  style={styles.bulkAddDefaultSelector}
+                  onPress={() => {
+                    const currentIndex = unitTypes.indexOf(bulkAddUnitType);
+                    const nextIndex = (currentIndex + 1) % unitTypes.length;
+                    setBulkAddUnitType(unitTypes[nextIndex]);
+                  }}
+                >
+                  <Text style={styles.bulkAddDefaultText}>Unit: {bulkAddUnitType}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            
+            <View style={styles.bulkAddButtonRow}>
+              <TouchableOpacity
+                style={[styles.bulkAddButton, styles.bulkAddCancelButton]}
+                onPress={() => {
+                  setShowBulkAddModal(false);
+                  setBulkAddText('');
+                }}
+              >
+                <Text style={styles.bulkAddCancelButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={[styles.bulkAddButton, styles.bulkAddSaveButton]}
+                onPress={processBulkAdd}
+              >
+                <Text style={styles.bulkAddSaveButtonText}>Add Items</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -1951,6 +2329,156 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     textAlign: 'center',
+  },
+  importExportButtonRow: {
+    flexDirection: 'row',
+    marginBottom: 12,
+    gap: 8,
+  },
+  exportButton: {
+    flex: 1,
+    backgroundColor: '#28a745',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  exportButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  importButton: {
+    flex: 1,
+    backgroundColor: '#17a2b8',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  importButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  csvImportButton: {
+    flex: 1,
+    backgroundColor: '#6f42c1',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  csvImportButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  templateButton: {
+    flex: 1,
+    backgroundColor: '#6c757d',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  templateButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  bulkAddOpenButton: {
+    backgroundColor: '#fd7e14',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  bulkAddOpenButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  
+  // Bulk Add Modal Styles
+  bulkAddModalContent: {
+    width: '90%',
+    maxWidth: 400,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    maxHeight: '85%',
+  },
+  bulkAddTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 16,
+    color: '#333',
+  },
+  bulkAddInstructions: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 16,
+    lineHeight: 20,
+  },
+  bulkAddTextArea: {
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    minHeight: 120,
+    backgroundColor: '#f8f9fa',
+    marginBottom: 16,
+  },
+  bulkAddDefaults: {
+    marginBottom: 20,
+  },
+  bulkAddDefaultsLabel: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 8,
+  },
+  bulkAddDefaultsRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  bulkAddDefaultSelector: {
+    flex: 1,
+    backgroundColor: '#e8f4f8',
+    padding: 10,
+    borderRadius: 6,
+    alignItems: 'center',
+  },
+  bulkAddDefaultText: {
+    fontSize: 14,
+    color: '#333',
+    fontWeight: '500',
+  },
+  bulkAddButtonRow: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  bulkAddButton: {
+    flex: 1,
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  bulkAddCancelButton: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  bulkAddSaveButton: {
+    backgroundColor: '#007bff',
+  },
+  bulkAddCancelButtonText: {
+    color: '#666',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  bulkAddSaveButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 
