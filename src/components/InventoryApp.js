@@ -61,9 +61,228 @@ const defaultLanguage = {
   close: 'Close',
 };
 
+const availableLanguages = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+  { code: 'pt', name: 'Português', flag: '🇧🇷' },
+  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵' },
+  { code: 'my', name: 'မြန်မာ', flag: '🇲🇲' },
+];
+
+// Extended language configurations
+const languageConfigs = {
+  en: {
+    appTitle: 'Inventory Management',
+    searchPlaceholder: 'Search items...',
+    filterByCategory: 'Filter by Category',
+    sortBy: 'Sort By',
+    addItem: 'Add Item',
+    itemName: 'Item Name',
+    price: 'Price',
+    unitsSold: 'Units Sold',
+    totalAmount: 'Total Amount',
+    category: 'Category',
+    unitType: 'Unit Type',
+    save: 'Save',
+    cancel: 'Cancel',
+    dailyTotal: 'Daily Total',
+    noItems: 'No items for this date',
+    scanWithOCR: 'Scan with OCR',
+    takePhoto: 'Take Photo',
+    selectFromGallery: 'Select from Gallery',
+    all: 'All',
+    sortByName: 'Name',
+    sortByPrice: 'Price',
+    sortByAmount: 'Total Amount',
+    filters: 'Filters',
+    sort: 'Sort',
+    selectCategory: 'Select Category',
+    selectSortOption: 'Select Sort Option',
+    selectUnitType: 'Select Unit Type',
+    customItem: 'Create Custom Item',
+    predefinedItems: 'Select Predefined Item',
+    selectItemType: 'Select Item Type',
+    dailySummary: 'Daily Sales Summary',
+    shareViaEmail: 'Share via Email',
+    shareViaText: 'Share via Text',
+    close: 'Close',
+    settings: 'Settings',
+    language: 'Language',
+    appTitleSetting: 'App Title',
+    profile: 'Profile',
+  },
+  es: {
+    appTitle: 'Gestión de Inventario',
+    searchPlaceholder: 'Buscar artículos...',
+    filterByCategory: 'Filtrar por Categoría',
+    sortBy: 'Ordenar por',
+    addItem: 'Agregar Artículo',
+    itemName: 'Nombre del Artículo',
+    price: 'Precio',
+    unitsSold: 'Unidades Vendidas',
+    totalAmount: 'Cantidad Total',
+    category: 'Categoría',
+    unitType: 'Tipo de Unidad',
+    save: 'Guardar',
+    cancel: 'Cancelar',
+    dailyTotal: 'Total Diario',
+    noItems: 'No hay artículos para esta fecha',
+    scanWithOCR: 'Escanear con OCR',
+    takePhoto: 'Tomar Foto',
+    selectFromGallery: 'Seleccionar de Galería',
+    all: 'Todos',
+    sortByName: 'Nombre',
+    sortByPrice: 'Precio',
+    sortByAmount: 'Cantidad Total',
+    filters: 'Filtros',
+    sort: 'Ordenar',
+    selectCategory: 'Seleccionar Categoría',
+    selectSortOption: 'Seleccionar Opción de Orden',
+    selectUnitType: 'Seleccionar Tipo de Unidad',
+    customItem: 'Crear Artículo Personalizado',
+    predefinedItems: 'Seleccionar Artículo Predefinido',
+    selectItemType: 'Seleccionar Tipo de Artículo',
+    dailySummary: 'Resumen de Ventas Diarias',
+    shareViaEmail: 'Compartir por Email',
+    shareViaText: 'Compartir por Texto',
+    close: 'Cerrar',
+    settings: 'Configuración',
+    language: 'Idioma',
+    appTitleSetting: 'Título de la App',
+    profile: 'Perfil',
+  },
+  fr: {
+    appTitle: 'Gestion d\'Inventaire',
+    searchPlaceholder: 'Rechercher des articles...',
+    filterByCategory: 'Filtrer par Catégorie',
+    sortBy: 'Trier par',
+    addItem: 'Ajouter un Article',
+    itemName: 'Nom de l\'Article',
+    price: 'Prix',
+    unitsSold: 'Unités Vendues',
+    totalAmount: 'Montant Total',
+    category: 'Catégorie',
+    unitType: 'Type d\'Unité',
+    save: 'Sauvegarder',
+    cancel: 'Annuler',
+    dailyTotal: 'Total Quotidien',
+    noItems: 'Aucun article pour cette date',
+    scanWithOCR: 'Scanner avec OCR',
+    takePhoto: 'Prendre une Photo',
+    selectFromGallery: 'Sélectionner de la Galerie',
+    all: 'Tous',
+    sortByName: 'Nom',
+    sortByPrice: 'Prix',
+    sortByAmount: 'Montant Total',
+    filters: 'Filtres',
+    sort: 'Trier',
+    selectCategory: 'Sélectionner une Catégorie',
+    selectSortOption: 'Sélectionner l\'Option de Tri',
+    selectUnitType: 'Sélectionner le Type d\'Unité',
+    customItem: 'Créer un Article Personnalisé',
+    predefinedItems: 'Sélectionner un Article Prédéfini',
+    selectItemType: 'Sélectionner le Type d\'Article',
+    dailySummary: 'Résumé des Ventes Quotidiennes',
+    shareViaEmail: 'Partager par Email',
+    shareViaText: 'Partager par Texte',
+    close: 'Fermer',
+    settings: 'Paramètres',
+    language: 'Langue',
+    appTitleSetting: 'Titre de l\'App',
+    profile: 'Profil',
+  },
+  de: {
+    appTitle: 'Inventarverwaltung',
+    searchPlaceholder: 'Artikel suchen...',
+    filterByCategory: 'Nach Kategorie filtern',
+    sortBy: 'Sortieren nach',
+    addItem: 'Artikel hinzufügen',
+    itemName: 'Artikelname',
+    price: 'Preis',
+    unitsSold: 'Verkaufte Einheiten',
+    totalAmount: 'Gesamtbetrag',
+    category: 'Kategorie',
+    unitType: 'Einheitentyp',
+    save: 'Speichern',
+    cancel: 'Abbrechen',
+    dailyTotal: 'Tagesgesamt',
+    noItems: 'Keine Artikel für dieses Datum',
+    scanWithOCR: 'Mit OCR scannen',
+    takePhoto: 'Foto aufnehmen',
+    selectFromGallery: 'Aus Galerie auswählen',
+    all: 'Alle',
+    sortByName: 'Name',
+    sortByPrice: 'Preis',
+    sortByAmount: 'Gesamtbetrag',
+    filters: 'Filter',
+    sort: 'Sortieren',
+    selectCategory: 'Kategorie auswählen',
+    selectSortOption: 'Sortieroption auswählen',
+    selectUnitType: 'Einheitentyp auswählen',
+    customItem: 'Benutzerdefinierten Artikel erstellen',
+    predefinedItems: 'Vordefinierten Artikel auswählen',
+    selectItemType: 'Artikeltyp auswählen',
+    dailySummary: 'Tägliche Verkaufszusammenfassung',
+    shareViaEmail: 'Per E-Mail teilen',
+    shareViaText: 'Per Text teilen',
+    close: 'Schließen',
+    settings: 'Einstellungen',
+    language: 'Sprache',
+    appTitleSetting: 'App-Titel',
+    profile: 'Profil',
+  },
+   my: {
+    appTitle: 'ပစ္စည်းစာရင်းစီမံခန့်ခွဲမှု',
+    searchPlaceholder: 'ပစ္စည်းများရှာပါ...',
+    filterByCategory: 'အမျိုးအစားအလိုက်စစ်ထုတ်ပါ',
+    sortBy: 'အစီအစဉ်',
+    addItem: 'ပစ္စည်းထည့်ပါ',
+    itemName: 'ပစ္စည်းအမည်',
+    price: 'စျေးနှုန်း',
+    unitsSold: 'ရောင်းသွားသောယူနစ်',
+    totalAmount: 'စုစုပေါင်းပမာဏ',
+    category: 'အမျိုးအစား',
+    unitType: 'ယူနစ်အမျိုးအစား',
+    save: 'သိမ်းပါ',
+    cancel: 'ပယ်ဖျက်ပါ',
+    dailyTotal: 'နေ့စဉ်စုစုပေါင်း',
+    noItems: 'ဤနေ့ရက်အတွက်ပစ္စည်းမရှိပါ',
+    scanWithOCR: 'OCR ဖြင့်စကင်န်ပါ',
+    takePhoto: 'ဓာတ်ပုံရိုက်ပါ',
+    selectFromGallery: 'ပုံတိုက်မှရွေးပါ',
+    all: 'အားလုံး',
+    sortByName: 'အမည်',
+    sortByPrice: 'စျေးနှုန်း',
+    sortByAmount: 'စုစုပေါင်းပမာဏ',
+    filters: 'စစ်ထုတ်မှုများ',
+    sort: 'အစီအစဉ်',
+    selectCategory: 'အမျိုးအစားရွေးပါ',
+    selectSortOption: 'အစီအစဉ်ရွေးချယ်မှုရွေးပါ',
+    selectUnitType: 'ယူနစ်အမျိုးအစားရွေးပါ',
+    customItem: 'စိတ်ကြိုက်ပစ္စည်းဖန်တီးပါ',
+    predefinedItems: 'ကြိုတင်သတ်မှတ်ထားသောပစ္စည်းရွေးပါ',
+    selectItemType: 'ပစ္စည်းအမျိုးအစားရွေးပါ',
+    dailySummary: 'နေ့စဉ်ရောင်းချမှုအနှစ်ချုပ်',
+    shareViaEmail: 'အီးမေးလ်ဖြင့်မျှဝေပါ',
+    shareViaText: 'စာသားဖြင့်မျှဝေပါ',
+    close: 'ပိတ်ပါ',
+    settings: 'ဆက်တင်များ',
+    language: 'ဘာသာစကား',
+    appTitleSetting: 'အက်ပ်ခေါင်းစဉ်',
+    profile: 'ပရိုဖိုင်',
+  },
+};
+
 // Default categories and unit types
 const defaultCategories = ['Food', 'Beverages', 'Electronics', 'Clothing', 'Other'];
 const defaultUnitTypes = ['lb', 'oz', 'kg', 'g', 'pcs', 'liters', 'ml'];
+
+const myanmarCategories = ['အစားအစာ', 'ရေစာ', 'လျှပ်စစ်ပစ္စည်း', 'အဝတ်အထည်', 'အခြား'];
+const myanmarUnitTypes = ['ပေါင်', 'အောင်စ', 'ကီလိုဂရမ်', 'ဂရမ်', 'ခု', 'လီတာ', 'မီလီလီတာ'];
 
 // Import predefined items from JSON file
 let defaultPredefinedItems = [];
@@ -122,6 +341,11 @@ const InventoryApp = () => {
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [swipedItemId, setSwipedItemId] = useState(null);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
+  const [customAppTitle, setCustomAppTitle] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -143,9 +367,14 @@ const InventoryApp = () => {
   };
 
   useEffect(() => {
-    loadData();
-    loadLanguageConfig();
-    loadPredefinedItems();
+    const initializeApp = async () => {
+      await loadSettings(); // Load settings first
+      await loadData();
+      await loadLanguageConfig(); // This might be redundant now
+      await loadPredefinedItems();
+    };
+    
+    initializeApp();
   }, [selectedDate]);
 
   useEffect(() => {
@@ -667,6 +896,135 @@ const InventoryApp = () => {
     }
   };
 
+    const loadSettings = async () => {
+      try {
+        const savedLanguage = await AsyncStorage.getItem('selectedLanguage');
+        const savedTitle = await AsyncStorage.getItem('customAppTitle');
+        const savedCategories = await AsyncStorage.getItem('categories');
+        const savedUnitTypes = await AsyncStorage.getItem('unit_types');
+        
+        let languageToUse = 'en'; // default
+        if (savedLanguage && languageConfigs[savedLanguage]) {
+          languageToUse = savedLanguage;
+        }
+        
+        setSelectedLanguage(languageToUse);
+        const languageConfig = { ...languageConfigs[languageToUse] };
+        
+        if (savedTitle && savedTitle.trim()) {
+          setCustomAppTitle(savedTitle.trim());
+          languageConfig.appTitle = savedTitle.trim();
+        } else {
+          setCustomAppTitle('');
+        }
+        
+        // Load saved categories and unit types
+        if (savedCategories) {
+          setCategories(JSON.parse(savedCategories));
+        } else if (languageToUse === 'my') {
+          setCategories(myanmarCategories);
+        } else {
+          setCategories(defaultCategories);
+        }
+        
+        if (savedUnitTypes) {
+          setUnitTypes(JSON.parse(savedUnitTypes));
+        } else if (languageToUse === 'my') {
+          setUnitTypes(myanmarUnitTypes);
+        } else {
+          setUnitTypes(defaultUnitTypes);
+        }
+        
+        setLanguage(languageConfig);
+        
+      } catch (error) {
+        console.error('Error loading settings:', error);
+        // Fallback to English
+        setSelectedLanguage('en');
+        setLanguage(languageConfigs.en);
+        setCategories(defaultCategories);
+        setUnitTypes(defaultUnitTypes);
+      }
+    };
+
+
+  const saveSettings = async () => {
+    try {
+      await AsyncStorage.setItem('selectedLanguage', selectedLanguage);
+      if (customAppTitle.trim()) {
+        await AsyncStorage.setItem('customAppTitle', customAppTitle.trim());
+        setLanguage(prev => ({ ...prev, appTitle: customAppTitle.trim() }));
+      }
+    } catch (error) {
+      console.error('Error saving settings:', error);
+    }
+  };
+
+  const changeLanguage = async (languageCode) => {
+    try {
+      console.log('Changing language to:', languageCode);
+      
+      setSelectedLanguage(languageCode);
+      const languageConfig = languageConfigs[languageCode] || languageConfigs.en;
+      
+      // Create a copy to avoid mutation
+      const newLanguageConfig = { ...languageConfig };
+      
+      // Preserve custom title if it exists
+      if (customAppTitle && customAppTitle.trim()) {
+        newLanguageConfig.appTitle = customAppTitle.trim();
+      }
+      
+      setLanguage(newLanguageConfig);
+      
+      // Handle Myanmar-specific categories and units
+      if (languageCode === 'my') {
+        setCategories(myanmarCategories);
+        setUnitTypes(myanmarUnitTypes);
+        // Reset form to use Myanmar defaults
+        setNewItem(prev => ({
+          ...prev,
+          category: myanmarCategories[4], // 'အခြား' (Other)
+          unitType: myanmarUnitTypes[4],  // 'ခု' (pieces)
+        }));
+      } else {
+        setCategories(defaultCategories);
+        setUnitTypes(defaultUnitTypes);
+        setNewItem(prev => ({
+          ...prev,
+          category: defaultCategories[4],
+          unitType: defaultUnitTypes[4],
+        }));
+      }
+      
+      // Save to storage
+      await AsyncStorage.setItem('selectedLanguage', languageCode);
+      await AsyncStorage.setItem('categories', JSON.stringify(
+        languageCode === 'my' ? myanmarCategories : defaultCategories
+      ));
+      await AsyncStorage.setItem('unit_types', JSON.stringify(
+        languageCode === 'my' ? myanmarUnitTypes : defaultUnitTypes
+      ));
+      
+      setShowLanguageModal(false);
+      
+    } catch (error) {
+      console.error('Error changing language:', error);
+      Alert.alert('Error', 'Could not change language');
+    }
+  };
+
+  const updateAppTitle = async (newTitle) => {
+    try {
+      const title = newTitle.trim() || languageConfigs[selectedLanguage].appTitle;
+      setCustomAppTitle(title);
+      setLanguage(prev => ({ ...prev, appTitle: title }));
+      await AsyncStorage.setItem('customAppTitle', title);
+    } catch (error) {
+      console.error('Error updating app title:', error);
+    }
+  };
+
   const [activeSwipeId, setActiveSwipeId] = useState(null);
 
 // Reset all swipes when modal closes
@@ -1030,7 +1388,15 @@ const InventoryApp = () => {
 
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>{language.appTitle}</Text>
+        <View style={styles.headerContent}>
+          <Text style={styles.headerTitle}>{language.appTitle}</Text>
+          <TouchableOpacity
+            style={styles.profileButton}
+            onPress={() => setShowSettingsModal(true)}
+          >
+            <Text style={styles.profileIcon}>⚙️</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Date Selector */}
@@ -1780,6 +2146,162 @@ const InventoryApp = () => {
                 <Text style={styles.bulkAddSaveButtonText}>Add Items</Text>
               </TouchableOpacity>
             </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Settings Modal */}
+      <Modal
+        visible={showSettingsModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowSettingsModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.fixedSettingsModalContent}>
+            <Text style={styles.settingsTitle}>{language.settings || 'Settings'}</Text>
+            
+            <ScrollView 
+              style={styles.settingsScrollView}
+              showsVerticalScrollIndicator={true}
+            >
+              {/* App Title Setting */}
+              <View style={styles.settingItem}>
+                <Text style={styles.settingLabel}>{language.appTitleSetting || 'App Title'}</Text>
+                <TextInput
+                  style={styles.settingInput}
+                  value={customAppTitle}
+                  onChangeText={setCustomAppTitle}
+                  placeholder={languageConfigs[selectedLanguage]?.appTitle || 'Inventory Management'}
+                />
+              </View>
+              
+              {/* Language Setting */}
+              <View style={styles.settingItem}>
+                <Text style={styles.settingLabel}>{language.language || 'Language'}</Text>
+                <TouchableOpacity
+                  style={styles.languageSelector}
+                  onPress={() => setShowLanguageDropdown(!showLanguageDropdown)}
+                >
+                  <Text style={styles.languageSelectorText}>
+                    {availableLanguages.find(lang => lang.code === selectedLanguage)?.flag || '🇺🇸'} {' '}
+                    {availableLanguages.find(lang => lang.code === selectedLanguage)?.name || 'English'}
+                  </Text>
+                  <Text style={styles.selectorArrow}>{showLanguageDropdown ? '▲' : '▼'}</Text>
+                </TouchableOpacity>
+                
+                {showLanguageDropdown && (
+                  <View style={styles.languageDropdown}>
+                    <ScrollView 
+                      style={styles.languageDropdownScroll}
+                      nestedScrollEnabled={true}
+                    >
+                      {availableLanguages.map(lang => (
+                        <TouchableOpacity
+                          key={lang.code}
+                          style={[
+                            styles.languageDropdownItem,
+                            selectedLanguage === lang.code && styles.selectedLanguageDropdownItem
+                          ]}
+                          onPress={() => {
+                            console.log('Language selected:', lang.code);
+                            changeLanguage(lang.code);
+                            setShowLanguageDropdown(false);
+                          }}
+                        >
+                          <Text style={styles.languageDropdownFlag}>{lang.flag}</Text>
+                          <Text style={[
+                            styles.languageDropdownText,
+                            selectedLanguage === lang.code && styles.selectedLanguageDropdownText
+                          ]}>
+                            {lang.name}
+                          </Text>
+                          {selectedLanguage === lang.code && (
+                            <Text style={styles.languageDropdownCheck}>✓</Text>
+                          )}
+                        </TouchableOpacity>
+                      ))}
+                    </ScrollView>
+                  </View>
+                )}
+              </View>
+            </ScrollView>
+            
+            <View style={styles.settingsButtonRow}>
+              <TouchableOpacity
+                style={[styles.settingsButton, styles.settingsCancelButton]}
+                onPress={() => {
+                  setShowSettingsModal(false);
+                  setShowLanguageDropdown(false);
+                }}
+              >
+                <Text style={styles.settingsCancelButtonText}>{language.cancel}</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={[styles.settingsButton, styles.settingsSaveButton]}
+                onPress={() => {
+                  updateAppTitle(customAppTitle);
+                  saveSettings();
+                  setShowSettingsModal(false);
+                  setShowLanguageDropdown(false);
+                }}
+              >
+                <Text style={styles.settingsSaveButtonText}>{language.save}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Language Selection Modal */}
+      <Modal
+        visible={showLanguageModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowLanguageModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.selectionModalContent}>
+            <Text style={styles.selectionModalTitle}>{language.language || 'Select Language'}</Text>
+            
+            <ScrollView>
+              {availableLanguages.map(lang => (
+                <TouchableOpacity
+                  key={lang.code}
+                  style={[
+                    styles.selectionOption,
+                    selectedLanguage === lang.code && styles.selectedOption
+                  ]}
+                  onPress={() => {
+                    console.log('Language selected:', lang.code);
+                    changeLanguage(lang.code);
+                  }}
+                >
+                  <View style={styles.languageOptionContent}>
+                    <Text style={styles.languageOptionFlag}>{lang.flag}</Text>
+                    <Text style={[
+                      styles.selectionOptionText,
+                      selectedLanguage === lang.code && styles.selectedOptionText
+                    ]}>
+                      {lang.name}
+                    </Text>
+                    {selectedLanguage === lang.code && (
+                      <Text style={styles.languageCheckmark}>✓</Text>
+                    )}
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+            
+            <TouchableOpacity
+              style={styles.closeModalButton}
+              onPress={() => setShowLanguageModal(false)}
+            >
+              <Text style={styles.closeModalButtonText}>
+                {language.cancel || 'Cancel'}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -2752,6 +3274,249 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  headerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  profileButton: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: '#f0f0f0',
+  },
+  profileIcon: {
+    fontSize: 20,
+  },
+  settingsModalContent: {
+    width: '90%',
+    maxWidth: 400,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+    maxHeight: '80%',
+  },
+  settingsTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 24,
+    color: '#333',
+  },
+  settingItem: {
+    marginBottom: 20,
+  },
+  settingLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8,
+    color: '#333',
+  },
+  settingInput: {
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    backgroundColor: '#f8f9fa',
+  },
+  languageSelector: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    padding: 12,
+    backgroundColor: '#f8f9fa',
+  },
+  languageSelectorText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  selectorArrow: {
+    fontSize: 12,
+    color: '#666',
+  },
+  settingsButtonRow: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 20,
+  },
+  settingsButton: {
+    flex: 1,
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  settingsCancelButton: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  settingsSaveButton: {
+    backgroundColor: '#007bff',
+  },
+  settingsCancelButtonText: {
+    color: '#666',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  settingsSaveButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  languageModalContent: {
+    width: '85%',
+    maxWidth: 350,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    maxHeight: '70%',
+  },
+  languageModalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#333',
+  },
+  languageList: {
+    maxHeight: 300,
+    marginBottom: 20,
+  },
+  languageOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 4,
+    backgroundColor: '#f8f9fa',
+  },
+  selectedLanguageOption: {
+    backgroundColor: '#e3f2fd',
+    borderWidth: 1,
+    borderColor: '#2196f3',
+  },
+  languageFlag: {
+    fontSize: 24,
+    marginRight: 12,
+  },
+  languageName: {
+    fontSize: 16,
+    color: '#333',
+    flex: 1,
+  },
+  selectedLanguageName: {
+    color: '#1976d2',
+    fontWeight: '600',
+  },
+  selectedCheckmark: {
+    fontSize: 18,
+    color: '#1976d2',
+    fontWeight: 'bold',
+  },
+  languageCloseButton: {
+    backgroundColor: '#6c757d',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  languageCloseButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  languageOptionContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  languageOptionFlag: {
+    fontSize: 20,
+    marginRight: 12,
+  },
+  languageCheckmark: {
+    fontSize: 16,
+    color: '#007bff',
+    fontWeight: 'bold',
+    marginLeft: 'auto',
+  },
+  languageDropdown: {
+    marginTop: 8,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    maxHeight: 200,
+  },
+  languageDropdownItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  fixedSettingsModalContent: {
+    width: '90%',
+    maxWidth: 400,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+    maxHeight: '80%', // Prevent overflow
+    minHeight: 300,
+  },
+  settingsScrollView: {
+    maxHeight: 400, // Constrain scroll area
+    marginBottom: 20,
+  },
+  languageDropdown: {
+    marginTop: 8,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    maxHeight: 160, // Limit dropdown height
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  languageDropdownScroll: {
+    maxHeight: 150, // Ensure scrollable
+  },
+  languageDropdownItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  selectedLanguageDropdownItem: {
+    backgroundColor: '#e3f2fd',
+  },
+  languageDropdownFlag: {
+    fontSize: 18,
+    marginRight: 12,
+    width: 24, // Fixed width for alignment
+  },
+  languageDropdownText: {
+    fontSize: 16,
+    color: '#333',
+    flex: 1,
+  },
+  selectedLanguageDropdownText: {
+    color: '#1976d2',
+    fontWeight: '600',
+  },
+  languageDropdownCheck: {
+    fontSize: 16,
+    color: '#1976d2',
+    fontWeight: 'bold',
+  },
+
 });
 
 export default InventoryApp;
