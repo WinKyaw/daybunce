@@ -13,6 +13,7 @@ import {
   Share,
   Linking,
 } from 'react-native';
+import * as Print from 'expo-print';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Camera } from 'expo-camera';
@@ -44,6 +45,7 @@ const defaultLanguage = {
   takePhoto: 'Take Photo',
   selectFromGallery: 'Select from Gallery',
   all: 'All',
+  sharePDF: 'Share as PDF',
   sortByName: 'Name',
   sortByPrice: 'Price',
   sortByAmount: 'Total Amount',
@@ -95,6 +97,7 @@ const languageConfigs = {
     takePhoto: 'Take Photo',
     selectFromGallery: 'Select from Gallery',
     all: 'All',
+    sharePDF: 'Share as PDF',
     sortByName: 'Name',
     sortByPrice: 'Price',
     sortByAmount: 'Total Amount',
@@ -135,6 +138,7 @@ const languageConfigs = {
     takePhoto: 'Tomar Foto',
     selectFromGallery: 'Seleccionar de Galería',
     all: 'Todos',
+    sharePDF: 'Compartir como PDF',
     sortByName: 'Nombre',
     sortByPrice: 'Precio',
     sortByAmount: 'Cantidad Total',
@@ -175,6 +179,7 @@ const languageConfigs = {
     takePhoto: 'Prendre une Photo',
     selectFromGallery: 'Sélectionner de la Galerie',
     all: 'Tous',
+    sharePDF: 'Partager en PDF',
     sortByName: 'Nom',
     sortByPrice: 'Prix',
     sortByAmount: 'Montant Total',
@@ -215,6 +220,7 @@ const languageConfigs = {
     takePhoto: 'Foto aufnehmen',
     selectFromGallery: 'Aus Galerie auswählen',
     all: 'Alle',
+    sharePDF: 'Als PDF teilen',
     sortByName: 'Name',
     sortByPrice: 'Preis',
     sortByAmount: 'Gesamtbetrag',
@@ -255,6 +261,7 @@ const languageConfigs = {
     takePhoto: 'ဓာတ်ပုံရိုက်ပါ',
     selectFromGallery: 'ပုံတိုက်မှရွေးပါ',
     all: 'အားလုံး',
+    sharePDF: 'PDF အနေဖြင့်မျှတေပါ',
     sortByName: 'အမည်',
     sortByPrice: 'စျေးနှုန်း',
     sortByAmount: 'စုစုပေါင်းပမာဏ',
@@ -307,7 +314,7 @@ try {
 }
 
 // CHANGE THIS TO YOUR SERVER'S ADDRESS
-const OCR_API_URL = 'http://10.0.0.125:5001/api/ocr/scan';
+const OCR_API_URL = 'http://10.0.0.156:5001/api/ocr/scan';
 
 const InventoryApp = () => {
   const [items, setItems] = useState([]);
@@ -439,14 +446,8 @@ const InventoryApp = () => {
   // Add new item to predefined items list
   const addToPredefinedItems = async (itemData) => {
     try {
-      // Check if item already exists (case insensitive)
-      const existingItem = predefinedItems.find(
-        item => item.name.toLowerCase() === itemData.name.toLowerCase() &&
-                item.category === itemData.category &&
-                item.unitType === itemData.unitType
-      );
-
-      if (!existingItem) {
+      // Check if item already exists using our helper function
+      if (isItemUnique(itemData, predefinedItems)) {
         const newPredefinedItem = {
           id: `custom_${Date.now()}`,
           name: itemData.name,
@@ -458,6 +459,8 @@ const InventoryApp = () => {
         setPredefinedItems(updatedPredefinedItems);
         await savePredefinedItems(updatedPredefinedItems);
         console.log('Added new item to predefined items:', newPredefinedItem.name);
+      } else {
+        console.log('Item already exists in predefined items, skipping:', itemData.name);
       }
     } catch (error) {
       console.error('Error adding to predefined items:', error);
@@ -692,9 +695,15 @@ const InventoryApp = () => {
       }
 
       if (importedItems.length > 0) {
+        // Check how many are unique before showing the dialog
+        const uniqueItems = importedItems.filter(item => isItemUnique(item, predefinedItems));
+        const duplicatesCount = importedItems.length - uniqueItems.length;
+        
+        const message = `Found ${importedItems.length} items${duplicatesCount > 0 ? ` (${duplicatesCount} would be duplicates)` : ''}. Import them?`;
+        
         Alert.alert(
           'CSV Import',
-          `Found ${importedItems.length} items. Import them?`,
+          message,
           [
             { text: 'Cancel', style: 'cancel' },
             { text: 'Import', onPress: () => mergePredefinedItems(importedItems) }
@@ -819,27 +828,218 @@ const InventoryApp = () => {
   // Merge imported items with existing ones
   const mergePredefinedItems = async (newItems) => {
     try {
-      const existingNames = new Set(predefinedItems.map(item => 
-        `${item.name.toLowerCase()}_${item.category}_${item.unitType}`
-      ));
-      
-      const uniqueNewItems = newItems.filter(item => 
-        !existingNames.has(`${item.name.toLowerCase()}_${item.category}_${item.unitType}`)
-      ).map((item, index) => ({
-        ...item,
-        id: item.id || `imported_${Date.now()}_${index}`
-      }));
+      // Filter out duplicates using our helper function
+      const uniqueNewItems = newItems.filter(item => isItemUnique(item, predefinedItems))
+        .map((item, index) => ({
+          ...item,
+          id: item.id || `imported_${Date.now()}_${index}`
+        }));
       
       const mergedItems = [...predefinedItems, ...uniqueNewItems];
       setPredefinedItems(mergedItems);
       await savePredefinedItems(mergedItems);
       
+      const duplicatesSkipped = newItems.length - uniqueNewItems.length;
+      
       Alert.alert(
         'Success', 
-        `Added ${uniqueNewItems.length} new items (${newItems.length - uniqueNewItems.length} duplicates skipped)`
+        `Added ${uniqueNewItems.length} new items${duplicatesSkipped > 0 ? ` (${duplicatesSkipped} duplicates skipped)` : ''}`
       );
     } catch (error) {
       Alert.alert('Error', 'Could not merge predefined items');
+    }
+  };
+
+  const generateReceiptHTML = () => {
+    const dateStr = selectedDate.toLocaleDateString();
+    const timeStr = new Date().toLocaleTimeString();
+    
+    let itemsHTML = '';
+    if (filteredItems.length === 0) {
+      itemsHTML = '<tr><td colspan="4" style="text-align: center; color: #666; font-style: italic;">No items sold on this date</td></tr>';
+    } else {
+      filteredItems.forEach((item, index) => {
+        const total = (parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2);
+        itemsHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>
+              <strong>${item.name}</strong><br>
+              <small style="color: #666;">${item.category}</small>
+            </td>
+            <td>$${item.price}/${item.unitType} × ${item.unitsSold}</td>
+            <td style="text-align: right; font-weight: bold;">$${total}</td>
+          </tr>
+        `;
+      });
+    }
+
+    return `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Daily Sales Summary</title>
+        <style>
+          body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            margin: 20px;
+            color: #333;
+            line-height: 1.6;
+            font-size: 14px;
+          }
+          .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+          }
+          .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+          }
+          .date-info {
+            color: #666;
+            font-size: 14px;
+          }
+          .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+          }
+          .summary-table th,
+          .summary-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+          }
+          .summary-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+          }
+          .summary-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+          }
+          .total-section {
+            border-top: 2px solid #333;
+            padding-top: 15px;
+            text-align: right;
+          }
+          .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+          }
+          .grand-total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2e7d32;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+            margin-top: 10px;
+          }
+          .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="title">${language.dailySummary}</div>
+          <div class="date-info">
+            Date: ${dateStr}<br>
+            Generated: ${timeStr}
+          </div>
+        </div>
+        
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th width="8%">#</th>
+              <th width="40%">Item</th>
+              <th width="32%">Price × Quantity</th>
+              <th width="20%">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${itemsHTML}
+          </tbody>
+        </table>
+        
+        <div class="total-section">
+          <div class="total-row">
+            <span>Total Items:</span>
+            <span>${filteredItems.length}</span>
+          </div>
+          <div class="total-row grand-total">
+            <span>Daily Total:</span>
+            <span>$${getDailyTotal()}</span>
+          </div>
+        </div>
+        
+        <div class="footer">
+          Generated by ${language.appTitle}<br>
+          ${new Date().toLocaleString()}
+        </div>
+      </body>
+      </html>
+    `;
+  };
+
+  const generateAndSharePDF = async () => {
+    try {
+      const htmlContent = generateReceiptHTML();
+      const fileName = `receipt-${formatDate(selectedDate)}.pdf`;
+      
+      const { uri } = await Print.printToFileAsync({
+        html: htmlContent,
+        base64: false,
+      });
+      
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(uri, {
+          UTI: '.pdf',
+          mimeType: 'application/pdf',
+        });
+        setShowReceiptModal(false);
+      } else {
+        Alert.alert('PDF Generated', `PDF created successfully`);
+        setShowReceiptModal(false);
+      }
+    } catch (error) {
+      console.error('PDF Generation Error:', error);
+      Alert.alert('Error', 'Could not generate PDF. Please try again.');
+    }
+  };
+
+  const shareViaEmailPDF = async () => {
+    try {
+      const htmlContent = generateReceiptHTML();
+      const { uri } = await Print.printToFileAsync({
+        html: htmlContent,
+        base64: false,
+      });
+      
+      const subject = `Daily Sales Summary - ${selectedDate.toLocaleDateString()}`;
+      
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(uri, {
+          UTI: '.pdf',
+          mimeType: 'application/pdf',
+        });
+        setShowReceiptModal(false);
+      }
+    } catch (error) {
+      console.error('PDF Email Error:', error);
+      Alert.alert('Error', 'Could not generate PDF for email.');
     }
   };
 
@@ -863,9 +1063,15 @@ const InventoryApp = () => {
       });
       
       if (newItems.length > 0) {
+        // Check for duplicates before showing confirmation
+        const uniqueItems = newItems.filter(item => isItemUnique(item, predefinedItems));
+        const duplicatesCount = newItems.length - uniqueItems.length;
+        
+        const message = `Add ${newItems.length} items to predefined items?${duplicatesCount > 0 ? `\n(${duplicatesCount} duplicates will be skipped)` : ''}`;
+        
         Alert.alert(
           'Bulk Add Confirmation',
-          `Add ${newItems.length} items to predefined items?`,
+          message,
           [
             { text: 'Cancel', style: 'cancel' },
             { text: 'Add Items', onPress: () => addBulkItems(newItems) }
@@ -881,16 +1087,18 @@ const InventoryApp = () => {
 
   const addBulkItems = async (newItems) => {
     try {
-      const existingNames = new Set(predefinedItems.map(item => item.name.toLowerCase()));
-      const uniqueItems = newItems.filter(item => !existingNames.has(item.name.toLowerCase()));
+      // Filter out duplicates using our helper function
+      const uniqueItems = newItems.filter(item => isItemUnique(item, predefinedItems));
       
       const updatedItems = [...predefinedItems, ...uniqueItems];
       setPredefinedItems(updatedItems);
       await savePredefinedItems(updatedItems);
       
+      const duplicatesCount = newItems.length - uniqueItems.length;
+      
       Alert.alert(
         'Success',
-        `Added ${uniqueItems.length} items (${newItems.length - uniqueItems.length} duplicates skipped)`
+        `Added ${uniqueItems.length} items${duplicatesCount > 0 ? ` (${duplicatesCount} duplicates skipped)` : ''}`
       );
       
       setBulkAddText('');
@@ -1027,6 +1235,13 @@ const InventoryApp = () => {
     } catch (error) {
       console.error('Error updating app title:', error);
     }
+  };
+  const isItemUnique = (itemToCheck, existingItems) => {
+    return !existingItems.some(existingItem => 
+      existingItem.name.toLowerCase() === itemToCheck.name.toLowerCase() &&
+      existingItem.category === itemToCheck.category &&
+      existingItem.unitType === itemToCheck.unitType
+    );
   };
 
   const [activeSwipeId, setActiveSwipeId] = useState(null);
@@ -1581,7 +1796,7 @@ const InventoryApp = () => {
             <View style={styles.receiptButtonRow}>
               <TouchableOpacity
                 style={styles.shareButton}
-                onPress={shareViaEmail}
+                onPress={shareViaEmailPDF}
               >
                 <Text style={styles.shareButtonText}>📧 {language.shareViaEmail}</Text>
               </TouchableOpacity>
@@ -1593,6 +1808,13 @@ const InventoryApp = () => {
                 <Text style={styles.shareButtonText}>💬 {language.shareViaText}</Text>
               </TouchableOpacity>
             </View>
+
+            <TouchableOpacity
+              style={styles.pdfShareButton}
+              onPress={generateAndSharePDF}
+            >
+              <Text style={styles.pdfShareButtonText}>📄 {language.sharePDF}</Text>
+            </TouchableOpacity>
             
             <TouchableOpacity
               style={styles.genericShareButton}
@@ -2275,73 +2497,86 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => setShowBulkAddModal(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.bulkAddModalContent}>
-            <Text style={styles.bulkAddTitle}>Bulk Add Items</Text>
-            <Text style={styles.bulkAddInstructions}>
-              Enter one item per line. You can use formats like:
-              {'\n'}- Apple
-              {'\n'}- Banana, Food, lb
-              {'\n'}- Coffee, Beverages, kg
-            </Text>
-            
-            <TextInput
-              style={styles.bulkAddTextArea}
-              multiline={true}
-              numberOfLines={8}
-              placeholder="Enter item names (one per line)..."
-              value={bulkAddText}
-              onChangeText={setBulkAddText}
-              textAlignVertical="top"
-            />
-            
-            <View style={styles.bulkAddDefaults}>
-              <Text style={styles.bulkAddDefaultsLabel}>Default values for items without category/unit:</Text>
-              <View style={styles.bulkAddDefaultsRow}>
-                <TouchableOpacity
-                  style={styles.bulkAddDefaultSelector}
-                  onPress={() => {
-                    const currentIndex = categories.indexOf(bulkAddCategory);
-                    const nextIndex = (currentIndex + 1) % categories.length;
-                    setBulkAddCategory(categories[nextIndex]);
-                  }}
-                >
-                  <Text style={styles.bulkAddDefaultText}>Category: {bulkAddCategory}</Text>
-                </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.modalOverlay}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={styles.keyboardAvoidingView}
+            >
+              <View style={styles.bulkAddModalContent}>
+                <Text style={styles.bulkAddTitle}>Bulk Add Items</Text>
+                <Text style={styles.bulkAddInstructions}>
+                  Enter one item per line. You can use formats like:
+                  {'\n'}- Apple
+                  {'\n'}- Banana, Food, lb
+                  {'\n'}- Coffee, Beverages, kg
+                </Text>
                 
-                <TouchableOpacity
-                  style={styles.bulkAddDefaultSelector}
-                  onPress={() => {
-                    const currentIndex = unitTypes.indexOf(bulkAddUnitType);
-                    const nextIndex = (currentIndex + 1) % unitTypes.length;
-                    setBulkAddUnitType(unitTypes[nextIndex]);
-                  }}
-                >
-                  <Text style={styles.bulkAddDefaultText}>Unit: {bulkAddUnitType}</Text>
-                </TouchableOpacity>
+                <TextInput
+                  style={styles.bulkAddTextArea}
+                  multiline={true}
+                  numberOfLines={8}
+                  placeholder="Enter item names (one per line)..."
+                  value={bulkAddText}
+                  onChangeText={setBulkAddText}
+                  textAlignVertical="top"
+                  blurOnSubmit={false}
+                  returnKeyType="done"
+                />
+                
+                <View style={styles.bulkAddDefaults}>
+                  <Text style={styles.bulkAddDefaultsLabel}>Default values for items without category/unit:</Text>
+                  <View style={styles.bulkAddDefaultsRow}>
+                    <TouchableOpacity
+                      style={styles.bulkAddDefaultSelector}
+                      onPress={() => {
+                        const currentIndex = categories.indexOf(bulkAddCategory);
+                        const nextIndex = (currentIndex + 1) % categories.length;
+                        setBulkAddCategory(categories[nextIndex]);
+                      }}
+                    >
+                      <Text style={styles.bulkAddDefaultText}>Category: {bulkAddCategory}</Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity
+                      style={styles.bulkAddDefaultSelector}
+                      onPress={() => {
+                        const currentIndex = unitTypes.indexOf(bulkAddUnitType);
+                        const nextIndex = (currentIndex + 1) % unitTypes.length;
+                        setBulkAddUnitType(unitTypes[nextIndex]);
+                      }}
+                    >
+                      <Text style={styles.bulkAddDefaultText}>Unit: {bulkAddUnitType}</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                
+                <View style={styles.bulkAddButtonRow}>
+                  <TouchableOpacity
+                    style={[styles.bulkAddButton, styles.bulkAddCancelButton]}
+                    onPress={() => {
+                      Keyboard.dismiss();
+                      setShowBulkAddModal(false);
+                      setBulkAddText('');
+                    }}
+                  >
+                    <Text style={styles.bulkAddCancelButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={[styles.bulkAddButton, styles.bulkAddSaveButton]}
+                    onPress={() => {
+                      Keyboard.dismiss();
+                      processBulkAdd();
+                    }}
+                  >
+                    <Text style={styles.bulkAddSaveButtonText}>Add Items</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            
-            <View style={styles.bulkAddButtonRow}>
-              <TouchableOpacity
-                style={[styles.bulkAddButton, styles.bulkAddCancelButton]}
-                onPress={() => {
-                  setShowBulkAddModal(false);
-                  setBulkAddText('');
-                }}
-              >
-                <Text style={styles.bulkAddCancelButtonText}>Cancel</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity
-                style={[styles.bulkAddButton, styles.bulkAddSaveButton]}
-                onPress={processBulkAdd}
-              >
-                <Text style={styles.bulkAddSaveButtonText}>Add Items</Text>
-              </TouchableOpacity>
-            </View>
+            </KeyboardAvoidingView>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
 
       {/* Settings Modal */}
@@ -3775,6 +4010,18 @@ const styles = StyleSheet.create({
   },
   dangerousActionText: {
     color: '#dc3545',
+  },
+  pdfShareButton: {
+    backgroundColor: '#dc3545',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  pdfShareButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 
 });
