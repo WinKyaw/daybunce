@@ -346,6 +346,9 @@ const InventoryApp = () => {
   const [customAppTitle, setCustomAppTitle] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [showPredefinedCategoryModal, setShowPredefinedCategoryModal] = useState(false);
+  const [showPredefinedUnitTypeModal, setShowPredefinedUnitTypeModal] = useState(false);
+  const [showPredefinedSortModal, setShowPredefinedSortModal] = useState(false);
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -1652,6 +1655,8 @@ const InventoryApp = () => {
           setPredefinedSearchText('');
           setPredefinedFilterCategory('All');
           setPredefinedSortBy('name');
+          setShowPredefinedCategoryModal(false);
+          setShowPredefinedSortModal(false);
         }}
       >
         <View style={styles.modalOverlay}>
@@ -1675,12 +1680,7 @@ const InventoryApp = () => {
             <View style={styles.predefinedFilterRow}>
               <TouchableOpacity
                 style={styles.predefinedFilterButton}
-                onPress={() => {
-                  const allCategories = ['All', ...categories];
-                  const currentIndex = allCategories.indexOf(predefinedFilterCategory);
-                  const nextIndex = (currentIndex + 1) % allCategories.length;
-                  setPredefinedFilterCategory(allCategories[nextIndex]);
-                }}
+                onPress={() => setShowPredefinedCategoryModal(true)}
               >
                 <Text style={styles.predefinedFilterText}>
                   📂 {predefinedFilterCategory}
@@ -1689,12 +1689,10 @@ const InventoryApp = () => {
               
               <TouchableOpacity
                 style={styles.predefinedSortButton}
-                onPress={() => {
-                  setPredefinedSortBy(predefinedSortBy === 'name' ? 'category' : 'name');
-                }}
+                onPress={() => setShowPredefinedSortModal(true)}
               >
                 <Text style={styles.predefinedSortText}>
-                  🔄 {predefinedSortBy === 'name' ? 'Name' : 'Category'}
+                  🔄 Sort: {predefinedSortBy === 'name' ? 'Name' : 'Category'}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -1781,10 +1779,120 @@ const InventoryApp = () => {
                 setPredefinedSearchText('');
                 setPredefinedFilterCategory('All');
                 setPredefinedSortBy('name');
+                setShowPredefinedCategoryModal(false);
+                setShowPredefinedSortModal(false);
               }}
             >
               <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
             </TouchableOpacity>
+            
+            {showPredefinedCategoryModal && (
+              <View style={styles.overlayModalContainer}>
+                <View style={styles.overlayModalContent}>
+                  <Text style={styles.overlayModalTitle}>{language.selectCategory}</Text>
+                  
+                  <ScrollView style={styles.overlayScrollView}>
+                    <TouchableOpacity
+                      style={[
+                        styles.overlayOption, 
+                        predefinedFilterCategory === 'All' && styles.overlaySelectedOption
+                      ]}
+                      onPress={() => {
+                        setPredefinedFilterCategory('All');
+                        setShowPredefinedCategoryModal(false);
+                      }}
+                    >
+                      <Text style={[
+                        styles.overlayOptionText, 
+                        predefinedFilterCategory === 'All' && styles.overlaySelectedOptionText
+                      ]}>
+                        {language.all}
+                      </Text>
+                    </TouchableOpacity>
+                    
+                    {categories.map(cat => (
+                      <TouchableOpacity
+                        key={cat}
+                        style={[
+                          styles.overlayOption, 
+                          predefinedFilterCategory === cat && styles.overlaySelectedOption
+                        ]}
+                        onPress={() => {
+                          setPredefinedFilterCategory(cat);
+                          setShowPredefinedCategoryModal(false);
+                        }}
+                      >
+                        <Text style={[
+                          styles.overlayOptionText, 
+                          predefinedFilterCategory === cat && styles.overlaySelectedOptionText
+                        ]}>
+                          {cat}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                  
+                  <TouchableOpacity
+                    style={styles.overlayCloseButton}
+                    onPress={() => setShowPredefinedCategoryModal(false)}
+                  >
+                    <Text style={styles.overlayCloseButtonText}>{language.cancel}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+            {showPredefinedSortModal && (
+              <View style={styles.overlayModalContainer}>
+                <View style={styles.overlayModalContent}>
+                  <Text style={styles.overlayModalTitle}>Select Sort Option</Text>
+                  
+                  <ScrollView style={styles.overlayScrollView}>
+                    <TouchableOpacity
+                      style={[
+                        styles.overlayOption, 
+                        predefinedSortBy === 'name' && styles.overlaySelectedOption
+                      ]}
+                      onPress={() => {
+                        setPredefinedSortBy('name');
+                        setShowPredefinedSortModal(false);
+                      }}
+                    >
+                      <Text style={[
+                        styles.overlayOptionText, 
+                        predefinedSortBy === 'name' && styles.overlaySelectedOptionText
+                      ]}>
+                        Sort by Name
+                      </Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity
+                      style={[
+                        styles.overlayOption, 
+                        predefinedSortBy === 'category' && styles.overlaySelectedOption
+                      ]}
+                      onPress={() => {
+                        setPredefinedSortBy('category');
+                        setShowPredefinedSortModal(false);
+                      }}
+                    >
+                      <Text style={[
+                        styles.overlayOptionText, 
+                        predefinedSortBy === 'category' && styles.overlaySelectedOptionText
+                      ]}>
+                        Sort by Category
+                      </Text>
+                    </TouchableOpacity>
+                  </ScrollView>
+                  
+                  <TouchableOpacity
+                    style={styles.overlayCloseButton}
+                    onPress={() => setShowPredefinedSortModal(false)}
+                  >
+                    <Text style={styles.overlayCloseButtonText}>{language.cancel}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
           </View>
         </View>
       </Modal>
@@ -2887,12 +2995,12 @@ const styles = StyleSheet.create({
   predefinedFilterRow: {
     flexDirection: 'row',
     marginBottom: 16,
-    gap: 8,
+    gap: 6,
   },
   predefinedFilterButton: {
     flex: 1,
     backgroundColor: '#e3f2fd',
-    padding: 12,
+    padding: 10,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
