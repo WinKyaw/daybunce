@@ -46,6 +46,8 @@ const defaultLanguage = {
   selectFromGallery: 'Select from Gallery',
   all: 'All',
   sharePDF: 'Share as PDF',
+  confirmDay: 'Confirm Day',
+  dayConfirmed: 'Day Confirmed',
   sortByName: 'Name',
   sortByPrice: 'Price',
   sortByAmount: 'Total Amount',
@@ -98,6 +100,8 @@ const languageConfigs = {
     selectFromGallery: 'Select from Gallery',
     all: 'All',
     sharePDF: 'Share as PDF',
+    confirmDay: 'Confirm Day',
+    dayConfirmed: 'Day Confirmed',
     sortByName: 'Name',
     sortByPrice: 'Price',
     sortByAmount: 'Total Amount',
@@ -139,6 +143,8 @@ const languageConfigs = {
     selectFromGallery: 'Seleccionar de Galería',
     all: 'Todos',
     sharePDF: 'Compartir como PDF',
+    confirmDay: 'Confirmar Día',
+    dayConfirmed: 'Día Confirmado',
     sortByName: 'Nombre',
     sortByPrice: 'Precio',
     sortByAmount: 'Cantidad Total',
@@ -180,6 +186,8 @@ const languageConfigs = {
     selectFromGallery: 'Sélectionner de la Galerie',
     all: 'Tous',
     sharePDF: 'Partager en PDF',
+    confirmDay: 'Confirmer le Jour',
+    dayConfirmed: 'Jour Confirmé',
     sortByName: 'Nom',
     sortByPrice: 'Prix',
     sortByAmount: 'Montant Total',
@@ -221,6 +229,8 @@ const languageConfigs = {
     selectFromGallery: 'Aus Galerie auswählen',
     all: 'Alle',
     sharePDF: 'Als PDF teilen',
+    confirmDay: 'Tag Bestätigen',
+    dayConfirmed: 'Tag Bestätigt',
     sortByName: 'Name',
     sortByPrice: 'Preis',
     sortByAmount: 'Gesamtbetrag',
@@ -262,6 +272,8 @@ const languageConfigs = {
     selectFromGallery: 'ပုံတိုက်မှရွေးပါ',
     all: 'အားလုံး',
     sharePDF: 'PDF အနေဖြင့်မျှတေပါ',
+    confirmDay: 'နေ့စွဲအတည်ပြုပါ',
+    dayConfirmed: 'နေ့စွဲအတည်ပြုပြီး',
     sortByName: 'အမည်',
     sortByPrice: 'စျေးနှုန်း',
     sortByAmount: 'စုစုပေါင်းပမာဏ',
@@ -357,6 +369,8 @@ const InventoryApp = () => {
   const [showPredefinedUnitTypeModal, setShowPredefinedUnitTypeModal] = useState(false);
   const [showPredefinedSortModal, setShowPredefinedSortModal] = useState(false);
   const [showBulkActionsModal, setShowBulkActionsModal] = useState(false);
+  const [dailyConfirmations, setDailyConfirmations] = useState({});
+  const [isDayConfirmed, setIsDayConfirmed] = useState(false);
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -383,6 +397,7 @@ const InventoryApp = () => {
       await loadData();
       await loadLanguageConfig(); // This might be redundant now
       await loadPredefinedItems();
+      await loadDailyConfirmation(selectedDate);
     };
     
     initializeApp();
@@ -949,11 +964,18 @@ const InventoryApp = () => {
             border-top: 1px solid #eee;
             padding-top: 15px;
           }
+          .confirmed-badge {
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+          }
         </style>
       </head>
       <body>
         <div class="header">
           <div class="title">${language.dailySummary}</div>
+          ${isDayConfirmed ? '<div class="confirmed-badge">✅ Confirmed</div>' : ''}
           <div class="date-info">
             Date: ${dateStr}<br>
             Generated: ${timeStr}
@@ -1041,6 +1063,45 @@ const InventoryApp = () => {
       console.error('PDF Email Error:', error);
       Alert.alert('Error', 'Could not generate PDF for email.');
     }
+  };
+
+  const loadDailyConfirmation = async (date) => {
+    try {
+      const dateKey = formatDate(date);
+      const confirmationData = await AsyncStorage.getItem('daily_confirmations');
+      if (confirmationData) {
+        const confirmations = JSON.parse(confirmationData);
+        setIsDayConfirmed(confirmations[dateKey] || false);
+      } else {
+        setIsDayConfirmed(false);
+      }
+    } catch (error) {
+      console.error('Error loading daily confirmation:', error);
+      setIsDayConfirmed(false);
+    }
+  };
+
+  const saveDailyConfirmation = async (date, isConfirmed) => {
+    try {
+      const dateKey = formatDate(date);
+      const confirmationData = await AsyncStorage.getItem('daily_confirmations');
+      let confirmations = {};
+      
+      if (confirmationData) {
+        confirmations = JSON.parse(confirmationData);
+      }
+      
+      confirmations[dateKey] = isConfirmed;
+      await AsyncStorage.setItem('daily_confirmations', JSON.stringify(confirmations));
+      setIsDayConfirmed(isConfirmed);
+    } catch (error) {
+      console.error('Error saving daily confirmation:', error);
+    }
+  };
+
+  const toggleDayConfirmation = () => {
+    const newConfirmationState = !isDayConfirmed;
+    saveDailyConfirmation(selectedDate, newConfirmationState);
   };
 
   const processBulkAdd = () => {
@@ -1640,6 +1701,28 @@ const InventoryApp = () => {
         />
       )}
 
+      {/* Confirmation Toggle */}
+      <View style={styles.confirmationContainer}>
+        <TouchableOpacity
+          style={[
+            styles.confirmationButton,
+            isDayConfirmed && styles.confirmationButtonConfirmed
+          ]}
+          onPress={toggleDayConfirmation}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.confirmationIcon}>
+            {isDayConfirmed ? '✅' : '⭕'}
+          </Text>
+          <Text style={[
+            styles.confirmationText,
+            isDayConfirmed && styles.confirmationTextConfirmed
+          ]}>
+            {isDayConfirmed ? language.dayConfirmed : language.confirmDay}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       {/* Search */}
       <View style={styles.searchContainer}>
         <TextInput
@@ -1749,7 +1832,15 @@ const InventoryApp = () => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.receiptModalContent}>
-            <Text style={styles.receiptTitle}>{language.dailySummary}</Text>
+            <View style={styles.receiptTitleContainer}>
+              <Text style={styles.receiptTitle}>{language.dailySummary}</Text>
+              {isDayConfirmed && (
+                <View style={styles.confirmedBadge}>
+                  <Text style={styles.confirmedBadgeIcon}>✅</Text>
+                  <Text style={styles.confirmedBadgeText}>Confirmed</Text>
+                </View>
+              )}
+            </View>
             <Text style={styles.receiptDate}>
               {selectedDate.toLocaleDateString()} • {new Date().toLocaleTimeString()}
             </Text>
@@ -4022,6 +4113,63 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  confirmationContainer: {
+    backgroundColor: '#fff',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+    alignItems: 'center',
+  },
+  confirmationButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    backgroundColor: '#f8f9fa',
+    borderWidth: 2,
+    borderColor: '#e0e0e0',
+    minWidth: 160,
+    justifyContent: 'center',
+  },
+  confirmationButtonConfirmed: {
+    backgroundColor: '#e8f5e8',
+    borderColor: '#4caf50',
+  },
+  confirmationIcon: {
+    fontSize: 20,
+    marginRight: 8,
+  },
+  confirmationText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#666',
+  },
+  confirmationTextConfirmed: {
+    color: '#2e7d32',
+  },
+  receiptTitleContainer: {
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  confirmedBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e8f5e8',
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 12,
+    marginTop: 8,
+  },
+  confirmedBadgeIcon: {
+    fontSize: 16,
+    marginRight: 4,
+  },
+  confirmedBadgeText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#2e7d32',
   },
 
 });
