@@ -349,6 +349,7 @@ const InventoryApp = () => {
   const [showPredefinedCategoryModal, setShowPredefinedCategoryModal] = useState(false);
   const [showPredefinedUnitTypeModal, setShowPredefinedUnitTypeModal] = useState(false);
   const [showPredefinedSortModal, setShowPredefinedSortModal] = useState(false);
+  const [showBulkActionsModal, setShowBulkActionsModal] = useState(false);
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -1657,6 +1658,7 @@ const InventoryApp = () => {
           setPredefinedSortBy('name');
           setShowPredefinedCategoryModal(false);
           setShowPredefinedSortModal(false);
+          setShowBulkActionsModal(false);
         }}
       >
         <View style={styles.modalOverlay}>
@@ -1723,53 +1725,11 @@ const InventoryApp = () => {
               Showing {getFilteredPredefinedItems().length} of {predefinedItems.length} items
             </Text>
 
-            <View style={styles.importExportButtonRow}>
-              <TouchableOpacity
-                style={styles.exportButton}
-                onPress={exportPredefinedItems}
-              >
-                <Text style={styles.exportButtonText}>Export Items</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.importButton}
-                onPress={importPredefinedItems}
-              >
-                <Text style={styles.importButtonText}>Import JSON</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.importExportButtonRow}>
-              <TouchableOpacity
-                style={styles.csvImportButton}
-                onPress={importFromCSV}
-              >
-                <Text style={styles.csvImportButtonText}>Import CSV</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.templateButton}
-                onPress={downloadCSVTemplate}
-              >
-                <Text style={styles.templateButtonText}>CSV Template</Text>
-              </TouchableOpacity>
-            </View>
-
             <TouchableOpacity
-              style={styles.bulkAddOpenButton}
-              onPress={() => {
-                setShowPredefinedItemsModal(false);
-                setShowBulkAddModal(true);
-              }}
+              style={styles.bulkActionsButton}
+              onPress={() => setShowBulkActionsModal(true)}
             >
-              <Text style={styles.bulkAddOpenButtonText}>Bulk Add Items</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.deleteAllButton}
-              onPress={confirmDeleteAllItems}
-            >
-              <Text style={styles.deleteAllButtonText}>Delete All Items</Text>
+              <Text style={styles.bulkActionsButtonText}>⚙️ Bulk Actions</Text>
             </TouchableOpacity>
             
             <TouchableOpacity
@@ -1781,6 +1741,7 @@ const InventoryApp = () => {
                 setPredefinedSortBy('name');
                 setShowPredefinedCategoryModal(false);
                 setShowPredefinedSortModal(false);
+                setShowBulkActionsModal(false);
               }}
             >
               <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
@@ -1887,6 +1848,131 @@ const InventoryApp = () => {
                   <TouchableOpacity
                     style={styles.overlayCloseButton}
                     onPress={() => setShowPredefinedSortModal(false)}
+                  >
+                    <Text style={styles.overlayCloseButtonText}>{language.cancel}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+            {showBulkActionsModal && (
+              <View style={styles.overlayModalContainer}>
+                <View style={styles.bulkActionsModalContent}>
+                  <Text style={styles.overlayModalTitle}>Bulk Actions</Text>
+                  <Text style={styles.bulkActionsSubtitle}>
+                    Manage your predefined items collection
+                  </Text>
+                  
+                  <ScrollView style={styles.bulkActionsScrollView}>
+
+                    {/* Bulk Add Items */}
+                    <TouchableOpacity
+                      style={styles.bulkActionOption}
+                      onPress={() => {
+                        setShowBulkActionsModal(false);
+                        setShowPredefinedItemsModal(false);
+                        setShowBulkAddModal(true);
+                      }}
+                    >
+                      <Text style={styles.bulkActionIcon}>➕</Text>
+                      <View style={styles.bulkActionContent}>
+                        <Text style={styles.bulkActionTitle}>Bulk Add Items</Text>
+                        <Text style={styles.bulkActionDescription}>
+                          Add multiple items at once
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    
+                    {/* Export Items */}
+                    {/* <TouchableOpacity
+                      style={styles.bulkActionOption}
+                      onPress={() => {
+                        setShowBulkActionsModal(false);
+                        exportPredefinedItems();
+                      }}
+                    >
+                      <Text style={styles.bulkActionIcon}>📤</Text>
+                      <View style={styles.bulkActionContent}>
+                        <Text style={styles.bulkActionTitle}>Export Items</Text>
+                        <Text style={styles.bulkActionDescription}>
+                          Save all items to JSON file
+                        </Text>
+                      </View>
+                    </TouchableOpacity> */}
+
+                    {/* Import JSON */}
+                    {/* <TouchableOpacity
+                      style={styles.bulkActionOption}
+                      onPress={() => {
+                        setShowBulkActionsModal(false);
+                        importPredefinedItems();
+                      }}
+                    >
+                      <Text style={styles.bulkActionIcon}>📥</Text>
+                      <View style={styles.bulkActionContent}>
+                        <Text style={styles.bulkActionTitle}>Import JSON</Text>
+                        <Text style={styles.bulkActionDescription}>
+                          Load items from JSON file
+                        </Text>
+                      </View>
+                    </TouchableOpacity> */}
+
+                    {/* Import CSV */}
+                    <TouchableOpacity
+                      style={styles.bulkActionOption}
+                      onPress={() => {
+                        setShowBulkActionsModal(false);
+                        importFromCSV();
+                      }}
+                    >
+                      <Text style={styles.bulkActionIcon}>📊</Text>
+                      <View style={styles.bulkActionContent}>
+                        <Text style={styles.bulkActionTitle}>Import CSV</Text>
+                        <Text style={styles.bulkActionDescription}>
+                          Load items from CSV file
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+
+                    {/* CSV Template */}
+                    {/* <TouchableOpacity
+                      style={styles.bulkActionOption}
+                      onPress={() => {
+                        setShowBulkActionsModal(false);
+                        downloadCSVTemplate();
+                      }}
+                    >
+                      <Text style={styles.bulkActionIcon}>📋</Text>
+                      <View style={styles.bulkActionContent}>
+                        <Text style={styles.bulkActionTitle}>CSV Template</Text>
+                        <Text style={styles.bulkActionDescription}>
+                          Download CSV template file
+                        </Text>
+                      </View>
+                    </TouchableOpacity> */}
+
+                    {/* Delete All Items */}
+                    <TouchableOpacity
+                      style={[styles.bulkActionOption, styles.dangerousAction]}
+                      onPress={() => {
+                        setShowBulkActionsModal(false);
+                        confirmDeleteAllItems();
+                      }}
+                    >
+                      <Text style={styles.bulkActionIcon}>🗑️</Text>
+                      <View style={styles.bulkActionContent}>
+                        <Text style={[styles.bulkActionTitle, styles.dangerousActionText]}>
+                          Delete All Items
+                        </Text>
+                        <Text style={[styles.bulkActionDescription, styles.dangerousActionText]}>
+                          Remove all predefined items
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </ScrollView>
+                  
+                  <TouchableOpacity
+                    style={styles.overlayCloseButton}
+                    onPress={() => setShowBulkActionsModal(false)}
                   >
                     <Text style={styles.overlayCloseButtonText}>{language.cancel}</Text>
                   </TouchableOpacity>
@@ -3623,6 +3709,72 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#1976d2',
     fontWeight: 'bold',
+  },
+  bulkActionsButton: {
+    backgroundColor: '#6f42c1',
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  bulkActionsButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  bulkActionsModalContent: {
+    width: '85%',
+    maxWidth: 320,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 20,
+    maxHeight: '70%',
+  },
+  bulkActionsSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  bulkActionsScrollView: {
+    maxHeight: 400,
+    marginBottom: 16,
+  },
+  bulkActionOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 8,
+    backgroundColor: '#f8f9fa',
+    borderWidth: 1,
+    borderColor: '#e9ecef',
+  },
+  bulkActionIcon: {
+    fontSize: 24,
+    marginRight: 16,
+    width: 32,
+    textAlign: 'center',
+  },
+  bulkActionContent: {
+    flex: 1,
+  },
+  bulkActionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 2,
+  },
+  bulkActionDescription: {
+    fontSize: 13,
+    color: '#666',
+  },
+  dangerousAction: {
+    borderColor: '#dc3545',
+    backgroundColor: '#fff5f5',
+  },
+  dangerousActionText: {
+    color: '#dc3545',
   },
 
 });
