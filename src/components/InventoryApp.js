@@ -21,7 +21,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { PanResponder, Animated, Dimensions } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 
 // Language Configuration
@@ -774,6 +774,37 @@ const InventoryApp = () => {
     } catch (error) {
       Alert.alert('Export Error', 'Could not export predefined items');
       console.error('Export error:', error);
+    }
+  };
+
+    // Export predefined items to CSV file
+  const exportPredefinedItemsCSV = async () => {
+    try {
+      // Create CSV header
+      let csvContent = 'name,category,unitType\n';
+      
+      // Add each item as a CSV row
+      predefinedItems.forEach(item => {
+        // Escape commas and quotes in the data
+        const name = `"${item.name.replace(/"/g, '""')}"`;
+        const category = `"${item.category.replace(/"/g, '""')}"`;
+        const unitType = `"${item.unitType.replace(/"/g, '""')}"`;
+        csvContent += `${name},${category},${unitType}\n`;
+      });
+      
+      const filename = `predefined-items-${new Date().toISOString().split('T')[0]}.csv`;
+      const fileUri = FileSystem.documentDirectory + filename;
+      
+      await FileSystem.writeAsStringAsync(fileUri, csvContent);
+      
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(fileUri);
+      } else {
+        Alert.alert('Export Complete', `CSV file saved to: ${filename}`);
+      }
+    } catch (error) {
+      Alert.alert('Export Error', 'Could not export predefined items to CSV');
+      console.error('CSV Export error:', error);
     }
   };
 
@@ -2196,7 +2227,7 @@ const InventoryApp = () => {
                     </TouchableOpacity>
                     
                     {/* Export Items */}
-                    {/* <TouchableOpacity
+                    <TouchableOpacity
                       style={styles.bulkActionOption}
                       onPress={() => {
                         setShowBulkActionsModal(false);
@@ -2210,7 +2241,7 @@ const InventoryApp = () => {
                           Save all items to JSON file
                         </Text>
                       </View>
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
 
                     {/* Import JSON */}
                     {/* <TouchableOpacity
@@ -2228,6 +2259,23 @@ const InventoryApp = () => {
                         </Text>
                       </View>
                     </TouchableOpacity> */}
+
+                    {/* Export CSV */}
+                      <TouchableOpacity
+                        style={styles.bulkActionOption}
+                        onPress={() => {
+                          setShowBulkActionsModal(false);
+                          exportPredefinedItemsCSV();
+                        }}
+                      >
+                        <Text style={styles.bulkActionIcon}>📊</Text>
+                        <View style={styles.bulkActionContent}>
+                          <Text style={styles.bulkActionTitle}>Export as CSV</Text>
+                          <Text style={styles.bulkActionDescription}>
+                            Save all items to CSV file
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
 
                     {/* Import CSV */}
                     <TouchableOpacity

@@ -24,7 +24,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -42,6 +46,11 @@
           "photosPermission": "Allow Inventory App to access your photos to select images for processing."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e9b5bba6-4d30-4e79-b977-ec5f7953a5aa"
+      }
+    }
   }
 }
