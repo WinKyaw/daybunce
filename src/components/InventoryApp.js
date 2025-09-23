@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -371,6 +371,9 @@ const InventoryApp = () => {
   const [showBulkActionsModal, setShowBulkActionsModal] = useState(false);
   const [dailyConfirmations, setDailyConfirmations] = useState({});
   const [isDayConfirmed, setIsDayConfirmed] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [debouncedSearchText, setDebouncedSearchText] = useState('');
+  const ITEMS_PER_PAGE = 20;
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -383,6 +386,14 @@ const InventoryApp = () => {
     category: defaultCategories[4], // Default to "Other"
     unitType: defaultUnitTypes[4], // Default to "pcs"
   });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchText(predefinedSearchText);
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, [predefinedSearchText]);
 
   // Calculate total amount in real-time
   const calculateTotal = () => {
@@ -573,13 +584,13 @@ const InventoryApp = () => {
   };
 
   const openAddModal = () => {
-    setShowItemTypeModal(true);
+    setShowPredefinedItemsModal(true);
   };
 
   const handleItemTypeSelection = (isCustom) => {
     setIsCustomItem(isCustom);
-    setShowItemTypeModal(false);
     if (isCustom) {
+      setShowPredefinedItemsModal(false);
       setShowAddModal(true);
     } else {
       setShowPredefinedItemsModal(true);
@@ -642,7 +653,7 @@ const InventoryApp = () => {
     ).toFixed(2);
   };
 
-  const getFilteredPredefinedItems = () => {
+  const getFilteredPredefinedItems = useMemo(() => {
     let filtered = predefinedItems.filter(item =>
       item.name.toLowerCase().includes(predefinedSearchText.toLowerCase()) &&
       (predefinedFilterCategory === 'All' || item.category === predefinedFilterCategory)
@@ -660,7 +671,33 @@ const InventoryApp = () => {
     });
 
     return filtered;
-  };
+  }, [predefinedItems, predefinedSearchText, predefinedFilterCategory, predefinedSortBy]);
+
+  // const getFilteredPredefinedItems = () => {
+  //   let filtered = predefinedItems.filter(item =>
+  //     item.name.toLowerCase().includes(predefinedSearchText.toLowerCase()) &&
+  //     (predefinedFilterCategory === 'All' || item.category === predefinedFilterCategory)
+  //   );
+
+  //   filtered.sort((a, b) => {
+  //     switch (predefinedSortBy) {
+  //       case 'name':
+  //         return a.name.localeCompare(b.name);
+  //       case 'category':
+  //         return a.category.localeCompare(b.category);
+  //       default:
+  //         return 0;
+  //     }
+  //   });
+
+  //   return filtered;
+  // };
+
+ const paginatedItems = useMemo(() => {
+    const filtered = getFilteredPredefinedItems; // Remove the parentheses here
+    const startIndex = currentPage * ITEMS_PER_PAGE;
+    return filtered.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [getFilteredPredefinedItems, currentPage]);
 
   const importFromCSV = async () => {
     try {
@@ -1328,14 +1365,22 @@ const InventoryApp = () => {
       console.error('Error updating app title:', error);
     }
   };
-  const isItemUnique = (itemToCheck, existingItems) => {
-    return !existingItems.some(existingItem => 
-      existingItem.name.toLowerCase() === itemToCheck.name.toLowerCase() &&
-      existingItem.category === itemToCheck.category &&
-      existingItem.unitType === itemToCheck.unitType
-    );
-  };
+  // const isItemUnique = (itemToCheck, existingItems) => {
+  //   return !existingItems.some(existingItem => 
+  //     existingItem.name.toLowerCase() === itemToCheck.name.toLowerCase() &&
+  //     existingItem.category === itemToCheck.category &&
+  //     existingItem.unitType === itemToCheck.unitType
+  //   );
+  // };
 
+  const isItemUnique = useCallback((itemToCheck, existingItems) => {
+    const key = `${itemToCheck.name.toLowerCase()}-${itemToCheck.category}-${itemToCheck.unitType}`;
+    const existingKeys = new Set(existingItems.map(item => 
+      `${item.name.toLowerCase()}-${item.category}-${item.unitType}`
+    ));
+    return !existingKeys.has(key);
+  }, []);
+  
   const [activeSwipeId, setActiveSwipeId] = useState(null);
 
 // Reset all swipes when modal closes
@@ -1345,11 +1390,11 @@ const InventoryApp = () => {
     }
   }, [showPredefinedItemsModal]);
 
-  const SwipeableItem = ({ item, onSelect, onDelete }) => {
+  const SwipeableItem = React.memo(({ item, onSelect, onDelete }) => {
     const [translateX] = useState(new Animated.Value(0));
     const [isDeleteVisible, setIsDeleteVisible] = useState(false);
 
-    const panResponder = PanResponder.create({
+    const panResponder = useMemo(() => PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => {
         return Math.abs(gestureState.dx) > 10;
@@ -1381,7 +1426,7 @@ const InventoryApp = () => {
           resetSwipe();
         }
       },
-    });
+    }), []);
 
     const resetSwipe = () => {
       setIsDeleteVisible(false);
@@ -1458,7 +1503,7 @@ const InventoryApp = () => {
         </Animated.View>
       </View>
     );
-  };
+  });
 
   // Delete all predefined items
   const deleteAllPredefinedItems = async () => {
@@ -2014,6 +2059,16 @@ const InventoryApp = () => {
             <Text style={styles.swipeInstructions}>
               Swipe left on any item to delete
             </Text>
+
+            {/* Create Custom Item Button */}
+            <TouchableOpacity
+              style={styles.createCustomItemButton}
+              onPress={() => handleItemTypeSelection(true)}
+            >
+              <Text style={styles.createCustomItemIcon}>➕</Text>
+              <Text style={styles.createCustomItemText}>Create Custom Item</Text>
+              <Text style={styles.createCustomItemArrow}>›</Text>
+            </TouchableOpacity>
             
             <TextInput
               style={styles.predefinedSearchInput}
@@ -2043,7 +2098,7 @@ const InventoryApp = () => {
               </TouchableOpacity>
             </View>
             
-            <ScrollView style={styles.predefinedItemsList}>
+            {/* <ScrollView style={styles.predefinedItemsList}>
               {getFilteredPredefinedItems().length === 0 ? (
                 <View style={styles.noPredefinedItemsContainer}>
                   <Text style={styles.noPredefinedItemsText}>
@@ -2063,10 +2118,54 @@ const InventoryApp = () => {
                   />
                 ))
               )}
-            </ScrollView>
+            </ScrollView> */}
             
+            <ScrollView style={styles.predefinedItemsList}>
+              {paginatedItems.length === 0 ? (
+                <View style={styles.noPredefinedItemsContainer}>
+                  <Text style={styles.noPredefinedItemsText}>
+                    No items found matching your search
+                  </Text>
+                </View>
+              ) : (
+                paginatedItems.map(item => (
+                  <SwipeableItem
+                    key={item.id}
+                    item={item}
+                    onSelect={handlePredefinedItemSelection}
+                    onDelete={confirmDeleteItem}
+                    isActive={activeSwipeId === item.id}
+                    onSwipeStart={() => setActiveSwipeId(item.id)}
+                    onSwipeReset={() => setActiveSwipeId(null)}
+                  />
+                ))
+              )}
+              
+              {/* Pagination controls */}
+              <View style={styles.paginationContainer}>
+                <TouchableOpacity
+                  disabled={currentPage === 0}
+                  onPress={() => setCurrentPage(p => p - 1)}
+                  style={[styles.paginationButton, currentPage === 0 && styles.disabled]}
+                >
+                  <Text>Previous</Text>
+                </TouchableOpacity>
+                
+                <Text style={styles.pageInfo}>
+                  Page {currentPage + 1} of {Math.ceil(getFilteredPredefinedItems.length / ITEMS_PER_PAGE)}
+                </Text>
+                
+                <TouchableOpacity
+                  disabled={currentPage >= Math.ceil(getFilteredPredefinedItems.length / ITEMS_PER_PAGE) - 1}
+                  onPress={() => setCurrentPage(p => p + 1)}
+                  style={[styles.paginationButton, currentPage >= Math.ceil(getFilteredPredefinedItems.length / ITEMS_PER_PAGE) - 1 && styles.disabled]}
+                >
+                  <Text>Next</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
             <Text style={styles.resultsCount}>
-              Showing {getFilteredPredefinedItems().length} of {predefinedItems.length} items
+              Showing {getFilteredPredefinedItems.length} of {predefinedItems.length} items
             </Text>
 
             <TouchableOpacity
@@ -2227,7 +2326,7 @@ const InventoryApp = () => {
                     </TouchableOpacity>
                     
                     {/* Export Items */}
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                       style={styles.bulkActionOption}
                       onPress={() => {
                         setShowBulkActionsModal(false);
@@ -2241,7 +2340,7 @@ const InventoryApp = () => {
                           Save all items to JSON file
                         </Text>
                       </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     {/* Import JSON */}
                     {/* <TouchableOpacity
@@ -3835,6 +3934,31 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontStyle: 'italic',
   },
+  createCustomItemButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e8f5e8',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#4caf50',
+  },
+  createCustomItemIcon: {
+    fontSize: 20,
+    marginRight: 12,
+    color: '#2e7d32',
+  },
+  createCustomItemText: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#2e7d32',
+  },
+  createCustomItemArrow: {
+    fontSize: 20,
+    color: '#2e7d32',
+  },
   deleteButtonTouchable: {
     flex: 1,
     justifyContent: 'center',
@@ -4219,7 +4343,28 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#2e7d32',
   },
-
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#e0e0e0',
+  },
+  paginationButton: {
+    padding: 12,
+    backgroundColor: '#007bff',
+    borderRadius: 6,
+    minWidth: 80,
+    alignItems: 'center',
+  },
+  disabled: {
+    backgroundColor: '#ccc',
+  },
+  pageInfo: {
+    fontSize: 14,
+    color: '#666',
+  },
 });
 
 export default InventoryApp;
