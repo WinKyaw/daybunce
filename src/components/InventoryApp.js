@@ -1763,6 +1763,22 @@ const InventoryApp = () => {
         >
           <Text style={styles.dateText}>📅 {selectedDate.toDateString()}</Text>
         </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={[
+            styles.confirmDayToggle,
+            isDayConfirmed && styles.confirmDayToggleActive
+          ]}
+          onPress={toggleDayConfirmation}
+          activeOpacity={0.7}
+        >
+          <Text style={[
+            styles.confirmDayToggleText,
+            isDayConfirmed && styles.confirmDayToggleTextActive
+          ]}>
+            {isDayConfirmed ? '✅' : '⭕'} {isDayConfirmed ? language.dayConfirmed : language.confirmDay}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {showDatePicker && (
@@ -1778,7 +1794,7 @@ const InventoryApp = () => {
       )}
 
       {/* Confirmation Toggle */}
-      <View style={styles.confirmationContainer}>
+      {/* <View style={styles.confirmationContainer}>
         <TouchableOpacity
           style={[
             styles.confirmationButton,
@@ -1797,7 +1813,7 @@ const InventoryApp = () => {
             {isDayConfirmed ? language.dayConfirmed : language.confirmDay}
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {/* Search */}
       <View style={styles.searchContainer}>
@@ -2997,12 +3013,39 @@ const styles = StyleSheet.create({
     padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   dateButton: {
-    alignSelf: 'center',
     padding: 8,
     backgroundColor: '#e3f2fd',
     borderRadius: 8,
+    flex: 1,
+    marginRight: 12,
+    alignItems: 'center',
+  },
+  confirmDayToggle: {
+    padding: 8,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#e0e0e0',
+    flex: 1,
+    alignItems: 'center',
+  },
+  confirmDayToggleActive: {
+    backgroundColor: '#e8f5e8',
+    borderColor: '#4caf50',
+  },
+  confirmDayToggleText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#666',
+    textAlign: 'center',
+  },
+  confirmDayToggleTextActive: {
+    color: '#2e7d32',
   },
   dateText: {
     fontSize: 16,
@@ -4285,41 +4328,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
-  },
-  confirmationContainer: {
-    backgroundColor: '#fff',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-    alignItems: 'center',
-  },
-  confirmationButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 25,
-    backgroundColor: '#f8f9fa',
-    borderWidth: 2,
-    borderColor: '#e0e0e0',
-    minWidth: 160,
-    justifyContent: 'center',
-  },
-  confirmationButtonConfirmed: {
-    backgroundColor: '#e8f5e8',
-    borderColor: '#4caf50',
-  },
-  confirmationIcon: {
-    fontSize: 20,
-    marginRight: 8,
-  },
-  confirmationText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#666',
-  },
-  confirmationTextConfirmed: {
-    color: '#2e7d32',
   },
   receiptTitleContainer: {
     alignItems: 'center',
