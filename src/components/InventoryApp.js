@@ -46,8 +46,8 @@ const defaultLanguage = {
   selectFromGallery: 'Select from Gallery',
   all: 'All',
   sharePDF: 'Share as PDF',
-  confirmDay: 'Confirm Day',
-  dayConfirmed: 'Day Confirmed',
+  confirmDay: 'confirm',
+  dayConfirmed: 'Confirmed',
   sortByName: 'Name',
   sortByPrice: 'Price',
   sortByAmount: 'Total Amount',
@@ -100,8 +100,8 @@ const languageConfigs = {
     selectFromGallery: 'Select from Gallery',
     all: 'All',
     sharePDF: 'Share as PDF',
-    confirmDay: 'Confirm Day',
-    dayConfirmed: 'Day Confirmed',
+    confirmDay: 'Confirm',
+    dayConfirmed: 'Confirmed',
     sortByName: 'Name',
     sortByPrice: 'Price',
     sortByAmount: 'Total Amount',
@@ -1764,21 +1764,24 @@ const InventoryApp = () => {
           <Text style={styles.dateText}>📅 {selectedDate.toDateString()}</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity
-          style={[
-            styles.confirmDayToggle,
-            isDayConfirmed && styles.confirmDayToggleActive
-          ]}
-          onPress={toggleDayConfirmation}
-          activeOpacity={0.7}
-        >
-          <Text style={[
-            styles.confirmDayToggleText,
-            isDayConfirmed && styles.confirmDayToggleTextActive
-          ]}>
-            {isDayConfirmed ? '✅' : '⭕'} {isDayConfirmed ? language.dayConfirmed : language.confirmDay}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.confirmDayContainer}>
+          {/* <Text style={styles.confirmDayLabel}>
+            {isDayConfirmed ? language.dayConfirmed : language.confirmDay}
+          </Text> */}
+          <TouchableOpacity
+            style={[
+              styles.materialSwitch,
+              isDayConfirmed && styles.materialSwitchActive
+            ]}
+            onPress={toggleDayConfirmation}
+            activeOpacity={0.8}
+          >
+            <View style={[
+              styles.materialSwitchThumb,
+              isDayConfirmed && styles.materialSwitchThumbActive
+            ]} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {showDatePicker && (
@@ -1792,6 +1795,18 @@ const InventoryApp = () => {
           }}
         />
       )}
+
+      {/* {showDatePicker && (
+        <DateTimePicker
+          value={selectedDate}
+          mode="date"
+          display="default"
+          onChange={(event, date) => {
+            setShowDatePicker(false);
+            if (date) setSelectedDate(date);
+          }}
+        />
+      )} */}
 
       {/* Confirmation Toggle */}
       {/* <View style={styles.confirmationContainer}>
@@ -1823,22 +1838,11 @@ const InventoryApp = () => {
           value={searchText}
           onChangeText={setSearchText}
         />
-      </View>
-
-      {/* Filter and Sort Buttons */}
-      <View style={styles.filterSortContainer}>
         <TouchableOpacity
           style={styles.filterButton}
           onPress={() => setShowFilterModal(true)}
         >
-          <Text style={styles.filterButtonText}>{language.filters} ☰</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-          style={styles.sortButton}
-          onPress={() => setShowSortModal(true)}
-        >
-          <Text style={styles.sortButtonText}>{language.sort} ↕</Text>
+          <Text style={styles.filterIcon}>☰</Text>
         </TouchableOpacity>
       </View>
 
@@ -1976,7 +1980,7 @@ const InventoryApp = () => {
               </View>
             </View>
             
-            <View style={styles.receiptButtonRow}>
+            {/* <View style={styles.receiptButtonRow}>
               <TouchableOpacity
                 style={styles.shareButton}
                 onPress={shareViaEmailPDF}
@@ -1990,7 +1994,7 @@ const InventoryApp = () => {
               >
                 <Text style={styles.shareButtonText}>💬 {language.shareViaText}</Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
 
             <TouchableOpacity
               style={styles.pdfShareButton}
@@ -1999,12 +2003,12 @@ const InventoryApp = () => {
               <Text style={styles.pdfShareButtonText}>📄 {language.sharePDF}</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.genericShareButton}
               onPress={shareReceipt}
             >
               <Text style={styles.genericShareButtonText}>📤 Share</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             
             <TouchableOpacity
               style={styles.closeReceiptButton}
@@ -2663,44 +2667,89 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => setShowFilterModal(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.selectionModalContent}>
-            <Text style={styles.selectionModalTitle}>{language.selectCategory}</Text>
-            
-            <ScrollView>
-              <TouchableOpacity
-                style={[styles.selectionOption, filterCategory === 'All' && styles.selectedOption]}
-                onPress={() => {
-                  setFilterCategory('All');
-                  setShowFilterModal(false);
-                }}
-              >
-                <Text style={[styles.selectionOptionText, filterCategory === 'All' && styles.selectedOptionText]}>
-                  {language.all}
-                </Text>
+        <View style={styles.filterModalOverlay}>
+          <View style={styles.filterModalContent}>
+            {/* Header */}
+            <View style={styles.filterModalHeader}>
+              <View style={styles.filterHeaderLeft}>
+                <Text style={styles.filterIcon}>🔍</Text>
+                <Text style={styles.filterTitle}>FILTER</Text>
+              </View>
+              <TouchableOpacity onPress={() => setShowFilterModal(false)}>
+                <Text style={styles.closeIcon}>✕</Text>
               </TouchableOpacity>
+            </View>
+            
+            {/* Category Section */}
+            <View style={styles.filterSection}>
+              <View style={styles.filterSectionHeader}>
+                <Text style={styles.filterSectionTitle}>CATEGORY</Text>
+                <View style={styles.clearButton}>
+                  <Text style={styles.clearButtonText}>Clear</Text>
+                </View>
+              </View>
               
-              {categories.map(cat => (
+              <View style={styles.categoryChips}>
                 <TouchableOpacity
-                  key={cat}
-                  style={[styles.selectionOption, filterCategory === cat && styles.selectedOption]}
-                  onPress={() => {
-                    setFilterCategory(cat);
-                    setShowFilterModal(false);
-                  }}
+                  style={[styles.categoryChip, filterCategory === 'All' && styles.selectedCategoryChip]}
+                  onPress={() => setFilterCategory('All')}
                 >
-                  <Text style={[styles.selectionOptionText, filterCategory === cat && styles.selectedOptionText]}>
-                    {cat}
+                  <Text style={[styles.categoryChipText, filterCategory === 'All' && styles.selectedCategoryChipText]}>
+                    {language.all}
                   </Text>
                 </TouchableOpacity>
-              ))}
-            </ScrollView>
+                
+                {categories.map(cat => (
+                  <TouchableOpacity
+                    key={cat}
+                    style={[styles.categoryChip, filterCategory === cat && styles.selectedCategoryChip]}
+                    onPress={() => setFilterCategory(cat)}
+                  >
+                    <Text style={[styles.categoryChipText, filterCategory === cat && styles.selectedCategoryChipText]}>
+                      {cat}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
             
+            {/* Sort Section */}
+            <View style={styles.filterSection}>
+              <View style={styles.filterSectionHeader}>
+                <Text style={styles.filterSectionTitle}>SORT BY</Text>
+              </View>
+              
+              <TouchableOpacity 
+                style={styles.sortOption}
+                onPress={() => setSortBy('name')}
+              >
+                <Text style={styles.sortOptionText}>Name (A-Z)</Text>
+                <View style={[styles.sortToggle, sortBy === 'name' && styles.activeSortToggle]} />
+              </TouchableOpacity>
+              
+              <TouchableOpacity 
+                style={styles.sortOption}
+                onPress={() => setSortBy('price')}
+              >
+                <Text style={styles.sortOptionText}>Price (High to Low)</Text>
+                <View style={[styles.sortToggle, sortBy === 'price' && styles.activeSortToggle]} />
+              </TouchableOpacity>
+              
+              <TouchableOpacity 
+                style={styles.sortOption}
+                onPress={() => setSortBy('amount')}
+              >
+                <Text style={styles.sortOptionText}>Total Amount</Text>
+                <View style={[styles.sortToggle, sortBy === 'amount' && styles.activeSortToggle]} />
+              </TouchableOpacity>
+            </View>
+            
+            {/* Apply Button */}
             <TouchableOpacity
-              style={styles.closeModalButton}
+              style={styles.applyButton}
               onPress={() => setShowFilterModal(false)}
             >
-              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
+              <Text style={styles.applyButtonText}>Apply</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -3025,28 +3074,28 @@ const styles = StyleSheet.create({
     marginRight: 12,
     alignItems: 'center',
   },
-  confirmDayToggle: {
-    padding: 8,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: '#e0e0e0',
-    flex: 1,
-    alignItems: 'center',
-  },
-  confirmDayToggleActive: {
-    backgroundColor: '#e8f5e8',
-    borderColor: '#4caf50',
-  },
-  confirmDayToggleText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
-    textAlign: 'center',
-  },
-  confirmDayToggleTextActive: {
-    color: '#2e7d32',
-  },
+  // confirmDayToggle: {
+  //   padding: 8,
+  //   backgroundColor: '#f8f9fa',
+  //   borderRadius: 8,
+  //   borderWidth: 2,
+  //   borderColor: '#e0e0e0',
+  //   flex: 1,
+  //   alignItems: 'center',
+  // },
+  // confirmDayToggleActive: {
+  //   backgroundColor: '#e8f5e8',
+  //   borderColor: '#4caf50',
+  // },
+  // confirmDayToggleText: {
+  //   fontSize: 14,
+  //   fontWeight: '600',
+  //   color: '#666',
+  //   textAlign: 'center',
+  // },
+  // confirmDayToggleTextActive: {
+  //   color: '#2e7d32',
+  // },
   dateText: {
     fontSize: 16,
     color: '#1976d2',
@@ -3056,6 +3105,8 @@ const styles = StyleSheet.create({
     padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   searchInput: {
     borderWidth: 1,
@@ -3063,38 +3114,22 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-  },
-  filterSortContainer: {
-    backgroundColor: '#2c3e50',
-    flexDirection: 'row',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    flex: 1,
+    marginRight: 12,
   },
   filterButton: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    padding: 12,
-    borderRadius: 8,
-    marginRight: 8,
+    backgroundColor: '#5A7FFF',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  sortButton: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    padding: 12,
-    borderRadius: 8,
-    marginLeft: 8,
-    alignItems: 'center',
-  },
-  filterButtonText: {
+  filterIcon: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  sortButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: 'bold',
+    lineHeight: 18,
   },
   itemsList: {
     flex: 1,
@@ -4372,6 +4407,203 @@ const styles = StyleSheet.create({
   pageInfo: {
     fontSize: 14,
     color: '#666',
+  },
+  confirmDayContainer: {
+    alignItems: 'center',
+    flex: 0.5,
+    // position: 'absolute',
+    left: '10%',
+  },
+  confirmDayLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#666',
+    marginBottom: 6,
+    textAlign: 'center',
+  },
+  materialSwitch: {
+    width: 44,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#e0e0e0',
+    padding: 2,
+    justifyContent: 'center',
+  },
+  materialSwitchActive: {
+    backgroundColor: '#4caf50',
+  },
+  materialSwitchThumb: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  materialSwitchThumbActive: {
+    transform: [{ translateX: 20 }],
+  },
+  iconButton: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'center',
+  },
+  dropdownOverlay: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  filterDropdown: {
+    position: 'absolute',
+    top: 150,
+    right: 20,
+    backgroundColor: '#5A7FFF',
+    borderRadius: 20,
+    minWidth: 120,
+    paddingVertical: 8,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  filterDropdownItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  selectedFilterItem: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  filterDropdownText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  selectedFilterText: {
+    fontWeight: 'bold',
+  },
+  filterModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  filterModalContent: {
+    width: '85%',
+    maxWidth: 320,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    maxHeight: '70%',
+  },
+  filterModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  filterHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  filterTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#5A7FFF',
+  },
+  closeIcon: {
+    fontSize: 18,
+    color: '#999',
+    fontWeight: 'bold',
+  },
+  filterSection: {
+    marginBottom: 24,
+  },
+  filterSectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  filterSectionTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#5A7FFF',
+    letterSpacing: 0.5,
+  },
+  clearButton: {
+    backgroundColor: '#E8E8E8',
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  clearButtonText: {
+    fontSize: 12,
+    color: '#666',
+  },
+  categoryChips: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  categoryChip: {
+    backgroundColor: '#E8E8E8',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 16,
+  },
+  selectedCategoryChip: {
+    backgroundColor: '#5A7FFF',
+  },
+  categoryChipText: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '500',
+  },
+  selectedCategoryChipText: {
+    color: '#fff',
+  },
+  sortOption: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#E8E8E8',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  sortOptionText: {
+    fontSize: 14,
+    color: '#666',
+  },
+  sortToggle: {
+    width: 20,
+    height: 12,
+    backgroundColor: '#DDD',
+    borderRadius: 6,
+  },
+  addIcon: {
+    fontSize: 20,
+    color: '#999',
+    fontWeight: 'bold',
+  },
+  applyButton: {
+    backgroundColor: '#C8D4FF',
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  applyButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#5A7FFF',
+  },
+  activeSortToggle: {
+    backgroundColor: '#5A7FFF',
   },
 });
 
