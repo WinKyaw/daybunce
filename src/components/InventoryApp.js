@@ -422,11 +422,17 @@ const InventoryApp = () => {
 
   useEffect(() => {
     if (!showPredefinedItemsModal) {
+      // Reset all modal states when closed
       setLoadedItemsCount(20);
       setPredefinedSearchText('');
+      setDebouncedSearchText(''); // Also reset debounced search
       setPredefinedFilterCategory('All');
       setPredefinedSortBy('name');
       setActiveSwipeId(null);
+      
+      // Reset any sub-modals
+      setShowPredefinedCategoryModal(false);
+      setShowBulkActionsModal(false);
     }
   }, [showPredefinedItemsModal]);
 
@@ -2114,11 +2120,13 @@ const InventoryApp = () => {
         onRequestClose={() => {
           setShowPredefinedItemsModal(false);
           setPredefinedSearchText('');
+          setDebouncedSearchText('');
           setPredefinedFilterCategory('All');
           setPredefinedSortBy('name');
           setShowPredefinedCategoryModal(false);
           setShowBulkActionsModal(false);
           setLoadedItemsCount(20);
+          setActiveSwipeId(null);
         }}
       >
         <View style={styles.modalOverlay}>
@@ -2221,11 +2229,13 @@ const InventoryApp = () => {
               onPress={() => {
                 setShowPredefinedItemsModal(false);
                 setPredefinedSearchText('');
+                setDebouncedSearchText('');
                 setPredefinedFilterCategory('All');
                 setPredefinedSortBy('name');
                 setShowPredefinedCategoryModal(false);
                 setShowBulkActionsModal(false);
                 setLoadedItemsCount(20);
+                setActiveSwipeId(null);
               }}
             >
               <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
