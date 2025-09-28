@@ -371,9 +371,7 @@ const InventoryApp = () => {
   const [showBulkActionsModal, setShowBulkActionsModal] = useState(false);
   const [dailyConfirmations, setDailyConfirmations] = useState({});
   const [isDayConfirmed, setIsDayConfirmed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
   const [debouncedSearchText, setDebouncedSearchText] = useState('');
-  const ITEMS_PER_PAGE = 20;
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -417,6 +415,20 @@ const InventoryApp = () => {
   useEffect(() => {
     filterAndSortItems();
   }, [items, searchText, filterCategory, sortBy]);
+
+  useEffect(() => {
+    resetPagination();
+  }, [debouncedSearchText, predefinedFilterCategory, predefinedSortBy]);
+
+  useEffect(() => {
+    if (!showPredefinedItemsModal) {
+      setLoadedItemsCount(20);
+      setPredefinedSearchText('');
+      setPredefinedFilterCategory('All');
+      setPredefinedSortBy('name');
+      setActiveSwipeId(null);
+    }
+  }, [showPredefinedItemsModal]);
 
   // Load predefined items from AsyncStorage with JSON file integration
   const loadPredefinedItems = async () => {
@@ -655,7 +667,7 @@ const InventoryApp = () => {
 
   const getFilteredPredefinedItems = useMemo(() => {
     let filtered = predefinedItems.filter(item =>
-      item.name.toLowerCase().includes(predefinedSearchText.toLowerCase()) &&
+      item.name.toLowerCase().includes(debouncedSearchText.toLowerCase()) &&
       (predefinedFilterCategory === 'All' || item.category === predefinedFilterCategory)
     );
 
@@ -693,11 +705,26 @@ const InventoryApp = () => {
   //   return filtered;
   // };
 
- const paginatedItems = useMemo(() => {
-    const filtered = getFilteredPredefinedItems; // Remove the parentheses here
-    const startIndex = currentPage * ITEMS_PER_PAGE;
-    return filtered.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [getFilteredPredefinedItems, currentPage]);
+  const [loadedItemsCount, setLoadedItemsCount] = useState(20);
+  const ITEMS_PER_LOAD = 20;
+
+  const loadedPredefinedItems = useMemo(() => {
+    const filtered = getFilteredPredefinedItems;
+    return filtered.slice(0, loadedItemsCount);
+  }, [getFilteredPredefinedItems, loadedItemsCount]);
+
+  const loadMoreItems = () => {
+    const filtered = getFilteredPredefinedItems;
+    if (loadedItemsCount < filtered.length) {
+      setLoadedItemsCount(prev => prev + ITEMS_PER_LOAD);
+    }
+  };
+
+  const resetPagination = () => {
+    setLoadedItemsCount(20);
+  };
+
+
 
   const importFromCSV = async () => {
     try {
@@ -1759,15 +1786,19 @@ const InventoryApp = () => {
       <View style={styles.dateContainer}>
         <TouchableOpacity
           style={styles.dateButton}
-          onPress={() => setShowDatePicker(true)}
+          onPress={() => {
+            try {
+              setShowDatePicker(true);
+            } catch (error) {
+              console.error('Date picker error:', error);
+              Alert.alert('Error', 'Could not open date picker');
+            }
+          }}
         >
           <Text style={styles.dateText}>📅 {selectedDate.toDateString()}</Text>
         </TouchableOpacity>
         
         <View style={styles.confirmDayContainer}>
-          {/* <Text style={styles.confirmDayLabel}>
-            {isDayConfirmed ? language.dayConfirmed : language.confirmDay}
-          </Text> */}
           <TouchableOpacity
             style={[
               styles.materialSwitch,
@@ -1784,7 +1815,27 @@ const InventoryApp = () => {
         </View>
       </View>
 
+      {/* Conditional DateTimePicker with error handling */}
       {showDatePicker && (
+        <DateTimePicker
+          value={selectedDate}
+          mode="date"
+          display="default"
+          onChange={(event, date) => {
+            try {
+              setShowDatePicker(false);
+              if (event.type === 'set' && date) {
+                setSelectedDate(date);
+              }
+            } catch (error) {
+              console.error('Date selection error:', error);
+              setShowDatePicker(false);
+            }
+          }}
+        />
+      )}
+
+      {/* {showDatePicker && (
         <DateTimePicker
           value={selectedDate}
           mode="date"
@@ -1794,7 +1845,7 @@ const InventoryApp = () => {
             if (date) setSelectedDate(date);
           }}
         />
-      )}
+      )} */}
 
       {/* {showDatePicker && (
         <DateTimePicker
@@ -2067,27 +2118,17 @@ const InventoryApp = () => {
           setPredefinedSortBy('name');
           setShowPredefinedCategoryModal(false);
           setShowBulkActionsModal(false);
+          setLoadedItemsCount(20);
         }}
       >
         <View style={styles.modalOverlay}>
           <View style={styles.enhancedPredefinedModalContent}>
             <Text style={styles.selectionModalTitle}>{language.predefinedItems}</Text>
-            <Text style={styles.predefinedItemsCount}>
-              {predefinedItems.length} items available
-            </Text>
+            
             <Text style={styles.swipeInstructions}>
               Swipe left on any item to delete
             </Text>
 
-            {/* Create Custom Item Button */}
-            <TouchableOpacity
-              style={styles.createCustomItemButton}
-              onPress={() => handleItemTypeSelection(true)}
-            >
-              <Text style={styles.createCustomItemIcon}>➕</Text>
-              <Text style={styles.createCustomItemText}>Create Custom Item</Text>
-              <Text style={styles.createCustomItemArrow}>›</Text>
-            </TouchableOpacity>
             
             <View style={styles.predefinedSearchContainer}>
               <TextInput
@@ -2127,15 +2168,25 @@ const InventoryApp = () => {
               )}
             </ScrollView> */}
             
-            <ScrollView style={styles.predefinedItemsList}>
-              {paginatedItems.length === 0 ? (
+            <ScrollView 
+              style={styles.predefinedItemsList}
+              onScroll={({ nativeEvent }) => {
+                const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
+                const paddingToBottom = 20;
+                if (layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom) {
+                  loadMoreItems();
+                }
+              }}
+              scrollEventThrottle={400}
+            >
+              {loadedPredefinedItems.length === 0 ? (
                 <View style={styles.noPredefinedItemsContainer}>
                   <Text style={styles.noPredefinedItemsText}>
                     No items found matching your search
                   </Text>
                 </View>
               ) : (
-                paginatedItems.map(item => (
+                loadedPredefinedItems.map(item => (
                   <SwipeableItem
                     key={item.id}
                     item={item}
@@ -2148,31 +2199,14 @@ const InventoryApp = () => {
                 ))
               )}
               
-              {/* Pagination controls */}
-              <View style={styles.paginationContainer}>
-                <TouchableOpacity
-                  disabled={currentPage === 0}
-                  onPress={() => setCurrentPage(p => p - 1)}
-                  style={[styles.paginationButton, currentPage === 0 && styles.disabled]}
-                >
-                  <Text>Previous</Text>
-                </TouchableOpacity>
-                
-                <Text style={styles.pageInfo}>
-                  Page {currentPage + 1} of {Math.ceil(getFilteredPredefinedItems.length / ITEMS_PER_PAGE)}
-                </Text>
-                
-                <TouchableOpacity
-                  disabled={currentPage >= Math.ceil(getFilteredPredefinedItems.length / ITEMS_PER_PAGE) - 1}
-                  onPress={() => setCurrentPage(p => p + 1)}
-                  style={[styles.paginationButton, currentPage >= Math.ceil(getFilteredPredefinedItems.length / ITEMS_PER_PAGE) - 1 && styles.disabled]}
-                >
-                  <Text>Next</Text>
-                </TouchableOpacity>
-              </View>
+              {loadedItemsCount < getFilteredPredefinedItems.length && (
+                <View style={styles.loadingMoreContainer}>
+                  <Text style={styles.loadingMoreText}>Loading more items...</Text>
+                </View>
+              )}
             </ScrollView>
             <Text style={styles.resultsCount}>
-              Showing {getFilteredPredefinedItems.length} of {predefinedItems.length} items
+              Showing {Math.min(loadedItemsCount, getFilteredPredefinedItems.length)} of {getFilteredPredefinedItems.length} filtered items ({predefinedItems.length} total)
             </Text>
 
             <TouchableOpacity
@@ -2191,6 +2225,7 @@ const InventoryApp = () => {
                 setPredefinedSortBy('name');
                 setShowPredefinedCategoryModal(false);
                 setShowBulkActionsModal(false);
+                setLoadedItemsCount(20);
               }}
             >
               <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
@@ -2311,6 +2346,25 @@ const InventoryApp = () => {
                         <Text style={styles.bulkActionTitle}>Bulk Add Items</Text>
                         <Text style={styles.bulkActionDescription}>
                           Add multiple items at once
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+
+                    {/* Create Custom Item */}
+                    <TouchableOpacity
+                      style={styles.bulkActionOption}
+                      onPress={() => {
+                        setShowBulkActionsModal(false);
+                        setShowPredefinedItemsModal(false);
+                        setShowAddModal(true);
+                        setIsCustomItem(true);
+                      }}
+                    >
+                      <Text style={styles.bulkActionIcon}>✏️</Text>
+                      <View style={styles.bulkActionContent}>
+                        <Text style={styles.bulkActionTitle}>Create Custom Item</Text>
+                        <Text style={styles.bulkActionDescription}>
+                          Create a new custom item
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -3958,31 +4012,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontStyle: 'italic',
   },
-  createCustomItemButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#e8f5e8',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 16,
-    borderWidth: 2,
-    borderColor: '#4caf50',
-  },
-  createCustomItemIcon: {
-    fontSize: 20,
-    marginRight: 12,
-    color: '#2e7d32',
-  },
-  createCustomItemText: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#2e7d32',
-  },
-  createCustomItemArrow: {
-    fontSize: 20,
-    color: '#2e7d32',
-  },
   deleteButtonTouchable: {
     flex: 1,
     justifyContent: 'center',
@@ -4332,28 +4361,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#2e7d32',
   },
-  paginationContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-  },
-  paginationButton: {
-    padding: 12,
-    backgroundColor: '#007bff',
-    borderRadius: 6,
-    minWidth: 80,
-    alignItems: 'center',
-  },
-  disabled: {
-    backgroundColor: '#ccc',
-  },
-  pageInfo: {
-    fontSize: 14,
-    color: '#666',
-  },
   confirmDayContainer: {
     alignItems: 'center',
     flex: 0.5,
@@ -4561,6 +4568,27 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     lineHeight: 18,
+  },
+  loadingMoreContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  loadingMoreText: {
+    fontSize: 14,
+    color: '#666',
+    fontStyle: 'italic',
+  },
+  calendarModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  calendarModalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    margin: 20,
   },
 });
 
