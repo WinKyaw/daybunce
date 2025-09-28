@@ -1166,6 +1166,62 @@ const InventoryApp = () => {
     }
   };
 
+  // Generate dynamic categories from existing items
+  const getDynamicCategories = useCallback(() => {
+    const itemCategories = new Set();
+    
+    // Add categories from current day's items
+    items.forEach(item => {
+      if (item.category) {
+        itemCategories.add(item.category);
+      }
+    });
+    
+    // Add categories from predefined items
+    predefinedItems.forEach(item => {
+      if (item.category) {
+        itemCategories.add(item.category);
+      }
+    });
+    
+    // Add default categories to ensure they're always available
+    categories.forEach(cat => {
+      itemCategories.add(cat);
+    });
+    
+    // Always ensure "Other" is included (in current language)
+    const otherInCurrentLanguage = selectedLanguage === 'my' ? 'အခြား' : 'Other';
+    itemCategories.add(otherInCurrentLanguage);
+    
+    return ['All', ...Array.from(itemCategories).sort()];
+  }, [items, predefinedItems, categories, selectedLanguage]);
+
+  // Generate dynamic unit types from existing items
+  const getDynamicUnitTypes = useCallback(() => {
+    const itemUnitTypes = new Set();
+    
+    // Add unit types from current day's items
+    items.forEach(item => {
+      if (item.unitType) {
+        itemUnitTypes.add(item.unitType);
+      }
+    });
+    
+    // Add unit types from predefined items
+    predefinedItems.forEach(item => {
+      if (item.unitType) {
+        itemUnitTypes.add(item.unitType);
+      }
+    });
+    
+    // Add default unit types to ensure they're always available
+    unitTypes.forEach(unit => {
+      itemUnitTypes.add(unit);
+    });
+    
+    return Array.from(itemUnitTypes).sort();
+  }, [items, predefinedItems, unitTypes]);
+
   const loadDailyConfirmation = async (date) => {
     try {
       const dateKey = formatDate(date);
@@ -1355,21 +1411,21 @@ const InventoryApp = () => {
       if (languageCode === 'my') {
         setCategories(myanmarCategories);
         setUnitTypes(myanmarUnitTypes);
-        // Reset form to use Myanmar defaults
-        setNewItem(prev => ({
-          ...prev,
-          category: myanmarCategories[4], // 'အခြား' (Other)
-          unitType: myanmarUnitTypes[4],  // 'ခု' (pieces)
-        }));
       } else {
         setCategories(defaultCategories);
         setUnitTypes(defaultUnitTypes);
-        setNewItem(prev => ({
-          ...prev,
-          category: defaultCategories[4],
-          unitType: defaultUnitTypes[4],
-        }));
       }
+
+      // Reset form to use appropriate defaults based on available options
+      // This will use dynamic categories/units if they exist, otherwise fallback to defaults
+      const otherCategory = languageCode === 'my' ? 'အခြား' : 'Other';
+      const defaultUnit = languageCode === 'my' ? 'အတု' : 'pcs';
+
+      setNewItem(prev => ({
+        ...prev,
+        category: otherCategory,
+        unitType: defaultUnit,
+      }));
       
       // Save to storage
       await AsyncStorage.setItem('selectedLanguage', languageCode);
@@ -2274,16 +2330,7 @@ const InventoryApp = () => {
                       </View>
                       
                       <View style={styles.categoryChips}>
-                        <TouchableOpacity
-                          style={[styles.categoryChip, predefinedFilterCategory === 'All' && styles.selectedCategoryChip]}
-                          onPress={() => setPredefinedFilterCategory('All')}
-                        >
-                          <Text style={[styles.categoryChipText, predefinedFilterCategory === 'All' && styles.selectedCategoryChipText]}>
-                            {language.all}
-                          </Text>
-                        </TouchableOpacity>
-                        
-                        {categories.map(cat => (
+                        {getDynamicCategories().map(cat => (
                           <TouchableOpacity
                             key={cat}
                             style={[styles.categoryChip, predefinedFilterCategory === cat && styles.selectedCategoryChip]}
@@ -2294,6 +2341,33 @@ const InventoryApp = () => {
                             </Text>
                           </TouchableOpacity>
                         ))}
+                        <TouchableOpacity
+                          style={[styles.overlayOption, styles.addNewCategoryOption]}
+                          onPress={() => {
+                            // You can implement a text input modal here
+                            Alert.prompt(
+                              'New Category',
+                              'Enter a new category name:',
+                              [
+                                { text: 'Cancel', style: 'cancel' },
+                                {
+                                  text: 'Add',
+                                  onPress: (categoryName) => {
+                                    if (categoryName && categoryName.trim()) {
+                                      const newCategory = categoryName.trim();
+                                      setCategories(prev => [...prev, newCategory]);
+                                      setNewItem(prev => ({ ...prev, category: newCategory }));
+                                      setShowCategoryModal(false);
+                                    }
+                                  }
+                                }
+                              ],
+                              'plain-text'
+                            );
+                          }}
+                        >
+                          <Text style={styles.addNewCategoryText}>+ Add New Category</Text>
+                        </TouchableOpacity>
                       </View>
                     </View>
                     
@@ -2616,7 +2690,7 @@ const InventoryApp = () => {
                   <Text style={styles.overlayModalTitle}>{language.selectCategory}</Text>
                   
                   <ScrollView style={styles.overlayScrollView}>
-                    {categories.map(cat => (
+                    {getDynamicCategories().filter(cat => cat !== 'All').map(cat => (
                       <TouchableOpacity
                         key={cat}
                         style={[
@@ -2637,6 +2711,33 @@ const InventoryApp = () => {
                       </TouchableOpacity>
                     ))}
                   </ScrollView>
+                  {/* <TouchableOpacity
+                    style={[styles.overlayOption, styles.addNewCategoryOption]}
+                    onPress={() => {
+                      // You can implement a text input modal here
+                      Alert.prompt(
+                        'New Category',
+                        'Enter a new category name:',
+                        [
+                          { text: 'Cancel', style: 'cancel' },
+                          {
+                            text: 'Add',
+                            onPress: (categoryName) => {
+                              if (categoryName && categoryName.trim()) {
+                                const newCategory = categoryName.trim();
+                                setCategories(prev => [...prev, newCategory]);
+                                setNewItem(prev => ({ ...prev, category: newCategory }));
+                                setShowCategoryModal(false);
+                              }
+                            }
+                          }
+                        ],
+                        'plain-text'
+                      );
+                    }}
+                  >
+                    <Text style={styles.addNewCategoryText}>+ Add New Category</Text>
+                  </TouchableOpacity> */}
                   
                   <TouchableOpacity
                     style={styles.overlayCloseButton}
@@ -2657,7 +2758,7 @@ const InventoryApp = () => {
                   <Text style={styles.overlayModalTitle}>{language.selectUnitType}</Text>
                   
                   <ScrollView style={styles.overlayScrollView}>
-                    {unitTypes.map(unit => (
+                    {getDynamicUnitTypes().map(unit => (
                       <TouchableOpacity
                         key={unit}
                         style={[
@@ -2677,6 +2778,34 @@ const InventoryApp = () => {
                         </Text>
                       </TouchableOpacity>
                     ))}
+                    
+                    {/* Add new unit type option */}
+                    <TouchableOpacity
+                      style={[styles.overlayOption, styles.addNewUnitOption]}
+                      onPress={() => {
+                        Alert.prompt(
+                          'New Unit Type',
+                          'Enter a new unit type (e.g., bottles, boxes, etc.):',
+                          [
+                            { text: 'Cancel', style: 'cancel' },
+                            {
+                              text: 'Add',
+                              onPress: (unitName) => {
+                                if (unitName && unitName.trim()) {
+                                  const newUnit = unitName.trim();
+                                  setUnitTypes(prev => [...prev, newUnit]);
+                                  setNewItem(prev => ({ ...prev, unitType: newUnit }));
+                                  setShowUnitTypeModal(false);
+                                }
+                              }
+                            }
+                          ],
+                          'plain-text'
+                        );
+                      }}
+                    >
+                      <Text style={styles.addNewUnitText}>+ Add New Unit Type</Text>
+                    </TouchableOpacity>
                   </ScrollView>
                   
                   <TouchableOpacity
@@ -2724,16 +2853,7 @@ const InventoryApp = () => {
               </View>
               
               <View style={styles.categoryChips}>
-                <TouchableOpacity
-                  style={[styles.categoryChip, filterCategory === 'All' && styles.selectedCategoryChip]}
-                  onPress={() => setFilterCategory('All')}
-                >
-                  <Text style={[styles.categoryChipText, filterCategory === 'All' && styles.selectedCategoryChipText]}>
-                    {language.all}
-                  </Text>
-                </TouchableOpacity>
-                
-                {categories.map(cat => (
+                {getDynamicCategories().map(cat => (
                   <TouchableOpacity
                     key={cat}
                     style={[styles.categoryChip, filterCategory === cat && styles.selectedCategoryChip]}
@@ -2744,6 +2864,33 @@ const InventoryApp = () => {
                     </Text>
                   </TouchableOpacity>
                 ))}
+                <TouchableOpacity
+                  style={[styles.overlayOption, styles.addNewCategoryOption]}
+                  onPress={() => {
+                    // You can implement a text input modal here
+                    Alert.prompt(
+                      'New Category',
+                      'Enter a new category name:',
+                      [
+                        { text: 'Cancel', style: 'cancel' },
+                        {
+                          text: 'Add',
+                          onPress: (categoryName) => {
+                            if (categoryName && categoryName.trim()) {
+                              const newCategory = categoryName.trim();
+                              setCategories(prev => [...prev, newCategory]);
+                              setNewItem(prev => ({ ...prev, category: newCategory }));
+                              setShowCategoryModal(false);
+                            }
+                          }
+                        }
+                      ],
+                      'plain-text'
+                    );
+                  }}
+                >
+                  <Text style={styles.addNewCategoryText}>+ Add New Category</Text>
+                </TouchableOpacity>
               </View>
             </View>
             
@@ -2867,9 +3014,10 @@ const InventoryApp = () => {
                     <TouchableOpacity
                       style={styles.bulkAddDefaultSelector}
                       onPress={() => {
-                        const currentIndex = categories.indexOf(bulkAddCategory);
-                        const nextIndex = (currentIndex + 1) % categories.length;
-                        setBulkAddCategory(categories[nextIndex]);
+                        const dynamicCategories = getDynamicCategories().filter(cat => cat !== 'All');
+                        const currentIndex = dynamicCategories.indexOf(bulkAddCategory);
+                        const nextIndex = (currentIndex + 1) % dynamicCategories.length;
+                        setBulkAddCategory(dynamicCategories[nextIndex]);
                       }}
                     >
                       <Text style={styles.bulkAddDefaultText}>Category: {bulkAddCategory}</Text>
@@ -2878,9 +3026,10 @@ const InventoryApp = () => {
                     <TouchableOpacity
                       style={styles.bulkAddDefaultSelector}
                       onPress={() => {
-                        const currentIndex = unitTypes.indexOf(bulkAddUnitType);
-                        const nextIndex = (currentIndex + 1) % unitTypes.length;
-                        setBulkAddUnitType(unitTypes[nextIndex]);
+                        const dynamicUnits = getDynamicUnitTypes();
+                        const currentIndex = dynamicUnits.indexOf(bulkAddUnitType);
+                        const nextIndex = (currentIndex + 1) % dynamicUnits.length;
+                        setBulkAddUnitType(dynamicUnits[nextIndex]);
                       }}
                     >
                       <Text style={styles.bulkAddDefaultText}>Unit: {bulkAddUnitType}</Text>
@@ -4599,6 +4748,30 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 20,
     margin: 20,
+  },
+  addNewCategoryOption: {
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    borderColor: '#007bff',
+    backgroundColor: '#f8f9ff',
+  },
+  addNewCategoryText: {
+    fontSize: 16,
+    color: '#007bff',
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  addNewUnitOption: {
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    borderColor: '#28a745',
+    backgroundColor: '#f8fff8',
+  },
+  addNewUnitText: {
+    fontSize: 16,
+    color: '#28a745',
+    textAlign: 'center',
+    fontWeight: '600',
   },
 });
 
