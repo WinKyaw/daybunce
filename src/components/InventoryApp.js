@@ -2341,7 +2341,7 @@ const InventoryApp = () => {
                             </Text>
                           </TouchableOpacity>
                         ))}
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                           style={[styles.overlayOption, styles.addNewCategoryOption]}
                           onPress={() => {
                             // You can implement a text input modal here
@@ -2367,7 +2367,7 @@ const InventoryApp = () => {
                           }}
                         >
                           <Text style={styles.addNewCategoryText}>+ Add New Category</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                       </View>
                     </View>
                     
@@ -2864,7 +2864,7 @@ const InventoryApp = () => {
                     </Text>
                   </TouchableOpacity>
                 ))}
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={[styles.overlayOption, styles.addNewCategoryOption]}
                   onPress={() => {
                     // You can implement a text input modal here
@@ -2890,7 +2890,7 @@ const InventoryApp = () => {
                   }}
                 >
                   <Text style={styles.addNewCategoryText}>+ Add New Category</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
             
