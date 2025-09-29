@@ -2398,6 +2398,7 @@ const InventoryApp = () => {
                     <TouchableOpacity
                       style={styles.applyButton}
                       onPress={() => setShowPredefinedCategoryModal(false)}
+                      activeOpacity={0.8}
                     >
                       <Text style={styles.applyButtonText}>Apply</Text>
                     </TouchableOpacity>
@@ -2929,6 +2930,7 @@ const InventoryApp = () => {
             <TouchableOpacity
               style={styles.applyButton}
               onPress={() => setShowFilterModal(false)}
+              activeOpacity={0.8}
             >
               <Text style={styles.applyButtonText}>Apply</Text>
             </TouchableOpacity>
