@@ -1,7 +1,7 @@
 PODS:
   - boost (1.84.0)
   - DoubleConversion (1.1.6)
-  - Expo (54.0.7):
+  - Expo (54.0.10):
     - boost
     - DoubleConversion
     - fast_float
@@ -2797,7 +2797,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
-  Expo: d4805c13cba8a077172ad74ebfafc6c1f4b34a3e
+  Expo: 3b27ff5b5423991ee116aeef8c131d66066b7e73
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 941bef1c8eeabd9fe1f501e30a5220beee913886
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
