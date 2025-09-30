@@ -14,7 +14,7 @@ import {
   Linking,
 } from 'react-native';
 import * as Print from 'expo-print';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { Calendar } from 'react-native-calendars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
@@ -372,6 +372,7 @@ const InventoryApp = () => {
   const [dailyConfirmations, setDailyConfirmations] = useState({});
   const [isDayConfirmed, setIsDayConfirmed] = useState(false);
   const [debouncedSearchText, setDebouncedSearchText] = useState('');
+  const [showCalendarModal, setShowCalendarModal] = useState(false);
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -1848,18 +1849,10 @@ const InventoryApp = () => {
       <View style={styles.dateContainer}>
         <TouchableOpacity
           style={styles.dateButton}
-          onPress={() => {
-            try {
-              setShowDatePicker(true);
-            } catch (error) {
-              console.error('Date picker error:', error);
-              Alert.alert('Error', 'Could not open date picker');
-            }
-          }}
+          onPress={() => setShowCalendarModal(true)}
         >
           <Text style={styles.dateText}>📅 {selectedDate.toDateString()}</Text>
         </TouchableOpacity>
-        
         <View style={styles.confirmDayContainer}>
           <TouchableOpacity
             style={[
@@ -1878,24 +1871,34 @@ const InventoryApp = () => {
       </View>
 
       {/* Conditional DateTimePicker with error handling */}
-      {showDatePicker && (
-        <DateTimePicker
-          value={selectedDate}
-          mode="date"
-          display="default"
-          onChange={(event, date) => {
-            try {
-              setShowDatePicker(false);
-              if (event.type === 'set' && date) {
-                setSelectedDate(date);
-              }
-            } catch (error) {
-              console.error('Date selection error:', error);
-              setShowDatePicker(false);
-            }
-          }}
-        />
-      )}
+      <Modal
+        visible={showCalendarModal}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={() => setShowCalendarModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setShowCalendarModal(false)}>
+          <View style={styles.calendarModalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.calendarModalContent}>
+                <Calendar
+                  current={selectedDate.toISOString().split('T')[0]}
+                  onDayPress={(day) => {
+                    setSelectedDate(new Date(day.dateString));
+                    setShowCalendarModal(false);
+                  }}
+                  markedDates={{
+                    [selectedDate.toISOString().split('T')[0]]: {
+                      selected: true,
+                      selectedColor: '#2196f3'
+                    }
+                  }}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
 
       {/* {showDatePicker && (
         <DateTimePicker
