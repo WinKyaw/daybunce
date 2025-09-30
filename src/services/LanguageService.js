@@ -1,4 +1,4 @@
-import DataService from './DataService';
+import(/* removed */) from './DataService';
 
 const SUPPORTED_LANGUAGES = {
   en: 'English',
@@ -189,6 +189,7 @@ class LanguageService {
   // Initialize language service
   static async initialize() {
     try {
+      const { default: DataService } = await import('./DataService');
       const savedLanguage = await DataService.getLanguageConfig();
       if (savedLanguage && savedLanguage.currentLanguage) {
         this.currentLanguage = savedLanguage.currentLanguage;
@@ -212,6 +213,9 @@ class LanguageService {
   
   // Set current language
   static async setCurrentLanguage(languageCode) {
+    const SUPPORTED_LANGUAGES = {
+      en: 'English', my: 'Myanmar', es: 'Español', fr: 'Français', zh: '中文', hi: 'हिन्दी', ar: 'العربية'
+    };
     if (!SUPPORTED_LANGUAGES[languageCode]) {
       throw new Error(`Unsupported language: ${languageCode}`);
     }
@@ -308,6 +312,7 @@ class LanguageService {
   // Save language configuration to storage
   static async saveLanguageConfig() {
     try {
+      const { default: DataService } = await import('./DataService');
       const config = {
         currentLanguage: this.currentLanguage,
         customTranslations: this.translations
