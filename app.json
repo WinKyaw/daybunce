@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "saleReport",
-    "slug": "saleReport",
+    "name": "daybunce",
+    "slug": "daybunce",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,13 +14,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.winkyaw.daybunce"
     },
     "android": {
+      "package": "com.winkyaw.daybunce",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -37,13 +37,13 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow Inventory App to access your camera to scan receipts and items."
+          "cameraPermission": "Allow Daybunce to access your camera to scan receipts and items."
         }
       ],
       [
         "expo-image-picker",
         {
-          "photosPermission": "Allow Inventory App to access your photos to select images for processing."
+          "photosPermission": "Allow Daybunce to access your photos to select images for processing."
         }
       ]
     ],
