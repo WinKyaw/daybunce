@@ -34,6 +34,7 @@ const defaultLanguage = {
   itemName: 'Item Name',
   price: 'Price',
   unitsSold: 'Units Sold',
+  currency: '$',
   totalAmount: 'Total Amount',
   category: 'Category',
   unitType: 'Unit Type',
@@ -77,6 +78,15 @@ const availableLanguages = [
   { code: 'my', name: 'မြန်မာ', flag: '🇲🇲' },
 ];
 
+const availableCurrencies = [
+  { code: 'USD', symbol: '$', name: 'US Dollar' },
+  { code: 'EUR', symbol: '€', name: 'Euro' },
+  { code: 'MMK', symbol: 'Ks', name: 'Myanmar Kyat' },
+  { code: 'GBP', symbol: '£', name: 'British Pound' },
+  { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
+  { code: 'CNY', symbol: '¥', name: 'Chinese Yuan' },
+];
+
 // Extended language configurations
 const languageConfigs = {
   en: {
@@ -88,6 +98,7 @@ const languageConfigs = {
     itemName: 'Item Name',
     price: 'Price',
     unitsSold: 'Units Sold',
+    currency: '$',
     totalAmount: 'Total Amount',
     category: 'Category',
     unitType: 'Unit Type',
@@ -131,6 +142,7 @@ const languageConfigs = {
     itemName: 'Nombre del Artículo',
     price: 'Precio',
     unitsSold: 'Unidades Vendidas',
+    currency: '€',
     totalAmount: 'Cantidad Total',
     category: 'Categoría',
     unitType: 'Tipo de Unidad',
@@ -174,6 +186,7 @@ const languageConfigs = {
     itemName: 'Nom de l\'Article',
     price: 'Prix',
     unitsSold: 'Unités Vendues',
+    currency: '€',
     totalAmount: 'Montant Total',
     category: 'Catégorie',
     unitType: 'Type d\'Unité',
@@ -217,6 +230,7 @@ const languageConfigs = {
     itemName: 'Artikelname',
     price: 'Preis',
     unitsSold: 'Verkaufte Einheiten',
+    currency: '€',
     totalAmount: 'Gesamtbetrag',
     category: 'Kategorie',
     unitType: 'Einheitentyp',
@@ -260,6 +274,7 @@ const languageConfigs = {
     itemName: 'ပစ္စည်းအမည်',
     price: 'စျေးနှုန်း',
     unitsSold: 'ရောင်းသွားသောယူနစ်',
+    currency: 'Ks',
     totalAmount: 'စုစုပေါင်းပမာဏ',
     category: 'အမျိုးအစား',
     unitType: 'ယူနစ်အမျိုးအစား',
@@ -373,6 +388,8 @@ const InventoryApp = () => {
   const [isDayConfirmed, setIsDayConfirmed] = useState(false);
   const [debouncedSearchText, setDebouncedSearchText] = useState('');
   const [showCalendarModal, setShowCalendarModal] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState('$');
+  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -603,6 +620,7 @@ const InventoryApp = () => {
   };
 
   const openAddModal = () => {
+    setIsCustomItem(true); // Reset to default
     setShowPredefinedItemsModal(true);
   };
 
@@ -646,7 +664,7 @@ const InventoryApp = () => {
     await saveData(updatedItems);
 
     // If this was a custom item, add it to predefined items
-    if (isCustomItem) {
+    if (isItemUnique(newItem, predefinedItems)) {
       await addToPredefinedItems(newItem);
     }
 
@@ -657,6 +675,7 @@ const InventoryApp = () => {
       category: defaultCategories[4],
       unitType: defaultUnitTypes[4],
     });
+    setIsCustomItem(true); // Reset to default
     setShowAddModal(false);
   };
 
@@ -984,8 +1003,8 @@ const InventoryApp = () => {
               <strong>${item.name}</strong><br>
               <small style="color: #666;">${item.category}</small>
             </td>
-            <td>$${item.price}/${item.unitType} × ${item.unitsSold}</td>
-            <td style="text-align: right; font-weight: bold;">$${total}</td>
+            <td>${language.currency}${item.price}/${item.unitType} × ${item.unitsSold}</td>
+            <td style="text-align: right; font-weight: bold;">${language.currency}${total}</td>
           </tr>
         `;
       });
@@ -1105,7 +1124,7 @@ const InventoryApp = () => {
           </div>
           <div class="total-row grand-total">
             <span>Daily Total:</span>
-            <span>$${getDailyTotal()}</span>
+            <span>${language.currency}${getDailyTotal()}</span>
           </div>
         </div>
         
@@ -1333,6 +1352,7 @@ const InventoryApp = () => {
         const savedTitle = await AsyncStorage.getItem('customAppTitle');
         const savedCategories = await AsyncStorage.getItem('categories');
         const savedUnitTypes = await AsyncStorage.getItem('unit_types');
+        const savedCurrency = await AsyncStorage.getItem('selectedCurrency'); 
         
         let languageToUse = 'en'; // default
         if (savedLanguage && languageConfigs[savedLanguage]) {
@@ -1347,6 +1367,13 @@ const InventoryApp = () => {
           languageConfig.appTitle = savedTitle.trim();
         } else {
           setCustomAppTitle('');
+        }
+
+        if (savedCurrency) {
+          setSelectedCurrency(savedCurrency);
+          languageConfig.currency = savedCurrency;
+        } else {
+          setSelectedCurrency(languageConfig.currency || '$');
         }
         
         // Load saved categories and unit types
@@ -1382,6 +1409,7 @@ const InventoryApp = () => {
   const saveSettings = async () => {
     try {
       await AsyncStorage.setItem('selectedLanguage', selectedLanguage);
+      await AsyncStorage.setItem('selectedCurrency', selectedCurrency);
       if (customAppTitle.trim()) {
         await AsyncStorage.setItem('customAppTitle', customAppTitle.trim());
         setLanguage(prev => ({ ...prev, appTitle: customAppTitle.trim() }));
@@ -1670,14 +1698,14 @@ const InventoryApp = () => {
         const total = (parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2);
         receiptText += `${index + 1}. ${item.name}\n`;
         receiptText += `   Category: ${item.category}\n`;
-        receiptText += `   Price: $${item.price} per ${item.unitType}\n`;
+        receiptText += `   Price: ${language.currency}${item.price} per ${item.unitType}\n`;
         receiptText += `   Quantity: ${item.unitsSold} ${item.unitType}\n`;
-        receiptText += `   Total: $${total}\n\n`;
+        receiptText += `   Total: ${language.currency}${total}\n\n`;
       });
     }
     
     receiptText += `${'-'.repeat(40)}\n`;
-    receiptText += `Daily Total: $${getDailyTotal()}\n`;
+    receiptText += `Daily Total: ${language.currency}${getDailyTotal()}\n`;
     receiptText += `Total Items: ${filteredItems.length}\n`;
     
     return receiptText;
@@ -1978,13 +2006,13 @@ const InventoryApp = () => {
               <View style={styles.itemHeader}>
                 <Text style={styles.itemName}>{item.name}</Text>
                 <Text style={styles.itemAmount}>
-                  ${(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
+                  {language.currency}{(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
                 </Text>
               </View>
 
               <View style={styles.itemSubInfo}>
                 <Text style={styles.itemDetail}>
-                  {language.price}: ${item.price} | {language.unitsSold}: {item.unitsSold} {item.unitType}
+                  {language.price}: {language.currency}{item.price} | {language.unitsSold}: {item.unitsSold} {item.unitType}
                 </Text>
                 <Text style={styles.itemCategory}>{item.category}</Text>
               </View>
@@ -1992,13 +2020,13 @@ const InventoryApp = () => {
               {expandedItem === item.id && (
                 <View style={styles.expandedInfo}>
                   <Text style={styles.expandedText}>
-                    {language.price}: ${item.price}
+                    {language.price}: {language.currency}{item.price}
                   </Text>
                   <Text style={styles.expandedText}>
                     {language.unitsSold}: {item.unitsSold} {item.unitType}
                   </Text>
                   <Text style={styles.expandedText}>
-                    {language.totalAmount}: ${item.totalAmount}
+                    {language.totalAmount}: {language.currency}{item.totalAmount}
                   </Text>
                   <TouchableOpacity
                     style={styles.deleteButton}
@@ -2028,7 +2056,7 @@ const InventoryApp = () => {
         activeOpacity={0.7}
       >
         <Text style={styles.totalText}>
-          {language.dailyTotal}: ${getDailyTotal()}
+          {language.dailyTotal}: {language.currency}{getDailyTotal()}
         </Text>
         <Text style={styles.tapToViewReceipt}>
           Tap to view receipt
@@ -2069,12 +2097,12 @@ const InventoryApp = () => {
                       <Text style={styles.receiptItemNumber}>{index + 1}.</Text>
                       <Text style={styles.receiptItemName}>{item.name}</Text>
                       <Text style={styles.receiptItemTotal}>
-                        ${(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
+                        {language.currency}{(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
                       </Text>
                     </View>
                     <View style={styles.receiptItemDetails}>
                       <Text style={styles.receiptItemDetail}>
-                        ${item.price}/{item.unitType} × {item.unitsSold} {item.unitType}
+                        {language.currency}{item.price}/{item.unitType} × {item.unitsSold} {item.unitType}
                       </Text>
                       <Text style={styles.receiptItemCategory}>{item.category}</Text>
                     </View>
@@ -2092,7 +2120,7 @@ const InventoryApp = () => {
               </View>
               <View style={styles.receiptSummaryRow}>
                 <Text style={styles.receiptTotalLabel}>Daily Total:</Text>
-                <Text style={styles.receiptTotalValue}>${getDailyTotal()}</Text>
+                <Text style={styles.receiptTotalValue}>{language.currency}{getDailyTotal()}</Text>
               </View>
             </View>
             
@@ -2612,15 +2640,31 @@ const InventoryApp = () => {
                     style={[styles.modernInput, { flex: 1, marginRight: 8 }]}
                     placeholder={language.price}
                     value={newItem.price}
-                    onChangeText={(text) => setNewItem(prev => ({ ...prev, price: text }))}
-                    keyboardType="numeric"
+                    onChangeText={(text) => {
+                      // Only allow numbers and one decimal point
+                      const numericValue = text.replace(/[^0-9.]/g, '');
+                      const parts = numericValue.split('.');
+                      const filteredValue = parts.length > 2 
+                        ? parts[0] + '.' + parts.slice(1).join('') 
+                        : numericValue;
+                      setNewItem(prev => ({ ...prev, price: filteredValue }));
+                    }}
+                    keyboardType="decimal-pad"
                   />
                   <TextInput
                     style={[styles.modernInput, { flex: 1, marginLeft: 8 }]}
                     placeholder={language.unitsSold}
                     value={newItem.unitsSold}
-                    onChangeText={(text) => setNewItem(prev => ({ ...prev, unitsSold: text }))}
-                    keyboardType="numeric"
+                    onChangeText={(text) => {
+                      // Only allow numbers and one decimal point
+                      const numericValue = text.replace(/[^0-9.]/g, '');
+                      const parts = numericValue.split('.');
+                      const filteredValue = parts.length > 2 
+                        ? parts[0] + '.' + parts.slice(1).join('') 
+                        : numericValue;
+                      setNewItem(prev => ({ ...prev, unitsSold: filteredValue }));
+                    }}
+                    keyboardType="decimal-pad"
                   />
                 </View>
 
@@ -2652,7 +2696,7 @@ const InventoryApp = () => {
 
                 <View style={styles.totalAmountContainer}>
                   <Text style={styles.totalAmountText}>
-                    Total Amount: ${calculateTotal()}
+                    Total Amount: {language.currency}{calculateTotal()}
                   </Text>
                 </View>
 
@@ -2665,6 +2709,7 @@ const InventoryApp = () => {
                     style={[styles.modernButton, styles.modernCancelButton]}
                     onPress={() => {
                       setShowAddModal(false);
+                      setIsCustomItem(true); // Reset to default
                       setNewItem({
                         name: '',
                         price: '',
@@ -3145,6 +3190,54 @@ const InventoryApp = () => {
                   </View>
                 )}
               </View>
+              {/* Currency Setting */}
+              <View style={styles.settingItem}>
+                <Text style={styles.settingLabel}>Currency</Text>
+                <TouchableOpacity
+                  style={styles.languageSelector}
+                  onPress={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
+                >
+                  <Text style={styles.languageSelectorText}>
+                    {selectedCurrency} ({availableCurrencies.find(c => c.symbol === selectedCurrency)?.name || 'Custom'})
+                  </Text>
+                  <Text style={styles.selectorArrow}>{showCurrencyDropdown ? '▲' : '▼'}</Text>
+                </TouchableOpacity>
+                
+                {showCurrencyDropdown && (
+                  <View style={styles.languageDropdown}>
+                    <ScrollView 
+                      style={styles.languageDropdownScroll}
+                      nestedScrollEnabled={true}
+                    >
+                      {availableCurrencies.map(curr => (
+                        <TouchableOpacity
+                          key={curr.code}
+                          style={[
+                            styles.languageDropdownItem,
+                            selectedCurrency === curr.symbol && styles.selectedLanguageDropdownItem
+                          ]}
+                          onPress={() => {
+                            setSelectedCurrency(curr.symbol);
+                            setLanguage(prev => ({ ...prev, currency: curr.symbol }));
+                            setShowCurrencyDropdown(false);
+                          }}
+                        >
+                          <Text style={styles.languageDropdownFlag}>{curr.symbol}</Text>
+                          <Text style={[
+                            styles.languageDropdownText,
+                            selectedCurrency === curr.symbol && styles.selectedLanguageDropdownText
+                          ]}>
+                            {curr.name}
+                          </Text>
+                          {selectedCurrency === curr.symbol && (
+                            <Text style={styles.languageDropdownCheck}>✓</Text>
+                          )}
+                        </TouchableOpacity>
+                      ))}
+                    </ScrollView>
+                  </View>
+                )}
+              </View>
             </ScrollView>
             
             <View style={styles.settingsButtonRow}>
@@ -3153,6 +3246,7 @@ const InventoryApp = () => {
                 onPress={() => {
                   setShowSettingsModal(false);
                   setShowLanguageDropdown(false);
+                  setShowCurrencyDropdown(false);
                 }}
               >
                 <Text style={styles.settingsCancelButtonText}>{language.cancel}</Text>
@@ -3165,6 +3259,7 @@ const InventoryApp = () => {
                   saveSettings();
                   setShowSettingsModal(false);
                   setShowLanguageDropdown(false);
+                  setShowCurrencyDropdown(false);
                 }}
               >
                 <Text style={styles.settingsSaveButtonText}>{language.save}</Text>
