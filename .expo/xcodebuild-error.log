@@ -1,11 +1,3 @@
 --- xcodebuild: WARNING: Using the first of multiple matching destinations:
 { platform:iOS Simulator, arch:arm64, id:92C3E0D4-C7C4-464A-BBC6-58D97FA61913, OS:18.1, name:iPhone 16 Pro }
 { platform:iOS Simulator, arch:x86_64, id:92C3E0D4-C7C4-464A-BBC6-58D97FA61913, OS:18.1, name:iPhone 16 Pro }
-** BUILD FAILED **
-
-
-The following build commands failed:
-	SwiftEmitModule normal arm64 Emitting\ module\ for\ Expo (in target 'Expo' from project 'Pods')
-	EmitSwiftModule normal arm64 (in target 'Expo' from project 'Pods')
-	Building workspace saleReport with scheme saleReport and configuration Debug
-(3 failures)

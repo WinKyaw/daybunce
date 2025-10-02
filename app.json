@@ -14,13 +14,14 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.winkyaw.daybunce"
+      "bundleIdentifier": "com.kywin.daybunce"
     },
     "android": {
-      "package": "com.winkyaw.daybunce",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -28,29 +29,18 @@
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "package": "com.kywin.daybunce"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      [
-        "expo-camera",
-        {
-          "cameraPermission": "Allow Daybunce to access your camera to scan receipts and items."
-        }
-      ],
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "Allow Daybunce to access your photos to select images for processing."
-        }
-      ]
-    ],
+    "plugins": [],
     "extra": {
       "eas": {
-        "projectId": "e9b5bba6-4d30-4e79-b977-ec5f7953a5aa"
+        "projectId": "1272de7d-84f4-495f-827a-7521ac3ae2f7"
       }
-    }
+    },
+    "owner": "kywin"
   }
 }
