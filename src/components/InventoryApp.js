@@ -2070,98 +2070,102 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => setShowReceiptModal(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.receiptModalContent}>
-            <View style={styles.receiptTitleContainer}>
-              <Text style={styles.receiptTitle}>{language.dailySummary}</Text>
-              {isDayConfirmed && (
-                <View style={styles.confirmedBadge}>
-                  <Text style={styles.confirmedBadgeIcon}>✅</Text>
-                  <Text style={styles.confirmedBadgeText}>Confirmed</Text>
+        <TouchableWithoutFeedback onPress={() => setShowReceiptModal(false)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.receiptModalContent}>
+                <View style={styles.receiptTitleContainer}>
+                  <Text style={styles.receiptTitle}>{language.dailySummary}</Text>
+                  {isDayConfirmed && (
+                    <View style={styles.confirmedBadge}>
+                      <Text style={styles.confirmedBadgeIcon}>✅</Text>
+                      <Text style={styles.confirmedBadgeText}>Confirmed</Text>
+                    </View>
+                  )}
                 </View>
-              )}
-            </View>
-            <Text style={styles.receiptDate}>
-              {selectedDate.toLocaleDateString()} • {new Date().toLocaleTimeString()}
-            </Text>
-            
-            <View style={styles.receiptDivider} />
-            
-            <ScrollView style={styles.receiptItemsList}>
-              {filteredItems.length === 0 ? (
-                <Text style={styles.noReceiptItems}>No items sold on this date</Text>
-              ) : (
-                filteredItems.map((item, index) => (
-                  <View key={item.id} style={styles.receiptItem}>
-                    <View style={styles.receiptItemHeader}>
-                      <Text style={styles.receiptItemNumber}>{index + 1}.</Text>
-                      <Text style={styles.receiptItemName}>{item.name}</Text>
-                      <Text style={styles.receiptItemTotal}>
-                        {language.currency}{(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
-                      </Text>
-                    </View>
-                    <View style={styles.receiptItemDetails}>
-                      <Text style={styles.receiptItemDetail}>
-                        {language.currency}{item.price}/{item.unitType} × {item.unitsSold} {item.unitType}
-                      </Text>
-                      <Text style={styles.receiptItemCategory}>{item.category}</Text>
-                    </View>
+                <Text style={styles.receiptDate}>
+                  {selectedDate.toLocaleDateString()} • {new Date().toLocaleTimeString()}
+                </Text>
+                
+                <View style={styles.receiptDivider} />
+                
+                <ScrollView style={styles.receiptItemsList}>
+                  {filteredItems.length === 0 ? (
+                    <Text style={styles.noReceiptItems}>No items sold on this date</Text>
+                  ) : (
+                    filteredItems.map((item, index) => (
+                      <View key={item.id} style={styles.receiptItem}>
+                        <View style={styles.receiptItemHeader}>
+                          <Text style={styles.receiptItemNumber}>{index + 1}.</Text>
+                          <Text style={styles.receiptItemName}>{item.name}</Text>
+                          <Text style={styles.receiptItemTotal}>
+                            {language.currency}{(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
+                          </Text>
+                        </View>
+                        <View style={styles.receiptItemDetails}>
+                          <Text style={styles.receiptItemDetail}>
+                            {language.currency}{item.price}/{item.unitType} × {item.unitsSold} {item.unitType}
+                          </Text>
+                          <Text style={styles.receiptItemCategory}>{item.category}</Text>
+                        </View>
+                      </View>
+                    ))
+                  )}
+                </ScrollView>
+                
+                <View style={styles.receiptDivider} />
+                
+                <View style={styles.receiptSummary}>
+                  <View style={styles.receiptSummaryRow}>
+                    <Text style={styles.receiptSummaryLabel}>Total Items:</Text>
+                    <Text style={styles.receiptSummaryValue}>{filteredItems.length}</Text>
                   </View>
-                ))
-              )}
-            </ScrollView>
-            
-            <View style={styles.receiptDivider} />
-            
-            <View style={styles.receiptSummary}>
-              <View style={styles.receiptSummaryRow}>
-                <Text style={styles.receiptSummaryLabel}>Total Items:</Text>
-                <Text style={styles.receiptSummaryValue}>{filteredItems.length}</Text>
-              </View>
-              <View style={styles.receiptSummaryRow}>
-                <Text style={styles.receiptTotalLabel}>Daily Total:</Text>
-                <Text style={styles.receiptTotalValue}>{language.currency}{getDailyTotal()}</Text>
-              </View>
-            </View>
-            
-            {/* <View style={styles.receiptButtonRow}>
-              <TouchableOpacity
-                style={styles.shareButton}
-                onPress={shareViaEmailPDF}
-              >
-                <Text style={styles.shareButtonText}>📧 {language.shareViaEmail}</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity
-                style={styles.shareButton}
-                onPress={shareViaText}
-              >
-                <Text style={styles.shareButtonText}>💬 {language.shareViaText}</Text>
-              </TouchableOpacity>
-            </View> */}
+                  <View style={styles.receiptSummaryRow}>
+                    <Text style={styles.receiptTotalLabel}>Daily Total:</Text>
+                    <Text style={styles.receiptTotalValue}>{language.currency}{getDailyTotal()}</Text>
+                  </View>
+                </View>
+                
+                {/* <View style={styles.receiptButtonRow}>
+                  <TouchableOpacity
+                    style={styles.shareButton}
+                    onPress={shareViaEmailPDF}
+                  >
+                    <Text style={styles.shareButtonText}>📧 {language.shareViaEmail}</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={styles.shareButton}
+                    onPress={shareViaText}
+                  >
+                    <Text style={styles.shareButtonText}>💬 {language.shareViaText}</Text>
+                  </TouchableOpacity>
+                </View> */}
 
-            <TouchableOpacity
-              style={styles.pdfShareButton}
-              onPress={generateAndSharePDF}
-            >
-              <Text style={styles.pdfShareButtonText}>📄 {language.sharePDF}</Text>
-            </TouchableOpacity>
-            
-            {/* <TouchableOpacity
-              style={styles.genericShareButton}
-              onPress={shareReceipt}
-            >
-              <Text style={styles.genericShareButtonText}>📤 Share</Text>
-            </TouchableOpacity> */}
-            
-            <TouchableOpacity
-              style={styles.closeReceiptButton}
-              onPress={() => setShowReceiptModal(false)}
-            >
-              <Text style={styles.closeReceiptButtonText}>{language.close}</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.pdfShareButton}
+                  onPress={generateAndSharePDF}
+                >
+                  <Text style={styles.pdfShareButtonText}>📄 {language.sharePDF}</Text>
+                </TouchableOpacity>
+                
+                {/* <TouchableOpacity
+                  style={styles.genericShareButton}
+                  onPress={shareReceipt}
+                >
+                  <Text style={styles.genericShareButtonText}>📤 Share</Text>
+                </TouchableOpacity> */}
+                
+                <TouchableOpacity
+                  style={styles.closeReceiptButton}
+                  onPress={() => setShowReceiptModal(false)}
+                >
+                  <Text style={styles.closeReceiptButtonText}>{language.close}</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
 
       {/* Item Type Selection Modal */}
@@ -2216,391 +2220,405 @@ const InventoryApp = () => {
           setActiveSwipeId(null);
         }}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.enhancedPredefinedModalContent}>
-            <Text style={styles.selectionModalTitle}>{language.predefinedItems}</Text>
-            
-            <Text style={styles.swipeInstructions}>
-              Swipe left on any item to delete
-            </Text>
+        <TouchableWithoutFeedback onPress={() => {
+          setShowPredefinedItemsModal(false);
+          setPredefinedSearchText('');
+          setDebouncedSearchText('');
+          setPredefinedFilterCategory('All');
+          setPredefinedSortBy('name');
+          setShowPredefinedCategoryModal(false);
+          setShowBulkActionsModal(false);
+          setLoadedItemsCount(20);
+          setActiveSwipeId(null);
+        }}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.enhancedPredefinedModalContent}>
+                <Text style={styles.selectionModalTitle}>{language.predefinedItems}</Text>
+                
+                <Text style={styles.swipeInstructions}>
+                  Swipe left on any item to delete
+                </Text>
 
-            
-            <View style={styles.predefinedSearchContainer}>
-              <TextInput
-                style={styles.predefinedSearchInput}
-                placeholder="Search items..."
-                value={predefinedSearchText}
-                onChangeText={setPredefinedSearchText}
-                clearButtonMode="while-editing"
-              />
-              <TouchableOpacity
-                style={styles.predefinedFilterButton}
-                onPress={() => setShowPredefinedCategoryModal(true)}
-              >
-                <Text style={styles.predefinedFilterIcon}>☰</Text>
-              </TouchableOpacity>
-            </View>
-            
-            {/* <ScrollView style={styles.predefinedItemsList}>
-              {getFilteredPredefinedItems().length === 0 ? (
-                <View style={styles.noPredefinedItemsContainer}>
-                  <Text style={styles.noPredefinedItemsText}>
-                    No items found matching your search
-                  </Text>
-                </View>
-              ) : (
-                getFilteredPredefinedItems().map(item => (
-                  <SwipeableItem
-                    key={item.id}
-                    item={item}
-                    onSelect={handlePredefinedItemSelection}
-                    onDelete={confirmDeleteItem}
-                    isActive={activeSwipeId === item.id}
-                    onSwipeStart={() => setActiveSwipeId(item.id)}
-                    onSwipeReset={() => setActiveSwipeId(null)}
+                
+                <View style={styles.predefinedSearchContainer}>
+                  <TextInput
+                    style={styles.predefinedSearchInput}
+                    placeholder="Search items..."
+                    value={predefinedSearchText}
+                    onChangeText={setPredefinedSearchText}
+                    clearButtonMode="while-editing"
                   />
-                ))
-              )}
-            </ScrollView> */}
-            
-            <ScrollView 
-              style={styles.predefinedItemsList}
-              onScroll={({ nativeEvent }) => {
-                const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-                const paddingToBottom = 20;
-                if (layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom) {
-                  loadMoreItems();
-                }
-              }}
-              scrollEventThrottle={400}
-            >
-              {loadedPredefinedItems.length === 0 ? (
-                <View style={styles.noPredefinedItemsContainer}>
-                  <Text style={styles.noPredefinedItemsText}>
-                    No items found matching your search
-                  </Text>
-                </View>
-              ) : (
-                loadedPredefinedItems.map(item => (
-                  <SwipeableItem
-                    key={item.id}
-                    item={item}
-                    onSelect={handlePredefinedItemSelection}
-                    onDelete={confirmDeleteItem}
-                    isActive={activeSwipeId === item.id}
-                    onSwipeStart={() => setActiveSwipeId(item.id)}
-                    onSwipeReset={() => setActiveSwipeId(null)}
-                  />
-                ))
-              )}
-              
-              {loadedItemsCount < getFilteredPredefinedItems.length && (
-                <View style={styles.loadingMoreContainer}>
-                  <Text style={styles.loadingMoreText}>Loading more items...</Text>
-                </View>
-              )}
-            </ScrollView>
-            <Text style={styles.resultsCount}>
-              Showing {Math.min(loadedItemsCount, getFilteredPredefinedItems.length)} of {getFilteredPredefinedItems.length} filtered items ({predefinedItems.length} total)
-            </Text>
-
-            <TouchableOpacity
-              style={styles.bulkActionsButton}
-              onPress={() => setShowBulkActionsModal(true)}
-            >
-              <Text style={styles.bulkActionsButtonText}>⚙️ Bulk Actions</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={styles.closeModalButton}
-              onPress={() => {
-                setShowPredefinedItemsModal(false);
-                setPredefinedSearchText('');
-                setDebouncedSearchText('');
-                setPredefinedFilterCategory('All');
-                setPredefinedSortBy('name');
-                setShowPredefinedCategoryModal(false);
-                setShowBulkActionsModal(false);
-                setLoadedItemsCount(20);
-                setActiveSwipeId(null);
-              }}
-            >
-              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
-            </TouchableOpacity>
-            
-            {showPredefinedCategoryModal && (
-              <Modal
-                visible={showPredefinedCategoryModal}
-                animationType="slide"
-                transparent={true}
-                onRequestClose={() => setShowPredefinedCategoryModal(false)}
-              >
-                <View style={styles.filterModalOverlay}>
-                  <View style={styles.filterModalContent}>
-                    {/* Header */}
-                    <View style={styles.filterModalHeader}>
-                      <View style={styles.filterHeaderLeft}>
-                        <Text style={styles.filterIcon}>🔍</Text>
-                        <Text style={styles.filterTitle}>FILTER</Text>
-                      </View>
-                      <TouchableOpacity onPress={() => setShowPredefinedCategoryModal(false)}>
-                        <Text style={styles.closeIcon}>✕</Text>
-                      </TouchableOpacity>
-                    </View>
-                    
-                    {/* Category Section */}
-                    <View style={styles.filterSection}>
-                      <View style={styles.filterSectionHeader}>
-                        <Text style={styles.filterSectionTitle}>CATEGORY</Text>
-                        <TouchableOpacity 
-                          style={styles.clearButton}
-                          onPress={() => setPredefinedFilterCategory('All')}
-                        >
-                          <Text style={styles.clearButtonText}>Clear</Text>
-                        </TouchableOpacity>
-                      </View>
-                      
-                      <View style={styles.categoryChips}>
-                        {getDynamicCategories().map(cat => (
-                          <TouchableOpacity
-                            key={cat}
-                            style={[styles.categoryChip, predefinedFilterCategory === cat && styles.selectedCategoryChip]}
-                            onPress={() => setPredefinedFilterCategory(cat)}
-                          >
-                            <Text style={[styles.categoryChipText, predefinedFilterCategory === cat && styles.selectedCategoryChipText]}>
-                              {cat}
-                            </Text>
-                          </TouchableOpacity>
-                        ))}
-                        {/* <TouchableOpacity
-                          style={[styles.overlayOption, styles.addNewCategoryOption]}
-                          onPress={() => {
-                            // You can implement a text input modal here
-                            Alert.prompt(
-                              'New Category',
-                              'Enter a new category name:',
-                              [
-                                { text: 'Cancel', style: 'cancel' },
-                                {
-                                  text: 'Add',
-                                  onPress: (categoryName) => {
-                                    if (categoryName && categoryName.trim()) {
-                                      const newCategory = categoryName.trim();
-                                      setCategories(prev => [...prev, newCategory]);
-                                      setNewItem(prev => ({ ...prev, category: newCategory }));
-                                      setShowCategoryModal(false);
-                                    }
-                                  }
-                                }
-                              ],
-                              'plain-text'
-                            );
-                          }}
-                        >
-                          <Text style={styles.addNewCategoryText}>+ Add New Category</Text>
-                        </TouchableOpacity> */}
-                      </View>
-                    </View>
-                    
-                    {/* Sort Section */}
-                    <View style={styles.filterSection}>
-                      <View style={styles.filterSectionHeader}>
-                        <Text style={styles.filterSectionTitle}>SORT BY</Text>
-                      </View>
-                      
-                      <TouchableOpacity 
-                        style={styles.sortOption}
-                        onPress={() => setPredefinedSortBy('name')}
-                      >
-                        <Text style={styles.sortOptionText}>Name (A-Z)</Text>
-                        <View style={[styles.sortToggle, predefinedSortBy === 'name' && styles.activeSortToggle]} />
-                      </TouchableOpacity>
-                      
-                      <TouchableOpacity 
-                        style={styles.sortOption}
-                        onPress={() => setPredefinedSortBy('category')}
-                      >
-                        <Text style={styles.sortOptionText}>Category</Text>
-                        <View style={[styles.sortToggle, predefinedSortBy === 'category' && styles.activeSortToggle]} />
-                      </TouchableOpacity>
-                    </View>
-                    
-                    {/* Apply Button */}
-                    <TouchableOpacity
-                      style={styles.applyButton}
-                      onPress={() => setShowPredefinedCategoryModal(false)}
-                      activeOpacity={0.8}
-                    >
-                      <Text style={styles.applyButtonText}>Apply</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </Modal>
-            )}
-           
-            {showBulkActionsModal && (
-              <View style={styles.overlayModalContainer}>
-                <View style={styles.bulkActionsModalContent}>
-                  <Text style={styles.overlayModalTitle}>Bulk Actions</Text>
-                  <Text style={styles.bulkActionsSubtitle}>
-                    Manage your predefined items collection
-                  </Text>
-                  
-                  <ScrollView style={styles.bulkActionsScrollView}>
-
-                    {/* Bulk Add Items */}
-                    <TouchableOpacity
-                      style={styles.bulkActionOption}
-                      onPress={() => {
-                        setShowBulkActionsModal(false);
-                        setShowPredefinedItemsModal(false);
-                        setShowBulkAddModal(true);
-                      }}
-                    >
-                      <Text style={styles.bulkActionIcon}>➕</Text>
-                      <View style={styles.bulkActionContent}>
-                        <Text style={styles.bulkActionTitle}>Bulk Add Items</Text>
-                        <Text style={styles.bulkActionDescription}>
-                          Add multiple items at once
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-
-                    {/* Create Custom Item */}
-                    <TouchableOpacity
-                      style={styles.bulkActionOption}
-                      onPress={() => {
-                        setShowBulkActionsModal(false);
-                        setShowPredefinedItemsModal(false);
-                        setShowAddModal(true);
-                        setIsCustomItem(true);
-                      }}
-                    >
-                      <Text style={styles.bulkActionIcon}>✏️</Text>
-                      <View style={styles.bulkActionContent}>
-                        <Text style={styles.bulkActionTitle}>Create Custom Item</Text>
-                        <Text style={styles.bulkActionDescription}>
-                          Create a new custom item
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                    
-                    {/* Export Items */}
-                    {/* <TouchableOpacity
-                      style={styles.bulkActionOption}
-                      onPress={() => {
-                        setShowBulkActionsModal(false);
-                        exportPredefinedItems();
-                      }}
-                    >
-                      <Text style={styles.bulkActionIcon}>📤</Text>
-                      <View style={styles.bulkActionContent}>
-                        <Text style={styles.bulkActionTitle}>Export Items</Text>
-                        <Text style={styles.bulkActionDescription}>
-                          Save all items to JSON file
-                        </Text>
-                      </View>
-                    </TouchableOpacity> */}
-
-                    {/* Import JSON */}
-                    {/* <TouchableOpacity
-                      style={styles.bulkActionOption}
-                      onPress={() => {
-                        setShowBulkActionsModal(false);
-                        importPredefinedItems();
-                      }}
-                    >
-                      <Text style={styles.bulkActionIcon}>📥</Text>
-                      <View style={styles.bulkActionContent}>
-                        <Text style={styles.bulkActionTitle}>Import JSON</Text>
-                        <Text style={styles.bulkActionDescription}>
-                          Load items from JSON file
-                        </Text>
-                      </View>
-                    </TouchableOpacity> */}
-
-                    {/* Export CSV */}
-                      <TouchableOpacity
-                        style={styles.bulkActionOption}
-                        onPress={() => {
-                          setShowBulkActionsModal(false);
-                          exportPredefinedItemsCSV();
-                        }}
-                      >
-                        <Text style={styles.bulkActionIcon}>📊</Text>
-                        <View style={styles.bulkActionContent}>
-                          <Text style={styles.bulkActionTitle}>Export as CSV</Text>
-                          <Text style={styles.bulkActionDescription}>
-                            Save all items to CSV file
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-
-                    {/* Import CSV */}
-                    <TouchableOpacity
-                      style={styles.bulkActionOption}
-                      onPress={() => {
-                        setShowBulkActionsModal(false);
-                        importFromCSV();
-                      }}
-                    >
-                      <Text style={styles.bulkActionIcon}>📊</Text>
-                      <View style={styles.bulkActionContent}>
-                        <Text style={styles.bulkActionTitle}>Import CSV</Text>
-                        <Text style={styles.bulkActionDescription}>
-                          Load items from CSV file
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-
-                    {/* CSV Template */}
-                    {/* <TouchableOpacity
-                      style={styles.bulkActionOption}
-                      onPress={() => {
-                        setShowBulkActionsModal(false);
-                        downloadCSVTemplate();
-                      }}
-                    >
-                      <Text style={styles.bulkActionIcon}>📋</Text>
-                      <View style={styles.bulkActionContent}>
-                        <Text style={styles.bulkActionTitle}>CSV Template</Text>
-                        <Text style={styles.bulkActionDescription}>
-                          Download CSV template file
-                        </Text>
-                      </View>
-                    </TouchableOpacity> */}
-
-                    {/* Delete All Items */}
-                    <TouchableOpacity
-                      style={[styles.bulkActionOption, styles.dangerousAction]}
-                      onPress={() => {
-                        setShowBulkActionsModal(false);
-                        confirmDeleteAllItems();
-                      }}
-                    >
-                      <Text style={styles.bulkActionIcon}>🗑️</Text>
-                      <View style={styles.bulkActionContent}>
-                        <Text style={[styles.bulkActionTitle, styles.dangerousActionText]}>
-                          Delete All Items
-                        </Text>
-                        <Text style={[styles.bulkActionDescription, styles.dangerousActionText]}>
-                          Remove all predefined items
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </ScrollView>
-                  
                   <TouchableOpacity
-                    style={styles.overlayCloseButton}
-                    onPress={() => setShowBulkActionsModal(false)}
+                    style={styles.predefinedFilterButton}
+                    onPress={() => setShowPredefinedCategoryModal(true)}
                   >
-                    <Text style={styles.overlayCloseButtonText}>{language.cancel}</Text>
+                    <Text style={styles.predefinedFilterIcon}>☰</Text>
                   </TouchableOpacity>
                 </View>
+                
+                {/* <ScrollView style={styles.predefinedItemsList}>
+                  {getFilteredPredefinedItems().length === 0 ? (
+                    <View style={styles.noPredefinedItemsContainer}>
+                      <Text style={styles.noPredefinedItemsText}>
+                        No items found matching your search
+                      </Text>
+                    </View>
+                  ) : (
+                    getFilteredPredefinedItems().map(item => (
+                      <SwipeableItem
+                        key={item.id}
+                        item={item}
+                        onSelect={handlePredefinedItemSelection}
+                        onDelete={confirmDeleteItem}
+                        isActive={activeSwipeId === item.id}
+                        onSwipeStart={() => setActiveSwipeId(item.id)}
+                        onSwipeReset={() => setActiveSwipeId(null)}
+                      />
+                    ))
+                  )}
+                </ScrollView> */}
+                
+                <ScrollView 
+                  style={styles.predefinedItemsList}
+                  onScroll={({ nativeEvent }) => {
+                    const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
+                    const paddingToBottom = 20;
+                    if (layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom) {
+                      loadMoreItems();
+                    }
+                  }}
+                  scrollEventThrottle={400}
+                >
+                  {loadedPredefinedItems.length === 0 ? (
+                    <View style={styles.noPredefinedItemsContainer}>
+                      <Text style={styles.noPredefinedItemsText}>
+                        No items found matching your search
+                      </Text>
+                    </View>
+                  ) : (
+                    loadedPredefinedItems.map(item => (
+                      <SwipeableItem
+                        key={item.id}
+                        item={item}
+                        onSelect={handlePredefinedItemSelection}
+                        onDelete={confirmDeleteItem}
+                        isActive={activeSwipeId === item.id}
+                        onSwipeStart={() => setActiveSwipeId(item.id)}
+                        onSwipeReset={() => setActiveSwipeId(null)}
+                      />
+                    ))
+                  )}
+                  
+                  {loadedItemsCount < getFilteredPredefinedItems.length && (
+                    <View style={styles.loadingMoreContainer}>
+                      <Text style={styles.loadingMoreText}>Loading more items...</Text>
+                    </View>
+                  )}
+                </ScrollView>
+                <Text style={styles.resultsCount}>
+                  Showing {Math.min(loadedItemsCount, getFilteredPredefinedItems.length)} of {getFilteredPredefinedItems.length} filtered items ({predefinedItems.length} total)
+                </Text>
+
+                <TouchableOpacity
+                  style={styles.bulkActionsButton}
+                  onPress={() => setShowBulkActionsModal(true)}
+                >
+                  <Text style={styles.bulkActionsButtonText}>⚙️ Bulk Actions</Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity
+                  style={styles.closeModalButton}
+                  onPress={() => {
+                    setShowPredefinedItemsModal(false);
+                    setPredefinedSearchText('');
+                    setDebouncedSearchText('');
+                    setPredefinedFilterCategory('All');
+                    setPredefinedSortBy('name');
+                    setShowPredefinedCategoryModal(false);
+                    setShowBulkActionsModal(false);
+                    setLoadedItemsCount(20);
+                    setActiveSwipeId(null);
+                  }}
+                >
+                  <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
+                </TouchableOpacity>
+                
+                {showPredefinedCategoryModal && (
+                  <Modal
+                    visible={showPredefinedCategoryModal}
+                    animationType="slide"
+                    transparent={true}
+                    onRequestClose={() => setShowPredefinedCategoryModal(false)}
+                  >
+                    <View style={styles.filterModalOverlay}>
+                      <View style={styles.filterModalContent}>
+                        {/* Header */}
+                        <View style={styles.filterModalHeader}>
+                          <View style={styles.filterHeaderLeft}>
+                            <Text style={styles.filterIcon}>🔍</Text>
+                            <Text style={styles.filterTitle}>FILTER</Text>
+                          </View>
+                          <TouchableOpacity onPress={() => setShowPredefinedCategoryModal(false)}>
+                            <Text style={styles.closeIcon}>✕</Text>
+                          </TouchableOpacity>
+                        </View>
+                        
+                        {/* Category Section */}
+                        <View style={styles.filterSection}>
+                          <View style={styles.filterSectionHeader}>
+                            <Text style={styles.filterSectionTitle}>CATEGORY</Text>
+                            <TouchableOpacity 
+                              style={styles.clearButton}
+                              onPress={() => setPredefinedFilterCategory('All')}
+                            >
+                              <Text style={styles.clearButtonText}>Clear</Text>
+                            </TouchableOpacity>
+                          </View>
+                          
+                          <View style={styles.categoryChips}>
+                            {getDynamicCategories().map(cat => (
+                              <TouchableOpacity
+                                key={cat}
+                                style={[styles.categoryChip, predefinedFilterCategory === cat && styles.selectedCategoryChip]}
+                                onPress={() => setPredefinedFilterCategory(cat)}
+                              >
+                                <Text style={[styles.categoryChipText, predefinedFilterCategory === cat && styles.selectedCategoryChipText]}>
+                                  {cat}
+                                </Text>
+                              </TouchableOpacity>
+                            ))}
+                            {/* <TouchableOpacity
+                              style={[styles.overlayOption, styles.addNewCategoryOption]}
+                              onPress={() => {
+                                // You can implement a text input modal here
+                                Alert.prompt(
+                                  'New Category',
+                                  'Enter a new category name:',
+                                  [
+                                    { text: 'Cancel', style: 'cancel' },
+                                    {
+                                      text: 'Add',
+                                      onPress: (categoryName) => {
+                                        if (categoryName && categoryName.trim()) {
+                                          const newCategory = categoryName.trim();
+                                          setCategories(prev => [...prev, newCategory]);
+                                          setNewItem(prev => ({ ...prev, category: newCategory }));
+                                          setShowCategoryModal(false);
+                                        }
+                                      }
+                                    }
+                                  ],
+                                  'plain-text'
+                                );
+                              }}
+                            >
+                              <Text style={styles.addNewCategoryText}>+ Add New Category</Text>
+                            </TouchableOpacity> */}
+                          </View>
+                        </View>
+                        
+                        {/* Sort Section */}
+                        <View style={styles.filterSection}>
+                          <View style={styles.filterSectionHeader}>
+                            <Text style={styles.filterSectionTitle}>SORT BY</Text>
+                          </View>
+                          
+                          <TouchableOpacity 
+                            style={styles.sortOption}
+                            onPress={() => setPredefinedSortBy('name')}
+                          >
+                            <Text style={styles.sortOptionText}>Name (A-Z)</Text>
+                            <View style={[styles.sortToggle, predefinedSortBy === 'name' && styles.activeSortToggle]} />
+                          </TouchableOpacity>
+                          
+                          <TouchableOpacity 
+                            style={styles.sortOption}
+                            onPress={() => setPredefinedSortBy('category')}
+                          >
+                            <Text style={styles.sortOptionText}>Category</Text>
+                            <View style={[styles.sortToggle, predefinedSortBy === 'category' && styles.activeSortToggle]} />
+                          </TouchableOpacity>
+                        </View>
+                        
+                        {/* Apply Button */}
+                        <TouchableOpacity
+                          style={styles.applyButton}
+                          onPress={() => setShowPredefinedCategoryModal(false)}
+                          activeOpacity={0.8}
+                        >
+                          <Text style={styles.applyButtonText}>Apply</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </Modal>
+                )}
+              
+                {showBulkActionsModal && (
+                  <View style={styles.overlayModalContainer}>
+                    <View style={styles.bulkActionsModalContent}>
+                      <Text style={styles.overlayModalTitle}>Bulk Actions</Text>
+                      <Text style={styles.bulkActionsSubtitle}>
+                        Manage your predefined items collection
+                      </Text>
+                      
+                      <ScrollView style={styles.bulkActionsScrollView}>
+
+                        {/* Bulk Add Items */}
+                        <TouchableOpacity
+                          style={styles.bulkActionOption}
+                          onPress={() => {
+                            setShowBulkActionsModal(false);
+                            setShowPredefinedItemsModal(false);
+                            setShowBulkAddModal(true);
+                          }}
+                        >
+                          <Text style={styles.bulkActionIcon}>➕</Text>
+                          <View style={styles.bulkActionContent}>
+                            <Text style={styles.bulkActionTitle}>Bulk Add Items</Text>
+                            <Text style={styles.bulkActionDescription}>
+                              Add multiple items at once
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+
+                        {/* Create Custom Item */}
+                        <TouchableOpacity
+                          style={styles.bulkActionOption}
+                          onPress={() => {
+                            setShowBulkActionsModal(false);
+                            setShowPredefinedItemsModal(false);
+                            setShowAddModal(true);
+                            setIsCustomItem(true);
+                          }}
+                        >
+                          <Text style={styles.bulkActionIcon}>✏️</Text>
+                          <View style={styles.bulkActionContent}>
+                            <Text style={styles.bulkActionTitle}>Create Custom Item</Text>
+                            <Text style={styles.bulkActionDescription}>
+                              Create a new custom item
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        
+                        {/* Export Items */}
+                        {/* <TouchableOpacity
+                          style={styles.bulkActionOption}
+                          onPress={() => {
+                            setShowBulkActionsModal(false);
+                            exportPredefinedItems();
+                          }}
+                        >
+                          <Text style={styles.bulkActionIcon}>📤</Text>
+                          <View style={styles.bulkActionContent}>
+                            <Text style={styles.bulkActionTitle}>Export Items</Text>
+                            <Text style={styles.bulkActionDescription}>
+                              Save all items to JSON file
+                            </Text>
+                          </View>
+                        </TouchableOpacity> */}
+
+                        {/* Import JSON */}
+                        {/* <TouchableOpacity
+                          style={styles.bulkActionOption}
+                          onPress={() => {
+                            setShowBulkActionsModal(false);
+                            importPredefinedItems();
+                          }}
+                        >
+                          <Text style={styles.bulkActionIcon}>📥</Text>
+                          <View style={styles.bulkActionContent}>
+                            <Text style={styles.bulkActionTitle}>Import JSON</Text>
+                            <Text style={styles.bulkActionDescription}>
+                              Load items from JSON file
+                            </Text>
+                          </View>
+                        </TouchableOpacity> */}
+
+                        {/* Export CSV */}
+                          <TouchableOpacity
+                            style={styles.bulkActionOption}
+                            onPress={() => {
+                              setShowBulkActionsModal(false);
+                              exportPredefinedItemsCSV();
+                            }}
+                          >
+                            <Text style={styles.bulkActionIcon}>📊</Text>
+                            <View style={styles.bulkActionContent}>
+                              <Text style={styles.bulkActionTitle}>Export as CSV</Text>
+                              <Text style={styles.bulkActionDescription}>
+                                Save all items to CSV file
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+
+                        {/* Import CSV */}
+                        <TouchableOpacity
+                          style={styles.bulkActionOption}
+                          onPress={() => {
+                            setShowBulkActionsModal(false);
+                            importFromCSV();
+                          }}
+                        >
+                          <Text style={styles.bulkActionIcon}>📊</Text>
+                          <View style={styles.bulkActionContent}>
+                            <Text style={styles.bulkActionTitle}>Import CSV</Text>
+                            <Text style={styles.bulkActionDescription}>
+                              Load items from CSV file
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+
+                        {/* CSV Template */}
+                        {/* <TouchableOpacity
+                          style={styles.bulkActionOption}
+                          onPress={() => {
+                            setShowBulkActionsModal(false);
+                            downloadCSVTemplate();
+                          }}
+                        >
+                          <Text style={styles.bulkActionIcon}>📋</Text>
+                          <View style={styles.bulkActionContent}>
+                            <Text style={styles.bulkActionTitle}>CSV Template</Text>
+                            <Text style={styles.bulkActionDescription}>
+                              Download CSV template file
+                            </Text>
+                          </View>
+                        </TouchableOpacity> */}
+
+                        {/* Delete All Items */}
+                        <TouchableOpacity
+                          style={[styles.bulkActionOption, styles.dangerousAction]}
+                          onPress={() => {
+                            setShowBulkActionsModal(false);
+                            confirmDeleteAllItems();
+                          }}
+                        >
+                          <Text style={styles.bulkActionIcon}>🗑️</Text>
+                          <View style={styles.bulkActionContent}>
+                            <Text style={[styles.bulkActionTitle, styles.dangerousActionText]}>
+                              Delete All Items
+                            </Text>
+                            <Text style={[styles.bulkActionDescription, styles.dangerousActionText]}>
+                              Remove all predefined items
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      </ScrollView>
+                      
+                      <TouchableOpacity
+                        style={styles.overlayCloseButton}
+                        onPress={() => setShowBulkActionsModal(false)}
+                      >
+                        <Text style={styles.overlayCloseButtonText}>{language.cancel}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                )}
               </View>
-            )}
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
 
       {/* Add Item Modal */}
@@ -2879,111 +2897,115 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => setShowFilterModal(false)}
       >
-        <View style={styles.filterModalOverlay}>
-          <View style={styles.filterModalContent}>
-            {/* Header */}
-            <View style={styles.filterModalHeader}>
-              <View style={styles.filterHeaderLeft}>
-                <Text style={styles.filterIcon}>🔍</Text>
-                <Text style={styles.filterTitle}>FILTER</Text>
-              </View>
-              <TouchableOpacity onPress={() => setShowFilterModal(false)}>
-                <Text style={styles.closeIcon}>✕</Text>
-              </TouchableOpacity>
-            </View>
-            
-            {/* Category Section */}
-            <View style={styles.filterSection}>
-              <View style={styles.filterSectionHeader}>
-                <Text style={styles.filterSectionTitle}>CATEGORY</Text>
-                <View style={styles.clearButton}>
-                  <Text style={styles.clearButtonText}>Clear</Text>
-                </View>
-              </View>
-              
-              <View style={styles.categoryChips}>
-                {getDynamicCategories().map(cat => (
-                  <TouchableOpacity
-                    key={cat}
-                    style={[styles.categoryChip, filterCategory === cat && styles.selectedCategoryChip]}
-                    onPress={() => setFilterCategory(cat)}
-                  >
-                    <Text style={[styles.categoryChipText, filterCategory === cat && styles.selectedCategoryChipText]}>
-                      {cat}
-                    </Text>
+        <TouchableWithoutFeedback onPress={() => setShowFilterModal(false)}>
+          <View style={styles.filterModalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.filterModalContent}>
+                {/* Header */}
+                <View style={styles.filterModalHeader}>
+                  <View style={styles.filterHeaderLeft}>
+                    <Text style={styles.filterIcon}>🔍</Text>
+                    <Text style={styles.filterTitle}>FILTER</Text>
+                  </View>
+                  <TouchableOpacity onPress={() => setShowFilterModal(false)}>
+                    <Text style={styles.closeIcon}>✕</Text>
                   </TouchableOpacity>
-                ))}
-                {/* <TouchableOpacity
-                  style={[styles.overlayOption, styles.addNewCategoryOption]}
-                  onPress={() => {
-                    // You can implement a text input modal here
-                    Alert.prompt(
-                      'New Category',
-                      'Enter a new category name:',
-                      [
-                        { text: 'Cancel', style: 'cancel' },
-                        {
-                          text: 'Add',
-                          onPress: (categoryName) => {
-                            if (categoryName && categoryName.trim()) {
-                              const newCategory = categoryName.trim();
-                              setCategories(prev => [...prev, newCategory]);
-                              setNewItem(prev => ({ ...prev, category: newCategory }));
-                              setShowCategoryModal(false);
+                </View>
+                
+                {/* Category Section */}
+                <View style={styles.filterSection}>
+                  <View style={styles.filterSectionHeader}>
+                    <Text style={styles.filterSectionTitle}>CATEGORY</Text>
+                    <View style={styles.clearButton}>
+                      <Text style={styles.clearButtonText}>Clear</Text>
+                    </View>
+                  </View>
+                  
+                  <View style={styles.categoryChips}>
+                    {getDynamicCategories().map(cat => (
+                      <TouchableOpacity
+                        key={cat}
+                        style={[styles.categoryChip, filterCategory === cat && styles.selectedCategoryChip]}
+                        onPress={() => setFilterCategory(cat)}
+                      >
+                        <Text style={[styles.categoryChipText, filterCategory === cat && styles.selectedCategoryChipText]}>
+                          {cat}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                    {/* <TouchableOpacity
+                      style={[styles.overlayOption, styles.addNewCategoryOption]}
+                      onPress={() => {
+                        // You can implement a text input modal here
+                        Alert.prompt(
+                          'New Category',
+                          'Enter a new category name:',
+                          [
+                            { text: 'Cancel', style: 'cancel' },
+                            {
+                              text: 'Add',
+                              onPress: (categoryName) => {
+                                if (categoryName && categoryName.trim()) {
+                                  const newCategory = categoryName.trim();
+                                  setCategories(prev => [...prev, newCategory]);
+                                  setNewItem(prev => ({ ...prev, category: newCategory }));
+                                  setShowCategoryModal(false);
+                                }
+                              }
                             }
-                          }
-                        }
-                      ],
-                      'plain-text'
-                    );
-                  }}
+                          ],
+                          'plain-text'
+                        );
+                      }}
+                    >
+                      <Text style={styles.addNewCategoryText}>+ Add New Category</Text>
+                    </TouchableOpacity> */}
+                  </View>
+                </View>
+                
+                {/* Sort Section */}
+                <View style={styles.filterSection}>
+                  <View style={styles.filterSectionHeader}>
+                    <Text style={styles.filterSectionTitle}>SORT BY</Text>
+                  </View>
+                  
+                  <TouchableOpacity 
+                    style={styles.sortOption}
+                    onPress={() => setSortBy('name')}
+                  >
+                    <Text style={styles.sortOptionText}>Name (A-Z)</Text>
+                    <View style={[styles.sortToggle, sortBy === 'name' && styles.activeSortToggle]} />
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity 
+                    style={styles.sortOption}
+                    onPress={() => setSortBy('price')}
+                  >
+                    <Text style={styles.sortOptionText}>Price (High to Low)</Text>
+                    <View style={[styles.sortToggle, sortBy === 'price' && styles.activeSortToggle]} />
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity 
+                    style={styles.sortOption}
+                    onPress={() => setSortBy('amount')}
+                  >
+                    <Text style={styles.sortOptionText}>Total Amount</Text>
+                    <View style={[styles.sortToggle, sortBy === 'amount' && styles.activeSortToggle]} />
+                  </TouchableOpacity>
+                </View>
+                
+                {/* Apply Button */}
+                <TouchableOpacity
+                  style={styles.applyButton}
+                  onPress={() => setShowFilterModal(false)}
+                  activeOpacity={0.8}
                 >
-                  <Text style={styles.addNewCategoryText}>+ Add New Category</Text>
-                </TouchableOpacity> */}
+                  <Text style={styles.applyButtonText}>Apply</Text>
+                </TouchableOpacity>
               </View>
-            </View>
-            
-            {/* Sort Section */}
-            <View style={styles.filterSection}>
-              <View style={styles.filterSectionHeader}>
-                <Text style={styles.filterSectionTitle}>SORT BY</Text>
-              </View>
-              
-              <TouchableOpacity 
-                style={styles.sortOption}
-                onPress={() => setSortBy('name')}
-              >
-                <Text style={styles.sortOptionText}>Name (A-Z)</Text>
-                <View style={[styles.sortToggle, sortBy === 'name' && styles.activeSortToggle]} />
-              </TouchableOpacity>
-              
-              <TouchableOpacity 
-                style={styles.sortOption}
-                onPress={() => setSortBy('price')}
-              >
-                <Text style={styles.sortOptionText}>Price (High to Low)</Text>
-                <View style={[styles.sortToggle, sortBy === 'price' && styles.activeSortToggle]} />
-              </TouchableOpacity>
-              
-              <TouchableOpacity 
-                style={styles.sortOption}
-                onPress={() => setSortBy('amount')}
-              >
-                <Text style={styles.sortOptionText}>Total Amount</Text>
-                <View style={[styles.sortToggle, sortBy === 'amount' && styles.activeSortToggle]} />
-              </TouchableOpacity>
-            </View>
-            
-            {/* Apply Button */}
-            <TouchableOpacity
-              style={styles.applyButton}
-              onPress={() => setShowFilterModal(false)}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.applyButtonText}>Apply</Text>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
 
       {/* Sort Modal */}
@@ -2993,35 +3015,39 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => setShowSortModal(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.selectionModalContent}>
-            <Text style={styles.selectionModalTitle}>{language.selectSortOption}</Text>
-            
-            <ScrollView>
-              {sortOptions.map(option => (
+        <TouchableWithoutFeedback onPress={() => setShowSortModal(false)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.selectionModalContent}>
+                <Text style={styles.selectionModalTitle}>{language.selectSortOption}</Text>
+                
+                <ScrollView>
+                  {sortOptions.map(option => (
+                    <TouchableOpacity
+                      key={option.value}
+                      style={[styles.selectionOption, sortBy === option.value && styles.selectedOption]}
+                      onPress={() => {
+                        setSortBy(option.value);
+                        setShowSortModal(false);
+                      }}
+                    >
+                      <Text style={[styles.selectionOptionText, sortBy === option.value && styles.selectedOptionText]}>
+                        {option.label}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+                
                 <TouchableOpacity
-                  key={option.value}
-                  style={[styles.selectionOption, sortBy === option.value && styles.selectedOption]}
-                  onPress={() => {
-                    setSortBy(option.value);
-                    setShowSortModal(false);
-                  }}
+                  style={styles.closeModalButton}
+                  onPress={() => setShowSortModal(false)}
                 >
-                  <Text style={[styles.selectionOptionText, sortBy === option.value && styles.selectedOptionText]}>
-                    {option.label}
-                  </Text>
+                  <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
                 </TouchableOpacity>
-              ))}
-            </ScrollView>
-            
-            <TouchableOpacity
-              style={styles.closeModalButton}
-              onPress={() => setShowSortModal(false)}
-            >
-              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
-            </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
 
       {/* Bulk Add Modal */}
@@ -3122,151 +3148,159 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => setShowSettingsModal(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.fixedSettingsModalContent}>
-            <Text style={styles.settingsTitle}>{language.settings || 'Settings'}</Text>
-            
-            <ScrollView 
-              style={styles.settingsScrollView}
-              showsVerticalScrollIndicator={true}
-            >
-              {/* App Title Setting */}
-              <View style={styles.settingItem}>
-                <Text style={styles.settingLabel}>{language.appTitleSetting || 'App Title'}</Text>
-                <TextInput
-                  style={styles.settingInput}
-                  value={customAppTitle}
-                  onChangeText={setCustomAppTitle}
-                  placeholder={languageConfigs[selectedLanguage]?.appTitle || 'Inventory Management'}
-                />
-              </View>
-              
-              {/* Language Setting */}
-              <View style={styles.settingItem}>
-                <Text style={styles.settingLabel}>{language.language || 'Language'}</Text>
-                <TouchableOpacity
-                  style={styles.languageSelector}
-                  onPress={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                >
-                  <Text style={styles.languageSelectorText}>
-                    {availableLanguages.find(lang => lang.code === selectedLanguage)?.flag || '🇺🇸'} {' '}
-                    {availableLanguages.find(lang => lang.code === selectedLanguage)?.name || 'English'}
-                  </Text>
-                  <Text style={styles.selectorArrow}>{showLanguageDropdown ? '▲' : '▼'}</Text>
-                </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={() => {
+          setShowSettingsModal(false);
+          setShowLanguageDropdown(false);
+          setShowCurrencyDropdown(false);
+        }}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.fixedSettingsModalContent}>
+                <Text style={styles.settingsTitle}>{language.settings || 'Settings'}</Text>
                 
-                {showLanguageDropdown && (
-                  <View style={styles.languageDropdown}>
-                    <ScrollView 
-                      style={styles.languageDropdownScroll}
-                      nestedScrollEnabled={true}
-                    >
-                      {availableLanguages.map(lang => (
-                        <TouchableOpacity
-                          key={lang.code}
-                          style={[
-                            styles.languageDropdownItem,
-                            selectedLanguage === lang.code && styles.selectedLanguageDropdownItem
-                          ]}
-                          onPress={() => {
-                            console.log('Language selected:', lang.code);
-                            changeLanguage(lang.code);
-                            setShowLanguageDropdown(false);
-                          }}
-                        >
-                          <Text style={styles.languageDropdownFlag}>{lang.flag}</Text>
-                          <Text style={[
-                            styles.languageDropdownText,
-                            selectedLanguage === lang.code && styles.selectedLanguageDropdownText
-                          ]}>
-                            {lang.name}
-                          </Text>
-                          {selectedLanguage === lang.code && (
-                            <Text style={styles.languageDropdownCheck}>✓</Text>
-                          )}
-                        </TouchableOpacity>
-                      ))}
-                    </ScrollView>
-                  </View>
-                )}
-              </View>
-              {/* Currency Setting */}
-              <View style={styles.settingItem}>
-                <Text style={styles.settingLabel}>Currency</Text>
-                <TouchableOpacity
-                  style={styles.languageSelector}
-                  onPress={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
+                <ScrollView 
+                  style={styles.settingsScrollView}
+                  showsVerticalScrollIndicator={true}
                 >
-                  <Text style={styles.languageSelectorText}>
-                    {selectedCurrency} ({availableCurrencies.find(c => c.symbol === selectedCurrency)?.name || 'Custom'})
-                  </Text>
-                  <Text style={styles.selectorArrow}>{showCurrencyDropdown ? '▲' : '▼'}</Text>
-                </TouchableOpacity>
-                
-                {showCurrencyDropdown && (
-                  <View style={styles.languageDropdown}>
-                    <ScrollView 
-                      style={styles.languageDropdownScroll}
-                      nestedScrollEnabled={true}
-                    >
-                      {availableCurrencies.map(curr => (
-                        <TouchableOpacity
-                          key={curr.code}
-                          style={[
-                            styles.languageDropdownItem,
-                            selectedCurrency === curr.symbol && styles.selectedLanguageDropdownItem
-                          ]}
-                          onPress={() => {
-                            setSelectedCurrency(curr.symbol);
-                            setLanguage(prev => ({ ...prev, currency: curr.symbol }));
-                            setShowCurrencyDropdown(false);
-                          }}
-                        >
-                          <Text style={styles.languageDropdownFlag}>{curr.symbol}</Text>
-                          <Text style={[
-                            styles.languageDropdownText,
-                            selectedCurrency === curr.symbol && styles.selectedLanguageDropdownText
-                          ]}>
-                            {curr.name}
-                          </Text>
-                          {selectedCurrency === curr.symbol && (
-                            <Text style={styles.languageDropdownCheck}>✓</Text>
-                          )}
-                        </TouchableOpacity>
-                      ))}
-                    </ScrollView>
+                  {/* App Title Setting */}
+                  <View style={styles.settingItem}>
+                    <Text style={styles.settingLabel}>{language.appTitleSetting || 'App Title'}</Text>
+                    <TextInput
+                      style={styles.settingInput}
+                      value={customAppTitle}
+                      onChangeText={setCustomAppTitle}
+                      placeholder={languageConfigs[selectedLanguage]?.appTitle || 'Inventory Management'}
+                    />
                   </View>
-                )}
+                  
+                  {/* Language Setting */}
+                  <View style={styles.settingItem}>
+                    <Text style={styles.settingLabel}>{language.language || 'Language'}</Text>
+                    <TouchableOpacity
+                      style={styles.languageSelector}
+                      onPress={() => setShowLanguageDropdown(!showLanguageDropdown)}
+                    >
+                      <Text style={styles.languageSelectorText}>
+                        {availableLanguages.find(lang => lang.code === selectedLanguage)?.flag || '🇺🇸'} {' '}
+                        {availableLanguages.find(lang => lang.code === selectedLanguage)?.name || 'English'}
+                      </Text>
+                      <Text style={styles.selectorArrow}>{showLanguageDropdown ? '▲' : '▼'}</Text>
+                    </TouchableOpacity>
+                    
+                    {showLanguageDropdown && (
+                      <View style={styles.languageDropdown}>
+                        <ScrollView 
+                          style={styles.languageDropdownScroll}
+                          nestedScrollEnabled={true}
+                        >
+                          {availableLanguages.map(lang => (
+                            <TouchableOpacity
+                              key={lang.code}
+                              style={[
+                                styles.languageDropdownItem,
+                                selectedLanguage === lang.code && styles.selectedLanguageDropdownItem
+                              ]}
+                              onPress={() => {
+                                console.log('Language selected:', lang.code);
+                                changeLanguage(lang.code);
+                                setShowLanguageDropdown(false);
+                              }}
+                            >
+                              <Text style={styles.languageDropdownFlag}>{lang.flag}</Text>
+                              <Text style={[
+                                styles.languageDropdownText,
+                                selectedLanguage === lang.code && styles.selectedLanguageDropdownText
+                              ]}>
+                                {lang.name}
+                              </Text>
+                              {selectedLanguage === lang.code && (
+                                <Text style={styles.languageDropdownCheck}>✓</Text>
+                              )}
+                            </TouchableOpacity>
+                          ))}
+                        </ScrollView>
+                      </View>
+                    )}
+                  </View>
+                  {/* Currency Setting */}
+                  <View style={styles.settingItem}>
+                    <Text style={styles.settingLabel}>Currency</Text>
+                    <TouchableOpacity
+                      style={styles.languageSelector}
+                      onPress={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
+                    >
+                      <Text style={styles.languageSelectorText}>
+                        {selectedCurrency} ({availableCurrencies.find(c => c.symbol === selectedCurrency)?.name || 'Custom'})
+                      </Text>
+                      <Text style={styles.selectorArrow}>{showCurrencyDropdown ? '▲' : '▼'}</Text>
+                    </TouchableOpacity>
+                    
+                    {showCurrencyDropdown && (
+                      <View style={styles.languageDropdown}>
+                        <ScrollView 
+                          style={styles.languageDropdownScroll}
+                          nestedScrollEnabled={true}
+                        >
+                          {availableCurrencies.map(curr => (
+                            <TouchableOpacity
+                              key={curr.code}
+                              style={[
+                                styles.languageDropdownItem,
+                                selectedCurrency === curr.symbol && styles.selectedLanguageDropdownItem
+                              ]}
+                              onPress={() => {
+                                setSelectedCurrency(curr.symbol);
+                                setLanguage(prev => ({ ...prev, currency: curr.symbol }));
+                                setShowCurrencyDropdown(false);
+                              }}
+                            >
+                              <Text style={styles.languageDropdownFlag}>{curr.symbol}</Text>
+                              <Text style={[
+                                styles.languageDropdownText,
+                                selectedCurrency === curr.symbol && styles.selectedLanguageDropdownText
+                              ]}>
+                                {curr.name}
+                              </Text>
+                              {selectedCurrency === curr.symbol && (
+                                <Text style={styles.languageDropdownCheck}>✓</Text>
+                              )}
+                            </TouchableOpacity>
+                          ))}
+                        </ScrollView>
+                      </View>
+                    )}
+                  </View>
+                </ScrollView>
+                
+                <View style={styles.settingsButtonRow}>
+                  <TouchableOpacity
+                    style={[styles.settingsButton, styles.settingsCancelButton]}
+                    onPress={() => {
+                      setShowSettingsModal(false);
+                      setShowLanguageDropdown(false);
+                      setShowCurrencyDropdown(false);
+                    }}
+                  >
+                    <Text style={styles.settingsCancelButtonText}>{language.cancel}</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={[styles.settingsButton, styles.settingsSaveButton]}
+                    onPress={() => {
+                      updateAppTitle(customAppTitle);
+                      saveSettings();
+                      setShowSettingsModal(false);
+                      setShowLanguageDropdown(false);
+                      setShowCurrencyDropdown(false);
+                    }}
+                  >
+                    <Text style={styles.settingsSaveButtonText}>{language.save}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </ScrollView>
-            
-            <View style={styles.settingsButtonRow}>
-              <TouchableOpacity
-                style={[styles.settingsButton, styles.settingsCancelButton]}
-                onPress={() => {
-                  setShowSettingsModal(false);
-                  setShowLanguageDropdown(false);
-                  setShowCurrencyDropdown(false);
-                }}
-              >
-                <Text style={styles.settingsCancelButtonText}>{language.cancel}</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity
-                style={[styles.settingsButton, styles.settingsSaveButton]}
-                onPress={() => {
-                  updateAppTitle(customAppTitle);
-                  saveSettings();
-                  setShowSettingsModal(false);
-                  setShowLanguageDropdown(false);
-                  setShowCurrencyDropdown(false);
-                }}
-              >
-                <Text style={styles.settingsSaveButtonText}>{language.save}</Text>
-              </TouchableOpacity>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
 
       {/* Language Selection Modal */}
@@ -3276,49 +3310,53 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => setShowLanguageModal(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.selectionModalContent}>
-            <Text style={styles.selectionModalTitle}>{language.language || 'Select Language'}</Text>
-            
-            <ScrollView>
-              {availableLanguages.map(lang => (
+        <TouchableWithoutFeedback onPress={() => setShowLanguageModal(false)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.selectionModalContent}>
+                <Text style={styles.selectionModalTitle}>{language.language || 'Select Language'}</Text>
+                
+                <ScrollView>
+                  {availableLanguages.map(lang => (
+                    <TouchableOpacity
+                      key={lang.code}
+                      style={[
+                        styles.selectionOption,
+                        selectedLanguage === lang.code && styles.selectedOption
+                      ]}
+                      onPress={() => {
+                        console.log('Language selected:', lang.code);
+                        changeLanguage(lang.code);
+                      }}
+                    >
+                      <View style={styles.languageOptionContent}>
+                        <Text style={styles.languageOptionFlag}>{lang.flag}</Text>
+                        <Text style={[
+                          styles.selectionOptionText,
+                          selectedLanguage === lang.code && styles.selectedOptionText
+                        ]}>
+                          {lang.name}
+                        </Text>
+                        {selectedLanguage === lang.code && (
+                          <Text style={styles.languageCheckmark}>✓</Text>
+                        )}
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+                
                 <TouchableOpacity
-                  key={lang.code}
-                  style={[
-                    styles.selectionOption,
-                    selectedLanguage === lang.code && styles.selectedOption
-                  ]}
-                  onPress={() => {
-                    console.log('Language selected:', lang.code);
-                    changeLanguage(lang.code);
-                  }}
+                  style={styles.closeModalButton}
+                  onPress={() => setShowLanguageModal(false)}
                 >
-                  <View style={styles.languageOptionContent}>
-                    <Text style={styles.languageOptionFlag}>{lang.flag}</Text>
-                    <Text style={[
-                      styles.selectionOptionText,
-                      selectedLanguage === lang.code && styles.selectedOptionText
-                    ]}>
-                      {lang.name}
-                    </Text>
-                    {selectedLanguage === lang.code && (
-                      <Text style={styles.languageCheckmark}>✓</Text>
-                    )}
-                  </View>
+                  <Text style={styles.closeModalButtonText}>
+                    {language.cancel || 'Cancel'}
+                  </Text>
                 </TouchableOpacity>
-              ))}
-            </ScrollView>
-            
-            <TouchableOpacity
-              style={styles.closeModalButton}
-              onPress={() => setShowLanguageModal(false)}
-            >
-              <Text style={styles.closeModalButtonText}>
-                {language.cancel || 'Cancel'}
-              </Text>
-            </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </SafeAreaView>
   );
