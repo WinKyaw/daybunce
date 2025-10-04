@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kywin.daybunce"
+      "bundleIdentifier": "com.investSight.daybunce"
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +30,7 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.kywin.daybunce"
+      "package": "com.investSight.daybunce"
     },
     "web": {
       "favicon": "./assets/favicon.png"
