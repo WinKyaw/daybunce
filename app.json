@@ -19,8 +19,9 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.investSight.daybunce",
-      "icon": "./assets/icon.png"
+      "bundleIdentifier": "com.inventsight.daybunce",
+      "icon": "./assets/icon-ios.png",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,7 +32,8 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.investSight.daybunce"
+      "package": "com.inventsight.daybunce",
+      "buildNumber": "2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
