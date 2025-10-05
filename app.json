@@ -19,7 +19,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.investSight.daybunce"
+      "bundleIdentifier": "com.investSight.daybunce",
+      "icon": "./assets/icon.png"
     },
     "android": {
       "adaptiveIcon": {
