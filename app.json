@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.inventsight.daybunce",
-      "icon": "./assets/icon-ios.png",
+      "icon": "./assets/icon.png",
       "buildNumber": "2"
     },
     "android": {
