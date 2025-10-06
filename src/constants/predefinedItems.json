@@ -58,11 +58,5 @@
     "name": "Smartphone",
     "category": "Electronics",
     "unitType": "pcs"
-  },
-  {
-    "id": "tester",
-    "name": "Test Item",
-    "category": "Testing",
-    "unitType": "pcs"
   }
 ]
