@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.kywin.daybunce'
+    namespace 'com.inventsight.daybunce'
     defaultConfig {
-        applicationId 'com.kywin.daybunce'
+        applicationId 'com.inventsight.daybunce'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

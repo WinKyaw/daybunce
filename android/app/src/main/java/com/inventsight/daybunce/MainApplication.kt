@@ -1,4 +1,4 @@
-package com.kywin.daybunce
+package com.inventsight.daybunce
 
 import android.app.Application
 import android.content.res.Configuration
