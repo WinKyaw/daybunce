@@ -64,27 +64,70 @@ const defaultLanguage = {
   shareViaEmail: 'Share via Email',
   shareViaText: 'Share via Text',
   close: 'Close',
+  bulkActions: 'Bulk Actions',
+  managePredefined: 'Manage your predefined items collection',
+  bulkAddItems: 'Bulk Add Items',
+  bulkAddDescription: 'Add multiple items at once',
+  createCustomItem: 'Create Custom Item',
+  createCustomDescription: 'Create a new custom item',
+  exportCSV: 'Export as CSV',
+  exportCSVDescription: 'Save all items to CSV file',
+  importCSV: 'Import CSV',
+  importCSVDescription: 'Load items from CSV file',
+  deleteAllItems: 'Delete All Items',
+  deleteAllDescription: 'Remove all predefined items',
+  showingItems: 'Showing {{count}} of {{total}} filtered items ({{all}} total)',
+  tapToViewReceipt: 'Tap to view receipt',
+  totalItems: 'Total Items',
+  delete: 'Delete',
+  deleteItem: 'Delete Item',
+  deleteItemConfirm: 'Are you sure you want to delete this item from predefined items?',
+  deleteAllConfirm: 'Are you sure you want to delete all {{count}} predefined items? This action cannot be undone.',
+  bulkAddInstructions: 'Enter one item per line. You can use formats like:\n- Apple\n- Banana, Food, lb\n- Coffee, Beverages, kg',
+  bulkAddDefaults: 'Default values for items without category/unit',
 };
 
 const availableLanguages = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
   { code: 'es', name: 'Español', flag: '🇪🇸' },
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵' },
+  { code: 'ko', name: '한국어', flag: '🇰🇷' },
+  { code: 'my', name: 'မြန်မာ', flag: '🇲🇲' },
+  { code: 'th', name: 'ไทย', flag: '🇹🇭' },
+  { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
+  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
+  { code: 'ms', name: 'Bahasa Melayu', flag: '🇲🇾' },
+  { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
   { code: 'it', name: 'Italiano', flag: '🇮🇹' },
   { code: 'pt', name: 'Português', flag: '🇧🇷' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
-  { code: 'ja', name: '日本語', flag: '🇯🇵' },
-  { code: 'my', name: 'မြန်မာ', flag: '🇲🇲' },
+  
+  // { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+  // { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+  // { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
 ];
 
 const availableCurrencies = [
   { code: 'USD', symbol: '$', name: 'US Dollar' },
   { code: 'EUR', symbol: '€', name: 'Euro' },
-  { code: 'MMK', symbol: 'Ks', name: 'Myanmar Kyat' },
   { code: 'GBP', symbol: '£', name: 'British Pound' },
   { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
   { code: 'CNY', symbol: '¥', name: 'Chinese Yuan' },
+  { code: 'MMK', symbol: 'Ks', name: 'Myanmar Kyat' },
+  { code: 'BRL', symbol: 'R$', name: 'Brazilian Real' },
+  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
+  { code: 'THB', symbol: '฿', name: 'Thai Baht' },
+  { code: 'VND', symbol: '₫', name: 'Vietnamese Dong' },
+  { code: 'PHP', symbol: '₱', name: 'Philippine Peso' },
+  { code: 'IDR', symbol: 'Rp', name: 'Indonesian Rupiah' },
+  { code: 'SGD', symbol: 'S$', name: 'Singapore Dollar' },
+  { code: 'MYR', symbol: 'RM', name: 'Malaysian Ringgit' },
+  { code: 'KRW', symbol: '₩', name: 'South Korean Won' },
+  { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
+  { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar' },
+  { code: 'MXN', symbol: 'Mex$', name: 'Mexican Peso' },
 ];
 
 // Extended language configurations
@@ -132,6 +175,27 @@ const languageConfigs = {
     language: 'Language',
     appTitleSetting: 'App Title',
     profile: 'Profile',
+    bulkActions: 'Bulk Actions',
+    managePredefined: 'Manage your predefined items collection',
+    bulkAddItems: 'Bulk Add Items',
+    bulkAddDescription: 'Add multiple items at once',
+    createCustomItem: 'Create Custom Item',
+    createCustomDescription: 'Create a new custom item',
+    exportCSV: 'Export as CSV',
+    exportCSVDescription: 'Save all items to CSV file',
+    importCSV: 'Import CSV',
+    importCSVDescription: 'Load items from CSV file',
+    deleteAllItems: 'Delete All Items',
+    deleteAllDescription: 'Remove all predefined items',
+    showingItems: 'Showing {{count}} of {{total}} filtered items ({{all}} total)',
+    tapToViewReceipt: 'Tap to view receipt',
+    totalItems: 'Total Items',
+    delete: 'Delete',
+    deleteItem: 'Delete Item',
+    deleteItemConfirm: 'Are you sure you want to delete this item from predefined items?',
+    deleteAllConfirm: 'Are you sure you want to delete all {{count}} predefined items? This action cannot be undone.',
+    bulkAddInstructions: 'Enter one item per line. You can use formats like:\n- Apple\n- Banana, Food, lb\n- Coffee, Beverages, kg',
+    bulkAddDefaults: 'Default values for items without category/unit',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -176,6 +240,39 @@ const languageConfigs = {
     language: 'Idioma',
     appTitleSetting: 'Título de la App',
     profile: 'Perfil',
+    bulkActions: 'Acciones Masivas',
+    managePredefined: 'Administre su colección de artículos predefinidos',
+    bulkAddItems: 'Agregar Artículos Masivamente',
+    bulkAddDescription: 'Agregar múltiples artículos a la vez',
+    createCustomItem: 'Crear Artículo Personalizado',
+    createCustomDescription: 'Crear un nuevo artículo personalizado',
+    exportCSV: 'Exportar como CSV',
+    exportCSVDescription: 'Guardar todos los artículos en archivo CSV',
+    importCSV: 'Importar CSV',
+    importCSVDescription: 'Cargar artículos desde archivo CSV',
+    deleteAllItems: 'Eliminar Todos los Artículos',
+    deleteAllDescription: 'Eliminar todos los artículos predefinidos',
+    showingItems: 'Mostrando {{count}} de {{total}} artículos filtrados ({{all}} total)',
+    tapToViewReceipt: 'Toque para ver el recibo',
+    bulkActions: 'Acciones Masivas',
+    managePredefined: 'Administre su colección de artículos predefinidos',
+    bulkAddItems: 'Agregar Artículos Masivamente',
+    bulkAddDescription: 'Agregar múltiples artículos a la vez',
+    createCustomItem: 'Crear Artículo Personalizado',
+    createCustomDescription: 'Crear un nuevo artículo personalizado',
+    exportCSV: 'Exportar como CSV',
+    exportCSVDescription: 'Guardar todos los artículos en archivo CSV',
+    importCSV: 'Importar CSV',
+    importCSVDescription: 'Cargar artículos desde archivo CSV',
+    deleteAllItems: 'Eliminar Todos los Artículos',
+    deleteAllDescription: 'Eliminar todos los artículos predefinidos',
+    totalItems: 'Artículos Totales',
+    delete: 'Eliminar',
+    deleteItem: 'Eliminar Artículo',
+    deleteItemConfirm: '¿Está seguro de que desea eliminar este artículo de los artículos predefinidos?',
+    deleteAllConfirm: '¿Está seguro de que desea eliminar todos los {{count}} artículos predefinidos? Esta acción no se puede deshacer.',
+    bulkAddInstructions: 'Ingrese un artículo por línea. Puede usar formatos como:\n- Manzana\n- Plátano, Comida, lb\n- Café, Bebidas, kg',
+    bulkAddDefaults: 'Valores predeterminados para artículos sin categoría/unidad',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -220,6 +317,26 @@ const languageConfigs = {
     language: 'Langue',
     appTitleSetting: 'Titre de l\'App',
     profile: 'Profil',
+    showingItems: 'Affichage de {{count}} sur {{total}} articles filtrés ({{all}} total)',
+    bulkActions: 'Actions en Masse',
+    managePredefined: 'Gérez votre collection d\'articles prédéfinis',
+    bulkAddItems: 'Ajouter des Articles en Masse',
+    bulkAddDescription: 'Ajouter plusieurs articles à la fois',
+    createCustomItem: 'Créer un Article Personnalisé',
+    createCustomDescription: 'Créer un nouvel article personnalisé',
+    exportCSV: 'Exporter en CSV',
+    exportCSVDescription: 'Enregistrer tous les articles dans un fichier CSV',
+    importCSV: 'Importer CSV',
+    importCSVDescription: 'Charger des articles depuis un fichier CSV',
+    deleteAllItems: 'Supprimer Tous les Articles',
+    deleteAllDescription: 'Supprimer tous les articles prédéfinis',
+    totalItems: 'Total des Articles',
+    delete: 'Supprimer',
+    deleteItem: 'Supprimer l\'Article',
+    deleteItemConfirm: 'Êtes-vous sûr de vouloir supprimer cet article des articles prédéfinis?',
+    deleteAllConfirm: 'Êtes-vous sûr de vouloir supprimer tous les {{count}} articles prédéfinis? Cette action ne peut pas être annulée.',
+    bulkAddInstructions: 'Entrez un article par ligne. Vous pouvez utiliser des formats comme:\n- Pomme\n- Banane, Nourriture, lb\n- Café, Boissons, kg',
+    bulkAddDefaults: 'Valeurs par défaut pour les articles sans catégorie/unité',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -264,6 +381,26 @@ const languageConfigs = {
     language: 'Sprache',
     appTitleSetting: 'App-Titel',
     profile: 'Profil',
+    showingItems: 'Zeige {{count}} von {{total}} gefilterten Artikeln ({{all}} gesamt)',
+    bulkActions: 'Massenaktionen',
+    managePredefined: 'Verwalten Sie Ihre vordefinierte Artikelsammlung',
+    bulkAddItems: 'Artikel in Masse Hinzufügen',
+    bulkAddDescription: 'Mehrere Artikel auf einmal hinzufügen',
+    createCustomItem: 'Benutzerdefinierten Artikel Erstellen',
+    createCustomDescription: 'Neuen benutzerdefinierten Artikel erstellen',
+    exportCSV: 'Als CSV Exportieren',
+    exportCSVDescription: 'Alle Artikel in CSV-Datei speichern',
+    importCSV: 'CSV Importieren',
+    importCSVDescription: 'Artikel aus CSV-Datei laden',
+    deleteAllItems: 'Alle Artikel Löschen',
+    deleteAllDescription: 'Alle vordefinierten Artikel entfernen',
+    totalItems: 'Artikel Gesamt',
+    delete: 'Löschen',
+    deleteItem: 'Artikel Löschen',
+    deleteItemConfirm: 'Sind Sie sicher, dass Sie diesen Artikel aus den vordefinierten Artikeln löschen möchten?',
+    deleteAllConfirm: 'Sind Sie sicher, dass Sie alle {{count}} vordefinierten Artikel löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
+    bulkAddInstructions: 'Geben Sie einen Artikel pro Zeile ein. Sie können Formate verwenden wie:\n- Apfel\n- Banane, Essen, lb\n- Kaffee, Getränke, kg',
+    bulkAddDefaults: 'Standardwerte für Artikel ohne Kategorie/Einheit',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -308,6 +445,26 @@ const languageConfigs = {
     language: 'Lingua',
     appTitleSetting: 'Titolo App',
     profile: 'Profilo',
+    showingItems: 'Mostrando {{count}} di {{total}} articoli filtrati ({{all}} totale)',
+    bulkActions: 'Azioni di Massa',
+    managePredefined: 'Gestisci la tua collezione di articoli predefiniti',
+    bulkAddItems: 'Aggiungi Articoli in Massa',
+    bulkAddDescription: 'Aggiungi più articoli contemporaneamente',
+    createCustomItem: 'Crea Articolo Personalizzato',
+    createCustomDescription: 'Crea un nuovo articolo personalizzato',
+    exportCSV: 'Esporta come CSV',
+    exportCSVDescription: 'Salva tutti gli articoli in file CSV',
+    importCSV: 'Importa CSV',
+    importCSVDescription: 'Carica articoli da file CSV',
+    deleteAllItems: 'Elimina Tutti gli Articoli',
+    deleteAllDescription: 'Rimuovi tutti gli articoli predefiniti',
+    totalItems: 'Articoli Totali',
+    delete: 'Elimina',
+    deleteItem: 'Elimina Articolo',
+    deleteItemConfirm: 'Sei sicuro di voler eliminare questo articolo dagli articoli predefiniti?',
+    deleteAllConfirm: 'Sei sicuro di voler eliminare tutti i {{count}} articoli predefiniti? Questa azione non può essere annullata.',
+    bulkAddInstructions: 'Inserisci un articolo per riga. Puoi usare formati come:\n- Mela\n- Banana, Cibo, lb\n- Caffè, Bevande, kg',
+    bulkAddDefaults: 'Valori predefiniti per articoli senza categoria/unità',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -352,6 +509,26 @@ const languageConfigs = {
     language: 'Idioma',
     appTitleSetting: 'Título do App',
     profile: 'Perfil',
+    showingItems: 'Mostrando {{count}} de {{total}} itens filtrados ({{all}} total)',
+    bulkActions: 'Ações em Massa',
+    managePredefined: 'Gerencie sua coleção de itens predefinidos',
+    bulkAddItems: 'Adicionar Itens em Massa',
+    bulkAddDescription: 'Adicionar vários itens de uma vez',
+    createCustomItem: 'Criar Item Personalizado',
+    createCustomDescription: 'Criar um novo item personalizado',
+    exportCSV: 'Exportar como CSV',
+    exportCSVDescription: 'Salvar todos os itens em arquivo CSV',
+    importCSV: 'Importar CSV',
+    importCSVDescription: 'Carregar itens de arquivo CSV',
+    deleteAllItems: 'Excluir Todos os Itens',
+    deleteAllDescription: 'Remover todos os itens predefinidos',
+    totalItems: 'Total de Itens',
+    delete: 'Excluir',
+    deleteItem: 'Excluir Item',
+    deleteItemConfirm: 'Tem certeza de que deseja excluir este item dos itens predefinidos?',
+    deleteAllConfirm: 'Tem certeza de que deseja excluir todos os {{count}} itens predefinidos? Esta ação não pode ser desfeita.',
+    bulkAddInstructions: 'Digite um item por linha. Você pode usar formatos como:\n- Maçã\n- Banana, Comida, lb\n- Café, Bebidas, kg',
+    bulkAddDefaults: 'Valores padrão para itens sem categoria/unidade',
   },
   zh: {
     appTitle: '库存管理',
@@ -396,6 +573,20 @@ const languageConfigs = {
     language: '语言',
     appTitleSetting: '应用标题',
     profile: '个人资料',
+    bulkActions: '批量操作',
+    managePredefined: '管理您的预定义物品集合',
+    bulkAddItems: '批量添加物品',
+    bulkAddDescription: '一次添加多个物品',
+    createCustomItem: '创建自定义物品',
+    createCustomDescription: '创建新的自定义物品',
+    exportCSV: '导出为CSV',
+    exportCSVDescription: '将所有物品保存到CSV文件',
+    importCSV: '导入CSV',
+    importCSVDescription: '从CSV文件加载物品',
+    deleteAllItems: '删除所有物品',
+    deleteAllDescription: '删除所有预定义物品',
+    showingItems: '显示 {{count}} / {{total}} 已筛选物品（共 {{all}} 个）',
+    tapToViewReceipt: '点击查看收据',
   },
   ja: {
     appTitle: '在庫管理',
@@ -440,16 +631,350 @@ const languageConfigs = {
     language: '言語',
     appTitleSetting: 'アプリタイトル',
     profile: 'プロフィール',
+    bulkActions: '一括操作',
+    managePredefined: '事前定義アイテムコレクションを管理',
+    bulkAddItems: '一括アイテム追加',
+    bulkAddDescription: '複数のアイテムを一度に追加',
+    createCustomItem: 'カスタムアイテムを作成',
+    createCustomDescription: '新しいカスタムアイテムを作成',
+    exportCSV: 'CSVとしてエクスポート',
+    exportCSVDescription: 'すべてのアイテムをCSVファイルに保存',
+    importCSV: 'CSVをインポート',
+    importCSVDescription: 'CSVファイルからアイテムを読み込む',
+    deleteAllItems: 'すべてのアイテムを削除',
+    deleteAllDescription: '事前定義アイテムをすべて削除',
+    showingItems: '{{count}} / {{total}} 件の絞り込みアイテムを表示中（全 {{all}} 件）',
+    tapToViewReceipt: 'タップしてレシートを表示',
   },
-   my: {
-    appTitle: 'ပစ္စည်းစာရင်းစီမံခန့်ခွဲမှု',
+  ko: {
+    appTitle: '재고 관리',
+    searchPlaceholder: '품목 검색...',
+    filterByCategory: '카테고리별 필터',
+    sortBy: '정렬 기준',
+    addItem: '품목 추가',
+    itemName: '품목 이름',
+    price: '가격',
+    unitsSold: '판매 수량',
+    currency: '₩',
+    totalAmount: '총액',
+    category: '카테고리',
+    unitType: '단위 유형',
+    save: '저장',
+    cancel: '취소',
+    dailyTotal: '일일 합계',
+    noItems: '이 날짜에 품목이 없습니다',
+    scanWithOCR: 'OCR로 스캔',
+    takePhoto: '사진 촬영',
+    selectFromGallery: '갤러리에서 선택',
+    all: '전체',
+    sharePDF: 'PDF로 공유',
+    confirmDay: '날짜 확인',
+    dayConfirmed: '확인됨',
+    sortByName: '이름',
+    sortByPrice: '가격',
+    sortByAmount: '총액',
+    filters: '필터',
+    sort: '정렬',
+    selectCategory: '카테고리 선택',
+    selectSortOption: '정렬 옵션 선택',
+    selectUnitType: '단위 유형 선택',
+    customItem: '맞춤 품목 만들기',
+    predefinedItems: '사전 정의된 품목 선택',
+    selectItemType: '품목 유형 선택',
+    dailySummary: '일일 판매 요약',
+    shareViaEmail: '이메일로 공유',
+    shareViaText: '문자로 공유',
+    close: '닫기',
+    settings: '설정',
+    language: '언어',
+    appTitleSetting: '앱 제목',
+    profile: '프로필',
+    showingItems: '{{count}} / {{total}} 필터링된 항목 표시 중 (총 {{all}}개)',
+    bulkActions: '일괄 작업',
+    managePredefined: '사전 정의된 품목 컬렉션 관리',
+    bulkAddItems: '일괄 품목 추가',
+    bulkAddDescription: '여러 품목을 한 번에 추가',
+    createCustomItem: '맞춤 품목 만들기',
+    createCustomDescription: '새 맞춤 품목 만들기',
+    exportCSV: 'CSV로 내보내기',
+    exportCSVDescription: '모든 품목을 CSV 파일로 저장',
+    importCSV: 'CSV 가져오기',
+    importCSVDescription: 'CSV 파일에서 품목 로드',
+    deleteAllItems: '모든 품목 삭제',
+    deleteAllDescription: '사전 정의된 품목 모두 제거',
+    totalItems: '총 품목',
+    delete: '삭제',
+    deleteItem: '품목 삭제',
+    deleteItemConfirm: '사전 정의된 품목에서 이 품목을 삭제하시겠습니까?',
+    deleteAllConfirm: '모든 {{count}}개의 사전 정의된 품목을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.',
+    bulkAddInstructions: '한 줄에 하나의 품목을 입력하세요. 다음과 같은 형식을 사용할 수 있습니다:\n- 사과\n- 바나나, 식품, lb\n- 커피, 음료, kg',
+    bulkAddDefaults: '카테고리/단위가 없는 품목의 기본값',
+  },
+  th: {
+    appTitle: 'การจัดการสินค้าคงคลัง',
+    searchPlaceholder: 'ค้นหาสินค้า...',
+    filterByCategory: 'กรองตามหมวดหมู่',
+    sortBy: 'เรียงตาม',
+    addItem: 'เพิ่มสินค้า',
+    itemName: 'ชื่อสินค้า',
+    price: 'ราคา',
+    unitsSold: 'จำนวนที่ขาย',
+    currency: '฿',
+    totalAmount: 'ยอดรวม',
+    category: 'หมวดหมู่',
+    unitType: 'ประเภทหน่วย',
+    save: 'บันทึก',
+    cancel: 'ยกเลิก',
+    dailyTotal: 'ยอดรวมรายวัน',
+    noItems: 'ไม่มีสินค้าในวันนี้',
+    scanWithOCR: 'สแกนด้วย OCR',
+    takePhoto: 'ถ่ายรูป',
+    selectFromGallery: 'เลือกจากแกลเลอรี่',
+    all: 'ทั้งหมด',
+    sharePDF: 'แชร์เป็น PDF',
+    confirmDay: 'ยืนยันวัน',
+    dayConfirmed: 'ยืนยันแล้ว',
+    sortByName: 'ชื่อ',
+    sortByPrice: 'ราคา',
+    sortByAmount: 'ยอดรวม',
+    filters: 'ตัวกรอง',
+    sort: 'เรียง',
+    selectCategory: 'เลือกหมวดหมู่',
+    selectSortOption: 'เลือกตัวเลือกการเรียง',
+    selectUnitType: 'เลือกประเภทหน่วย',
+    customItem: 'สร้างสินค้าที่กำหนดเอง',
+    predefinedItems: 'เลือกสินค้าที่กำหนดไว้',
+    selectItemType: 'เลือกประเภทสินค้า',
+    dailySummary: 'สรุปยอดขายรายวัน',
+    shareViaEmail: 'แชร์ทางอีเมล',
+    shareViaText: 'แชร์ทางข้อความ',
+    close: 'ปิด',
+    settings: 'การตั้งค่า',
+    language: 'ภาษา',
+    appTitleSetting: 'ชื่อแอป',
+    profile: 'โปรไฟล์',
+    showingItems: 'แสดง {{count}} จาก {{total}} รายการที่กรอง ({{all}} ทั้งหมด)',
+    bulkActions: 'การดำเนินการจำนวนมาก',
+    managePredefined: 'จัดการคอลเลกชันสินค้าที่กำหนดไว้ล่วงหน้า',
+    bulkAddItems: 'เพิ่มสินค้าจำนวนมาก',
+    bulkAddDescription: 'เพิ่มหลายรายการพร้อมกัน',
+    createCustomItem: 'สร้างสินค้าที่กำหนดเอง',
+    createCustomDescription: 'สร้างสินค้าที่กำหนดเองใหม่',
+    exportCSV: 'ส่งออกเป็น CSV',
+    exportCSVDescription: 'บันทึกสินค้าทั้งหมดเป็นไฟล์ CSV',
+    importCSV: 'นำเข้า CSV',
+    importCSVDescription: 'โหลดสินค้าจากไฟล์ CSV',
+    deleteAllItems: 'ลบสินค้าทั้งหมด',
+    deleteAllDescription: 'ลบสินค้าที่กำหนดไว้ล่วงหน้าทั้งหมด',
+    totalItems: 'สินค้าทั้งหมด',
+    delete: 'ลบ',
+    deleteItem: 'ลบสินค้า',
+    deleteItemConfirm: 'คุณแน่ใจหรือไม่ว่าต้องการลบสินค้านี้จากรายการที่กำหนดไว้ล่วงหน้า?',
+    deleteAllConfirm: 'คุณแน่ใจหรือไม่ว่าต้องการลบสินค้าที่กำหนดไว้ล่วงหน้าทั้งหมด {{count}} รายการ? การดำเนินการนี้ไม่สามารถยกเลิกได้',
+    bulkAddInstructions: 'ป้อนสินค้าหนึ่งรายการต่อบรรทัด คุณสามารถใช้รูปแบบเช่น:\n- แอปเปิ้ล\n- กล้วย, อาหาร, lb\n- กาแฟ, เครื่องดื่ม, kg',
+    bulkAddDefaults: 'ค่าเริ่มต้นสำหรับสินค้าที่ไม่มีหมวดหมู่/หน่วย',
+  },
+  vi: {
+    appTitle: 'Quản Lý Hàng Tồn Kho',
+    searchPlaceholder: 'Tìm kiếm sản phẩm...',
+    filterByCategory: 'Lọc theo Danh Mục',
+    sortBy: 'Sắp Xếp Theo',
+    addItem: 'Thêm Sản Phẩm',
+    itemName: 'Tên Sản Phẩm',
+    price: 'Giá',
+    unitsSold: 'Số Lượng Bán',
+    currency: '₫',
+    totalAmount: 'Tổng Số Tiền',
+    category: 'Danh Mục',
+    unitType: 'Loại Đơn Vị',
+    save: 'Lưu',
+    cancel: 'Hủy',
+    dailyTotal: 'Tổng Hàng Ngày',
+    noItems: 'Không có sản phẩm cho ngày này',
+    scanWithOCR: 'Quét bằng OCR',
+    takePhoto: 'Chụp Ảnh',
+    selectFromGallery: 'Chọn từ Thư Viện',
+    all: 'Tất Cả',
+    sharePDF: 'Chia Sẻ dưới dạng PDF',
+    confirmDay: 'Xác Nhận Ngày',
+    dayConfirmed: 'Đã Xác Nhận',
+    sortByName: 'Tên',
+    sortByPrice: 'Giá',
+    sortByAmount: 'Tổng Số Tiền',
+    filters: 'Bộ Lọc',
+    sort: 'Sắp Xếp',
+    selectCategory: 'Chọn Danh Mục',
+    selectSortOption: 'Chọn Tùy Chọn Sắp Xếp',
+    selectUnitType: 'Chọn Loại Đơn Vị',
+    customItem: 'Tạo Sản Phẩm Tùy Chỉnh',
+    predefinedItems: 'Chọn Sản Phẩm Có Sẵn',
+    selectItemType: 'Chọn Loại Sản Phẩm',
+    dailySummary: 'Tóm Tắt Doanh Số Hàng Ngày',
+    shareViaEmail: 'Chia Sẻ qua Email',
+    shareViaText: 'Chia Sẻ qua Tin Nhắn',
+    close: 'Đóng',
+    settings: 'Cài Đặt',
+    language: 'Ngôn Ngữ',
+    appTitleSetting: 'Tiêu Đề Ứng Dụng',
+    profile: 'Hồ Sơ',
+    showingItems: 'Hiển thị {{count}} trong số {{total}} mục đã lọc ({{all}} tổng)',
+    bulkActions: 'Hành Động Hàng Loạt',
+    managePredefined: 'Quản lý bộ sưu tập mục có sẵn của bạn',
+    bulkAddItems: 'Thêm Mục Hàng Loạt',
+    bulkAddDescription: 'Thêm nhiều mục cùng một lúc',
+    createCustomItem: 'Tạo Mục Tùy Chỉnh',
+    createCustomDescription: 'Tạo mục tùy chỉnh mới',
+    exportCSV: 'Xuất dưới dạng CSV',
+    exportCSVDescription: 'Lưu tất cả các mục vào tệp CSV',
+    importCSV: 'Nhập CSV',
+    importCSVDescription: 'Tải mục từ tệp CSV',
+    deleteAllItems: 'Xóa Tất Cả Mục',
+    deleteAllDescription: 'Xóa tất cả các mục có sẵn',
+    totalItems: 'Tổng Số Mục',
+    delete: 'Xóa',
+    deleteItem: 'Xóa Mục',
+    deleteItemConfirm: 'Bạn có chắc chắn muốn xóa mục này khỏi các mục có sẵn không?',
+    deleteAllConfirm: 'Bạn có chắc chắn muốn xóa tất cả {{count}} mục có sẵn không? Hành động này không thể hoàn tác.',
+    bulkAddInstructions: 'Nhập một mục mỗi dòng. Bạn có thể sử dụng các định dạng như:\n- Táo\n- Chuối, Thực phẩm, lb\n- Cà phê, Đồ uống, kg',
+    bulkAddDefaults: 'Giá trị mặc định cho các mục không có danh mục/đơn vị',
+  },
+  id: {
+    appTitle: 'Manajemen Inventaris',
+    searchPlaceholder: 'Cari barang...',
+    filterByCategory: 'Filter berdasarkan Kategori',
+    sortBy: 'Urutkan Berdasarkan',
+    addItem: 'Tambah Barang',
+    itemName: 'Nama Barang',
+    price: 'Harga',
+    unitsSold: 'Unit Terjual',
+    currency: 'Rp',
+    totalAmount: 'Jumlah Total',
+    category: 'Kategori',
+    unitType: 'Jenis Unit',
+    save: 'Simpan',
+    cancel: 'Batal',
+    dailyTotal: 'Total Harian',
+    noItems: 'Tidak ada barang untuk tanggal ini',
+    scanWithOCR: 'Pindai dengan OCR',
+    takePhoto: 'Ambil Foto',
+    selectFromGallery: 'Pilih dari Galeri',
+    all: 'Semua',
+    sharePDF: 'Bagikan sebagai PDF',
+    confirmDay: 'Konfirmasi Hari',
+    dayConfirmed: 'Dikonfirmasi',
+    sortByName: 'Nama',
+    sortByPrice: 'Harga',
+    sortByAmount: 'Jumlah Total',
+    filters: 'Filter',
+    sort: 'Urutkan',
+    selectCategory: 'Pilih Kategori',
+    selectSortOption: 'Pilih Opsi Urutan',
+    selectUnitType: 'Pilih Jenis Unit',
+    customItem: 'Buat Barang Kustom',
+    predefinedItems: 'Pilih Barang Terdefinisi',
+    selectItemType: 'Pilih Jenis Barang',
+    dailySummary: 'Ringkasan Penjualan Harian',
+    shareViaEmail: 'Bagikan via Email',
+    shareViaText: 'Bagikan via Teks',
+    close: 'Tutup',
+    settings: 'Pengaturan',
+    language: 'Bahasa',
+    appTitleSetting: 'Judul Aplikasi',
+    profile: 'Profil',
+    showingItems: 'Menampilkan {{count}} dari {{total}} item yang difilter ({{all}} total)',
+    bulkActions: 'Tindakan Massal',
+    managePredefined: 'Kelola koleksi barang terdefinisi Anda',
+    bulkAddItems: 'Tambah Barang Massal',
+    bulkAddDescription: 'Tambahkan beberapa barang sekaligus',
+    createCustomItem: 'Buat Barang Kustom',
+    createCustomDescription: 'Buat barang kustom baru',
+    exportCSV: 'Ekspor sebagai CSV',
+    exportCSVDescription: 'Simpan semua barang ke file CSV',
+    importCSV: 'Impor CSV',
+    importCSVDescription: 'Muat barang dari file CSV',
+    deleteAllItems: 'Hapus Semua Barang',
+    deleteAllDescription: 'Hapus semua barang terdefinisi',
+    totalItems: 'Total Barang',
+    delete: 'Hapus',
+    deleteItem: 'Hapus Barang',
+    deleteItemConfirm: 'Apakah Anda yakin ingin menghapus barang ini dari barang terdefinisi?',
+    deleteAllConfirm: 'Apakah Anda yakin ingin menghapus semua {{count}} barang terdefinisi? Tindakan ini tidak dapat dibatalkan.',
+    bulkAddInstructions: 'Masukkan satu barang per baris. Anda dapat menggunakan format seperti:\n- Apel\n- Pisang, Makanan, lb\n- Kopi, Minuman, kg',
+    bulkAddDefaults: 'Nilai default untuk barang tanpa kategori/unit',
+  },
+  hi: {
+    appTitle: 'इन्वेंटरी प्रबंधन',
+    searchPlaceholder: 'वस्तुएं खोजें...',
+    filterByCategory: 'श्रेणी के अनुसार फ़िल्टर करें',
+    sortBy: 'इसके अनुसार क्रमबद्ध करें',
+    addItem: 'वस्तु जोड़ें',
+    itemName: 'वस्तु का नाम',
+    price: 'मूल्य',
+    unitsSold: 'बेची गई इकाइयाँ',
+    currency: '₹',
+    totalAmount: 'कुल राशि',
+    category: 'श्रेणी',
+    unitType: 'इकाई प्रकार',
+    save: 'सहेजें',
+    cancel: 'रद्द करें',
+    dailyTotal: 'दैनिक कुल',
+    noItems: 'इस तारीख के लिए कोई वस्तु नहीं',
+    scanWithOCR: 'OCR से स्कैन करें',
+    takePhoto: 'फ़ोटो लें',
+    selectFromGallery: 'गैलरी से चुनें',
+    all: 'सभी',
+    sharePDF: 'PDF के रूप में साझा करें',
+    confirmDay: 'दिन की पुष्टि करें',
+    dayConfirmed: 'पुष्टि हो गई',
+    sortByName: 'नाम',
+    sortByPrice: 'मूल्य',
+    sortByAmount: 'कुल राशि',
+    filters: 'फ़िल्टर',
+    sort: 'क्रमबद्ध करें',
+    selectCategory: 'श्रेणी चुनें',
+    selectSortOption: 'क्रमबद्ध विकल्प चुनें',
+    selectUnitType: 'इकाई प्रकार चुनें',
+    customItem: 'कस्टम वस्तु बनाएं',
+    predefinedItems: 'पूर्वनिर्धारित वस्तु चुनें',
+    selectItemType: 'वस्तु प्रकार चुनें',
+    dailySummary: 'दैनिक बिक्री सारांश',
+    shareViaEmail: 'ईमेल के माध्यम से साझा करें',
+    shareViaText: 'टेक्स्ट के माध्यम से साझा करें',
+    close: 'बंद करें',
+    settings: 'सेटिंग्स',
+    language: 'भाषा',
+    appTitleSetting: 'ऐप शीर्षक',
+    profile: 'प्रोफ़ाइल',
+    showingItems: '{{count}} में से {{total}} फ़िल्टर की गई वस्तुएं दिखा रहे हैं ({{all}} कुल)',
+    bulkActions: 'थोक क्रियाएं',
+    managePredefined: 'अपने पूर्वनिर्धारित वस्तु संग्रह का प्रबंधन करें',
+    bulkAddItems: 'थोक वस्तुएं जोड़ें',
+    bulkAddDescription: 'एक साथ कई वस्तुएं जोड़ें',
+    createCustomItem: 'कस्टम वस्तु बनाएं',
+    createCustomDescription: 'नई कस्टम वस्तु बनाएं',
+    exportCSV: 'CSV के रूप में निर्यात करें',
+    exportCSVDescription: 'सभी वस्तुओं को CSV फ़ाइल में सहेजें',
+    importCSV: 'CSV आयात करें',
+    importCSVDescription: 'CSV फ़ाइल से वस्तुएं लोड करें',
+    deleteAllItems: 'सभी वस्तुएं हटाएं',
+    deleteAllDescription: 'सभी पूर्वनिर्धारित वस्तुओं को हटाएं',
+    totalItems: 'कुल वस्तुएं',
+    delete: 'हटाएं',
+    deleteItem: 'वस्तु हटाएं',
+    deleteItemConfirm: 'क्या आप वाकई इस वस्तु को पूर्वनिर्धारित वस्तुओं से हटाना चाहते हैं?',
+    deleteAllConfirm: 'क्या आप वाकई सभी {{count}} पूर्वनिर्धारित वस्तुओं को हटाना चाहते हैं? इस क्रिया को पूर्ववत नहीं किया जा सकता।',
+    bulkAddInstructions: 'प्रति पंक्ति एक वस्तु दर्ज करें। आप इस तरह के प्रारूपों का उपयोग कर सकते हैं:\n- सेब\n- केला, भोजन, lb\n- कॉफी, पेय, kg',
+    bulkAddDefaults: 'श्रेणी/इकाई के बिना वस्तुओं के लिए डिफ़ॉल्ट मान',
+  },
+  my: {
+    appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
     searchPlaceholder: 'ပစ္စည်းများရှာပါ...',
     filterByCategory: 'အမျိုးအစားအလိုက်စစ်ထုတ်ပါ',
     sortBy: 'အစီအစဉ်',
     addItem: 'ပစ္စည်းထည့်ပါ',
     itemName: 'ပစ္စည်းအမည်',
-    price: 'စျေးနှုန်း',
-    unitsSold: 'ရောင်းသွားသောယူနစ်',
+    price: 'ဈေးနှုန်း',
+    unitsSold: 'ရောင်းချသောယူနစ်',
     currency: 'Ks',
     totalAmount: 'စုစုပေါင်းပမာဏ',
     category: 'အမျိုးအစား',
@@ -462,11 +987,11 @@ const languageConfigs = {
     takePhoto: 'ဓာတ်ပုံရိုက်ပါ',
     selectFromGallery: 'ပုံတိုက်မှရွေးပါ',
     all: 'အားလုံး',
-    sharePDF: 'PDF အနေဖြင့်မျှတေပါ',
-    confirmDay: 'နေ့စွဲအတည်ပြုပါ',
-    dayConfirmed: 'နေ့စွဲအတည်ပြုပြီး',
+    sharePDF: 'PDF အနေဖြင့်မျှဝေပါ',
+    confirmDay: 'နေ့ချိန်အတည်ပြုပါ',
+    dayConfirmed: 'နေ့ချိန်အတည်ပြုပြီး',
     sortByName: 'အမည်',
-    sortByPrice: 'စျေးနှုန်း',
+    sortByPrice: 'ဈေးနှုန်း',
     sortByAmount: 'စုစုပေါင်းပမာဏ',
     filters: 'စစ်ထုတ်မှုများ',
     sort: 'အစီအစဉ်',
@@ -484,6 +1009,25 @@ const languageConfigs = {
     language: 'ဘာသာစကား',
     appTitleSetting: 'အက်ပ်ခေါင်းစဉ်',
     profile: 'ပရိုဖိုင်',
+    bulkActions: 'အစုလိုက်လုပ်ဆောင်ချက်များ',
+    managePredefined: 'သင်၏ကြိုတင်သတ်မှတ်ထားသောပစ္စည်းစုစည်းမှုကိုစီမံပါ',
+    bulkAddItems: 'အစုလိုက်ပစ္စည်းထည့်ရန်',
+    bulkAddDescription: 'ပစ္စည်းများစွာကိုတစ်ခါတည်းထည့်ပါ',
+    createCustomItem: 'စိတ်ကြိုက်ပစ္စည်းဖန်တီးရန်',
+    createCustomDescription: 'အသစ်စိတ်ကြိုက်ပစ္စည်းဖန်တီးပါ',
+    exportCSV: 'CSV အဖြစ်ထုတ်ယူရန်',
+    exportCSVDescription: 'ပစ္စည်းအားလုံးကို CSV ဖိုင်သို့သိမ်းဆည်းပါ',
+    importCSV: 'CSV တင်သွင်းရန်',
+    importCSVDescription: 'CSV ဖိုင်မှပစ္စည်းများကိုတင်သွင်းပါ',
+    deleteAllItems: 'ပစ္စည်းအားလုံးဖျက်ရန်',
+    deleteAllDescription: 'ကြိုတင်သတ်မှတ်ထားသောပစ္စည်းအားလုံးကိုဖျက်ရှားပါ',
+    showingItems: '{{count}} / {{total}} စစ်ထုတ်ပစ္စည်းများပြသနေသည် (စုစုပေါင်း {{all}})',
+    tapToViewReceipt: 'ငွေလက်ခံဖြတ်ပိုင်းကြည့်ရန်တို့ပါ',
+    totalItems: 'စုစုပေါင်းပစ္စည်းများ',
+    delete: 'ဖျက်ပါ',
+    deleteItem: 'ပစ္စည်းဖျက်ရန်',
+    deleteItemConfirm: 'ဤပစ္စည်းကိုကြိုတင်သတ်မှတ်ထားသောပစ္စည်းများမှဖျက်လိုသည်မှာသေချာပါသလား?',
+    deleteAllConfirm: 'ကြိုတင်သတ်မှတ်ထားသောပစ္စည်းအားလုံး {{count}} ခုကိုဖျက်လိုသည်မှာသေချာပါသလား? ဤလုပ်ဆောင်ချက်ကိုပြန်ပြောင်း၍မရပါ။',
   },
 };
 
@@ -2235,7 +2779,7 @@ const InventoryApp = () => {
           {language.dailyTotal}: {language.currency}{getDailyTotal()}
         </Text>
         <Text style={styles.tapToViewReceipt}>
-          Tap to view receipt
+          {language.tapToViewReceipt}
         </Text>
       </TouchableOpacity>
 
@@ -2293,11 +2837,11 @@ const InventoryApp = () => {
                 
                 <View style={styles.receiptSummary}>
                   <View style={styles.receiptSummaryRow}>
-                    <Text style={styles.receiptSummaryLabel}>Total Items:</Text>
+                    <Text style={styles.receiptSummaryLabel}>{language.totalItems || 'Total Items'}:</Text>
                     <Text style={styles.receiptSummaryValue}>{filteredItems.length}</Text>
                   </View>
                   <View style={styles.receiptSummaryRow}>
-                    <Text style={styles.receiptTotalLabel}>Daily Total:</Text>
+                    <Text style={styles.receiptTotalLabel}>{language.dailyTotal}:</Text>
                     <Text style={styles.receiptTotalValue}>{language.currency}{getDailyTotal()}</Text>
                   </View>
                 </View>
@@ -2490,14 +3034,17 @@ const InventoryApp = () => {
                   )}
                 </ScrollView>
                 <Text style={styles.resultsCount}>
-                  Showing {Math.min(loadedItemsCount, getFilteredPredefinedItems.length)} of {getFilteredPredefinedItems.length} filtered items ({predefinedItems.length} total)
+                  {language.showingItems
+                    .replace('{{count}}', Math.min(loadedItemsCount, getFilteredPredefinedItems.length))
+                    .replace('{{total}}', getFilteredPredefinedItems.length)
+                    .replace('{{all}}', predefinedItems.length)}
                 </Text>
 
                 <TouchableOpacity
                   style={styles.bulkActionsButton}
                   onPress={() => setShowBulkActionsModal(true)}
                 >
-                  <Text style={styles.bulkActionsButtonText}>⚙️ Bulk Actions</Text>
+                  <Text style={styles.bulkActionsButtonText}>⚙️ {language.bulkActions}</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity
@@ -2630,9 +3177,9 @@ const InventoryApp = () => {
                 {showBulkActionsModal && (
                   <View style={styles.overlayModalContainer}>
                     <View style={styles.bulkActionsModalContent}>
-                      <Text style={styles.overlayModalTitle}>Bulk Actions</Text>
+                      <Text style={styles.overlayModalTitle}>{language.bulkActions}</Text>
                       <Text style={styles.bulkActionsSubtitle}>
-                        Manage your predefined items collection
+                        {language.managePredefined}
                       </Text>
                       
                       <ScrollView style={styles.bulkActionsScrollView}>
@@ -2648,9 +3195,9 @@ const InventoryApp = () => {
                         >
                           <Text style={styles.bulkActionIcon}>➕</Text>
                           <View style={styles.bulkActionContent}>
-                            <Text style={styles.bulkActionTitle}>Bulk Add Items</Text>
+                            <Text style={styles.bulkActionTitle}>{language.bulkAddItems}</Text>
                             <Text style={styles.bulkActionDescription}>
-                              Add multiple items at once
+                              {language.bulkAddDescription}
                             </Text>
                           </View>
                         </TouchableOpacity>
@@ -2667,9 +3214,9 @@ const InventoryApp = () => {
                         >
                           <Text style={styles.bulkActionIcon}>✏️</Text>
                           <View style={styles.bulkActionContent}>
-                            <Text style={styles.bulkActionTitle}>Create Custom Item</Text>
+                            <Text style={styles.bulkActionTitle}>{language.createCustomItem}</Text>
                             <Text style={styles.bulkActionDescription}>
-                              Create a new custom item
+                              {language.createCustomDescription}
                             </Text>
                           </View>
                         </TouchableOpacity>
@@ -2718,9 +3265,9 @@ const InventoryApp = () => {
                           >
                             <Text style={styles.bulkActionIcon}>📊</Text>
                             <View style={styles.bulkActionContent}>
-                              <Text style={styles.bulkActionTitle}>Export as CSV</Text>
+                              <Text style={styles.bulkActionTitle}>{language.exportCSV}</Text>
                               <Text style={styles.bulkActionDescription}>
-                                Save all items to CSV file
+                                {language.exportCSVDescription}
                               </Text>
                             </View>
                           </TouchableOpacity>
@@ -2735,9 +3282,9 @@ const InventoryApp = () => {
                         >
                           <Text style={styles.bulkActionIcon}>📊</Text>
                           <View style={styles.bulkActionContent}>
-                            <Text style={styles.bulkActionTitle}>Import CSV</Text>
+                            <Text style={styles.bulkActionTitle}>{language.importCSV}</Text>
                             <Text style={styles.bulkActionDescription}>
-                              Load items from CSV file
+                              {language.importCSVDescription}
                             </Text>
                           </View>
                         </TouchableOpacity>
@@ -2770,10 +3317,10 @@ const InventoryApp = () => {
                           <Text style={styles.bulkActionIcon}>🗑️</Text>
                           <View style={styles.bulkActionContent}>
                             <Text style={[styles.bulkActionTitle, styles.dangerousActionText]}>
-                              Delete All Items
+                              {language.deleteAllItems}
                             </Text>
                             <Text style={[styles.bulkActionDescription, styles.dangerousActionText]}>
-                              Remove all predefined items
+                              {language.deleteAllDescription}
                             </Text>
                           </View>
                         </TouchableOpacity>
@@ -3237,12 +3784,13 @@ const InventoryApp = () => {
               style={styles.keyboardAvoidingView}
             >
               <View style={styles.bulkAddModalContent}>
-                <Text style={styles.bulkAddTitle}>Bulk Add Items</Text>
+                <Text style={styles.bulkAddTitle}>{language.bulkAddItems}</Text>
                 <Text style={styles.bulkAddInstructions}>
-                  Enter one item per line. You can use formats like:
-                  {'\n'}- Apple
-                  {'\n'}- Banana, Food, lb
-                  {'\n'}- Coffee, Beverages, kg
+                  {language.bulkAddInstructions || 
+                        `Enter one item per line. You can use formats like:
+                    - Apple
+                    - Banana, Food, lb
+                    - Coffee, Beverages, kg`}
                 </Text>
                 
                 <TextInput
@@ -3258,7 +3806,7 @@ const InventoryApp = () => {
                 />
                 
                 <View style={styles.bulkAddDefaults}>
-                  <Text style={styles.bulkAddDefaultsLabel}>Default values for items without category/unit:</Text>
+                  <Text style={styles.bulkAddDefaultsLabel}>{language.bulkAddDefaults || 'Default values for items without category/unit'}:</Text>
                   <View style={styles.bulkAddDefaultsRow}>
                     <TouchableOpacity
                       style={styles.bulkAddDefaultSelector}
@@ -3269,7 +3817,7 @@ const InventoryApp = () => {
                         setBulkAddCategory(dynamicCategories[nextIndex]);
                       }}
                     >
-                      <Text style={styles.bulkAddDefaultText}>Category: {bulkAddCategory}</Text>
+                      <Text style={styles.bulkAddDefaultText}>{language.category}: {bulkAddCategory}</Text>
                     </TouchableOpacity>
                     
                     <TouchableOpacity
@@ -3281,7 +3829,7 @@ const InventoryApp = () => {
                         setBulkAddUnitType(dynamicUnits[nextIndex]);
                       }}
                     >
-                      <Text style={styles.bulkAddDefaultText}>Unit: {bulkAddUnitType}</Text>
+                      <Text style={styles.bulkAddDefaultText}>{language.unitType}: {bulkAddUnitType}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -3305,7 +3853,7 @@ const InventoryApp = () => {
                       processBulkAdd();
                     }}
                   >
-                    <Text style={styles.bulkAddSaveButtonText}>Add Items</Text>
+                    <Text style={styles.bulkAddSaveButtonText}>{language.bulkAddItems}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -3397,7 +3945,7 @@ const InventoryApp = () => {
                   </View>
                   {/* Currency Setting */}
                   <View style={styles.settingItem}>
-                    <Text style={styles.settingLabel}>Currency</Text>
+                    <Text style={styles.settingLabel}>{language.currency || 'Currency'}</Text>
                     <TouchableOpacity
                       style={styles.languageSelector}
                       onPress={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
