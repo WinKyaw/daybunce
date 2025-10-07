@@ -5,9 +5,10 @@
   },
   "build": {
     "production": {
-      "distribution": "internal",
+      "distribution": "store",
       "ios": {
-        "simulator": false
+        "simulator": false,
+        "distribution": "store"
       },
       "android": {
         "buildType": "apk"

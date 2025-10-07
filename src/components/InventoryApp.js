@@ -2630,13 +2630,16 @@ const InventoryApp = () => {
             <TouchableWithoutFeedback>
               <View style={styles.calendarModalContent}>
                 <Calendar
-                  current={selectedDate.toISOString().split('T')[0]}
+                  current={formatDate(selectedDate)}
                   onDayPress={(day) => {
-                    setSelectedDate(new Date(day.dateString));
+                    const [year, month, dayNum] = day.dateString.split('-');
+                    // Create date at noon local time to avoid timezone issues
+                    const newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(dayNum), 12, 0, 0);
+                    setSelectedDate(newDate);
                     setShowCalendarModal(false);
                   }}
                   markedDates={{
-                    [selectedDate.toISOString().split('T')[0]]: {
+                    [formatDate(selectedDate)]: {
                       selected: true,
                       selectedColor: '#2196f3'
                     }
@@ -4310,7 +4313,7 @@ const styles = StyleSheet.create({
   },
   modernModalContent: {
     width: '100%',
-    maxWidth: 400,
+    maxWidth: 600,
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 24,
@@ -4427,7 +4430,7 @@ const styles = StyleSheet.create({
   },
   receiptModalContent: {
     width: '90%',
-    maxWidth: 400,
+    maxWidth: 600,
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 20,
@@ -4576,11 +4579,11 @@ const styles = StyleSheet.create({
   },
   selectionModalContent: {
     width: '80%',
-    maxWidth: 300,
+    maxWidth: 500,
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 20,
-    maxHeight: '70%',
+    maxHeight: '75%',
   },
   selectionModalTitle: {
     fontSize: 20,
@@ -4649,7 +4652,7 @@ const styles = StyleSheet.create({
   },
   enhancedPredefinedModalContent: {
     width: '90%',
-    maxWidth: 400,
+    maxWidth: 650,
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 20,
@@ -4754,11 +4757,11 @@ const styles = StyleSheet.create({
   },
   overlayModalContent: {
     width: '80%',
-    maxWidth: 280,
+    maxWidth: 450,
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
-    maxHeight: '60%',
+    maxHeight: '70%',
   },
   overlayModalTitle: {
     fontSize: 18,
@@ -4869,7 +4872,7 @@ const styles = StyleSheet.create({
   // Bulk Add Modal Styles
   bulkAddModalContent: {
     width: '90%',
-    maxWidth: 400,
+    maxWidth: 650,
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 20,
@@ -5223,11 +5226,11 @@ const styles = StyleSheet.create({
   },
   fixedSettingsModalContent: {
     width: '90%',
-    maxWidth: 400,
+    maxWidth: 600,
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 24,
-    maxHeight: '80%', // Prevent overflow
+    maxHeight: '85%', // Prevent overflow
     minHeight: 300,
   },
   settingsScrollView: {
@@ -5293,7 +5296,7 @@ const styles = StyleSheet.create({
   },
   bulkActionsModalContent: {
     width: '85%',
-    maxWidth: 320,
+    maxWidth: 550,
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 20,
@@ -5464,7 +5467,7 @@ const styles = StyleSheet.create({
   },
   filterModalContent: {
     width: '85%',
-    maxWidth: 320,
+    maxWidth: 550,
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 20,
@@ -5607,6 +5610,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 20,
     margin: 20,
+    minWidth: 350,
   },
   addNewCategoryOption: {
     borderWidth: 2,
