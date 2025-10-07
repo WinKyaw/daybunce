@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "daybunce.app"
-               BlueprintName = "daybunce"
-               ReferencedContainer = "container:daybunce.xcodeproj">
+               BuildableName = "DayBunce.app"
+               BlueprintName = "DayBunce"
+               ReferencedContainer = "container:DayBunce.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "daybunceTests.xctest"
-               BlueprintName = "daybunceTests"
-               ReferencedContainer = "container:daybunce.xcodeproj">
+               BuildableName = "DayBunceTests.xctest"
+               BlueprintName = "DayBunceTests"
+               ReferencedContainer = "container:DayBunce.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "daybunce.app"
-            BlueprintName = "daybunce"
-            ReferencedContainer = "container:daybunce.xcodeproj">
+            BuildableName = "DayBunce.app"
+            BlueprintName = "DayBunce"
+            ReferencedContainer = "container:DayBunce.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "daybunce.app"
-            BlueprintName = "daybunce"
-            ReferencedContainer = "container:daybunce.xcodeproj">
+            BuildableName = "DayBunce.app"
+            BlueprintName = "DayBunce"
+            ReferencedContainer = "container:DayBunce.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
