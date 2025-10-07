@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Daybunce",
-    "slug": "Daybunce",
+    "name": "DayBunce",
+    "slug": "DayBunce",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
