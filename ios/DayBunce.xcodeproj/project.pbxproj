@@ -8,25 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		1A37C45BAA66EAFC57C3D213 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D5A9A25F574433BF4A6E70C8 /* PrivacyInfo.xcprivacy */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		663D88B00F8E330DF2BFF54C /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FB0826A3FAE92D22F1844B /* ExpoModulesProvider.swift */; };
-		6E57D97AFA0FF147366300F0 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CC71BD64B14760A137662B0F /* PrivacyInfo.xcprivacy */; };
+		4F06CDF69F4661A1C2CF56B7 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6084DAE631E67713A2090164 /* ExpoModulesProvider.swift */; };
+		8DC22A9784F551A0737A63A0 /* libPods-DayBunce.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 107EE6067945199B3DCF6319 /* libPods-DayBunce.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
-		FAF1372AEBE08334A76D5445 /* libPods-DayBunce.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F7B57FD17DAC9B28FF1E8ED /* libPods-DayBunce.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		107EE6067945199B3DCF6319 /* libPods-DayBunce.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DayBunce.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* DayBunce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DayBunce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = DayBunce/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = DayBunce/Info.plist; sourceTree = "<group>"; };
-		59FB0826A3FAE92D22F1844B /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-DayBunce/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		97F9402D14C9E4511B487EB8 /* Pods-DayBunce.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DayBunce.release.xcconfig"; path = "Target Support Files/Pods-DayBunce/Pods-DayBunce.release.xcconfig"; sourceTree = "<group>"; };
-		9F7B57FD17DAC9B28FF1E8ED /* libPods-DayBunce.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DayBunce.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C433394AEA0C90FB0007E56 /* Pods-DayBunce.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DayBunce.debug.xcconfig"; path = "Target Support Files/Pods-DayBunce/Pods-DayBunce.debug.xcconfig"; sourceTree = "<group>"; };
+		6084DAE631E67713A2090164 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-DayBunce/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = DayBunce/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		BB3419BCD279B8646F053349 /* Pods-DayBunce.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DayBunce.debug.xcconfig"; path = "Target Support Files/Pods-DayBunce/Pods-DayBunce.debug.xcconfig"; sourceTree = "<group>"; };
-		CC71BD64B14760A137662B0F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = DayBunce/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D5A9A25F574433BF4A6E70C8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = DayBunce/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		E108C74230A30D9A4638B3BC /* Pods-DayBunce.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DayBunce.release.xcconfig"; path = "Target Support Files/Pods-DayBunce/Pods-DayBunce.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = DayBunce/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* DayBunce-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "DayBunce-Bridging-Header.h"; path = "DayBunce/DayBunce-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -37,21 +37,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAF1372AEBE08334A76D5445 /* libPods-DayBunce.a in Frameworks */,
+				8DC22A9784F551A0737A63A0 /* libPods-DayBunce.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0763079924AFA09446A50D8F /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				D231DED5789281D604A9E76C /* DayBunce */,
-			);
-			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* DayBunce */ = {
 			isa = PBXGroup;
 			children = (
@@ -61,7 +53,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				CC71BD64B14760A137662B0F /* PrivacyInfo.xcprivacy */,
+				D5A9A25F574433BF4A6E70C8 /* PrivacyInfo.xcprivacy */,
 			);
 			name = DayBunce;
 			sourceTree = "<group>";
@@ -70,19 +62,9 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				9F7B57FD17DAC9B28FF1E8ED /* libPods-DayBunce.a */,
+				107EE6067945199B3DCF6319 /* libPods-DayBunce.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		49EC8A39E8576F6E1BA311C9 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				BB3419BCD279B8646F053349 /* Pods-DayBunce.debug.xcconfig */,
-				97F9402D14C9E4511B487EB8 /* Pods-DayBunce.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -99,8 +81,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				49EC8A39E8576F6E1BA311C9 /* Pods */,
-				0763079924AFA09446A50D8F /* ExpoModulesProviders */,
+				FF04A984D8A25B8E6CD4A561 /* Pods */,
+				D3E91163E5B129C2915BBBD4 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -115,6 +97,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B7CD93E0F18CC4B2CD6EB36C /* DayBunce */ = {
+			isa = PBXGroup;
+			children = (
+				6084DAE631E67713A2090164 /* ExpoModulesProvider.swift */,
+			);
+			name = DayBunce;
+			sourceTree = "<group>";
+		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,12 +114,22 @@
 			path = DayBunce/Supporting;
 			sourceTree = "<group>";
 		};
-		D231DED5789281D604A9E76C /* DayBunce */ = {
+		D3E91163E5B129C2915BBBD4 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				59FB0826A3FAE92D22F1844B /* ExpoModulesProvider.swift */,
+				B7CD93E0F18CC4B2CD6EB36C /* DayBunce */,
 			);
-			name = DayBunce;
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
+		FF04A984D8A25B8E6CD4A561 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3C433394AEA0C90FB0007E56 /* Pods-DayBunce.debug.xcconfig */,
+				E108C74230A30D9A4638B3BC /* Pods-DayBunce.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "DayBunce" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				3BD468303D4C5508EBF740AC /* [Expo] Configure project */,
+				3BBD42ABBE7A6C70E8C3454B /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				EA7F8EE150206ED3A1D14704 /* [CP] Embed Pods Frameworks */,
+				101EA385E593252783620954 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				6E57D97AFA0FF147366300F0 /* PrivacyInfo.xcprivacy in Resources */,
+				1A37C45BAA66EAFC57C3D213 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,7 +242,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3BD468303D4C5508EBF740AC /* [Expo] Configure project */ = {
+		101EA385E593252783620954 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DayBunce/Pods-DayBunce-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/React-Core-prebuilt/React.framework/React",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ReactNativeDependencies/ReactNativeDependencies.framework/ReactNativeDependencies",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactNativeDependencies.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DayBunce/Pods-DayBunce-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3BBD42ABBE7A6C70E8C3454B /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -334,28 +356,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DayBunce/Pods-DayBunce-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EA7F8EE150206ED3A1D14704 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DayBunce/Pods-DayBunce-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/React-Core-prebuilt/React.framework/React",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ReactNativeDependencies/ReactNativeDependencies.framework/ReactNativeDependencies",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactNativeDependencies.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DayBunce/Pods-DayBunce-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -364,7 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				663D88B00F8E330DF2BFF54C /* ExpoModulesProvider.swift in Sources */,
+				4F06CDF69F4661A1C2CF56B7 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,7 +373,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BB3419BCD279B8646F053349 /* Pods-DayBunce.debug.xcconfig */;
+			baseConfigurationReference = 3C433394AEA0C90FB0007E56 /* Pods-DayBunce.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -409,7 +409,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 97F9402D14C9E4511B487EB8 /* Pods-DayBunce.release.xcconfig */;
+			baseConfigurationReference = E108C74230A30D9A4638B3BC /* Pods-DayBunce.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
