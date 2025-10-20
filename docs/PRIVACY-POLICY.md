@@ -118,7 +118,7 @@ Since all data is stored locally on your device:
 
 ### Legal Requirements
 
-We may be required to disclose information if required by law, subpoena, or other legal process. However, since we do not have access to your data (it's stored locally on your device), we cannot provide information we do not possess.
+Since we do not collect or have access to your data (it's stored locally on your device), we have no information to disclose even if legally required. Your data remains entirely under your control on your device.
 
 ---
 
@@ -138,7 +138,7 @@ The App operates completely offline and independently.
 
 ## Children's Privacy
 
-The App does not knowingly collect information from children under the age of 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us at <ContactEmail>. Since all data is stored locally, you can delete the app to remove all data.
+The App does not knowingly collect information from children under the age of 13. Since all data is stored locally on the device, the App does not transmit any personal information. If you are a parent or guardian and are concerned about your child's use of the app, you can delete the app to remove all locally stored data. For questions, please contact us at <ContactEmail>.
 
 ---
 
