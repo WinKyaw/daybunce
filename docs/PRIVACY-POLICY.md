@@ -118,7 +118,7 @@ Since all data is stored locally on your device:
 
 ### Legal Requirements
 
-Since we do not collect or have access to your data (it's stored locally on your device), we have no information to disclose even if legally required. Your data remains entirely under your control on your device.
+We are committed to complying with applicable laws and legal processes. However, since we do not collect or have access to your data (it's stored locally on your device), we have no information to disclose even if legally required. Your data remains entirely under your control on your device.
 
 ---
 
