@@ -2,6 +2,10 @@
 
 A comprehensive React Native inventory management application with OCR support for Myanmar fonts, multi-language support, and local data storage.
 
+## Privacy Policy
+
+Please read our [Privacy Policy](https://winkyaw.github.io/daybunce/PRIVACY-POLICY.html) for information about how we handle your data.
+
 ## Features
 
 ### Core Features

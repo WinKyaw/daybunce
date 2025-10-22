@@ -3,7 +3,7 @@
 **Effective Date:** November 30, 2025  
 **Last Modified:** November 30, 2025
 
-DayBunce (“the App”) is provided by <Company/Developer Name> (“we”, “us”, or “our”). This policy explains what data the App processes, how and why we process it, and your choices.
+DayBunce (“the App”) is provided by InventSight (Developer: Kyaw Win) (“we”, “us”, or “our”). This policy explains what data the App processes, how and why we process it, and your choices.
 
 We designed DayBunce to work primarily offline. Your inventory and settings are stored on your device and are not sent to our servers.
 
@@ -44,10 +44,11 @@ We do not build advertising profiles, track you across apps, or combine your dat
 
 ## App Permissions and Purposes
 
-- Files/Document Picker (optional): import/export predefined items (CSV/JSON) and share PDFs/CSVs you generate.
+- Camera (optional): Used for optional OCR scanning of receipts/items.
+- Photo Library/Gallery & Document Picker (optional): Used for importing/choosing images and exporting CSV/JSON/PDF via system share.
 - Printing/Sharing (optional): generate and share daily summaries (PDF or text) using the system share sheet.
 
-DayBunce does not currently request or use the Camera, Photo Library, or Microphone. If a future version adds these features, we will update this policy and the App Store privacy disclosures before release.
+DayBunce does not use the Microphone permission.
 
 ---
 
@@ -89,7 +90,7 @@ We use reasonable technical and organizational measures appropriate to a local�
 
 - Delete local data: Remove items in‑app, clear predefined items, or uninstall the App.
 - Exports: You may export your data (CSV/JSON or PDF) using system share features.
-- Contact us: For privacy questions or requests related to support messages you’ve sent us, email <ContactEmail>.
+- Contact us: For privacy questions or requests related to support messages you’ve sent us, email windaybunce@gmail.com.
 
 Depending on your location, you may have legal rights to access, correct, delete, or restrict processing of your personal data. Contact us to exercise these rights.
 
@@ -113,15 +114,15 @@ If functionality changes (e.g., adding cloud sync), we will update these disclos
 
 ## Changes to This Policy
 
-We may update this Policy from time to time. The latest version will be available at <PrivacyPolicyURL>. Material changes will be indicated by updating the “Last updated” date and, where appropriate, additional notice.
+We may update this Policy from time to time. The latest version will be available at https://winkyaw.github.io/daybunce/PRIVACY-POLICY.html. Material changes will be indicated by updating the “Last updated” date and, where appropriate, additional notice.
 
 ---
 
 ## Contact Us
 
-<Company/Developer Name>  
-<Contact Address or City/Country>  
-Email: <ContactEmail>
+InventSight (Developer: Kyaw Win)  
+California, USA  
+Email: windaybunce@gmail.com
 
-Data Controller: <Company/Developer Name>  
-Jurisdiction: <Jurisdiction>
+Data Controller: InventSight (Developer: Kyaw Win)  
+Jurisdiction: State of California, United States
