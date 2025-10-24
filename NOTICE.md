@@ -247,8 +247,6 @@ This project uses the following major dependencies:
 - **@react-native-async-storage/async-storage** – MIT License
 - **react-native-vector-icons** – MIT License
 - **@react-native-picker/picker** – MIT License
-- **expo-camera** – MIT License
-- **expo-image-picker** – MIT License
 - **expo-document-picker** – MIT License
 - **expo-file-system** – MIT License
 - **expo-print** – MIT License

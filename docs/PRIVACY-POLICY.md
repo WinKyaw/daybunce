@@ -44,11 +44,10 @@ We do not build advertising profiles, track you across apps, or combine your dat
 
 ## App Permissions and Purposes
 
-- Camera (optional): Used for optional OCR scanning of receipts/items.
-- Photo Library/Gallery & Document Picker (optional): Used for importing/choosing images and exporting CSV/JSON/PDF via system share.
-- Printing/Sharing (optional): generate and share daily summaries (PDF or text) using the system share sheet.
+- Document Picker (optional): Used for importing/exporting CSV/JSON files.
+- Printing/Sharing (optional): Generate and share daily summaries (PDF or text) using the system share sheet.
 
-DayBunce does not use the Microphone permission.
+DayBunce does not request or use Camera, Photo Library, or Microphone permissions.
 
 ---
 
