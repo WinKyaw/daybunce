@@ -18,7 +18,6 @@ Please read our [Privacy Policy](https://winkyaw.github.io/daybunce/PRIVACY-POLI
 - ✅ Persistent bottom navigation bar
 
 ### Advanced Features
-- 🔍 **OCR Support**: Scan receipts and items with Myanmar font support
 - 🌍 **Multi-language**: Dynamic labels with built-in English and Myanmar translations
 - 📱 **100% Local Storage**: All data stored locally using AsyncStorage
 - 🗄️ **Data Management**: Automatic cleanup of data older than 30 days
@@ -78,7 +77,7 @@ inventory-management-app/
 │   ├── services/
 │   │   ├── DataService.js           # Local storage management
 │   │   ├── LanguageService.js       # Multi-language support
-│   │   ├── OCRService.js            # OCR processing
+│   │   ├── OCRService.js            # OCR service (disabled stub)
 │   │   └── LocalStorage.js          # Storage utilities
 │   └── styles/
 │       └── styles.js                # Shared styles
@@ -101,19 +100,7 @@ inventory-management-app/
    - **Units Sold**: Quantity sold
    - **Category**: Select from available categories
    - **Unit Type**: Choose measurement unit
-3. Optionally use OCR by tapping "Scan with OCR"
-4. Save the item
-
-### OCR Scanning
-1. Tap "Scan with OCR" in the add item modal
-2. Choose between:
-   - **Take Photo**: Use camera to capture receipt/item
-   - **Select from Gallery**: Choose existing image
-3. The app will process the image and extract:
-   - Item name
-   - Price information
-   - Quantity details
-4. Review and adjust the extracted data before saving
+3. Save the item
 
 ### Navigation
 - **Date Selection**: Tap the calendar icon to view different dates
@@ -156,44 +143,6 @@ await LanguageService.updateTranslation('appTitle', 'My Inventory App');
 await LanguageService.updateTranslations({
   'addItem': 'Add New Item',
   'save': 'Save Item'
-});
-```
-
-## OCR Configuration
-
-### Myanmar Font Support
-The app includes built-in support for Myanmar script OCR. To integrate with a real OCR service:
-
-1. **Google Cloud Vision API**:
-```javascript
-// In OCRService.js, replace mockOCRProcessing with:
-const response = await fetch('https://vision.googleapis.com/v1/images:annotate', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${your_api_key}`
-  },
-  body: JSON.stringify({
-    requests: [{
-      image: { content: base64Image },
-      features: [{ type: 'TEXT_DETECTION' }],
-      imageContext: {
-        languageHints: ['my', 'en'] // Myanmar and English
-      }
-    }]
-  })
-});
-```
-
-2. **Azure Computer Vision**:
-```javascript
-const response = await fetch(`${endpoint}/vision/v3.2/ocr`, {
-  method: 'POST',
-  headers: {
-    'Ocp-Apim-Subscription-Key': your_subscription_key,
-    'Content-Type': 'application/octet-stream'
-  },
-  body: imageBuffer
 });
 ```
 
@@ -309,14 +258,8 @@ LanguageService.formatDate(date)
 
 ### OCRService
 ```javascript
-// Process with camera
-OCRService.processWithCamera(options)
-
-// Process with gallery
-OCRService.processWithGallery(options)
-
-// Process image
-OCRService.processImage(imageUri, options)
+// Note: OCR functionality has been removed
+// OCRService is now a stub for backward compatibility
 ```
 
 ## Development
@@ -352,16 +295,6 @@ expo build:web
 
 ### Common Issues
 
-#### Camera Permission Denied
-- **Android**: Check that camera permissions are granted in Settings
-- **iOS**: Ensure camera usage description is in Info.plist
-
-#### OCR Not Working
-1. Verify image quality and lighting
-2. Check if text is clearly visible
-3. Ensure Myanmar font rendering is correct
-4. Test with English text first
-
 #### Data Not Persisting
 1. Check AsyncStorage permissions
 2. Verify data format is correct JSON
@@ -384,24 +317,20 @@ console.disableYellowBox = false; // Show warnings
 
 ### Best Practices
 - Use FlatList for large item lists
-- Implement image caching for OCR
 - Lazy load language translations
 - Optimize AsyncStorage operations
 - Use React.memo for expensive components
 
 ### Memory Management
-- Clear unused images from memory
-- Limit OCR image resolution
 - Implement data pagination for large datasets
-- Use compression for stored images
+- Optimize local storage operations
 
 ## Security Considerations
 
 ### Data Protection
 - All data stored locally (no cloud storage)
 - No personal data transmitted
-- Camera permissions requested only when needed
-- Images processed locally only
+- No camera or microphone access
 
 ### Privacy Features
 - No analytics or tracking
@@ -443,7 +372,6 @@ For support and questions:
 - [ ] Barcode scanning support
 - [ ] Inventory alerts and notifications
 - [ ] Multi-store management
-- [ ] Advanced OCR with AI improvements
 - [ ] Voice input support
 - [ ] Offline maps for delivery tracking
 

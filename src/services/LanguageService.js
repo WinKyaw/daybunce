@@ -46,10 +46,7 @@ const DEFAULT_TRANSLATIONS = {
     edit: 'Edit',
     confirm: 'Confirm',
     
-    // OCR
-    scanWithOCR: 'Scan with OCR',
-    takePhoto: 'Take Photo',
-    selectFromGallery: 'Select from Gallery',
+    // OCR functionality removed
     processing: 'Processing...',
     
     // Date and Time
@@ -72,7 +69,6 @@ const DEFAULT_TRANSLATIONS = {
     fillAllFields: 'Please fill all required fields',
     invalidPrice: 'Please enter a valid price',
     invalidQuantity: 'Please enter a valid quantity',
-    cameraPermissionRequired: 'Camera permission is required',
     
     // Units
     pieces: 'pieces',
@@ -131,10 +127,7 @@ const DEFAULT_TRANSLATIONS = {
     edit: 'ပြင်ဆင်ပါ',
     confirm: 'အတည်ပြုပါ',
     
-    // OCR
-    scanWithOCR: 'OCR ဖြင့် စကင်န်ပါ',
-    takePhoto: 'ဓာတ်ပုံရိုက်ပါ',
-    selectFromGallery: 'ပုံများမှ ရွေးပါ',
+    // OCR functionality removed
     processing: 'လုပ်ဆောင်နေသည်...',
     
     // Date and Time
@@ -157,7 +150,6 @@ const DEFAULT_TRANSLATIONS = {
     fillAllFields: 'လိုအပ်သောနေရာများ အားလုံးကို ဖြည့်ပါ',
     invalidPrice: 'မှန်ကန်သောစျေးနှုန်း ထည့်ပါ',
     invalidQuantity: 'မှန်ကန်သောအရေအတွက် ထည့်ပါ',
-    cameraPermissionRequired: 'ကင်မရာ ခွင့်ပြုချက် လိုအပ်သည်',
     
     // Units
     pieces: 'လုံး',

@@ -30,9 +30,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "permissions": [
-        "android.permission.CAMERA"
-      ],
+      "permissions": [],
       "package": "com.inventsight.daybunce",
       "buildNumber": "4"
     },
