@@ -3,6 +3,12 @@
 **Effective Date:** November 30, 2025  
 **Last Modified:** November 30, 2025
 
+**Provider:** InventSight (Developer: Kyaw Win)  
+**Contact:** windaybunce@gmail.com  
+**Location:** California, USA  
+**Jurisdiction:** State of California, United States  
+**Privacy Policy URL:** https://winkyaw.github.io/daybunce/PRIVACY-POLICY.html
+
 DayBunce (“the App”) is provided by InventSight (Developer: Kyaw Win) (“we”, “us”, or “our”). This policy explains what data the App processes, how and why we process it, and your choices.
 
 We designed DayBunce to work primarily offline. Your inventory and settings are stored on your device and are not sent to our servers.
@@ -104,11 +110,11 @@ DayBunce is not directed to children under 13 (or the age required by your juris
 ## App Store Privacy Disclosures (iOS)
 
 We disclose the following in App Store Connect for the current version:
-- Data collected: “Data Not Collected” by the developer. Inventory data is stored on‑device.
+- Data collected: "Data Not Collected" by the developer. Inventory data is stored on‑device.
 - No tracking: We do not track users across apps or websites.
+- Camera/Photo Library: The app does not use or request access to the camera or photo library. These features have been removed.
 
 If functionality changes (e.g., adding cloud sync), we will update these disclosures before release.
-
 ---
 
 ## Changes to This Policy
