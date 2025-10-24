@@ -1013,8 +1013,7 @@ try {
   ];
 }
 
-// CHANGE THIS TO YOUR SERVER'S ADDRESS
-const OCR_API_URL = 'http://10.0.0.156:5001/api/ocr/scan';
+// OCR API URL removed - OCR functionality has been disabled
 
 const InventoryApp = () => {
   const [items, setItems] = useState([]);
@@ -2442,85 +2441,7 @@ const InventoryApp = () => {
     }
   };
 
-  // OCR Integration
-  const callOCRApi = async (base64Image) => {
-    try {
-      const response = await fetch(OCR_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: base64Image }),
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('OCR API error:', error);
-      return null;
-    }
-  };
-
-  const handleOCRScan = async () => {
-    const { status } = await Camera.requestCameraPermissionsAsync();
-    if (status === 'granted') {
-      Alert.alert(
-        language.scanWithOCR,
-        'Choose option',
-        [
-          { text: language.takePhoto, onPress: () => takePhoto() },
-          { text: language.selectFromGallery, onPress: () => selectFromGallery() },
-          { text: language.cancel, style: 'cancel' },
-        ]
-      );
-    }
-  };
-
-  const takePhoto = async () => {
-    const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-      base64: true,
-    });
-
-    if (!result.canceled && result.assets && result.assets.length > 0) {
-      const base64Image = result.assets[0].base64;
-      const ocrResult = await callOCRApi(base64Image);
-      if (ocrResult && ocrResult.success && ocrResult.extracted) {
-        setNewItem(prev => ({
-          ...prev,
-          name: ocrResult.extracted.item_name || '',
-          price: ocrResult.extracted.price || '',
-          unitsSold: ocrResult.extracted.quantity || '',
-        }));
-      } else {
-        Alert.alert('OCR failed', 'Could not extract data from image');
-      }
-    }
-  };
-
-  const selectFromGallery = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-      base64: true,
-    });
-
-    if (!result.canceled && result.assets && result.assets.length > 0) {
-      const base64Image = result.assets[0].base64;
-      const ocrResult = await callOCRApi(base64Image);
-      if (ocrResult && ocrResult.success && ocrResult.extracted) {
-        setNewItem(prev => ({
-          ...prev,
-          name: ocrResult.extracted.item_name || '',
-          price: ocrResult.extracted.price || '',
-          unitsSold: ocrResult.extracted.quantity || '',
-        }));
-      } else {
-        Alert.alert('OCR failed', 'Could not extract data from image');
-      }
-    }
-  };
+  // OCR Integration removed - camera and image picker functionality disabled
 
   // Filter and Sort option arrays
   const sortOptions = [
