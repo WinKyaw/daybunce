@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
   <!-- Removed CAMERA and RECORD_AUDIO to match privacy policy stating no camera/microphone usage -->
   <uses-permission android:name="android.permission.INTERNET"/>
-  <!-- Optional: remove the two storage permissions below if you rely only on SAF/DocumentPicker -->
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <!-- Removed READ_EXTERNAL_STORAGE and WRITE_EXTERNAL_STORAGE as the app relies only on SAF/DocumentPicker -->
   <uses-permission android:name="android.permission.VIBRATE"/>
   <!-- Removed: android.permission.CAMERA -->
   <!-- Removed: android.permission.RECORD_AUDIO -->
