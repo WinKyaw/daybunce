@@ -47,6 +47,9 @@ const defaultLanguage = {
   sortByName: 'Name',
   sortByPrice: 'Price',
   sortByAmount: 'Total Amount',
+  sortByCreated: 'Creation Time',
+  ascending: 'Ascending',
+  descending: 'Descending',
   filters: 'Filters',
   sort: 'Sort',
   selectCategory: 'Select Category',
@@ -151,6 +154,9 @@ const languageConfigs = {
     sortByName: 'Name',
     sortByPrice: 'Price',
     sortByAmount: 'Total Amount',
+    sortByCreated: 'Creation Time',
+    ascending: 'Ascending',
+    descending: 'Descending',
     filters: 'Filters',
     sort: 'Sort',
     selectCategory: 'Select Category',
@@ -1022,7 +1028,8 @@ const InventoryApp = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [filterCategory, setFilterCategory] = useState('All');
-  const [sortBy, setSortBy] = useState('name');
+  const [sortBy, setSortBy] = useState('created');
+  const [sortDirection, setSortDirection] = useState('desc');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
@@ -1104,7 +1111,7 @@ const InventoryApp = () => {
 
   useEffect(() => {
     filterAndSortItems();
-  }, [items, searchText, filterCategory, sortBy]);
+  }, [items, searchText, filterCategory, sortBy, sortDirection]);
 
   useEffect(() => {
     resetPagination();
@@ -1275,14 +1282,22 @@ const InventoryApp = () => {
       (filterCategory === 'All' || item.category === filterCategory)
     );
 
+    const dir = sortDirection === 'asc' ? 1 : -1;
+
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'name':
-          return a.name.localeCompare(b.name);
+          return a.name.localeCompare(b.name) * dir;
         case 'price':
-          return parseFloat(b.price) - parseFloat(a.price);
+          return (parseFloat(a.price) - parseFloat(b.price)) * dir;
         case 'amount':
-          return (parseFloat(b.price) * parseFloat(b.unitsSold)) - (parseFloat(a.price) * parseFloat(a.unitsSold));
+          const aAmount = parseFloat(a.price) * parseFloat(a.unitsSold);
+          const bAmount = parseFloat(b.price) * parseFloat(b.unitsSold);
+          return (aAmount - bAmount) * dir;
+        case 'created':
+          const aTime = a.timestamp ? Date.parse(a.timestamp) : (parseInt(a.id) || 0);
+          const bTime = b.timestamp ? Date.parse(b.timestamp) : (parseInt(b.id) || 0);
+          return (aTime - bTime) * dir;
         default:
           return 0;
       }
@@ -2445,6 +2460,7 @@ const InventoryApp = () => {
 
   // Filter and Sort option arrays
   const sortOptions = [
+    { label: language.sortByCreated, value: 'created' },
     { label: language.sortByName, value: 'name' },
     { label: language.sortByPrice, value: 'price' },
     { label: language.sortByAmount, value: 'amount' },
@@ -2594,14 +2610,17 @@ const InventoryApp = () => {
             <Text style={styles.noItemsText}>{language.noItems}</Text>
           </View>
         ) : (
-          filteredItems.map(item => (
+          filteredItems.map((item, index) => (
             <TouchableOpacity
               key={item.id}
               style={styles.itemCard}
               onPress={() => setExpandedItem(expandedItem === item.id ? null : item.id)}
             >
               <View style={styles.itemHeader}>
-                <Text style={styles.itemName}>{item.name}</Text>
+                <View style={styles.itemHeaderLeft}>
+                  <Text style={styles.itemIndex}>{index + 1}.</Text>
+                  <Text style={styles.itemName}>{item.name}</Text>
+                </View>
                 <Text style={styles.itemAmount}>
                   {language.currency}{(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
                 </Text>
@@ -3568,9 +3587,17 @@ const InventoryApp = () => {
                   
                   <TouchableOpacity 
                     style={styles.sortOption}
+                    onPress={() => setSortBy('created')}
+                  >
+                    <Text style={styles.sortOptionText}>{language.sortByCreated}</Text>
+                    <View style={[styles.sortToggle, sortBy === 'created' && styles.activeSortToggle]} />
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity 
+                    style={styles.sortOption}
                     onPress={() => setSortBy('name')}
                   >
-                    <Text style={styles.sortOptionText}>Name (A-Z)</Text>
+                    <Text style={styles.sortOptionText}>{language.sortByName}</Text>
                     <View style={[styles.sortToggle, sortBy === 'name' && styles.activeSortToggle]} />
                   </TouchableOpacity>
                   
@@ -3578,7 +3605,7 @@ const InventoryApp = () => {
                     style={styles.sortOption}
                     onPress={() => setSortBy('price')}
                   >
-                    <Text style={styles.sortOptionText}>Price (High to Low)</Text>
+                    <Text style={styles.sortOptionText}>{language.sortByPrice}</Text>
                     <View style={[styles.sortToggle, sortBy === 'price' && styles.activeSortToggle]} />
                   </TouchableOpacity>
                   
@@ -3586,9 +3613,33 @@ const InventoryApp = () => {
                     style={styles.sortOption}
                     onPress={() => setSortBy('amount')}
                   >
-                    <Text style={styles.sortOptionText}>Total Amount</Text>
+                    <Text style={styles.sortOptionText}>{language.sortByAmount}</Text>
                     <View style={[styles.sortToggle, sortBy === 'amount' && styles.activeSortToggle]} />
                   </TouchableOpacity>
+                  
+                  {/* Sort Direction */}
+                  <View style={styles.filterSectionHeader}>
+                    <Text style={styles.filterSectionTitle}>DIRECTION</Text>
+                  </View>
+                  
+                  <View style={styles.categoryChips}>
+                    <TouchableOpacity
+                      style={[styles.categoryChip, sortDirection === 'asc' && styles.selectedCategoryChip]}
+                      onPress={() => setSortDirection('asc')}
+                    >
+                      <Text style={[styles.categoryChipText, sortDirection === 'asc' && styles.selectedCategoryChipText]}>
+                        {language.ascending}
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.categoryChip, sortDirection === 'desc' && styles.selectedCategoryChip]}
+                      onPress={() => setSortDirection('desc')}
+                    >
+                      <Text style={[styles.categoryChipText, sortDirection === 'desc' && styles.selectedCategoryChipText]}>
+                        {language.descending}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 
                 {/* Apply Button */}
@@ -4079,6 +4130,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  itemHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  itemIndex: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#666',
+    minWidth: 30,
+    textAlign: 'right',
+    marginRight: 8,
   },
   itemName: {
     fontSize: 16,
