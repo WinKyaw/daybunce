@@ -1298,8 +1298,8 @@ const InventoryApp = () => {
           const bAmount = parseFloat(b.price) * parseFloat(b.unitsSold);
           return (aAmount - bAmount) * dir;
         case 'created':
-          const aTime = a.timestamp ? Date.parse(a.timestamp) : (parseInt(a.id) || 0);
-          const bTime = b.timestamp ? Date.parse(b.timestamp) : (parseInt(b.id) || 0);
+          const aTime = a.timestamp ? Date.parse(a.timestamp) : (parseInt(a.id, 10) || 0);
+          const bTime = b.timestamp ? Date.parse(b.timestamp) : (parseInt(b.id, 10) || 0);
           return (aTime - bTime) * dir;
         default:
           return 0;
