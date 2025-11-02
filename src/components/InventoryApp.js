@@ -47,6 +47,9 @@ const defaultLanguage = {
   sortByName: 'Name',
   sortByPrice: 'Price',
   sortByAmount: 'Total Amount',
+  sortByCreated: 'Created Time',
+  ascending: 'Ascending',
+  descending: 'Descending',
   filters: 'Filters',
   sort: 'Sort',
   selectCategory: 'Select Category',
@@ -151,6 +154,9 @@ const languageConfigs = {
     sortByName: 'Name',
     sortByPrice: 'Price',
     sortByAmount: 'Total Amount',
+    sortByCreated: 'Created Time',
+    ascending: 'Ascending',
+    descending: 'Descending',
     filters: 'Filters',
     sort: 'Sort',
     selectCategory: 'Select Category',
@@ -213,6 +219,9 @@ const languageConfigs = {
     sortByName: 'Nombre',
     sortByPrice: 'Precio',
     sortByAmount: 'Cantidad Total',
+    sortByCreated: 'Hora de Creación',
+    ascending: 'Ascendente',
+    descending: 'Descendente',
     filters: 'Filtros',
     sort: 'Ordenar',
     selectCategory: 'Seleccionar Categoría',
@@ -287,6 +296,9 @@ const languageConfigs = {
     sortByName: 'Nom',
     sortByPrice: 'Prix',
     sortByAmount: 'Montant Total',
+    sortByCreated: 'Heure de Création',
+    ascending: 'Croissant',
+    descending: 'Décroissant',
     filters: 'Filtres',
     sort: 'Trier',
     selectCategory: 'Sélectionner une Catégorie',
@@ -348,6 +360,9 @@ const languageConfigs = {
     sortByName: 'Name',
     sortByPrice: 'Preis',
     sortByAmount: 'Gesamtbetrag',
+    sortByCreated: 'Erstellungszeit',
+    ascending: 'Aufsteigend',
+    descending: 'Absteigend',
     filters: 'Filter',
     sort: 'Sortieren',
     selectCategory: 'Kategorie auswählen',
@@ -409,6 +424,9 @@ const languageConfigs = {
     sortByName: 'Nome',
     sortByPrice: 'Prezzo',
     sortByAmount: 'Totale',
+    sortByCreated: 'Ora di Creazione',
+    ascending: 'Ascendente',
+    descending: 'Discendente',
     filters: 'Filtri',
     sort: 'Ordina',
     selectCategory: 'Seleziona Categoria',
@@ -470,6 +488,9 @@ const languageConfigs = {
     sortByName: 'Nome',
     sortByPrice: 'Preço',
     sortByAmount: 'Valor Total',
+    sortByCreated: 'Hora de Criação',
+    ascending: 'Ascendente',
+    descending: 'Descendente',
     filters: 'Filtros',
     sort: 'Ordenar',
     selectCategory: 'Selecionar Categoria',
@@ -531,6 +552,9 @@ const languageConfigs = {
     sortByName: '名称',
     sortByPrice: '价格',
     sortByAmount: '总金额',
+    sortByCreated: '创建时间',
+    ascending: '升序',
+    descending: '降序',
     filters: '筛选',
     sort: '排序',
     selectCategory: '选择类别',
@@ -586,6 +610,9 @@ const languageConfigs = {
     sortByName: '名前',
     sortByPrice: '価格',
     sortByAmount: '合計金額',
+    sortByCreated: '作成時刻',
+    ascending: '昇順',
+    descending: '降順',
     filters: 'フィルター',
     sort: '並べ替え',
     selectCategory: 'カテゴリーを選択',
@@ -641,6 +668,9 @@ const languageConfigs = {
     sortByName: '이름',
     sortByPrice: '가격',
     sortByAmount: '총액',
+    sortByCreated: '생성 시간',
+    ascending: '오름차순',
+    descending: '내림차순',
     filters: '필터',
     sort: '정렬',
     selectCategory: '카테고리 선택',
@@ -702,6 +732,9 @@ const languageConfigs = {
     sortByName: 'ชื่อ',
     sortByPrice: 'ราคา',
     sortByAmount: 'ยอดรวม',
+    sortByCreated: 'เวลาที่สร้าง',
+    ascending: 'น้อยไปมาก',
+    descending: 'มากไปน้อย',
     filters: 'ตัวกรอง',
     sort: 'เรียง',
     selectCategory: 'เลือกหมวดหมู่',
@@ -763,6 +796,9 @@ const languageConfigs = {
     sortByName: 'Tên',
     sortByPrice: 'Giá',
     sortByAmount: 'Tổng Số Tiền',
+    sortByCreated: 'Thời Gian Tạo',
+    ascending: 'Tăng Dần',
+    descending: 'Giảm Dần',
     filters: 'Bộ Lọc',
     sort: 'Sắp Xếp',
     selectCategory: 'Chọn Danh Mục',
@@ -824,6 +860,9 @@ const languageConfigs = {
     sortByName: 'Nama',
     sortByPrice: 'Harga',
     sortByAmount: 'Jumlah Total',
+    sortByCreated: 'Waktu Pembuatan',
+    ascending: 'Menaik',
+    descending: 'Menurun',
     filters: 'Filter',
     sort: 'Urutkan',
     selectCategory: 'Pilih Kategori',
@@ -885,6 +924,9 @@ const languageConfigs = {
     sortByName: 'नाम',
     sortByPrice: 'मूल्य',
     sortByAmount: 'कुल राशि',
+    sortByCreated: 'निर्माण समय',
+    ascending: 'आरोही',
+    descending: 'अवरोही',
     filters: 'फ़िल्टर',
     sort: 'क्रमबद्ध करें',
     selectCategory: 'श्रेणी चुनें',
@@ -946,6 +988,9 @@ const languageConfigs = {
     sortByName: 'အမည်',
     sortByPrice: 'ဈေးနှုန်း',
     sortByAmount: 'စုစုပေါင်းပမာဏ',
+    sortByCreated: 'ဖန်တီးချိန်',
+    ascending: 'တက်လိုက်',
+    descending: 'ဆင်းလိုက်',
     filters: 'စစ်ထုတ်မှုများ',
     sort: 'အစီအစဉ်',
     selectCategory: 'အမျိုးအစားရွေးပါ',
@@ -1022,7 +1067,8 @@ const InventoryApp = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [filterCategory, setFilterCategory] = useState('All');
-  const [sortBy, setSortBy] = useState('name');
+  const [sortBy, setSortBy] = useState('created');
+  const [sortDirection, setSortDirection] = useState('desc');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
@@ -1104,7 +1150,7 @@ const InventoryApp = () => {
 
   useEffect(() => {
     filterAndSortItems();
-  }, [items, searchText, filterCategory, sortBy]);
+  }, [items, searchText, filterCategory, sortBy, sortDirection]);
 
   useEffect(() => {
     resetPagination();
@@ -1275,14 +1321,24 @@ const InventoryApp = () => {
       (filterCategory === 'All' || item.category === filterCategory)
     );
 
+    const dir = sortDirection === 'asc' ? 1 : -1;
+
     filtered.sort((a, b) => {
       switch (sortBy) {
+        case 'created': {
+          const timeA = a.timestamp ? Date.parse(a.timestamp) : (Number(a.id) || 0);
+          const timeB = b.timestamp ? Date.parse(b.timestamp) : (Number(b.id) || 0);
+          return (timeA - timeB) * dir;
+        }
         case 'name':
-          return a.name.localeCompare(b.name);
+          return a.name.localeCompare(b.name) * dir;
         case 'price':
-          return parseFloat(b.price) - parseFloat(a.price);
-        case 'amount':
-          return (parseFloat(b.price) * parseFloat(b.unitsSold)) - (parseFloat(a.price) * parseFloat(a.unitsSold));
+          return (parseFloat(a.price) - parseFloat(b.price)) * dir;
+        case 'amount': {
+          const totalA = parseFloat(a.price) * parseFloat(a.unitsSold);
+          const totalB = parseFloat(b.price) * parseFloat(b.unitsSold);
+          return (totalA - totalB) * dir;
+        }
         default:
           return 0;
       }
@@ -2594,14 +2650,17 @@ const InventoryApp = () => {
             <Text style={styles.noItemsText}>{language.noItems}</Text>
           </View>
         ) : (
-          filteredItems.map(item => (
+          filteredItems.map((item, index) => (
             <TouchableOpacity
               key={item.id}
               style={styles.itemCard}
               onPress={() => setExpandedItem(expandedItem === item.id ? null : item.id)}
             >
               <View style={styles.itemHeader}>
-                <Text style={styles.itemName}>{item.name}</Text>
+                <View style={styles.itemHeaderLeft}>
+                  <Text style={styles.itemIndex}>{index + 1}.</Text>
+                  <Text style={styles.itemName}>{item.name}</Text>
+                </View>
                 <Text style={styles.itemAmount}>
                   {language.currency}{(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
                 </Text>
@@ -3568,9 +3627,17 @@ const InventoryApp = () => {
                   
                   <TouchableOpacity 
                     style={styles.sortOption}
+                    onPress={() => setSortBy('created')}
+                  >
+                    <Text style={styles.sortOptionText}>{language.sortByCreated}</Text>
+                    <View style={[styles.sortToggle, sortBy === 'created' && styles.activeSortToggle]} />
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity 
+                    style={styles.sortOption}
                     onPress={() => setSortBy('name')}
                   >
-                    <Text style={styles.sortOptionText}>Name (A-Z)</Text>
+                    <Text style={styles.sortOptionText}>{language.sortByName}</Text>
                     <View style={[styles.sortToggle, sortBy === 'name' && styles.activeSortToggle]} />
                   </TouchableOpacity>
                   
@@ -3578,7 +3645,7 @@ const InventoryApp = () => {
                     style={styles.sortOption}
                     onPress={() => setSortBy('price')}
                   >
-                    <Text style={styles.sortOptionText}>Price (High to Low)</Text>
+                    <Text style={styles.sortOptionText}>{language.sortByPrice}</Text>
                     <View style={[styles.sortToggle, sortBy === 'price' && styles.activeSortToggle]} />
                   </TouchableOpacity>
                   
@@ -3586,9 +3653,34 @@ const InventoryApp = () => {
                     style={styles.sortOption}
                     onPress={() => setSortBy('amount')}
                   >
-                    <Text style={styles.sortOptionText}>Total Amount</Text>
+                    <Text style={styles.sortOptionText}>{language.sortByAmount}</Text>
                     <View style={[styles.sortToggle, sortBy === 'amount' && styles.activeSortToggle]} />
                   </TouchableOpacity>
+                  
+                  {/* Sort Direction */}
+                  <View style={styles.filterSectionHeader}>
+                    <Text style={styles.filterSectionTitle}>DIRECTION</Text>
+                  </View>
+                  
+                  <View style={styles.sortDirectionRow}>
+                    <TouchableOpacity 
+                      style={[styles.sortDirectionButton, sortDirection === 'asc' && styles.activeSortDirectionButton]}
+                      onPress={() => setSortDirection('asc')}
+                    >
+                      <Text style={[styles.sortDirectionButtonText, sortDirection === 'asc' && styles.activeSortDirectionButtonText]}>
+                        {language.ascending}
+                      </Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity 
+                      style={[styles.sortDirectionButton, sortDirection === 'desc' && styles.activeSortDirectionButton]}
+                      onPress={() => setSortDirection('desc')}
+                    >
+                      <Text style={[styles.sortDirectionButtonText, sortDirection === 'desc' && styles.activeSortDirectionButtonText]}>
+                        {language.descending}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 
                 {/* Apply Button */}
@@ -4079,6 +4171,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  itemHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  itemIndex: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#666',
+    marginRight: 8,
+    minWidth: 30,
   },
   itemName: {
     fontSize: 16,
@@ -5452,6 +5556,30 @@ const styles = StyleSheet.create({
   },
   activeSortToggle: {
     backgroundColor: '#5A7FFF',
+  },
+  sortDirectionRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 8,
+  },
+  sortDirectionButton: {
+    flex: 1,
+    backgroundColor: '#E8E8E8',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  activeSortDirectionButton: {
+    backgroundColor: '#5A7FFF',
+  },
+  sortDirectionButtonText: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '500',
+  },
+  activeSortDirectionButtonText: {
+    color: '#fff',
+    fontWeight: '600',
   },
   predefinedSearchContainer: {
     flexDirection: 'row',
