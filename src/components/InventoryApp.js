@@ -47,6 +47,7 @@ const defaultLanguage = {
   sortByName: 'Name',
   sortByPrice: 'Price',
   sortByAmount: 'Total Amount',
+  sortByTime: 'Time Created',
   filters: 'Filters',
   sort: 'Sort',
   selectCategory: 'Select Category',
@@ -151,6 +152,7 @@ const languageConfigs = {
     sortByName: 'Name',
     sortByPrice: 'Price',
     sortByAmount: 'Total Amount',
+    sortByTime: 'Time Created',
     filters: 'Filters',
     sort: 'Sort',
     selectCategory: 'Select Category',
@@ -213,6 +215,7 @@ const languageConfigs = {
     sortByName: 'Nombre',
     sortByPrice: 'Precio',
     sortByAmount: 'Cantidad Total',
+    sortByTime: 'Tiempo de Creación',
     filters: 'Filtros',
     sort: 'Ordenar',
     selectCategory: 'Seleccionar Categoría',
@@ -287,6 +290,7 @@ const languageConfigs = {
     sortByName: 'Nom',
     sortByPrice: 'Prix',
     sortByAmount: 'Montant Total',
+    sortByTime: 'Heure de Création',
     filters: 'Filtres',
     sort: 'Trier',
     selectCategory: 'Sélectionner une Catégorie',
@@ -348,6 +352,7 @@ const languageConfigs = {
     sortByName: 'Name',
     sortByPrice: 'Preis',
     sortByAmount: 'Gesamtbetrag',
+    sortByTime: 'Erstellungszeit',
     filters: 'Filter',
     sort: 'Sortieren',
     selectCategory: 'Kategorie auswählen',
@@ -409,6 +414,7 @@ const languageConfigs = {
     sortByName: 'Nome',
     sortByPrice: 'Prezzo',
     sortByAmount: 'Totale',
+    sortByTime: 'Data di Creazione',
     filters: 'Filtri',
     sort: 'Ordina',
     selectCategory: 'Seleziona Categoria',
@@ -470,6 +476,7 @@ const languageConfigs = {
     sortByName: 'Nome',
     sortByPrice: 'Preço',
     sortByAmount: 'Valor Total',
+    sortByTime: 'Hora de Criação',
     filters: 'Filtros',
     sort: 'Ordenar',
     selectCategory: 'Selecionar Categoria',
@@ -531,6 +538,7 @@ const languageConfigs = {
     sortByName: '名称',
     sortByPrice: '价格',
     sortByAmount: '总金额',
+    sortByTime: '创建时间',
     filters: '筛选',
     sort: '排序',
     selectCategory: '选择类别',
@@ -586,6 +594,7 @@ const languageConfigs = {
     sortByName: '名前',
     sortByPrice: '価格',
     sortByAmount: '合計金額',
+    sortByTime: '作成日時',
     filters: 'フィルター',
     sort: '並べ替え',
     selectCategory: 'カテゴリーを選択',
@@ -641,6 +650,7 @@ const languageConfigs = {
     sortByName: '이름',
     sortByPrice: '가격',
     sortByAmount: '총액',
+    sortByTime: '생성 시간',
     filters: '필터',
     sort: '정렬',
     selectCategory: '카테고리 선택',
@@ -702,6 +712,7 @@ const languageConfigs = {
     sortByName: 'ชื่อ',
     sortByPrice: 'ราคา',
     sortByAmount: 'ยอดรวม',
+    sortByTime: 'เวลาที่สร้าง',
     filters: 'ตัวกรอง',
     sort: 'เรียง',
     selectCategory: 'เลือกหมวดหมู่',
@@ -763,6 +774,7 @@ const languageConfigs = {
     sortByName: 'Tên',
     sortByPrice: 'Giá',
     sortByAmount: 'Tổng Số Tiền',
+    sortByTime: 'Thời Gian Tạo',
     filters: 'Bộ Lọc',
     sort: 'Sắp Xếp',
     selectCategory: 'Chọn Danh Mục',
@@ -824,6 +836,7 @@ const languageConfigs = {
     sortByName: 'Nama',
     sortByPrice: 'Harga',
     sortByAmount: 'Jumlah Total',
+    sortByTime: 'Waktu Dibuat',
     filters: 'Filter',
     sort: 'Urutkan',
     selectCategory: 'Pilih Kategori',
@@ -885,6 +898,7 @@ const languageConfigs = {
     sortByName: 'नाम',
     sortByPrice: 'मूल्य',
     sortByAmount: 'कुल राशि',
+    sortByTime: 'बनाने का समय',
     filters: 'फ़िल्टर',
     sort: 'क्रमबद्ध करें',
     selectCategory: 'श्रेणी चुनें',
@@ -946,6 +960,7 @@ const languageConfigs = {
     sortByName: 'အမည်',
     sortByPrice: 'ဈေးနှုန်း',
     sortByAmount: 'စုစုပေါင်းပမာဏ',
+    sortByTime: 'ဖန်တီးချိန်',
     filters: 'စစ်ထုတ်မှုများ',
     sort: 'အစီအစဉ်',
     selectCategory: 'အမျိုးအစားရွေးပါ',
@@ -1022,7 +1037,7 @@ const InventoryApp = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [filterCategory, setFilterCategory] = useState('All');
-  const [sortBy, setSortBy] = useState('name');
+  const [sortBy, setSortBy] = useState('time');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
@@ -1283,8 +1298,12 @@ const InventoryApp = () => {
           return parseFloat(b.price) - parseFloat(a.price);
         case 'amount':
           return (parseFloat(b.price) * parseFloat(b.unitsSold)) - (parseFloat(a.price) * parseFloat(a.unitsSold));
+        case 'time':
+          // Sort by timestamp (newest first)
+          return new Date(b.timestamp) - new Date(a.timestamp);
         default:
-          return 0;
+          // Default sort by time created (newest first)
+          return new Date(b.timestamp) - new Date(a.timestamp);
       }
     });
 
@@ -2445,6 +2464,7 @@ const InventoryApp = () => {
 
   // Filter and Sort option arrays
   const sortOptions = [
+    { label: language.sortByTime, value: 'time' },
     { label: language.sortByName, value: 'name' },
     { label: language.sortByPrice, value: 'price' },
     { label: language.sortByAmount, value: 'amount' },
@@ -2594,13 +2614,14 @@ const InventoryApp = () => {
             <Text style={styles.noItemsText}>{language.noItems}</Text>
           </View>
         ) : (
-          filteredItems.map(item => (
+          filteredItems.map((item, index) => (
             <TouchableOpacity
               key={item.id}
               style={styles.itemCard}
               onPress={() => setExpandedItem(expandedItem === item.id ? null : item.id)}
             >
               <View style={styles.itemHeader}>
+                <Text style={styles.itemNumber}>{index + 1}.</Text>
                 <Text style={styles.itemName}>{item.name}</Text>
                 <Text style={styles.itemAmount}>
                   {language.currency}{(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
@@ -4079,6 +4100,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    gap: 8,
+  },
+  itemNumber: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#666',
+    minWidth: 30,
   },
   itemName: {
     fontSize: 16,
