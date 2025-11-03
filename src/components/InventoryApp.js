@@ -3610,6 +3610,14 @@ const InventoryApp = () => {
                     <Text style={styles.sortOptionText}>Total Amount</Text>
                     <View style={[styles.sortToggle, sortBy === 'amount' && styles.activeSortToggle]} />
                   </TouchableOpacity>
+                  
+                  <TouchableOpacity 
+                    style={styles.sortOption}
+                    onPress={() => setSortBy('time')}
+                  >
+                    <Text style={styles.sortOptionText}>Time Created (Newest)</Text>
+                    <View style={[styles.sortToggle, sortBy === 'time' && styles.activeSortToggle]} />
+                  </TouchableOpacity>
                 </View>
                 
                 {/* Apply Button */}
