@@ -23,7 +23,7 @@
       "bundleIdentifier": "com.inventsight.daybunce",
       "icon": "./assets/icon.png",
       "buildNumber": "6",
-      "runtimeVersion": "1.0.1"
+      "runtimeVersion": "1.1.1"
     },
     "android": {
       "adaptiveIcon": {
@@ -44,6 +44,6 @@
       }
     },
     "owner": "kywin",
-    "runtimeVersion": "1.0.1"
+    "runtimeVersion": "1.1.1"
   }
 }
