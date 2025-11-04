@@ -81,6 +81,10 @@ const defaultLanguage = {
   deleteAllConfirm: 'Are you sure you want to delete all {{count}} predefined items? This action cannot be undone.',
   bulkAddInstructions: 'Enter one item per line. You can use formats like:\n- Apple\n- Banana, Food, lb\n- Coffee, Beverages, kg',
   bulkAddDefaults: 'Default values for items without category/unit',
+  deleteItem: 'Delete Item',
+  deleteItemConfirm: 'Are you sure you want to delete this item from predefined items?',
+  itemDeletedSuccess: 'Item deleted successfully',
+  successTitle: 'Success',
 };
 
 const availableLanguages = [
@@ -190,6 +194,10 @@ const languageConfigs = {
     deleteAllConfirm: 'Are you sure you want to delete all {{count}} predefined items? This action cannot be undone.',
     bulkAddInstructions: 'Enter one item per line. You can use formats like:\n- Apple\n- Banana, Food, lb\n- Coffee, Beverages, kg',
     bulkAddDefaults: 'Default values for items without category/unit',
+    deleteItem: 'Delete Item',
+    deleteItemConfirm: 'Are you sure you want to delete this item from predefined items?',
+    itemDeletedSuccess: 'Item deleted successfully',
+    successTitle: 'Success',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -265,6 +273,10 @@ const languageConfigs = {
     deleteAllConfirm: '¿Está seguro de que desea eliminar todos los {{count}} artículos predefinidos? Esta acción no se puede deshacer.',
     bulkAddInstructions: 'Ingrese un artículo por línea. Puede usar formatos como:\n- Manzana\n- Plátano, Comida, lb\n- Café, Bebidas, kg',
     bulkAddDefaults: 'Valores predeterminados para artículos sin categoría/unidad',
+    deleteItem: 'Eliminar Artículo',
+    deleteItemConfirm: '¿Está seguro de que desea eliminar este artículo de los artículos predefinidos?',
+    itemDeletedSuccess: 'Artículo eliminado exitosamente',
+    successTitle: 'Éxito',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -327,6 +339,10 @@ const languageConfigs = {
     deleteAllConfirm: 'Êtes-vous sûr de vouloir supprimer tous les {{count}} articles prédéfinis? Cette action ne peut pas être annulée.',
     bulkAddInstructions: 'Entrez un article par ligne. Vous pouvez utiliser des formats comme:\n- Pomme\n- Banane, Nourriture, lb\n- Café, Boissons, kg',
     bulkAddDefaults: 'Valeurs par défaut pour les articles sans catégorie/unité',
+    deleteItem: 'Supprimer l\'Article',
+    deleteItemConfirm: 'Êtes-vous sûr de vouloir supprimer cet article des articles prédéfinis?',
+    itemDeletedSuccess: 'Article supprimé avec succès',
+    successTitle: 'Succès',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -389,6 +405,10 @@ const languageConfigs = {
     deleteAllConfirm: 'Sind Sie sicher, dass Sie alle {{count}} vordefinierten Artikel löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
     bulkAddInstructions: 'Geben Sie einen Artikel pro Zeile ein. Sie können Formate verwenden wie:\n- Apfel\n- Banane, Essen, lb\n- Kaffee, Getränke, kg',
     bulkAddDefaults: 'Standardwerte für Artikel ohne Kategorie/Einheit',
+    deleteItem: 'Artikel Löschen',
+    deleteItemConfirm: 'Sind Sie sicher, dass Sie diesen Artikel aus den vordefinierten Artikeln löschen möchten?',
+    itemDeletedSuccess: 'Artikel erfolgreich gelöscht',
+    successTitle: 'Erfolg',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -451,6 +471,10 @@ const languageConfigs = {
     deleteAllConfirm: 'Sei sicuro di voler eliminare tutti i {{count}} articoli predefiniti? Questa azione non può essere annullata.',
     bulkAddInstructions: 'Inserisci un articolo per riga. Puoi usare formati come:\n- Mela\n- Banana, Cibo, lb\n- Caffè, Bevande, kg',
     bulkAddDefaults: 'Valori predefiniti per articoli senza categoria/unità',
+    deleteItem: 'Elimina Articolo',
+    deleteItemConfirm: 'Sei sicuro di voler eliminare questo articolo dagli articoli predefiniti?',
+    itemDeletedSuccess: 'Articolo eliminato con successo',
+    successTitle: 'Successo',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -513,6 +537,10 @@ const languageConfigs = {
     deleteAllConfirm: 'Tem certeza de que deseja excluir todos os {{count}} itens predefinidos? Esta ação não pode ser desfeita.',
     bulkAddInstructions: 'Digite um item por linha. Você pode usar formatos como:\n- Maçã\n- Banana, Comida, lb\n- Café, Bebidas, kg',
     bulkAddDefaults: 'Valores padrão para itens sem categoria/unidade',
+    deleteItem: 'Excluir Item',
+    deleteItemConfirm: 'Tem certeza de que deseja excluir este item dos itens predefinidos?',
+    itemDeletedSuccess: 'Item excluído com sucesso',
+    successTitle: 'Sucesso',
   },
   zh: {
     appTitle: '库存管理',
@@ -569,6 +597,10 @@ const languageConfigs = {
     deleteAllDescription: '删除所有预定义物品',
     showingItems: '显示 {{count}} / {{total}} 已筛选物品（共 {{all}} 个）',
     tapToViewReceipt: '点击查看收据',
+    deleteItem: '删除物品',
+    deleteItemConfirm: '您确定要从预定义物品中删除此物品吗？',
+    itemDeletedSuccess: '物品删除成功',
+    successTitle: '成功',
   },
   ja: {
     appTitle: '在庫管理',
@@ -625,6 +657,10 @@ const languageConfigs = {
     deleteAllDescription: '事前定義アイテムをすべて削除',
     showingItems: '{{count}} / {{total}} 件の絞り込みアイテムを表示中（全 {{all}} 件）',
     tapToViewReceipt: 'タップしてレシートを表示',
+    deleteItem: 'アイテムを削除',
+    deleteItemConfirm: '事前定義アイテムからこのアイテムを削除してもよろしいですか？',
+    itemDeletedSuccess: 'アイテムが正常に削除されました',
+    successTitle: '成功',
   },
   ko: {
     appTitle: '재고 관리',
@@ -687,6 +723,10 @@ const languageConfigs = {
     deleteAllConfirm: '모든 {{count}}개의 사전 정의된 품목을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.',
     bulkAddInstructions: '한 줄에 하나의 품목을 입력하세요. 다음과 같은 형식을 사용할 수 있습니다:\n- 사과\n- 바나나, 식품, lb\n- 커피, 음료, kg',
     bulkAddDefaults: '카테고리/단위가 없는 품목의 기본값',
+    deleteItem: '품목 삭제',
+    deleteItemConfirm: '사전 정의된 품목에서 이 품목을 삭제하시겠습니까?',
+    itemDeletedSuccess: '품목이 성공적으로 삭제되었습니다',
+    successTitle: '성공',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -749,6 +789,10 @@ const languageConfigs = {
     deleteAllConfirm: 'คุณแน่ใจหรือไม่ว่าต้องการลบสินค้าที่กำหนดไว้ล่วงหน้าทั้งหมด {{count}} รายการ? การดำเนินการนี้ไม่สามารถยกเลิกได้',
     bulkAddInstructions: 'ป้อนสินค้าหนึ่งรายการต่อบรรทัด คุณสามารถใช้รูปแบบเช่น:\n- แอปเปิ้ล\n- กล้วย, อาหาร, lb\n- กาแฟ, เครื่องดื่ม, kg',
     bulkAddDefaults: 'ค่าเริ่มต้นสำหรับสินค้าที่ไม่มีหมวดหมู่/หน่วย',
+    deleteItem: 'ลบสินค้า',
+    deleteItemConfirm: 'คุณแน่ใจหรือไม่ว่าต้องการลบสินค้านี้จากรายการที่กำหนดไว้ล่วงหน้า?',
+    itemDeletedSuccess: 'ลบสินค้าเรียบร้อยแล้ว',
+    successTitle: 'สำเร็จ',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -811,6 +855,10 @@ const languageConfigs = {
     deleteAllConfirm: 'Bạn có chắc chắn muốn xóa tất cả {{count}} mục có sẵn không? Hành động này không thể hoàn tác.',
     bulkAddInstructions: 'Nhập một mục mỗi dòng. Bạn có thể sử dụng các định dạng như:\n- Táo\n- Chuối, Thực phẩm, lb\n- Cà phê, Đồ uống, kg',
     bulkAddDefaults: 'Giá trị mặc định cho các mục không có danh mục/đơn vị',
+    deleteItem: 'Xóa Mục',
+    deleteItemConfirm: 'Bạn có chắc chắn muốn xóa mục này khỏi các mục có sẵn không?',
+    itemDeletedSuccess: 'Mục đã được xóa thành công',
+    successTitle: 'Thành Công',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -873,6 +921,10 @@ const languageConfigs = {
     deleteAllConfirm: 'Apakah Anda yakin ingin menghapus semua {{count}} barang terdefinisi? Tindakan ini tidak dapat dibatalkan.',
     bulkAddInstructions: 'Masukkan satu barang per baris. Anda dapat menggunakan format seperti:\n- Apel\n- Pisang, Makanan, lb\n- Kopi, Minuman, kg',
     bulkAddDefaults: 'Nilai default untuk barang tanpa kategori/unit',
+    deleteItem: 'Hapus Barang',
+    deleteItemConfirm: 'Apakah Anda yakin ingin menghapus barang ini dari barang terdefinisi?',
+    itemDeletedSuccess: 'Barang berhasil dihapus',
+    successTitle: 'Berhasil',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -935,6 +987,10 @@ const languageConfigs = {
     deleteAllConfirm: 'क्या आप वाकई सभी {{count}} पूर्वनिर्धारित वस्तुओं को हटाना चाहते हैं? इस क्रिया को पूर्ववत नहीं किया जा सकता।',
     bulkAddInstructions: 'प्रति पंक्ति एक वस्तु दर्ज करें। आप इस तरह के प्रारूपों का उपयोग कर सकते हैं:\n- सेब\n- केला, भोजन, lb\n- कॉफी, पेय, kg',
     bulkAddDefaults: 'श्रेणी/इकाई के बिना वस्तुओं के लिए डिफ़ॉल्ट मान',
+    deleteItem: 'वस्तु हटाएं',
+    deleteItemConfirm: 'क्या आप वाकई इस वस्तु को पूर्वनिर्धारित वस्तुओं से हटाना चाहते हैं?',
+    itemDeletedSuccess: 'वस्तु सफलतापूर्वक हटा दी गई',
+    successTitle: 'सफलता',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -996,6 +1052,10 @@ const languageConfigs = {
     deleteItem: 'ပစ္စည်းဖျက်ရန်',
     deleteItemConfirm: 'ဤပစ္စည်းကိုကြိုတင်သတ်မှတ်ထားသောပစ္စည်းများမှဖျက်လိုသည်မှာသေချာပါသလား?',
     deleteAllConfirm: 'ကြိုတင်သတ်မှတ်ထားသောပစ္စည်းအားလုံး {{count}} ခုကိုဖျက်လိုသည်မှာသေချာပါသလား? ဤလုပ်ဆောင်ချက်ကိုပြန်ပြောင်း၍မရပါ။',
+    deleteItem: 'ပစ္စည်းဖျက်ရန်',
+    deleteItemConfirm: 'ကြိုတင်သတ်မှတ်ထားသောပစ္စည်းများမှဤပစ္စည်းကိုဖျက်လိုသည်မှာသေချာပါသလား?',
+    itemDeletedSuccess: 'ပစ္စည်းအောင်မြင်စွာဖျက်ပြီးပါပြီ',
+    successTitle: 'အောင်မြင်ပါသည်',
   },
 };
 
@@ -2332,8 +2392,8 @@ const InventoryApp = () => {
       const updatedItems = predefinedItems.filter(item => item.id !== itemId);
       setPredefinedItems(updatedItems);
       await savePredefinedItems(updatedItems);
-      setSwipedItemId(null); // Reset swipe state
-      Alert.alert('Success', 'Item deleted successfully');
+      setSwipedItemId(null);
+      Alert.alert(language.successTitle, language.itemDeletedSuccess);
     } catch (error) {
       Alert.alert('Error', 'Could not delete item');
       console.error('Error deleting predefined item:', error);
@@ -2359,12 +2419,12 @@ const InventoryApp = () => {
   // Show delete confirmation for individual item
   const confirmDeleteItem = (item) => {
     Alert.alert(
-      'Delete Item',
-      `Are you sure you want to delete "${item.name}" from predefined items?`,
+      language.deleteItem,
+      language.deleteItemConfirm.replace('"${item.name}"', `"${item.name}"`),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: language.cancel, style: 'cancel' },
         { 
-          text: 'Delete', 
+          text: language.delete, 
           style: 'destructive',
           onPress: () => deleteIndividualPredefinedItem(item.id) 
         }
@@ -3610,7 +3670,7 @@ const InventoryApp = () => {
                     <Text style={styles.sortOptionText}>Total Amount</Text>
                     <View style={[styles.sortToggle, sortBy === 'amount' && styles.activeSortToggle]} />
                   </TouchableOpacity>
-                  
+
                   <TouchableOpacity 
                     style={styles.sortOption}
                     onPress={() => setSortBy('time')}
