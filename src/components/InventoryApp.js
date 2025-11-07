@@ -85,6 +85,8 @@ const defaultLanguage = {
   deleteItemConfirm: 'Are you sure you want to delete this item from predefined items?',
   itemDeletedSuccess: 'Item deleted successfully',
   successTitle: 'Success',
+  itemUpdated: 'Item Updated',
+  itemUpdatedMessage: 'Added {{units}} {{unitType}} to existing item. New total: {{total}} {{unitType}}',
 };
 
 const availableLanguages = [
@@ -198,6 +200,8 @@ const languageConfigs = {
     deleteItemConfirm: 'Are you sure you want to delete this item from predefined items?',
     itemDeletedSuccess: 'Item deleted successfully',
     successTitle: 'Success',
+    itemUpdated: 'Item Updated',
+    itemUpdatedMessage: 'Added {{units}} {{unitType}} to existing item. New total: {{total}} {{unitType}}',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -277,6 +281,8 @@ const languageConfigs = {
     deleteItemConfirm: '¿Está seguro de que desea eliminar este artículo de los artículos predefinidos?',
     itemDeletedSuccess: 'Artículo eliminado exitosamente',
     successTitle: 'Éxito',
+    itemUpdated: 'Artículo Actualizado',
+    itemUpdatedMessage: 'Se agregaron {{units}} {{unitType}} al artículo existente. Nuevo total: {{total}} {{unitType}}',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -343,6 +349,8 @@ const languageConfigs = {
     deleteItemConfirm: 'Êtes-vous sûr de vouloir supprimer cet article des articles prédéfinis?',
     itemDeletedSuccess: 'Article supprimé avec succès',
     successTitle: 'Succès',
+    itemUpdated: 'Article Mis à Jour',
+    itemUpdatedMessage: '{{units}} {{unitType}} ajoutés à l\'article existant. Nouveau total: {{total}} {{unitType}}',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -409,6 +417,8 @@ const languageConfigs = {
     deleteItemConfirm: 'Sind Sie sicher, dass Sie diesen Artikel aus den vordefinierten Artikeln löschen möchten?',
     itemDeletedSuccess: 'Artikel erfolgreich gelöscht',
     successTitle: 'Erfolg',
+    itemUpdated: 'Artikel Aktualisiert',
+    itemUpdatedMessage: '{{units}} {{unitType}} zum vorhandenen Artikel hinzugefügt. Neue Summe: {{total}} {{unitType}}',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -475,6 +485,8 @@ const languageConfigs = {
     deleteItemConfirm: 'Sei sicuro di voler eliminare questo articolo dagli articoli predefiniti?',
     itemDeletedSuccess: 'Articolo eliminato con successo',
     successTitle: 'Successo',
+    itemUpdated: 'Articolo Aggiornato',
+    itemUpdatedMessage: 'Aggiunti {{units}} {{unitType}} all\'articolo esistente. Nuovo totale: {{total}} {{unitType}}',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -541,6 +553,8 @@ const languageConfigs = {
     deleteItemConfirm: 'Tem certeza de que deseja excluir este item dos itens predefinidos?',
     itemDeletedSuccess: 'Item excluído com sucesso',
     successTitle: 'Sucesso',
+    itemUpdated: 'Item Atualizado',
+    itemUpdatedMessage: 'Adicionados {{units}} {{unitType}} ao item existente. Novo total: {{total}} {{unitType}}',
   },
   zh: {
     appTitle: '库存管理',
@@ -601,6 +615,8 @@ const languageConfigs = {
     deleteItemConfirm: '您确定要从预定义物品中删除此物品吗？',
     itemDeletedSuccess: '物品删除成功',
     successTitle: '成功',
+    itemUpdated: '物品已更新',
+    itemUpdatedMessage: '已添加 {{units}} {{unitType}} 到现有物品。新总计: {{total}} {{unitType}}',
   },
   ja: {
     appTitle: '在庫管理',
@@ -661,6 +677,8 @@ const languageConfigs = {
     deleteItemConfirm: '事前定義アイテムからこのアイテムを削除してもよろしいですか？',
     itemDeletedSuccess: 'アイテムが正常に削除されました',
     successTitle: '成功',
+    itemUpdated: 'アイテムが更新されました',
+    itemUpdatedMessage: '既存のアイテムに {{units}} {{unitType}} を追加しました。新しい合計: {{total}} {{unitType}}',
   },
   ko: {
     appTitle: '재고 관리',
@@ -727,6 +745,8 @@ const languageConfigs = {
     deleteItemConfirm: '사전 정의된 품목에서 이 품목을 삭제하시겠습니까?',
     itemDeletedSuccess: '품목이 성공적으로 삭제되었습니다',
     successTitle: '성공',
+    itemUpdated: '품목 업데이트됨',
+    itemUpdatedMessage: '기존 품목에 {{units}} {{unitType}}이(가) 추가되었습니다. 새 합계: {{total}} {{unitType}}',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -793,6 +813,8 @@ const languageConfigs = {
     deleteItemConfirm: 'คุณแน่ใจหรือไม่ว่าต้องการลบสินค้านี้จากรายการที่กำหนดไว้ล่วงหน้า?',
     itemDeletedSuccess: 'ลบสินค้าเรียบร้อยแล้ว',
     successTitle: 'สำเร็จ',
+    itemUpdated: 'อัปเดตสินค้าแล้ว',
+    itemUpdatedMessage: 'เพิ่ม {{units}} {{unitType}} ไปยังสินค้าที่มีอยู่ รวมใหม่: {{total}} {{unitType}}',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -859,6 +881,8 @@ const languageConfigs = {
     deleteItemConfirm: 'Bạn có chắc chắn muốn xóa mục này khỏi các mục có sẵn không?',
     itemDeletedSuccess: 'Mục đã được xóa thành công',
     successTitle: 'Thành Công',
+    itemUpdated: 'Đã Cập Nhật Mục',
+    itemUpdatedMessage: 'Đã thêm {{units}} {{unitType}} vào mục hiện có. Tổng mới: {{total}} {{unitType}}',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -925,6 +949,8 @@ const languageConfigs = {
     deleteItemConfirm: 'Apakah Anda yakin ingin menghapus barang ini dari barang terdefinisi?',
     itemDeletedSuccess: 'Barang berhasil dihapus',
     successTitle: 'Berhasil',
+    itemUpdated: 'Barang Diperbarui',
+    itemUpdatedMessage: 'Menambahkan {{units}} {{unitType}} ke barang yang ada. Total baru: {{total}} {{unitType}}',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -991,6 +1017,8 @@ const languageConfigs = {
     deleteItemConfirm: 'क्या आप वाकई इस वस्तु को पूर्वनिर्धारित वस्तुओं से हटाना चाहते हैं?',
     itemDeletedSuccess: 'वस्तु सफलतापूर्वक हटा दी गई',
     successTitle: 'सफलता',
+    itemUpdated: 'वस्तु अपडेट की गई',
+    itemUpdatedMessage: 'मौजूदा वस्तु में {{units}} {{unitType}} जोड़ा गया। नया कुल: {{total}} {{unitType}}',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1056,6 +1084,8 @@ const languageConfigs = {
     deleteItemConfirm: 'ကြိုတင်သတ်မှတ်ထားသောပစ္စည်းများမှဤပစ္စည်းကိုဖျက်လိုသည်မှာသေချာပါသလား?',
     itemDeletedSuccess: 'ပစ္စည်းအောင်မြင်စွာဖျက်ပြီးပါပြီ',
     successTitle: 'အောင်မြင်ပါသည်',
+    itemUpdated: 'ပစ္စည်းအပ်ဒိတ်လုပ်ပြီးပြီ',
+    itemUpdatedMessage: 'ရှိပြီးသားပစ္စည်းတွင် {{units}} {{unitType}} ထည့်သွင်းပြီးပြီ။ စုစုပေါင်းအသစ်: {{total}} {{unitType}}',
   },
 };
 
@@ -1137,6 +1167,7 @@ const InventoryApp = () => {
   const [showCalendarModal, setShowCalendarModal] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('$');
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
+  const [sortDirection, setSortDirection] = useState('asc');
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -1179,7 +1210,7 @@ const InventoryApp = () => {
 
   useEffect(() => {
     filterAndSortItems();
-  }, [items, searchText, filterCategory, sortBy]);
+  }, [items, searchText, filterCategory, sortBy, sortDirection]); // ADD sortDirection
 
   useEffect(() => {
     resetPagination();
@@ -1351,20 +1382,27 @@ const InventoryApp = () => {
     );
 
     filtered.sort((a, b) => {
+      let comparison = 0;
+      
       switch (sortBy) {
         case 'name':
-          return a.name.localeCompare(b.name);
+          comparison = a.name.localeCompare(b.name);
+          break;
         case 'price':
-          return parseFloat(b.price) - parseFloat(a.price);
+          comparison = parseFloat(a.price) - parseFloat(b.price);
+          break;
         case 'amount':
-          return (parseFloat(b.price) * parseFloat(b.unitsSold)) - (parseFloat(a.price) * parseFloat(a.unitsSold));
+          comparison = (parseFloat(a.price) * parseFloat(a.unitsSold)) - (parseFloat(b.price) * parseFloat(b.unitsSold));
+          break;
         case 'time':
-          // Sort by timestamp (newest first)
-          return new Date(b.timestamp) - new Date(a.timestamp);
+          comparison = new Date(a.timestamp) - new Date(b.timestamp);
+          break;
         default:
-          // Default sort by time created (newest first)
-          return new Date(b.timestamp) - new Date(a.timestamp);
+          comparison = new Date(a.timestamp) - new Date(b.timestamp);
       }
+      
+      // Apply sort direction
+      return sortDirection === 'asc' ? comparison : -comparison;
     });
 
     setFilteredItems(filtered);
@@ -1403,18 +1441,50 @@ const InventoryApp = () => {
       return;
     }
 
-    const item = {
-      id: Date.now().toString(),
-      ...newItem,
-      totalAmount: calculateTotal(),
-      timestamp: new Date().toISOString(),
-    };
+    // Check if item with same name and price exists on this date
+    const existingItemIndex = items.findIndex(item => 
+      item.name.toLowerCase() === newItem.name.toLowerCase() && 
+      parseFloat(item.price) === parseFloat(newItem.price)
+    );
 
-    const updatedItems = [...items, item];
+    let updatedItems;
+    
+    if (existingItemIndex !== -1) {
+      // Item exists - update the units sold and total amount
+      const existingItem = items[existingItemIndex];
+      const newUnitsSold = parseFloat(existingItem.unitsSold) + parseFloat(newItem.unitsSold);
+      const newTotalAmount = (parseFloat(newItem.price) * newUnitsSold).toFixed(2);
+      
+      updatedItems = [...items];
+      updatedItems[existingItemIndex] = {
+        ...existingItem,
+        unitsSold: newUnitsSold.toString(),
+        totalAmount: newTotalAmount
+      };
+      
+      Alert.alert(
+        language.itemUpdated, 
+        language.itemUpdatedMessage
+          .replace('{{units}}', newItem.unitsSold)
+          .replace('{{unitType}}', newItem.unitType)
+          .replace('{{total}}', newUnitsSold)
+          .replace('{{unitType}}', newItem.unitType)
+      );
+    } else {
+      // New item - add it
+      const item = {
+        id: Date.now().toString(),
+        ...newItem,
+        totalAmount: calculateTotal(),
+        timestamp: new Date().toISOString(),
+      };
+      updatedItems = [...items, item];
+    }
+
     setItems(updatedItems);
     await saveData(updatedItems);
 
-    // If this was a custom item, add it to predefined items
+    // If this was a custom item, add it to predefined items (only if it's truly new)
     if (isItemUnique(newItem, predefinedItems)) {
       await addToPredefinedItems(newItem);
     }
@@ -3645,6 +3715,14 @@ const InventoryApp = () => {
                 <View style={styles.filterSection}>
                   <View style={styles.filterSectionHeader}>
                     <Text style={styles.filterSectionTitle}>SORT BY</Text>
+                    <TouchableOpacity 
+                      style={styles.directionToggle}
+                      onPress={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
+                    >
+                      <Text style={styles.directionToggleText}>
+                        {sortDirection === 'asc' ? '↑ ASC' : '↓ DESC'}
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                   
                   <TouchableOpacity 
@@ -3659,7 +3737,7 @@ const InventoryApp = () => {
                     style={styles.sortOption}
                     onPress={() => setSortBy('price')}
                   >
-                    <Text style={styles.sortOptionText}>Price (High to Low)</Text>
+                    <Text style={styles.sortOptionText}>Price</Text>
                     <View style={[styles.sortToggle, sortBy === 'price' && styles.activeSortToggle]} />
                   </TouchableOpacity>
                   
@@ -3675,7 +3753,7 @@ const InventoryApp = () => {
                     style={styles.sortOption}
                     onPress={() => setSortBy('time')}
                   >
-                    <Text style={styles.sortOptionText}>Time Created (Newest)</Text>
+                    <Text style={styles.sortOptionText}>Time Created</Text>
                     <View style={[styles.sortToggle, sortBy === 'time' && styles.activeSortToggle]} />
                   </TouchableOpacity>
                 </View>
@@ -5604,6 +5682,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#28a745',
     textAlign: 'center',
+    fontWeight: '600',
+  },
+  directionToggle: {
+    backgroundColor: '#5A7FFF',
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  directionToggleText: {
+    fontSize: 12,
+    color: '#fff',
     fontWeight: '600',
   },
 });
