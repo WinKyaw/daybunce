@@ -3057,12 +3057,12 @@ const InventoryApp = () => {
                         <View style={styles.filterSection}>
                           <View style={styles.filterSectionHeader}>
                             <Text style={styles.filterSectionTitle}>CATEGORY</Text>
-                            <TouchableOpacity 
+                            {/* <TouchableOpacity 
                               style={styles.clearButton}
                               onPress={() => setPredefinedFilterCategory('All')}
                             >
                               <Text style={styles.clearButtonText}>Clear</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                           </View>
                           
                           <View style={styles.categoryChips}>
@@ -3605,9 +3605,9 @@ const InventoryApp = () => {
                 <View style={styles.filterSection}>
                   <View style={styles.filterSectionHeader}>
                     <Text style={styles.filterSectionTitle}>CATEGORY</Text>
-                    <View style={styles.clearButton}>
+                    {/* <View style={styles.clearButton}>
                       <Text style={styles.clearButtonText}>Clear</Text>
-                    </View>
+                    </View> */}
                   </View>
                   
                   <View style={styles.categoryChips}>
