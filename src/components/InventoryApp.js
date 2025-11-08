@@ -1193,7 +1193,7 @@ const InventoryApp = () => {
   const calculateTotal = () => {
     const price = parseFloat(newItem.price) || 0;
     const units = parseFloat(newItem.unitsSold) || 0;
-    return (price * units).toFixed(2);
+    return formatNumber(price * units, 2);
   };
 
   useEffect(() => {
@@ -1265,6 +1265,15 @@ const InventoryApp = () => {
       console.error('Error loading predefined items:', error);
       setPredefinedItems(defaultPredefinedItems);
     }
+  };
+  // Format a number with commas and specified decimal places
+  const formatNumber = (number, decimals = 2) => {
+    const num = parseFloat(number);
+    if (isNaN(num)) return '0';
+    return num.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
   };
 
   // Save predefined items to AsyncStorage and optionally export to JSON format
@@ -1441,7 +1450,6 @@ const InventoryApp = () => {
       return;
     }
 
-    // Check if item with same name and price exists on this date
     const existingItemIndex = items.findIndex(item => 
       item.name.toLowerCase() === newItem.name.toLowerCase() && 
       parseFloat(item.price) === parseFloat(newItem.price)
@@ -1450,32 +1458,34 @@ const InventoryApp = () => {
     let updatedItems;
     
     if (existingItemIndex !== -1) {
-      // Item exists - update the units sold and total amount
       const existingItem = items[existingItemIndex];
       const newUnitsSold = parseFloat(existingItem.unitsSold) + parseFloat(newItem.unitsSold);
-      const newTotalAmount = (parseFloat(newItem.price) * newUnitsSold).toFixed(2);
+      const newTotalAmount = (parseFloat(newItem.price) * newUnitsSold).toFixed(2); // Keep as plain number for storage
       
       updatedItems = [...items];
       updatedItems[existingItemIndex] = {
         ...existingItem,
         unitsSold: newUnitsSold.toString(),
-        totalAmount: newTotalAmount
+        totalAmount: newTotalAmount,
       };
       
       Alert.alert(
         language.itemUpdated, 
         language.itemUpdatedMessage
-          .replace('{{units}}', newItem.unitsSold)
+          .replace('{{units}}', formatNumber(parseFloat(newItem.unitsSold), 0))
           .replace('{{unitType}}', newItem.unitType)
-          .replace('{{total}}', newUnitsSold)
+          .replace('{{total}}', formatNumber(newUnitsSold, 0))
           .replace('{{unitType}}', newItem.unitType)
       );
     } else {
-      // New item - add it
+      const price = parseFloat(newItem.price);
+      const units = parseFloat(newItem.unitsSold);
+      const totalAmount = (price * units).toFixed(2); // Keep as plain number for storage
+      
       const item = {
         id: Date.now().toString(),
         ...newItem,
-        totalAmount: calculateTotal(),
+        totalAmount: totalAmount,
         timestamp: new Date().toISOString(),
       };
       updatedItems = [...items, item];
@@ -1484,7 +1494,6 @@ const InventoryApp = () => {
     setItems(updatedItems);
     await saveData(updatedItems);
 
-    // If this was a custom item, add it to predefined items (only if it's truly new)
     if (isItemUnique(newItem, predefinedItems)) {
       await addToPredefinedItems(newItem);
     }
@@ -1496,7 +1505,7 @@ const InventoryApp = () => {
       category: defaultCategories[4],
       unitType: defaultUnitTypes[4],
     });
-    setIsCustomItem(true); // Reset to default
+    setIsCustomItem(true);
     setShowAddModal(false);
   };
 
@@ -1507,9 +1516,10 @@ const InventoryApp = () => {
   };
 
   const getDailyTotal = () => {
-    return filteredItems.reduce((total, item) =>
+    const total = filteredItems.reduce((total, item) =>
       total + (parseFloat(item.price) * parseFloat(item.unitsSold)), 0
-    ).toFixed(2);
+    );
+    return formatNumber(total, 2);
   };
 
   const getFilteredPredefinedItems = useMemo(() => {
@@ -1816,7 +1826,10 @@ const InventoryApp = () => {
       itemsHTML = '<tr><td colspan="4" style="text-align: center; color: #666; font-style: italic;">No items sold on this date</td></tr>';
     } else {
       filteredItems.forEach((item, index) => {
-        const total = (parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2);
+        const total = formatNumber(parseFloat(item.price) * parseFloat(item.unitsSold), 2);
+        const price = formatNumber(parseFloat(item.price), 2);
+        const units = formatNumber(parseFloat(item.unitsSold), 2);
+        
         itemsHTML += `
           <tr>
             <td>${index + 1}</td>
@@ -1824,7 +1837,7 @@ const InventoryApp = () => {
               <strong>${item.name}</strong><br>
               <small style="color: #666;">${item.category}</small>
             </td>
-            <td>${language.currency}${item.price}/${item.unitType} × ${item.unitsSold}</td>
+            <td>${language.currency}${price}/${item.unitType} × ${units}</td>
             <td style="text-align: right; font-weight: bold;">${language.currency}${total}</td>
           </tr>
         `;
@@ -1839,79 +1852,7 @@ const InventoryApp = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Daily Sales Summary</title>
         <style>
-          body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            margin: 20px;
-            color: #333;
-            line-height: 1.6;
-            font-size: 14px;
-          }
-          .header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #333;
-            padding-bottom: 20px;
-          }
-          .title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-          }
-          .date-info {
-            color: #666;
-            font-size: 14px;
-          }
-          .summary-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-          }
-          .summary-table th,
-          .summary-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-            vertical-align: top;
-          }
-          .summary-table th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-          }
-          .summary-table tr:nth-child(even) {
-            background-color: #f8f9fa;
-          }
-          .total-section {
-            border-top: 2px solid #333;
-            padding-top: 15px;
-            text-align: right;
-          }
-          .total-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-          }
-          .grand-total {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2e7d32;
-            border-top: 1px solid #ccc;
-            padding-top: 10px;
-            margin-top: 10px;
-          }
-          .footer {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 12px;
-            color: #666;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-          }
-          .confirmed-badge {
-            color: #2e7d32;
-            font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 10px;
-          }
+          /* ... existing styles ... */
         </style>
       </head>
       <body>
@@ -1941,7 +1882,7 @@ const InventoryApp = () => {
         <div class="total-section">
           <div class="total-row">
             <span>Total Items:</span>
-            <span>${filteredItems.length}</span>
+            <span>${formatNumber(filteredItems.length, 0)}</span>
           </div>
           <div class="total-row grand-total">
             <span>Daily Total:</span>
@@ -2754,13 +2695,13 @@ const InventoryApp = () => {
                 <Text style={styles.itemNumber}>{index + 1}.</Text>
                 <Text style={styles.itemName}>{item.name}</Text>
                 <Text style={styles.itemAmount}>
-                  {language.currency}{(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
+                  {language.currency}{formatNumber(parseFloat(item.price) * parseFloat(item.unitsSold), 2)}
                 </Text>
               </View>
 
               <View style={styles.itemSubInfo}>
                 <Text style={styles.itemDetail}>
-                  {language.price}: {language.currency}{item.price} | {language.unitsSold}: {item.unitsSold} {item.unitType}
+                  {language.price}: {language.currency}{formatNumber(parseFloat(item.price), 2)} | {language.unitsSold}: {formatNumber(parseFloat(item.unitsSold), 2)} {item.unitType}
                 </Text>
                 <Text style={styles.itemCategory}>{item.category}</Text>
               </View>
@@ -2768,13 +2709,13 @@ const InventoryApp = () => {
               {expandedItem === item.id && (
                 <View style={styles.expandedInfo}>
                   <Text style={styles.expandedText}>
-                    {language.price}: {language.currency}{item.price}
+                    {language.price}: {language.currency}{formatNumber(parseFloat(item.price), 2)}
                   </Text>
                   <Text style={styles.expandedText}>
-                    {language.unitsSold}: {item.unitsSold} {item.unitType}
+                    {language.unitsSold}: {formatNumber(parseFloat(item.unitsSold), 2)} {item.unitType}
                   </Text>
                   <Text style={styles.expandedText}>
-                    {language.totalAmount}: {language.currency}{item.totalAmount}
+                    {language.totalAmount}: {language.currency}{formatNumber(parseFloat(item.totalAmount), 2)}
                   </Text>
                   <TouchableOpacity
                     style={styles.deleteButton}
@@ -2847,12 +2788,12 @@ const InventoryApp = () => {
                           <Text style={styles.receiptItemNumber}>{index + 1}.</Text>
                           <Text style={styles.receiptItemName}>{item.name}</Text>
                           <Text style={styles.receiptItemTotal}>
-                            {language.currency}{(parseFloat(item.price) * parseFloat(item.unitsSold)).toFixed(2)}
+                            {language.currency}{formatNumber(parseFloat(item.price) * parseFloat(item.unitsSold), 2)}
                           </Text>
                         </View>
                         <View style={styles.receiptItemDetails}>
                           <Text style={styles.receiptItemDetail}>
-                            {language.currency}{item.price}/{item.unitType} × {item.unitsSold} {item.unitType}
+                            {language.currency}{formatNumber(parseFloat(item.price), 2)}/{item.unitType} × {formatNumber(parseFloat(item.unitsSold), 2)} {item.unitType}
                           </Text>
                           <Text style={styles.receiptItemCategory}>{item.category}</Text>
                         </View>
