@@ -3,13 +3,13 @@
 **Effective Date:** November 30, 2025  
 **Last Modified:** November 30, 2025
 
-**Provider:** InventSight (Developer: Kyaw Win)  
+**Provider:** InventSight  
 **Contact:** windaybunce@gmail.com  
 **Location:** California, USA  
 **Jurisdiction:** State of California, United States  
 **Privacy Policy URL:** https://winkyaw.github.io/daybunce/PRIVACY-POLICY.html
 
-DayBunce (“the App”) is provided by InventSight (Developer: Kyaw Win) (“we”, “us”, or “our”). This policy explains what data the App processes, how and why we process it, and your choices.
+DayBunce (“the App”) is provided by InventSight (“we”, “us”, or “our”). This policy explains what data the App processes, how and why we process it, and your choices.
 
 We designed DayBunce to work primarily offline. Your inventory and settings are stored on your device and are not sent to our servers.
 
@@ -125,9 +125,10 @@ We may update this Policy from time to time. The latest version will be availabl
 
 ## Contact Us
 
-InventSight (Developer: Kyaw Win)  
+InventSight  
+Developer Team  
 California, USA  
 Email: windaybunce@gmail.com
 
-Data Controller: InventSight (Developer: Kyaw Win)  
+Data Controller: InventSight  
 Jurisdiction: State of California, United States
