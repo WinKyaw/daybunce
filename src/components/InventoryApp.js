@@ -87,6 +87,8 @@ const defaultLanguage = {
   successTitle: 'Success',
   itemUpdated: 'Item Updated',
   itemUpdatedMessage: 'Added {{units}} {{unitType}} to existing item. New total: {{total}} {{unitType}}',
+  combineItems: 'Combine Identical Items',
+  combineItemsDescription: 'When enabled, items with same name and price will be combined',
 };
 
 const availableLanguages = [
@@ -202,6 +204,8 @@ const languageConfigs = {
     successTitle: 'Success',
     itemUpdated: 'Item Updated',
     itemUpdatedMessage: 'Added {{units}} {{unitType}} to existing item. New total: {{total}} {{unitType}}',
+    combineItems: 'Combine Identical Items',
+    combineItemsDescription: 'When enabled, items with same name and price will be combined',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -283,6 +287,8 @@ const languageConfigs = {
     successTitle: 'Éxito',
     itemUpdated: 'Artículo Actualizado',
     itemUpdatedMessage: 'Se agregaron {{units}} {{unitType}} al artículo existente. Nuevo total: {{total}} {{unitType}}',
+    combineItems: 'Combinar Artículos Idénticos',
+    combineItemsDescription: 'Cuando está habilitado, los artículos con el mismo nombre y precio se combinarán',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -351,6 +357,8 @@ const languageConfigs = {
     successTitle: 'Succès',
     itemUpdated: 'Article Mis à Jour',
     itemUpdatedMessage: '{{units}} {{unitType}} ajoutés à l\'article existant. Nouveau total: {{total}} {{unitType}}',
+    combineItems: 'Combiner les Articles Identiques',
+    combineItemsDescription: 'Lorsqu\'activé, les articles avec le même nom et prix seront combinés',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -419,6 +427,8 @@ const languageConfigs = {
     successTitle: 'Erfolg',
     itemUpdated: 'Artikel Aktualisiert',
     itemUpdatedMessage: '{{units}} {{unitType}} zum vorhandenen Artikel hinzugefügt. Neue Summe: {{total}} {{unitType}}',
+    combineItems: 'Identische Artikel Kombinieren',
+    combineItemsDescription: 'Wenn aktiviert, werden Artikel mit gleichem Namen und Preis kombiniert',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -487,6 +497,8 @@ const languageConfigs = {
     successTitle: 'Successo',
     itemUpdated: 'Articolo Aggiornato',
     itemUpdatedMessage: 'Aggiunti {{units}} {{unitType}} all\'articolo esistente. Nuovo totale: {{total}} {{unitType}}',
+    combineItems: 'Combina Articoli Identici',
+    combineItemsDescription: 'Quando abilitato, gli articoli con lo stesso nome e prezzo verranno combinati',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -555,6 +567,8 @@ const languageConfigs = {
     successTitle: 'Sucesso',
     itemUpdated: 'Item Atualizado',
     itemUpdatedMessage: 'Adicionados {{units}} {{unitType}} ao item existente. Novo total: {{total}} {{unitType}}',
+    combineItems: 'Combinar Itens Idênticos',
+    combineItemsDescription: 'Quando ativado, itens com o mesmo nome e preço serão combinados',
   },
   zh: {
     appTitle: '库存管理',
@@ -617,6 +631,8 @@ const languageConfigs = {
     successTitle: '成功',
     itemUpdated: '物品已更新',
     itemUpdatedMessage: '已添加 {{units}} {{unitType}} 到现有物品。新总计: {{total}} {{unitType}}',
+    combineItems: '合并相同物品',
+    combineItemsDescription: '启用后，名称和价格相同的物品将被合并',
   },
   ja: {
     appTitle: '在庫管理',
@@ -679,6 +695,8 @@ const languageConfigs = {
     successTitle: '成功',
     itemUpdated: 'アイテムが更新されました',
     itemUpdatedMessage: '既存のアイテムに {{units}} {{unitType}} を追加しました。新しい合計: {{total}} {{unitType}}',
+    combineItems: '同一アイテムを結合',
+    combineItemsDescription: '有効にすると、同じ名前と価格のアイテムが結合されます',
   },
   ko: {
     appTitle: '재고 관리',
@@ -747,6 +765,8 @@ const languageConfigs = {
     successTitle: '성공',
     itemUpdated: '품목 업데이트됨',
     itemUpdatedMessage: '기존 품목에 {{units}} {{unitType}}이(가) 추가되었습니다. 새 합계: {{total}} {{unitType}}',
+    combineItems: '동일한 품목 결합',
+    combineItemsDescription: '활성화하면 이름과 가격이 같은 품목이 결합됩니다', 
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -815,6 +835,8 @@ const languageConfigs = {
     successTitle: 'สำเร็จ',
     itemUpdated: 'อัปเดตสินค้าแล้ว',
     itemUpdatedMessage: 'เพิ่ม {{units}} {{unitType}} ไปยังสินค้าที่มีอยู่ รวมใหม่: {{total}} {{unitType}}',
+    combineItems: 'รวมสินค้าที่เหมือนกัน',
+    combineItemsDescription: 'เมื่อเปิดใช้งาน สินค้าที่มีชื่อและราคาเหมือนกันจะถูกรวมเข้าด้วยกัน',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -883,6 +905,8 @@ const languageConfigs = {
     successTitle: 'Thành Công',
     itemUpdated: 'Đã Cập Nhật Mục',
     itemUpdatedMessage: 'Đã thêm {{units}} {{unitType}} vào mục hiện có. Tổng mới: {{total}} {{unitType}}',
+    combineItems: 'Kết Hợp Mục Giống Nhau',
+    combineItemsDescription: 'Khi bật, các mục có cùng tên và giá sẽ được kết hợp',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -951,6 +975,8 @@ const languageConfigs = {
     successTitle: 'Berhasil',
     itemUpdated: 'Barang Diperbarui',
     itemUpdatedMessage: 'Menambahkan {{units}} {{unitType}} ke barang yang ada. Total baru: {{total}} {{unitType}}',
+    combineItems: 'Gabungkan Barang Identik',
+    combineItemsDescription: 'Ketika diaktifkan, barang dengan nama dan harga yang sama akan digabungkan',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1019,6 +1045,8 @@ const languageConfigs = {
     successTitle: 'सफलता',
     itemUpdated: 'वस्तु अपडेट की गई',
     itemUpdatedMessage: 'मौजूदा वस्तु में {{units}} {{unitType}} जोड़ा गया। नया कुल: {{total}} {{unitType}}',
+    combineItems: 'समान वस्तुओं को संयोजित करें',
+    combineItemsDescription: 'सक्षम होने पर, समान नाम और मूल्य वाली वस्तुओं को संयोजित किया जाएगा',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1086,6 +1114,8 @@ const languageConfigs = {
     successTitle: 'အောင်မြင်ပါသည်',
     itemUpdated: 'ပစ္စည်းအပ်ဒိတ်လုပ်ပြီးပြီ',
     itemUpdatedMessage: 'ရှိပြီးသားပစ္စည်းတွင် {{units}} {{unitType}} ထည့်သွင်းပြီးပြီ။ စုစုပေါင်းအသစ်: {{total}} {{unitType}}',
+    combineItems: 'တူညီသောပစ္စည်းများပေါင်းစပ်ရန်',
+    combineItemsDescription: 'ဖွင့်ထားလျှင်၊ အမည်နှင့်စျေးနှုန်းတူညီသောပစ္စည်းများကိုပေါင်းစပ်မည်',
   },
 };
 
@@ -1168,6 +1198,13 @@ const InventoryApp = () => {
   const [selectedCurrency, setSelectedCurrency] = useState('$');
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   const [sortDirection, setSortDirection] = useState('asc');
+  const [combineIdenticalItems, setCombineIdenticalItems] = useState(false);
+  const [showSalesTrackingModal, setShowSalesTrackingModal] = useState(false);
+  const [showMonthlyDataModal, setShowMonthlyDataModal] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [monthlyData, setMonthlyData] = useState({});
+  const [yearlyTotals, setYearlyTotals] = useState({});
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -1231,6 +1268,11 @@ const InventoryApp = () => {
       setShowBulkActionsModal(false);
     }
   }, [showPredefinedItemsModal]);
+
+  useEffect(() => {
+    loadYearlyTotal(selectedYear);
+    cleanOldSalesData();
+  }, [selectedYear]);
 
   // Load predefined items from AsyncStorage with JSON file integration
   const loadPredefinedItems = async () => {
@@ -1384,6 +1426,174 @@ const InventoryApp = () => {
     return date.toISOString().split('T')[0];
   };
 
+  // Format number with thousand separator
+  const formatCurrency = (amount) => {
+    if (!amount || isNaN(amount)) return '0';
+    return parseFloat(amount).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  };
+
+  // Get days in month with day names
+  const getDaysInMonth = (year, month) => {
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const days = [];
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      days.push({
+        date: `${String(day).padStart(2, '0')}/${String(month + 1).padStart(2, '0')}/${year}`,
+        dayName: dayNames[date.getDay()],
+        amount: 0
+      });
+    }
+    return days;
+  };
+
+  // Load monthly sales data
+  const loadMonthlySalesData = async (year, month) => {
+    try {
+      const key = `monthly_sales_${year}_${month}`;
+      const savedData = await AsyncStorage.getItem(key);
+      if (savedData) {
+        return JSON.parse(savedData);
+      } else {
+        const days = getDaysInMonth(year, month);
+        return days;
+      }
+    } catch (error) {
+      console.error('Error loading monthly sales data:', error);
+      return getDaysInMonth(year, month);
+    }
+  };
+
+  // Save monthly sales data
+  const saveMonthlySalesData = async (year, month, data) => {
+    try {
+      const key = `monthly_sales_${year}_${month}`;
+      await AsyncStorage.setItem(key, JSON.stringify(data));
+      await calculateYearlyTotal(year);
+    } catch (error) {
+      console.error('Error saving monthly sales data:', error);
+    }
+  };
+
+  // Calculate yearly total
+  const calculateYearlyTotal = async (year) => {
+    try {
+      let yearTotal = 0;
+      for (let month = 0; month < 12; month++) {
+        const key = `monthly_sales_${year}_${month}`;
+        const savedData = await AsyncStorage.getItem(key);
+        if (savedData) {
+          const monthData = JSON.parse(savedData);
+          const monthTotal = monthData.reduce((sum, day) => sum + parseFloat(day.amount || 0), 0);
+          yearTotal += monthTotal;
+        }
+      }
+      
+      const yearlyKey = `yearly_total_${year}`;
+      await AsyncStorage.setItem(yearlyKey, yearTotal.toString());
+      
+      // Update state
+      setYearlyTotals(prev => ({ ...prev, [year]: yearTotal }));
+    } catch (error) {
+      console.error('Error calculating yearly total:', error);
+    }
+  };
+
+  // Load yearly total
+  const loadYearlyTotal = async (year) => {
+    try {
+      const yearlyKey = `yearly_total_${year}`;
+      const savedTotal = await AsyncStorage.getItem(yearlyKey);
+      if (savedTotal) {
+        setYearlyTotals(prev => ({ ...prev, [year]: parseFloat(savedTotal) }));
+      } else {
+        await calculateYearlyTotal(year);
+      }
+    } catch (error) {
+      console.error('Error loading yearly total:', error);
+    }
+  };
+
+  // Delete monthly data
+  const deleteMonthlyData = async (year, month) => {
+    Alert.alert(
+      'Delete Month Data',
+      `Are you sure you want to delete all sales data for ${new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              const key = `monthly_sales_${year}_${month}`;
+              await AsyncStorage.removeItem(key);
+              await calculateYearlyTotal(year);
+              setShowMonthlyDataModal(false);
+              Alert.alert('Success', 'Monthly data deleted successfully');
+            } catch (error) {
+              Alert.alert('Error', 'Could not delete monthly data');
+            }
+          }
+        }
+      ]
+    );
+  };
+
+  // Clean old sales data (keep only 5 years)
+  const cleanOldSalesData = async () => {
+    try {
+      const currentYear = new Date().getFullYear();
+      const keys = await AsyncStorage.getAllKeys();
+      const salesKeys = keys.filter(key => key.startsWith('monthly_sales_') || key.startsWith('yearly_total_'));
+      
+      for (const key of salesKeys) {
+        const match = key.match(/\d{4}/);
+        if (match) {
+          const year = parseInt(match[0]);
+          if (currentYear - year > 5) {
+            await AsyncStorage.removeItem(key);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error cleaning old sales data:', error);
+    }
+  };
+
+  // Open monthly data modal
+  const openMonthlyDataModal = async (month) => {
+    setSelectedMonth(month);
+    const data = await loadMonthlySalesData(selectedYear, month);
+    setMonthlyData(data);
+    setShowMonthlyDataModal(true);
+  };
+
+  // Update daily amount
+  const updateDailyAmount = (index, newAmount) => {
+    const numericValue = newAmount.replace(/[^0-9.]/g, '');
+    const parts = numericValue.split('.');
+    const filteredValue = parts.length > 2 
+      ? parts[0] + '.' + parts.slice(1).join('') 
+      : numericValue;
+    
+    const updatedData = [...monthlyData];
+    updatedData[index].amount = filteredValue;
+    setMonthlyData(updatedData);
+  };
+
+  // Save monthly data
+  const saveMonthlyData = async () => {
+    await saveMonthlySalesData(selectedYear, selectedMonth, monthlyData);
+    Alert.alert('Success', 'Monthly data saved successfully');
+    setShowMonthlyDataModal(false);
+  };
+
   const filterAndSortItems = () => {
     let filtered = items.filter(item =>
       item.name.toLowerCase().includes(searchText.toLowerCase()) &&
@@ -1450,37 +1660,55 @@ const InventoryApp = () => {
       return;
     }
 
-    const existingItemIndex = items.findIndex(item => 
-      item.name.toLowerCase() === newItem.name.toLowerCase() && 
-      parseFloat(item.price) === parseFloat(newItem.price)
-    );
-
     let updatedItems;
     
-    if (existingItemIndex !== -1) {
-      const existingItem = items[existingItemIndex];
-      const newUnitsSold = parseFloat(existingItem.unitsSold) + parseFloat(newItem.unitsSold);
-      const newTotalAmount = (parseFloat(newItem.price) * newUnitsSold).toFixed(2); // Keep as plain number for storage
-      
-      updatedItems = [...items];
-      updatedItems[existingItemIndex] = {
-        ...existingItem,
-        unitsSold: newUnitsSold.toString(),
-        totalAmount: newTotalAmount,
-      };
-      
-      Alert.alert(
-        language.itemUpdated, 
-        language.itemUpdatedMessage
-          .replace('{{units}}', formatNumber(parseFloat(newItem.unitsSold), 0))
-          .replace('{{unitType}}', newItem.unitType)
-          .replace('{{total}}', formatNumber(newUnitsSold, 0))
-          .replace('{{unitType}}', newItem.unitType)
+    // Only check for existing items if combineIdenticalItems is enabled
+    if (combineIdenticalItems) {
+      const existingItemIndex = items.findIndex(item => 
+        item.name.toLowerCase() === newItem.name.toLowerCase() && 
+        parseFloat(item.price) === parseFloat(newItem.price)
       );
+      
+      if (existingItemIndex !== -1) {
+        // Combine with existing item
+        const existingItem = items[existingItemIndex];
+        const newUnitsSold = parseFloat(existingItem.unitsSold) + parseFloat(newItem.unitsSold);
+        const newTotalAmount = (parseFloat(newItem.price) * newUnitsSold).toFixed(2);
+        
+        updatedItems = [...items];
+        updatedItems[existingItemIndex] = {
+          ...existingItem,
+          unitsSold: newUnitsSold.toString(),
+          totalAmount: newTotalAmount,
+        };
+        
+        Alert.alert(
+          language.itemUpdated, 
+          language.itemUpdatedMessage
+            .replace('{{units}}', formatNumber(parseFloat(newItem.unitsSold), 0))
+            .replace('{{unitType}}', newItem.unitType)
+            .replace('{{total}}', formatNumber(newUnitsSold, 0))
+            .replace('{{unitType}}', newItem.unitType)
+        );
+      } else {
+        // No matching item found, add as new
+        const price = parseFloat(newItem.price);
+        const units = parseFloat(newItem.unitsSold);
+        const totalAmount = (price * units).toFixed(2);
+        
+        const item = {
+          id: Date.now().toString(),
+          ...newItem,
+          totalAmount: totalAmount,
+          timestamp: new Date().toISOString(),
+        };
+        updatedItems = [...items, item];
+      }
     } else {
+      // Always add as new entry (default behavior)
       const price = parseFloat(newItem.price);
       const units = parseFloat(newItem.unitsSold);
-      const totalAmount = (price * units).toFixed(2); // Keep as plain number for storage
+      const totalAmount = (price * units).toFixed(2);
       
       const item = {
         id: Date.now().toString(),
@@ -2115,6 +2343,7 @@ const InventoryApp = () => {
         const savedCategories = await AsyncStorage.getItem('categories');
         const savedUnitTypes = await AsyncStorage.getItem('unit_types');
         const savedCurrency = await AsyncStorage.getItem('selectedCurrency'); 
+        const savedCombinePreference = await AsyncStorage.getItem('combineIdenticalItems');
         
         let languageToUse = 'en'; // default
         if (savedLanguage && languageConfigs[savedLanguage]) {
@@ -2138,6 +2367,9 @@ const InventoryApp = () => {
           setSelectedCurrency(languageConfig.currency || '$');
         }
         
+        if (savedCombinePreference !== null) {
+          setCombineIdenticalItems(savedCombinePreference === 'true');
+        }
         // Load saved categories and unit types
         if (savedCategories) {
           setCategories(JSON.parse(savedCategories));
@@ -2172,6 +2404,7 @@ const InventoryApp = () => {
     try {
       await AsyncStorage.setItem('selectedLanguage', selectedLanguage);
       await AsyncStorage.setItem('selectedCurrency', selectedCurrency);
+      await AsyncStorage.setItem('combineIdenticalItems', combineIdenticalItems.toString());
       if (customAppTitle.trim()) {
         await AsyncStorage.setItem('customAppTitle', customAppTitle.trim());
         setLanguage(prev => ({ ...prev, appTitle: customAppTitle.trim() }));
@@ -3976,6 +4209,36 @@ const InventoryApp = () => {
                       </View>
                     )}
                   </View>
+                  <View style={styles.settingItem}>
+                    <Text style={styles.settingLabel}>{language.combineItems || 'Combine Identical Items'}</Text>
+                    <Text style={styles.settingDescription}>
+                      {language.combineItemsDescription || 'When enabled, items with same name and price will be combined'}
+                    </Text>
+                    <TouchableOpacity
+                      style={[
+                        styles.materialSwitch,
+                        combineIdenticalItems && styles.materialSwitchActive
+                      ]}
+                      onPress={() => setCombineIdenticalItems(!combineIdenticalItems)}
+                      activeOpacity={0.8}
+                    >
+                      <View style={[
+                        styles.materialSwitchThumb,
+                        combineIdenticalItems && styles.materialSwitchThumbActive
+                      ]} />
+                    </TouchableOpacity>
+                  </View>
+
+                  {/* Sales Tracking Button */}
+                  <TouchableOpacity
+                    style={styles.salesTrackingButton}
+                    onPress={() => {
+                      setShowSettingsModal(false);
+                      setShowSalesTrackingModal(true);
+                    }}
+                  >
+                    <Text style={styles.salesTrackingButtonText}>📊 Monthly Sales Tracking</Text>
+                  </TouchableOpacity>
                 </ScrollView>
                 
                 <View style={styles.settingsButtonRow}>
@@ -4061,6 +4324,153 @@ const InventoryApp = () => {
                 </TouchableOpacity>
               </View>
             </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+      {/* Sales Tracking Modal */}
+      <Modal
+        visible={showSalesTrackingModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowSalesTrackingModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setShowSalesTrackingModal(false)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.salesTrackingModalContent}>
+                <View style={styles.salesTrackingHeader}>
+                  <TouchableOpacity
+                    onPress={() => setSelectedYear(selectedYear - 1)}
+                    style={styles.yearNavigationButton}
+                  >
+                    <Text style={styles.yearNavigationText}>◀</Text>
+                  </TouchableOpacity>
+                  
+                  <Text style={styles.salesTrackingTitle}>{selectedYear}</Text>
+                  
+                  <TouchableOpacity
+                    onPress={() => setSelectedYear(selectedYear + 1)}
+                    style={styles.yearNavigationButton}
+                    disabled={selectedYear >= new Date().getFullYear()}
+                  >
+                    <Text style={[
+                      styles.yearNavigationText,
+                      selectedYear >= new Date().getFullYear() && styles.disabledNavigation
+                    ]}>▶</Text>
+                  </TouchableOpacity>
+                </View>
+                
+                <ScrollView style={styles.monthsGrid}>
+                  {['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'].map((month, index) => (
+                    <TouchableOpacity
+                      key={month}
+                      style={styles.monthCard}
+                      onPress={() => openMonthlyDataModal(index)}
+                    >
+                      <Text style={styles.monthName}>{month}</Text>
+                      <Text style={styles.monthYear}>{selectedYear}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+                
+                <View style={styles.yearlyTotalContainer}>
+                  <Text style={styles.yearlyTotalLabel}>Yearly Total:</Text>
+                  <Text style={styles.yearlyTotalAmount}>
+                    {selectedCurrency}{formatCurrency(yearlyTotals[selectedYear] || 0)}
+                  </Text>
+                </View>
+                
+                <TouchableOpacity
+                  style={styles.closeModalButton}
+                  onPress={() => setShowSalesTrackingModal(false)}
+                >
+                  <Text style={styles.closeModalButtonText}>{language.close}</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      {/* Monthly Data Modal */}
+      <Modal
+        visible={showMonthlyDataModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowMonthlyDataModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.modalOverlay}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={styles.keyboardAvoidingView}
+            >
+              <View style={styles.monthlyDataModalContent}>
+                <View style={styles.monthlyDataHeader}>
+                  <Text style={styles.monthlyDataTitle}>
+                    {selectedMonth !== null && new Date(selectedYear, selectedMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.deleteMonthButton}
+                    onPress={() => deleteMonthlyData(selectedYear, selectedMonth)}
+                  >
+                    <Text style={styles.deleteMonthButtonText}>🗑️ Delete Month</Text>
+                  </TouchableOpacity>
+                </View>
+                
+                <View style={styles.tableHeader}>
+                  <Text style={styles.tableHeaderCell}>Date</Text>
+                  <Text style={styles.tableHeaderCellAmount}>Daily Sales Amount</Text>
+                </View>
+                
+                <ScrollView style={styles.tableBody}>
+                  {monthlyData && Array.isArray(monthlyData) && monthlyData.map((day, index) => (
+                    <View key={index} style={styles.tableRow}>
+                      <View style={styles.dateCell}>
+                        <Text style={styles.dateCellText}>{day.date}</Text>
+                        <Text style={styles.dayCellText}>{day.dayName}</Text>
+                      </View>
+                      <TextInput
+                        style={styles.amountInput}
+                        value={day.amount ? formatCurrency(day.amount) : ''}
+                        onChangeText={(text) => updateDailyAmount(index, text)}
+                        keyboardType="decimal-pad"
+                        placeholder="0.00"
+                      />
+                    </View>
+                  ))}
+                  
+                  {/* Total Row */}
+                  <View style={styles.totalRow}>
+                    <Text style={styles.totalLabel}>Total Amount:</Text>
+                    <Text style={styles.totalAmount}>
+                      {selectedCurrency}{formatCurrency(
+                        monthlyData && Array.isArray(monthlyData) 
+                          ? monthlyData.reduce((sum, day) => sum + parseFloat(day.amount || 0), 0)
+                          : 0
+                      )}
+                    </Text>
+                  </View>
+                </ScrollView>
+                
+                <View style={styles.monthlyDataButtonRow}>
+                  <TouchableOpacity
+                    style={[styles.modernButton, styles.modernCancelButton]}
+                    onPress={() => setShowMonthlyDataModal(false)}
+                  >
+                    <Text style={styles.modernCancelButtonText}>{language.cancel}</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={[styles.modernButton, styles.modernSaveButton]}
+                    onPress={saveMonthlyData}
+                  >
+                    <Text style={styles.modernSaveButtonText}>{language.save}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -5635,6 +6045,210 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#fff',
     fontWeight: '600',
+  },
+  settingDescription: {
+    fontSize: 13,
+    color: '#666',
+    marginBottom: 8,
+    lineHeight: 18,
+  },
+  salesTrackingButton: {
+    backgroundColor: '#28a745',
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  salesTrackingButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  salesTrackingModalContent: {
+    width: '90%',
+    maxWidth: 650,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    maxHeight: '85%',
+  },
+  salesTrackingHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  salesTrackingTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  yearNavigationButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  yearNavigationText: {
+    fontSize: 20,
+    color: '#333',
+    fontWeight: 'bold',
+  },
+  disabledNavigation: {
+    color: '#ccc',
+  },
+  monthsGrid: {
+    maxHeight: 400,
+    marginBottom: 20,
+  },
+  monthCard: {
+    backgroundColor: '#f8f9fa',
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    alignItems: 'center',
+  },
+  monthName: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 4,
+  },
+  monthYear: {
+    fontSize: 14,
+    color: '#666',
+  },
+  yearlyTotalContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#e8f5e8',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 20,
+  },
+  yearlyTotalLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2e7d32',
+  },
+  yearlyTotalAmount: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#2e7d32',
+  },
+  monthlyDataModalContent: {
+    width: '90%',
+    maxWidth: 650,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    maxHeight: '85%',
+  },
+  monthlyDataHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  monthlyDataTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    flex: 1,
+  },
+  deleteMonthButton: {
+    backgroundColor: '#dc3545',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  deleteMonthButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    backgroundColor: '#f8f9fa',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  tableHeaderCell: {
+    flex: 1,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  tableHeaderCellAmount: {
+    flex: 1,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'right',
+  },
+  tableBody: {
+    maxHeight: 400,
+    marginBottom: 16,
+  },
+  tableRow: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+    alignItems: 'center',
+  },
+  dateCell: {
+    flex: 1,
+  },
+  dateCellText: {
+    fontSize: 14,
+    color: '#333',
+    fontWeight: '500',
+  },
+  dayCellText: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 2,
+  },
+  amountInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    padding: 10,
+    fontSize: 16,
+    textAlign: 'right',
+    backgroundColor: '#f8f9fa',
+  },
+  totalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#e8f5e8',
+    padding: 16,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  totalLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2e7d32',
+  },
+  totalAmount: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2e7d32',
+  },
+  monthlyDataButtonRow: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 16,
   },
 });
 
