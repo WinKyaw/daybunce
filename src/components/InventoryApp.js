@@ -4228,18 +4228,18 @@ const InventoryApp = () => {
                       ]} />
                     </TouchableOpacity>
                   </View>
+                </ScrollView>   
 
-                  {/* Sales Tracking Button */}
-                  <TouchableOpacity
-                    style={styles.salesTrackingButton}
-                    onPress={() => {
-                      setShowSettingsModal(false);
-                      setShowSalesTrackingModal(true);
-                    }}
-                  >
-                    <Text style={styles.salesTrackingButtonText}>📊 Monthly Sales Tracking</Text>
-                  </TouchableOpacity>
-                </ScrollView>
+                {/* Sales Tracking Button */}
+                <TouchableOpacity
+                  style={styles.salesTrackingButton}
+                  onPress={() => {
+                    setShowSettingsModal(false);
+                    setShowSalesTrackingModal(true);
+                  }}
+                >
+                  <Text style={styles.salesTrackingButtonText}>📊 Monthly Sales Tracking</Text>
+                </TouchableOpacity>
                 
                 <View style={styles.settingsButtonRow}>
                   <TouchableOpacity
@@ -5631,10 +5631,11 @@ const styles = StyleSheet.create({
     padding: 24,
     maxHeight: '85%', // Prevent overflow
     minHeight: 300,
+    flexDirection: 'column',
   },
   settingsScrollView: {
-    maxHeight: 400, // Constrain scroll area
-    marginBottom: 20,
+    flex: 1,
+    marginBottom: 16,
   },
   languageDropdown: {
     marginTop: 8,
@@ -6057,7 +6058,8 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     alignItems: 'center',
-    marginTop: 16,
+    marginTop: 8,
+    marginBottom: 8,
   },
   salesTrackingButtonText: {
     color: '#fff',

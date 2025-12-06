@@ -22,7 +22,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.inventsight.daybunce",
       "icon": "./assets/icon.png",
-      "buildNumber": "11",
+      "buildNumber": "12",
       "runtimeVersion": "1.2.0"
     },
     "android": {
