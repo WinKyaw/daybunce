@@ -89,6 +89,14 @@ const defaultLanguage = {
   itemUpdatedMessage: 'Added {{units}} {{unitType}} to existing item. New total: {{total}} {{unitType}}',
   combineItems: 'Combine Identical Items',
   combineItemsDescription: 'When enabled, items with same name and price will be combined',
+  monthlySalesTracking: 'Monthly Sales Tracking',
+  yearlyTotal: 'Yearly Total',
+  date: 'Date',
+  dailySaleAmount: 'Daily Sale Amount',
+  monthlyTotal: 'Monthly Total',
+  deleteMonth: 'Delete Month',
+  deleteMonthConfirm: 'Are you sure you want to delete all sales data for',
+  salesDataSaved: 'Sales data saved successfully',
 };
 
 const availableLanguages = [
@@ -206,6 +214,14 @@ const languageConfigs = {
     itemUpdatedMessage: 'Added {{units}} {{unitType}} to existing item. New total: {{total}} {{unitType}}',
     combineItems: 'Combine Identical Items',
     combineItemsDescription: 'When enabled, items with same name and price will be combined',
+    monthlySalesTracking: 'Monthly Sales Tracking',
+    yearlyTotal: 'Yearly Total',
+    date: 'Date',
+    dailySaleAmount: 'Daily Sale Amount',
+    monthlyTotal: 'Monthly Total',
+    deleteMonth: 'Delete Month',
+    deleteMonthConfirm: 'Are you sure you want to delete all sales data for',
+    salesDataSaved: 'Sales data saved successfully',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -289,6 +305,14 @@ const languageConfigs = {
     itemUpdatedMessage: 'Se agregaron {{units}} {{unitType}} al artículo existente. Nuevo total: {{total}} {{unitType}}',
     combineItems: 'Combinar Artículos Idénticos',
     combineItemsDescription: 'Cuando está habilitado, los artículos con el mismo nombre y precio se combinarán',
+    monthlySalesTracking: 'Seguimiento de Ventas Mensuales',
+    yearlyTotal: 'Total Anual',
+    date: 'Fecha',
+    dailySaleAmount: 'Monto de Venta Diaria',
+    monthlyTotal: 'Total Mensual',
+    deleteMonth: 'Eliminar Mes',
+    deleteMonthConfirm: '¿Está seguro de que desea eliminar todos los datos de ventas para',
+    salesDataSaved: 'Datos de ventas guardados exitosamente',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -359,6 +383,14 @@ const languageConfigs = {
     itemUpdatedMessage: '{{units}} {{unitType}} ajoutés à l\'article existant. Nouveau total: {{total}} {{unitType}}',
     combineItems: 'Combiner les Articles Identiques',
     combineItemsDescription: 'Lorsqu\'activé, les articles avec le même nom et prix seront combinés',
+    monthlySalesTracking: 'Suivi des Ventes Mensuelles',
+    yearlyTotal: 'Total Annuel',
+    date: 'Date',
+    dailySaleAmount: 'Montant des Ventes Quotidiennes',
+    monthlyTotal: 'Total Mensuel',
+    deleteMonth: 'Supprimer le Mois',
+    deleteMonthConfirm: 'Êtes-vous sûr de vouloir supprimer toutes les données de ventes pour',
+    salesDataSaved: 'Données de ventes enregistrées avec succès',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -429,6 +461,14 @@ const languageConfigs = {
     itemUpdatedMessage: '{{units}} {{unitType}} zum vorhandenen Artikel hinzugefügt. Neue Summe: {{total}} {{unitType}}',
     combineItems: 'Identische Artikel Kombinieren',
     combineItemsDescription: 'Wenn aktiviert, werden Artikel mit gleichem Namen und Preis kombiniert',
+    monthlySalesTracking: 'Monatliche Umsatzverfolgung',
+    yearlyTotal: 'Jahresgesamt',
+    date: 'Datum',
+    dailySaleAmount: 'Täglicher Verkaufsbetrag',
+    monthlyTotal: 'Monatssumme',
+    deleteMonth: 'Monat Löschen',
+    deleteMonthConfirm: 'Sind Sie sicher, dass Sie alle Verkaufsdaten für löschen möchten',
+    salesDataSaved: 'Verkaufsdaten erfolgreich gespeichert',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -499,6 +539,14 @@ const languageConfigs = {
     itemUpdatedMessage: 'Aggiunti {{units}} {{unitType}} all\'articolo esistente. Nuovo totale: {{total}} {{unitType}}',
     combineItems: 'Combina Articoli Identici',
     combineItemsDescription: 'Quando abilitato, gli articoli con lo stesso nome e prezzo verranno combinati',
+    monthlySalesTracking: 'Monitoraggio Vendite Mensili',
+    yearlyTotal: 'Totale Annuale',
+    date: 'Data',
+    dailySaleAmount: 'Importo Vendite Giornaliere',
+    monthlyTotal: 'Totale Mensile',
+    deleteMonth: 'Elimina Mese',
+    deleteMonthConfirm: 'Sei sicuro di voler eliminare tutti i dati di vendita per',
+    salesDataSaved: 'Dati di vendita salvati con successo',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -569,6 +617,14 @@ const languageConfigs = {
     itemUpdatedMessage: 'Adicionados {{units}} {{unitType}} ao item existente. Novo total: {{total}} {{unitType}}',
     combineItems: 'Combinar Itens Idênticos',
     combineItemsDescription: 'Quando ativado, itens com o mesmo nome e preço serão combinados',
+    monthlySalesTracking: 'Acompanhamento de Vendas Mensais',
+    yearlyTotal: 'Total Anual',
+    date: 'Data',
+    dailySaleAmount: 'Valor de Vendas Diárias',
+    monthlyTotal: 'Total Mensal',
+    deleteMonth: 'Excluir Mês',
+    deleteMonthConfirm: 'Tem certeza de que deseja excluir todos os dados de vendas para',
+    salesDataSaved: 'Dados de vendas salvos com sucesso',
   },
   zh: {
     appTitle: '库存管理',
@@ -633,6 +689,14 @@ const languageConfigs = {
     itemUpdatedMessage: '已添加 {{units}} {{unitType}} 到现有物品。新总计: {{total}} {{unitType}}',
     combineItems: '合并相同物品',
     combineItemsDescription: '启用后，名称和价格相同的物品将被合并',
+    monthlySalesTracking: '每月销售跟踪',
+    yearlyTotal: '年度总计',
+    date: '日期',
+    dailySaleAmount: '每日销售额',
+    monthlyTotal: '月度总计',
+    deleteMonth: '删除月份',
+    deleteMonthConfirm: '您确定要删除以下月份的所有销售数据吗',
+    salesDataSaved: '销售数据保存成功',
   },
   ja: {
     appTitle: '在庫管理',
@@ -697,6 +761,14 @@ const languageConfigs = {
     itemUpdatedMessage: '既存のアイテムに {{units}} {{unitType}} を追加しました。新しい合計: {{total}} {{unitType}}',
     combineItems: '同一アイテムを結合',
     combineItemsDescription: '有効にすると、同じ名前と価格のアイテムが結合されます',
+    monthlySalesTracking: '月次売上追跡',
+    yearlyTotal: '年間合計',
+    date: '日付',
+    dailySaleAmount: '日次売上額',
+    monthlyTotal: '月間合計',
+    deleteMonth: '月を削除',
+    deleteMonthConfirm: '以下の月の売上データをすべて削除してもよろしいですか',
+    salesDataSaved: '売上データが正常に保存されました',
   },
   ko: {
     appTitle: '재고 관리',
@@ -767,6 +839,14 @@ const languageConfigs = {
     itemUpdatedMessage: '기존 품목에 {{units}} {{unitType}}이(가) 추가되었습니다. 새 합계: {{total}} {{unitType}}',
     combineItems: '동일한 품목 결합',
     combineItemsDescription: '활성화하면 이름과 가격이 같은 품목이 결합됩니다', 
+    monthlySalesTracking: '월별 판매 추적',
+    yearlyTotal: '연간 총계',
+    date: '날짜',
+    dailySaleAmount: '일일 판매 금액',
+    monthlyTotal: '월간 총계',
+    deleteMonth: '월 삭제',
+    deleteMonthConfirm: '다음 월의 모든 판매 데이터를 삭제하시겠습니까',
+    salesDataSaved: '판매 데이터가 성공적으로 저장되었습니다',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -837,6 +917,14 @@ const languageConfigs = {
     itemUpdatedMessage: 'เพิ่ม {{units}} {{unitType}} ไปยังสินค้าที่มีอยู่ รวมใหม่: {{total}} {{unitType}}',
     combineItems: 'รวมสินค้าที่เหมือนกัน',
     combineItemsDescription: 'เมื่อเปิดใช้งาน สินค้าที่มีชื่อและราคาเหมือนกันจะถูกรวมเข้าด้วยกัน',
+    monthlySalesTracking: 'การติดตามยอดขายรายเดือน',
+    yearlyTotal: 'ยอดรวมรายปี',
+    date: 'วันที่',
+    dailySaleAmount: 'ยอดขายรายวัน',
+    monthlyTotal: 'ยอดรวมรายเดือน',
+    deleteMonth: 'ลบข้อมูลเดือน',
+    deleteMonthConfirm: 'คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลยอดขายทั้งหมดสำหรับ',
+    salesDataSaved: 'บันทึกข้อมูลยอดขายเรียบร้อยแล้ว',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -907,6 +995,14 @@ const languageConfigs = {
     itemUpdatedMessage: 'Đã thêm {{units}} {{unitType}} vào mục hiện có. Tổng mới: {{total}} {{unitType}}',
     combineItems: 'Kết Hợp Mục Giống Nhau',
     combineItemsDescription: 'Khi bật, các mục có cùng tên và giá sẽ được kết hợp',
+    monthlySalesTracking: 'Theo Dõi Doanh Số Hàng Tháng',
+    yearlyTotal: 'Tổng Năm',
+    date: 'Ngày',
+    dailySaleAmount: 'Doanh Số Hàng Ngày',
+    monthlyTotal: 'Tổng Tháng',
+    deleteMonth: 'Xóa Tháng',
+    deleteMonthConfirm: 'Bạn có chắc chắn muốn xóa tất cả dữ liệu doanh số cho',
+    salesDataSaved: 'Dữ liệu doanh số đã được lưu thành công',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -977,6 +1073,14 @@ const languageConfigs = {
     itemUpdatedMessage: 'Menambahkan {{units}} {{unitType}} ke barang yang ada. Total baru: {{total}} {{unitType}}',
     combineItems: 'Gabungkan Barang Identik',
     combineItemsDescription: 'Ketika diaktifkan, barang dengan nama dan harga yang sama akan digabungkan',
+    monthlySalesTracking: 'Pelacakan Penjualan Bulanan',
+    yearlyTotal: 'Total Tahunan',
+    date: 'Tanggal',
+    dailySaleAmount: 'Jumlah Penjualan Harian',
+    monthlyTotal: 'Total Bulanan',
+    deleteMonth: 'Hapus Bulan',
+    deleteMonthConfirm: 'Apakah Anda yakin ingin menghapus semua data penjualan untuk',
+    salesDataSaved: 'Data penjualan berhasil disimpan',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1047,6 +1151,14 @@ const languageConfigs = {
     itemUpdatedMessage: 'मौजूदा वस्तु में {{units}} {{unitType}} जोड़ा गया। नया कुल: {{total}} {{unitType}}',
     combineItems: 'समान वस्तुओं को संयोजित करें',
     combineItemsDescription: 'सक्षम होने पर, समान नाम और मूल्य वाली वस्तुओं को संयोजित किया जाएगा',
+    monthlySalesTracking: 'मासिक बिक्री ट्रैकिंग',
+    yearlyTotal: 'वार्षिक कुल',
+    date: 'तारीख',
+    dailySaleAmount: 'दैनिक बिक्री राशि',
+    monthlyTotal: 'मासिक कुल',
+    deleteMonth: 'महीना हटाएं',
+    deleteMonthConfirm: 'क्या आप वाकई सभी बिक्री डेटा हटाना चाहते हैं',
+    salesDataSaved: 'बिक्री डेटा सफलतापूर्वक सहेजा गया',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1116,6 +1228,14 @@ const languageConfigs = {
     itemUpdatedMessage: 'ရှိပြီးသားပစ္စည်းတွင် {{units}} {{unitType}} ထည့်သွင်းပြီးပြီ။ စုစုပေါင်းအသစ်: {{total}} {{unitType}}',
     combineItems: 'တူညီသောပစ္စည်းများပေါင်းစပ်ရန်',
     combineItemsDescription: 'ဖွင့်ထားလျှင်၊ အမည်နှင့်စျေးနှုန်းတူညီသောပစ္စည်းများကိုပေါင်းစပ်မည်',
+    monthlySalesTracking: 'လစဉ်ရောင်းချမှုခြေရာခံခြင်း',
+    yearlyTotal: 'နှစ်စုစုပေါင်း',
+    date: 'ရက်စွဲ',
+    dailySaleAmount: 'နေ့စဉ်ရောင်းချမှုပမာဏ',
+    monthlyTotal: 'လစဉ်စုစုပေါင်း',
+    deleteMonth: 'လကိုဖျက်ရန်',
+    deleteMonthConfirm: 'အောက်ပါလအတွက်ရောင်းချမှုဒေတာအားလုံးကိုဖျက်လိုသည်မှာသေချာပါသလား',
+    salesDataSaved: 'ရောင်းချမှုဒေတာအောင်မြင်စွာသိမ်းဆည်းပြီးပါပြီ',
   },
 };
 
@@ -1521,13 +1641,15 @@ const InventoryApp = () => {
 
   // Delete monthly data
   const deleteMonthlyData = async (year, month) => {
+    const monthName = new Date(year, month). toLocaleString('default', { month: 'long', year: 'numeric' });
+    
     Alert.alert(
-      'Delete Month Data',
-      `Are you sure you want to delete all sales data for ${new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}?`,
+      language.deleteMonth,
+      `${language.deleteMonthConfirm} ${monthName}? `,
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: language.cancel, style: 'cancel' },
         {
-          text: 'Delete',
+          text: language.delete,
           style: 'destructive',
           onPress: async () => {
             try {
@@ -1535,7 +1657,8 @@ const InventoryApp = () => {
               await AsyncStorage.removeItem(key);
               await calculateYearlyTotal(year);
               setShowMonthlyDataModal(false);
-              Alert.alert('Success', 'Monthly data deleted successfully');
+              setShowSalesTrackingModal(true);
+              Alert.alert(language.successTitle, language.salesDataSaved);
             } catch (error) {
               Alert.alert('Error', 'Could not delete monthly data');
             }
@@ -1550,16 +1673,26 @@ const InventoryApp = () => {
     try {
       const currentYear = new Date().getFullYear();
       const keys = await AsyncStorage.getAllKeys();
-      const salesKeys = keys.filter(key => key.startsWith('monthly_sales_') || key.startsWith('yearly_total_'));
+      const salesKeys = keys.filter(key => 
+        key.startsWith('monthly_sales_') || key.startsWith('yearly_total_')
+      );
+      
+      const keysToDelete = [];
       
       for (const key of salesKeys) {
         const match = key.match(/\d{4}/);
         if (match) {
           const year = parseInt(match[0]);
+          // Delete data older than 5 years
           if (currentYear - year > 5) {
-            await AsyncStorage.removeItem(key);
+            keysToDelete.push(key);
           }
         }
+      }
+      
+      if (keysToDelete.length > 0) {
+        await AsyncStorage.multiRemove(keysToDelete);
+        console.log(`Cleaned ${keysToDelete.length} old sales data entries`);
       }
     } catch (error) {
       console.error('Error cleaning old sales data:', error);
@@ -1571,7 +1704,8 @@ const InventoryApp = () => {
     setSelectedMonth(month);
     const data = await loadMonthlySalesData(selectedYear, month);
     setMonthlyData(data);
-    setShowMonthlyDataModal(true);
+    setShowSalesTrackingModal(false); // Close sales tracking modal
+    setShowMonthlyDataModal(true); // Open monthly data modal
   };
 
   // Update daily amount
@@ -1590,8 +1724,9 @@ const InventoryApp = () => {
   // Save monthly data
   const saveMonthlyData = async () => {
     await saveMonthlySalesData(selectedYear, selectedMonth, monthlyData);
-    Alert.alert('Success', 'Monthly data saved successfully');
+    Alert.alert(language.successTitle, language.salesDataSaved);
     setShowMonthlyDataModal(false);
+    setShowSalesTrackingModal(true);
   };
 
   const filterAndSortItems = () => {
@@ -4240,7 +4375,7 @@ const InventoryApp = () => {
                     setShowSalesTrackingModal(true);
                   }}
                 >
-                  <Text style={styles.salesTrackingButtonText}>📊 Monthly Sales Tracking</Text>
+                  <Text style={styles.salesTrackingButtonText}>📊 {language.monthlySalesTracking}</Text>
                 </TouchableOpacity>
                 
                 <View style={styles.settingsButtonRow}>
@@ -4379,7 +4514,7 @@ const InventoryApp = () => {
                 </View>
                 
                 <View style={styles.yearlyTotalContainer}>
-                  <Text style={styles.yearlyTotalLabel}>Yearly Total:</Text>
+                  <Text style={styles.yearlyTotalLabel}>{language.yearlyTotal}:</Text>
                   <Text style={styles.yearlyTotalAmount}>
                     {selectedCurrency}{formatCurrency(yearlyTotals[selectedYear] || 0)}
                   </Text>
@@ -4402,7 +4537,10 @@ const InventoryApp = () => {
         visible={showMonthlyDataModal}
         animationType="slide"
         transparent={true}
-        onRequestClose={() => setShowMonthlyDataModal(false)}
+        onRequestClose={() => {
+          setShowMonthlyDataModal(false);
+          setShowSalesTrackingModal(true); // Go back to sales tracking
+        }}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.modalOverlay}>
@@ -4413,19 +4551,19 @@ const InventoryApp = () => {
               <View style={styles.monthlyDataModalContent}>
                 <View style={styles.monthlyDataHeader}>
                   <Text style={styles.monthlyDataTitle}>
-                    {selectedMonth !== null && new Date(selectedYear, selectedMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}
+                    {selectedMonth !== null && new Date(selectedYear, selectedMonth). toLocaleString('default', { month: 'long', year: 'numeric' })}
                   </Text>
                   <TouchableOpacity
                     style={styles.deleteMonthButton}
                     onPress={() => deleteMonthlyData(selectedYear, selectedMonth)}
                   >
-                    <Text style={styles.deleteMonthButtonText}>🗑️ Delete Month</Text>
+                    <Text style={styles.deleteMonthButtonText}>🗑️ {language.deleteMonth}</Text>
                   </TouchableOpacity>
                 </View>
                 
                 <View style={styles.tableHeader}>
-                  <Text style={styles.tableHeaderCell}>Date</Text>
-                  <Text style={styles.tableHeaderCellAmount}>Daily Sales Amount</Text>
+                  <Text style={styles.tableHeaderCell}>{language.date}</Text>
+                  <Text style={styles.tableHeaderCellAmount}>{language.dailySaleAmount}</Text>
                 </View>
                 
                 <ScrollView style={styles.tableBody}>
@@ -4437,31 +4575,35 @@ const InventoryApp = () => {
                       </View>
                       <TextInput
                         style={styles.amountInput}
-                        value={day.amount ? formatCurrency(day.amount) : ''}
+                        value={day.amount ?  formatCurrency(day.amount) : ''}
                         onChangeText={(text) => updateDailyAmount(index, text)}
                         keyboardType="decimal-pad"
-                        placeholder="0.00"
+                        placeholder="0. 00"
+                        placeholderTextColor="#999"
                       />
                     </View>
                   ))}
                   
                   {/* Total Row */}
                   <View style={styles.totalRow}>
-                    <Text style={styles.totalLabel}>Total Amount:</Text>
+                    <Text style={styles.totalLabel}>{language.monthlyTotal}:</Text>
                     <Text style={styles.totalAmount}>
                       {selectedCurrency}{formatCurrency(
                         monthlyData && Array.isArray(monthlyData) 
-                          ? monthlyData.reduce((sum, day) => sum + parseFloat(day.amount || 0), 0)
+                          ? monthlyData. reduce((sum, day) => sum + parseFloat(day.amount || 0), 0)
                           : 0
                       )}
                     </Text>
                   </View>
                 </ScrollView>
                 
-                <View style={styles.monthlyDataButtonRow}>
+                <View style={styles. monthlyDataButtonRow}>
                   <TouchableOpacity
                     style={[styles.modernButton, styles.modernCancelButton]}
-                    onPress={() => setShowMonthlyDataModal(false)}
+                    onPress={() => {
+                      setShowMonthlyDataModal(false);
+                      setShowSalesTrackingModal(true);
+                    }}
                   >
                     <Text style={styles.modernCancelButtonText}>{language.cancel}</Text>
                   </TouchableOpacity>
@@ -4470,7 +4612,7 @@ const InventoryApp = () => {
                     style={[styles.modernButton, styles.modernSaveButton]}
                     onPress={saveMonthlyData}
                   >
-                    <Text style={styles.modernSaveButtonText}>{language.save}</Text>
+                    <Text style={styles. modernSaveButtonText}>{language.save}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
