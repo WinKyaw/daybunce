@@ -97,6 +97,7 @@ const defaultLanguage = {
   deleteMonth: 'Delete Month',
   deleteMonthConfirm: 'Are you sure you want to delete all sales data for',
   salesDataSaved: 'Sales data saved successfully',
+  monthlySalesInfo: 'Monthly Sales Tracking is independent of daily inventory records. Use it to track overall monthly sales, purchases, or any other financial data.',
 };
 
 const availableLanguages = [
@@ -222,6 +223,7 @@ const languageConfigs = {
     deleteMonth: 'Delete Month',
     deleteMonthConfirm: 'Are you sure you want to delete all sales data for',
     salesDataSaved: 'Sales data saved successfully',
+    monthlySalesInfo: 'Monthly Sales Tracking is independent of daily inventory records. Use it to track overall monthly sales, purchases, or any other financial data.',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -313,6 +315,7 @@ const languageConfigs = {
     deleteMonth: 'Eliminar Mes',
     deleteMonthConfirm: '¿Está seguro de que desea eliminar todos los datos de ventas para',
     salesDataSaved: 'Datos de ventas guardados exitosamente',
+    monthlySalesInfo: 'El seguimiento de ventas mensuales es independiente de los registros de inventario diario. Úselo para rastrear ventas mensuales generales, compras o cualquier otro dato financiero.',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -391,6 +394,7 @@ const languageConfigs = {
     deleteMonth: 'Supprimer le Mois',
     deleteMonthConfirm: 'Êtes-vous sûr de vouloir supprimer toutes les données de ventes pour',
     salesDataSaved: 'Données de ventes enregistrées avec succès',
+    monthlySalesInfo: 'Le suivi des ventes mensuelles est indépendant des enregistrements d\'inventaire quotidiens. Utilisez-le pour suivre les ventes mensuelles globales, les achats ou toute autre donnée financière.',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -469,6 +473,7 @@ const languageConfigs = {
     deleteMonth: 'Monat Löschen',
     deleteMonthConfirm: 'Sind Sie sicher, dass Sie alle Verkaufsdaten für löschen möchten',
     salesDataSaved: 'Verkaufsdaten erfolgreich gespeichert',
+    monthlySalesInfo: 'Die monatliche Umsatzverfolgung ist unabhängig von den täglichen Bestandsaufzeichnungen.  Verwenden Sie es, um Gesamtumsätze, Einkäufe oder andere Finanzdaten zu verfolgen.',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -547,6 +552,7 @@ const languageConfigs = {
     deleteMonth: 'Elimina Mese',
     deleteMonthConfirm: 'Sei sicuro di voler eliminare tutti i dati di vendita per',
     salesDataSaved: 'Dati di vendita salvati con successo',
+    monthlySalesInfo: 'Il monitoraggio delle vendite mensili è indipendente dai registri di inventario giornalieri. Usalo per tracciare vendite mensili complessive, acquisti o altri dati finanziari.',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -625,6 +631,7 @@ const languageConfigs = {
     deleteMonth: 'Excluir Mês',
     deleteMonthConfirm: 'Tem certeza de que deseja excluir todos os dados de vendas para',
     salesDataSaved: 'Dados de vendas salvos com sucesso',
+    monthlySalesInfo: 'O acompanhamento de vendas mensais é independente dos registros de inventário diário. Use-o para rastrear vendas mensais gerais, compras ou quaisquer outros dados financeiros.',
   },
   zh: {
     appTitle: '库存管理',
@@ -697,6 +704,7 @@ const languageConfigs = {
     deleteMonth: '删除月份',
     deleteMonthConfirm: '您确定要删除以下月份的所有销售数据吗',
     salesDataSaved: '销售数据保存成功',
+    monthlySalesInfo: '月度销售跟踪独立于每日库存记录。使用它来跟踪整体月度销售、采购或任何其他财务数据。',
   },
   ja: {
     appTitle: '在庫管理',
@@ -769,6 +777,7 @@ const languageConfigs = {
     deleteMonth: '月を削除',
     deleteMonthConfirm: '以下の月の売上データをすべて削除してもよろしいですか',
     salesDataSaved: '売上データが正常に保存されました',
+    monthlySalesInfo: '月次売上追跡は日次在庫記録とは独立しています。全体的な月次売上、購入、その他の財務データを追跡するために使用してください。',
   },
   ko: {
     appTitle: '재고 관리',
@@ -847,6 +856,7 @@ const languageConfigs = {
     deleteMonth: '월 삭제',
     deleteMonthConfirm: '다음 월의 모든 판매 데이터를 삭제하시겠습니까',
     salesDataSaved: '판매 데이터가 성공적으로 저장되었습니다',
+    monthlySalesInfo: '월별 판매 추적은 일일 재고 기록과 독립적입니다. 전체 월별 판매, 구매 또는 기타 재무 데이터를 추적하는 데 사용하세요.',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -925,6 +935,7 @@ const languageConfigs = {
     deleteMonth: 'ลบข้อมูลเดือน',
     deleteMonthConfirm: 'คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลยอดขายทั้งหมดสำหรับ',
     salesDataSaved: 'บันทึกข้อมูลยอดขายเรียบร้อยแล้ว',
+    monthlySalesInfo: 'การติดตามยอดขายรายเดือนเป็นอิสระจากบันทึกสินค้าคงคลังรายวัน ใช้เพื่อติดตามยอดขายรายเดือนโดยรวม การซื้อ หรือข้อมูลทางการเงินอื่นๆ',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1003,6 +1014,7 @@ const languageConfigs = {
     deleteMonth: 'Xóa Tháng',
     deleteMonthConfirm: 'Bạn có chắc chắn muốn xóa tất cả dữ liệu doanh số cho',
     salesDataSaved: 'Dữ liệu doanh số đã được lưu thành công',
+    monthlySalesInfo: 'Theo dõi doanh số hàng tháng độc lập với hồ sơ hàng tồn kho hàng ngày. Sử dụng nó để theo dõi doanh số hàng tháng tổng thể, mua hàng hoặc bất kỳ dữ liệu tài chính nào khác.',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1081,6 +1093,7 @@ const languageConfigs = {
     deleteMonth: 'Hapus Bulan',
     deleteMonthConfirm: 'Apakah Anda yakin ingin menghapus semua data penjualan untuk',
     salesDataSaved: 'Data penjualan berhasil disimpan',
+    monthlySalesInfo: 'Pelacakan penjualan bulanan independen dari catatan inventaris harian. Gunakan untuk melacak penjualan bulanan keseluruhan, pembelian, atau data keuangan lainnya.',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1159,6 +1172,7 @@ const languageConfigs = {
     deleteMonth: 'महीना हटाएं',
     deleteMonthConfirm: 'क्या आप वाकई सभी बिक्री डेटा हटाना चाहते हैं',
     salesDataSaved: 'बिक्री डेटा सफलतापूर्वक सहेजा गया',
+    monthlySalesInfo: 'मासिक बिक्री ट्रैकिंग दैनिक इन्वेंट्री रिकॉर्ड से स्वतंत्र है। इसका उपयोग समग्र मासिक बिक्री, खरीद या किसी अन्य वित्तीय डेटा को ट्रैक करने के लिए करें।',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1236,6 +1250,7 @@ const languageConfigs = {
     deleteMonth: 'လကိုဖျက်ရန်',
     deleteMonthConfirm: 'အောက်ပါလအတွက်ရောင်းချမှုဒေတာအားလုံးကိုဖျက်လိုသည်မှာသေချာပါသလား',
     salesDataSaved: 'ရောင်းချမှုဒေတာအောင်မြင်စွာသိမ်းဆည်းပြီးပါပြီ',
+    monthlySalesInfo: 'လစဉ်ရောင်းချမှုခြေရာခံခြင်းသည် နေ့စဉ်ပစ္စည်းလက်ကျန်မှတ်တမ်းများနှင့် သီးခြားဖြစ်သည်။ ၎င်းကို စုစုပေါင်းလစဉ်ရောင်းချမှု၊ ဝယ်ယူမှု သို့မဟုတ် အခြားငွေကြေးဆိုင်ရာဒေတာများကို ခြေရာခံရန် အသုံးပြုပါ။',
   },
 };
 
@@ -1549,9 +1564,10 @@ const InventoryApp = () => {
   // Format number with thousand separator
   const formatCurrency = (amount) => {
     if (!amount || isNaN(amount)) return '0';
-    return parseFloat(amount).toLocaleString('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+    // Round down and format with thousand separators, no decimals
+    return Math.floor(parseFloat(amount)). toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
     });
   };
 
@@ -1710,14 +1726,10 @@ const InventoryApp = () => {
 
   // Update daily amount
   const updateDailyAmount = (index, newAmount) => {
-    const numericValue = newAmount.replace(/[^0-9.]/g, '');
-    const parts = numericValue.split('.');
-    const filteredValue = parts.length > 2 
-      ? parts[0] + '.' + parts.slice(1).join('') 
-      : numericValue;
-    
-    const updatedData = [...monthlyData];
-    updatedData[index].amount = filteredValue;
+    const numericValue = newAmount.replace(/[^0-9]/g, '');
+    const number = parseInt(numericValue) || 0;
+    const updatedData = [... monthlyData];
+    updatedData[index]. amount = number; // Store as number
     setMonthlyData(updatedData);
   };
 
@@ -4365,7 +4377,15 @@ const InventoryApp = () => {
                       ]} />
                     </TouchableOpacity>
                   </View>
-                </ScrollView>   
+                </ScrollView> 
+
+                {/* Info text about Monthly Sales Tracking */}
+                <View style={styles. trackingInfoContainer}>
+                  <Text style={styles.trackingInfoIcon}>ℹ️</Text>
+                  <Text style={styles.trackingInfoText}>
+                    {language. monthlySalesInfo || 'Monthly Sales Tracking is independent of daily inventory records.  Use it to track overall monthly sales, purchases, or any other financial data.'}
+                  </Text>
+                </View>  
 
                 {/* Sales Tracking Button */}
                 <TouchableOpacity
@@ -4539,34 +4559,54 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => {
           setShowMonthlyDataModal(false);
-          setShowSalesTrackingModal(true); // Go back to sales tracking
+          setShowSalesTrackingModal(true);
         }}
       >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback onPress={Keyboard. dismiss}>
           <View style={styles.modalOverlay}>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
               style={styles.keyboardAvoidingView}
             >
               <View style={styles.monthlyDataModalContent}>
+                {/* Header with Delete Button */}
                 <View style={styles.monthlyDataHeader}>
                   <Text style={styles.monthlyDataTitle}>
                     {selectedMonth !== null && new Date(selectedYear, selectedMonth). toLocaleString('default', { month: 'long', year: 'numeric' })}
                   </Text>
                   <TouchableOpacity
-                    style={styles.deleteMonthButton}
+                    style={styles. deleteMonthButton}
                     onPress={() => deleteMonthlyData(selectedYear, selectedMonth)}
                   >
-                    <Text style={styles.deleteMonthButtonText}>🗑️ {language.deleteMonth}</Text>
+                    <Text style={styles.deleteMonthButtonText}>🗑️ {language. deleteMonth}</Text>
                   </TouchableOpacity>
                 </View>
                 
-                <View style={styles.tableHeader}>
+                {/* Fixed Monthly Total at Top */}
+                <View style={styles.stickyTotalContainer}>
+                  <View style={styles.stickyTotalRow}>
+                    <Text style={styles.stickyTotalLabel}>{language.monthlyTotal}:</Text>
+                    <Text style={styles.stickyTotalAmount}>
+                      {selectedCurrency}{formatCurrency(
+                        monthlyData && Array.isArray(monthlyData) 
+                          ? monthlyData. reduce((sum, day) => sum + parseFloat(day.amount || 0), 0)
+                          : 0
+                      )}
+                    </Text>
+                  </View>
+                </View>
+                
+                {/* Table Header */}
+                <View style={styles. tableHeader}>
                   <Text style={styles.tableHeaderCell}>{language.date}</Text>
                   <Text style={styles.tableHeaderCellAmount}>{language.dailySaleAmount}</Text>
                 </View>
                 
-                <ScrollView style={styles.tableBody}>
+                {/* Scrollable Table Body */}
+                <ScrollView 
+                  style={styles.tableBody}
+                  showsVerticalScrollIndicator={true}
+                >
                   {monthlyData && Array.isArray(monthlyData) && monthlyData.map((day, index) => (
                     <View key={index} style={styles.tableRow}>
                       <View style={styles.dateCell}>
@@ -4577,27 +4617,16 @@ const InventoryApp = () => {
                         style={styles.amountInput}
                         value={day.amount ?  formatCurrency(day.amount) : ''}
                         onChangeText={(text) => updateDailyAmount(index, text)}
-                        keyboardType="decimal-pad"
-                        placeholder="0. 00"
+                        keyboardType="number-pad"
+                        placeholder="0"
                         placeholderTextColor="#999"
                       />
                     </View>
                   ))}
-                  
-                  {/* Total Row */}
-                  <View style={styles.totalRow}>
-                    <Text style={styles.totalLabel}>{language.monthlyTotal}:</Text>
-                    <Text style={styles.totalAmount}>
-                      {selectedCurrency}{formatCurrency(
-                        monthlyData && Array.isArray(monthlyData) 
-                          ? monthlyData. reduce((sum, day) => sum + parseFloat(day.amount || 0), 0)
-                          : 0
-                      )}
-                    </Text>
-                  </View>
                 </ScrollView>
                 
-                <View style={styles. monthlyDataButtonRow}>
+                {/* Bottom Buttons */}
+                <View style={styles.monthlyDataButtonRow}>
                   <TouchableOpacity
                     style={[styles.modernButton, styles.modernCancelButton]}
                     onPress={() => {
@@ -4612,7 +4641,7 @@ const InventoryApp = () => {
                     style={[styles.modernButton, styles.modernSaveButton]}
                     onPress={saveMonthlyData}
                   >
-                    <Text style={styles. modernSaveButtonText}>{language.save}</Text>
+                    <Text style={styles.modernSaveButtonText}>{language.save}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -6340,7 +6369,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   tableBody: {
-    maxHeight: 400,
+    maxHeight: 320,
     marginBottom: 16,
   },
   tableRow: {
@@ -6425,6 +6454,54 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     fontWeight: '600',
+  },
+  trackingInfoContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#e3f2fd',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#2196f3',
+  },
+  trackingInfoIcon: {
+    fontSize: 16,
+    marginRight: 8,
+    marginTop: 2,
+  },
+  trackingInfoText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#1565c0',
+    lineHeight: 18,
+  },
+  stickyTotalContainer: {
+    backgroundColor: '#e8f5e8',
+    borderRadius: 12,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#4caf50',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  stickyTotalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+  },
+  stickyTotalLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2e7d32',
+  },
+  stickyTotalAmount: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#2e7d32',
   },
 });
 
