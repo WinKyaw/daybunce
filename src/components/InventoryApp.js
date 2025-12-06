@@ -4100,6 +4100,7 @@ const InventoryApp = () => {
                 <ScrollView 
                   style={styles.settingsScrollView}
                   showsVerticalScrollIndicator={true}
+                  contentContainerStyle={{ paddingBottom: 20 }}
                 >
                   {/* App Title Setting */}
                   <View style={styles.settingItem}>
@@ -4209,6 +4210,7 @@ const InventoryApp = () => {
                       </View>
                     )}
                   </View>
+                  {/* Combine Items Setting */}
                   <View style={styles.settingItem}>
                     <Text style={styles.settingLabel}>{language.combineItems || 'Combine Identical Items'}</Text>
                     <Text style={styles.settingDescription}>
@@ -4243,7 +4245,7 @@ const InventoryApp = () => {
                 
                 <View style={styles.settingsButtonRow}>
                   <TouchableOpacity
-                    style={[styles.settingsButton, styles.settingsCancelButton]}
+                    style={[styles.settingsButton, styles. settingsCancelButton]}
                     onPress={() => {
                       setShowSettingsModal(false);
                       setShowLanguageDropdown(false);
@@ -4263,7 +4265,7 @@ const InventoryApp = () => {
                       setShowCurrencyDropdown(false);
                     }}
                   >
-                    <Text style={styles.settingsSaveButtonText}>{language.save}</Text>
+                    <Text style={styles. settingsSaveButtonText}>{language.save}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -4360,19 +4362,21 @@ const InventoryApp = () => {
                   </TouchableOpacity>
                 </View>
                 
-                <ScrollView style={styles.monthsGrid}>
-                  {['January', 'February', 'March', 'April', 'May', 'June',
-                    'July', 'August', 'September', 'October', 'November', 'December'].map((month, index) => (
-                    <TouchableOpacity
-                      key={month}
-                      style={styles.monthCard}
-                      onPress={() => openMonthlyDataModal(index)}
-                    >
-                      <Text style={styles.monthName}>{month}</Text>
-                      <Text style={styles.monthYear}>{selectedYear}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </ScrollView>
+                <View style={styles.monthsCalendarGrid}>
+                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]. map((monthIndex) => {
+                    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    return (
+                      <TouchableOpacity
+                        key={monthIndex}
+                        style={styles.monthCalendarCard}
+                        onPress={() => openMonthlyDataModal(monthIndex)}
+                      >
+                        <Text style={styles.monthCardNumber}>{monthIndex + 1}</Text>
+                        <Text style={styles.monthCardName}>{monthNames[monthIndex]}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
                 
                 <View style={styles.yearlyTotalContainer}>
                   <Text style={styles.yearlyTotalLabel}>Yearly Total:</Text>
@@ -5629,8 +5633,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 24,
-    maxHeight: '85%', // Prevent overflow
-    minHeight: 300,
+    height: '80%', 
     flexDirection: 'column',
   },
   settingsScrollView: {
@@ -6251,6 +6254,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     marginTop: 16,
+  },
+  monthsCalendarGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 8,
+    maxHeight: 400,
+  },
+  monthCalendarCard: {
+    width: '30%',
+    aspectRatio: 1,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  monthCardNumber: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
+  },
+  monthCardName: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '600',
   },
 });
 
