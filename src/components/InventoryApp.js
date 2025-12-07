@@ -1340,6 +1340,13 @@ const InventoryApp = () => {
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [monthlyData, setMonthlyData] = useState({});
   const [yearlyTotals, setYearlyTotals] = useState({});
+  const [stores, setStores] = useState([{ id: 'default', name: 'Main Store' }]);
+  const [selectedStore, setSelectedStore] = useState('default');
+  const [showStoreDropdown, setShowStoreDropdown] = useState(false);
+  const [showAddStoreModal, setShowAddStoreModal] = useState(false);
+  const [showEditStoreModal, setShowEditStoreModal] = useState(false);
+  const [newStoreName, setNewStoreName] = useState('');
+  const [editingStore, setEditingStore] = useState(null);
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -1405,9 +1412,14 @@ const InventoryApp = () => {
   }, [showPredefinedItemsModal]);
 
   useEffect(() => {
-    loadYearlyTotal(selectedYear);
-    cleanOldSalesData();
-  }, [selectedYear]);
+    loadStores();
+  }, []);
+
+  useEffect(() => {
+    if (selectedStore) {
+      loadYearlyTotal(selectedYear);
+    }
+  }, [selectedYear, selectedStore]);
 
   // Load predefined items from AsyncStorage with JSON file integration
   const loadPredefinedItems = async () => {
@@ -1591,7 +1603,7 @@ const InventoryApp = () => {
   // Load monthly sales data
   const loadMonthlySalesData = async (year, month) => {
     try {
-      const key = `monthly_sales_${year}_${month}`;
+      const key = `monthly_sales_${selectedStore}_${year}_${month}`;
       const savedData = await AsyncStorage.getItem(key);
       if (savedData) {
         return JSON.parse(savedData);
@@ -1608,7 +1620,7 @@ const InventoryApp = () => {
   // Save monthly sales data
   const saveMonthlySalesData = async (year, month, data) => {
     try {
-      const key = `monthly_sales_${year}_${month}`;
+      const key = `monthly_sales_${selectedStore}_${year}_${month}`;
       await AsyncStorage.setItem(key, JSON.stringify(data));
       await calculateYearlyTotal(year);
     } catch (error) {
@@ -1621,7 +1633,7 @@ const InventoryApp = () => {
     try {
       let yearTotal = 0;
       for (let month = 0; month < 12; month++) {
-        const key = `monthly_sales_${year}_${month}`;
+        const key = `monthly_sales_${selectedStore}_${year}_${month}`;
         const savedData = await AsyncStorage.getItem(key);
         if (savedData) {
           const monthData = JSON.parse(savedData);
@@ -1630,11 +1642,11 @@ const InventoryApp = () => {
         }
       }
       
-      const yearlyKey = `yearly_total_${year}`;
+      const yearlyKey = `yearly_total_${selectedStore}_${year}`;
       await AsyncStorage.setItem(yearlyKey, yearTotal.toString());
       
       // Update state
-      setYearlyTotals(prev => ({ ...prev, [year]: yearTotal }));
+      setYearlyTotals(prev => ({ ...prev, [`${selectedStore}_${year}`]: yearTotal }));
     } catch (error) {
       console.error('Error calculating yearly total:', error);
     }
@@ -1643,10 +1655,10 @@ const InventoryApp = () => {
   // Load yearly total
   const loadYearlyTotal = async (year) => {
     try {
-      const yearlyKey = `yearly_total_${year}`;
+      const yearlyKey = `yearly_total_${selectedStore}_${year}`;
       const savedTotal = await AsyncStorage.getItem(yearlyKey);
       if (savedTotal) {
-        setYearlyTotals(prev => ({ ...prev, [year]: parseFloat(savedTotal) }));
+        setYearlyTotals(prev => ({ ...prev, [`${selectedStore}_${year}`]: parseFloat(savedTotal) }));
       } else {
         await calculateYearlyTotal(year);
       }
@@ -1655,28 +1667,43 @@ const InventoryApp = () => {
     }
   };
 
-  // Delete monthly data
+  // Delete/Reset monthly data
   const deleteMonthlyData = async (year, month) => {
     const monthName = new Date(year, month). toLocaleString('default', { month: 'long', year: 'numeric' });
     
     Alert.alert(
       language.deleteMonth,
-      `${language.deleteMonthConfirm} ${monthName}? `,
+      `${language.deleteMonthConfirm} ${monthName}?`,
       [
-        { text: language.cancel, style: 'cancel' },
+        { text: language. cancel, style: 'cancel' },
         {
           text: language.delete,
           style: 'destructive',
           onPress: async () => {
             try {
-              const key = `monthly_sales_${year}_${month}`;
-              await AsyncStorage.removeItem(key);
+              // Reset all daily amounts to 0 instead of deleting
+              const days = getDaysInMonth(year, month);
+              const resetData = days.map(day => ({
+                ... day,
+                amount: 0
+              }));
+              
+              // Save the reset data
+              const key = `monthly_sales_${selectedStore}_${year}_${month}`;
+              await AsyncStorage.setItem(key, JSON.stringify(resetData));
+              
+              // Recalculate yearly total
               await calculateYearlyTotal(year);
+              
+              // Update UI
+              setMonthlyData(resetData);
               setShowMonthlyDataModal(false);
               setShowSalesTrackingModal(true);
-              Alert.alert(language.successTitle, language.salesDataSaved);
+              
+              Alert.alert(language. successTitle, 'All daily amounts reset to 0');
             } catch (error) {
-              Alert.alert('Error', 'Could not delete monthly data');
+              console.error('Error resetting monthly data:', error);
+              Alert. alert('Error', 'Could not reset monthly data');
             }
           }
         }
@@ -1739,6 +1766,119 @@ const InventoryApp = () => {
     Alert.alert(language.successTitle, language.salesDataSaved);
     setShowMonthlyDataModal(false);
     setShowSalesTrackingModal(true);
+  };
+
+  // Load stores
+  const loadStores = async () => {
+    try {
+      const savedStores = await AsyncStorage.getItem('sales_tracking_stores');
+      const savedSelectedStore = await AsyncStorage.getItem('selected_store');
+      
+      if (savedStores) {
+        setStores(JSON.parse(savedStores));
+      }
+      if (savedSelectedStore) {
+        setSelectedStore(savedSelectedStore);
+      }
+    } catch (error) {
+      console.error('Error loading stores:', error);
+    }
+  };
+
+  // Save stores
+  const saveStores = async (storesList) => {
+    try {
+      await AsyncStorage.setItem('sales_tracking_stores', JSON. stringify(storesList));
+    } catch (error) {
+      console.error('Error saving stores:', error);
+    }
+  };
+
+  // Add new store
+  const addNewStore = async () => {
+    if (! newStoreName.trim()) {
+      Alert.alert('Error', 'Please enter a store name');
+      return;
+    }
+    
+    const newStore = {
+      id: `store_${Date.now()}`,
+      name: newStoreName. trim()
+    };
+    
+    const updatedStores = [...stores, newStore];
+    setStores(updatedStores);
+    await saveStores(updatedStores);
+    setSelectedStore(newStore.id);
+    await AsyncStorage.setItem('selected_store', newStore.id);
+    setNewStoreName('');
+    setShowAddStoreModal(false);
+    
+    Alert.alert('Success', `Store "${newStore.name}" created successfully`);
+  };
+
+  // Edit store name
+  const editStoreName = async () => {
+    if (!newStoreName.trim()) {
+      Alert.alert('Error', 'Please enter a store name');
+      return;
+    }
+    
+    const updatedStores = stores.map(store => 
+      store.id === editingStore.id 
+        ? { ...store, name: newStoreName.trim() }
+        : store
+    );
+    
+    setStores(updatedStores);
+    await saveStores(updatedStores);
+    setNewStoreName('');
+    setEditingStore(null);
+    setShowEditStoreModal(false);
+    
+    Alert.alert('Success', 'Store name updated successfully');
+  };
+
+  // Delete store
+  const deleteStore = async (storeId) => {
+    if (stores.length === 1) {
+      Alert.alert('Error', 'Cannot delete the last store');
+      return;
+    }
+    
+    Alert.alert(
+      'Delete Store',
+      'Are you sure?  This will delete all sales data for this store.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            // Delete all sales data for this store
+            const keys = await AsyncStorage.getAllKeys();
+            const storeKeys = keys.filter(key => 
+              key.startsWith(`monthly_sales_${storeId}_`) || 
+              key.startsWith(`yearly_total_${storeId}_`)
+            );
+            await AsyncStorage.multiRemove(storeKeys);
+            
+            // Remove store from list
+            const updatedStores = stores.filter(s => s.id !== storeId);
+            setStores(updatedStores);
+            await saveStores(updatedStores);
+            
+            // Switch to first store if deleted store was selected
+            if (selectedStore === storeId) {
+              setSelectedStore(updatedStores[0].id);
+              await AsyncStorage.setItem('selected_store', updatedStores[0].id);
+            }
+            
+            Alert.alert('Success', 'Store deleted successfully');
+          }
+        }
+      ]
+    );
   };
 
   const filterAndSortItems = () => {
@@ -4491,10 +4631,102 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => setShowSalesTrackingModal(false)}
       >
-        <TouchableWithoutFeedback onPress={() => setShowSalesTrackingModal(false)}>
+        <TouchableWithoutFeedback onPress={() => {
+          setShowSalesTrackingModal(false);
+          setShowStoreDropdown(false);
+        }}>
           <View style={styles.modalOverlay}>
             <TouchableWithoutFeedback>
               <View style={styles.salesTrackingModalContent}>
+                {/* Store Selector */}
+                <View style={styles.storeSelectorContainer}>
+                  <TouchableOpacity
+                    style={styles.storeSelector}
+                    onPress={() => setShowStoreDropdown(! showStoreDropdown)}
+                  >
+                    <Text style={styles.storeSelectorLabel}>Store:</Text>
+                    <Text style={styles.storeSelectorText}>
+                      {stores.find(s => s.id === selectedStore)?.name || 'Main Store'}
+                    </Text>
+                    <Text style={styles.storeSelectorArrow}>{showStoreDropdown ? '▲' : '▼'}</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={styles.addStoreButton}
+                    onPress={() => {
+                      setShowStoreDropdown(false); // Close dropdown first
+                      setShowAddStoreModal(true);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.addStoreButtonText}>+ Store</Text>
+                  </TouchableOpacity>
+                </View>
+                
+                {/* Store Dropdown */}
+                {showStoreDropdown && (
+                  <View style={styles.storeDropdown}>
+                    <ScrollView style={styles.storeDropdownScroll} nestedScrollEnabled={true}>
+                      {stores.map(store => (
+                        <View key={store.id} style={styles.storeDropdownItemContainer}>
+                          <TouchableOpacity
+                            style={[
+                              styles.storeDropdownItem,
+                              selectedStore === store.id && styles.selectedStoreDropdownItem
+                            ]}
+                            onPress={async () => {
+                              setSelectedStore(store.id);
+                              await AsyncStorage.setItem('selected_store', store.id);
+                              setShowStoreDropdown(false);
+                              loadYearlyTotal(selectedYear);
+                            }}
+                          >
+                            <Text style={[
+                              styles.storeDropdownText,
+                              selectedStore === store.id && styles.selectedStoreDropdownText
+                            ]}>
+                              {store.name}
+                            </Text>
+                            {selectedStore === store.id && (
+                              <Text style={styles. storeDropdownCheck}>✓</Text>
+                            )}
+                          </TouchableOpacity>
+                          
+                          <View style={styles.storeActionButtons}>
+                            <TouchableOpacity
+                              style={styles.editStoreButton}
+                              onPress={() => {
+                                setShowStoreDropdown(false); // Close dropdown first
+                                setEditingStore(store);
+                                setNewStoreName(store.name);
+                                setTimeout(() => {
+                                  setShowEditStoreModal(true); // Delay to ensure state updates
+                                }, 100);
+                              }}
+                              activeOpacity={0.7}
+                            >
+                              <Text style={styles.storeActionButtonText}>✏️</Text>
+                            </TouchableOpacity>
+                            
+                            {stores.length > 1 && (
+                              <TouchableOpacity
+                                style={styles.deleteStoreButton}
+                                onPress={() => {
+                                  setShowStoreDropdown(false);
+                                  deleteStore(store.id);
+                                }}
+                              >
+                                <Text style={styles.storeActionButtonText}>🗑️</Text>
+                              </TouchableOpacity>
+                            )}
+                          </View>
+                        </View>
+                      ))}
+                    </ScrollView>
+                  </View>
+                )}
+                
+                {/* Year Navigation */}
                 <View style={styles.salesTrackingHeader}>
                   <TouchableOpacity
                     onPress={() => setSelectedYear(selectedYear - 1)}
@@ -4512,42 +4744,146 @@ const InventoryApp = () => {
                   >
                     <Text style={[
                       styles.yearNavigationText,
-                      selectedYear >= new Date().getFullYear() && styles.disabledNavigation
+                      selectedYear >= new Date(). getFullYear() && styles.disabledNavigation
                     ]}>▶</Text>
                   </TouchableOpacity>
                 </View>
                 
-                <View style={styles.monthsCalendarGrid}>
-                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]. map((monthIndex) => {
-                    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                    return (
-                      <TouchableOpacity
-                        key={monthIndex}
-                        style={styles.monthCalendarCard}
-                        onPress={() => openMonthlyDataModal(monthIndex)}
-                      >
-                        <Text style={styles.monthCardNumber}>{monthIndex + 1}</Text>
-                        <Text style={styles.monthCardName}>{monthNames[monthIndex]}</Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
+                {/* Months Grid */}
+                <ScrollView style={styles.monthsGridScroll}>
+                  <View style={styles. monthsCalendarGrid}>
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].  map((monthIndex) => {
+                      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                      return (
+                        <TouchableOpacity
+                          key={monthIndex}
+                          style={styles.monthCalendarCard}
+                          onPress={() => openMonthlyDataModal(monthIndex)}
+                        >
+                          <Text style={styles.monthCardNumber}>{monthIndex + 1}</Text>
+                          <Text style={styles.monthCardName}>{monthNames[monthIndex]}</Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                </ScrollView>
                 
+                {/* Yearly Total */}
                 <View style={styles.yearlyTotalContainer}>
-                  <Text style={styles.yearlyTotalLabel}>{language.yearlyTotal}:</Text>
+                  <Text style={styles.yearlyTotalLabel}>{language. yearlyTotal}:</Text>
                   <Text style={styles.yearlyTotalAmount}>
-                    {selectedCurrency}{formatCurrency(yearlyTotals[selectedYear] || 0)}
+                    {selectedCurrency}{formatCurrency(yearlyTotals[`${selectedStore}_${selectedYear}`] || 0)}
                   </Text>
                 </View>
                 
                 <TouchableOpacity
                   style={styles.closeModalButton}
-                  onPress={() => setShowSalesTrackingModal(false)}
+                  onPress={() => {
+                    setShowSalesTrackingModal(false);
+                    setShowStoreDropdown(false);
+                  }}
                 >
                   <Text style={styles.closeModalButtonText}>{language.close}</Text>
                 </TouchableOpacity>
               </View>
             </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      {/* Add Store Modal */}
+      <Modal
+        visible={showAddStoreModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowAddStoreModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.modalOverlay}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={styles.keyboardAvoidingView}
+            >
+              <View style={styles.addStoreModalContent}>
+                <Text style={styles.addStoreModalTitle}>Add New Store</Text>
+                
+                <TextInput
+                  style={styles.storeNameInput}
+                  placeholder="Enter store name"
+                  value={newStoreName}
+                  onChangeText={setNewStoreName}
+                  autoFocus={true}
+                />
+                
+                <View style={styles.storeModalButtonRow}>
+                  <TouchableOpacity
+                    style={[styles.storeModalButton, styles.storeModalCancelButton]}
+                    onPress={() => {
+                      setShowAddStoreModal(false);
+                      setNewStoreName('');
+                    }}
+                  >
+                    <Text style={styles.storeModalCancelButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={[styles.storeModalButton, styles.storeModalSaveButton]}
+                    onPress={addNewStore}
+                  >
+                    <Text style={styles.storeModalSaveButtonText}>Add Store</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      {/* Edit Store Modal */}
+      <Modal
+        visible={showEditStoreModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowEditStoreModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard. dismiss}>
+          <View style={styles.modalOverlay}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={styles.keyboardAvoidingView}
+            >
+              <View style={styles.addStoreModalContent}>
+                <Text style={styles.addStoreModalTitle}>Edit Store Name</Text>
+                
+                <TextInput
+                  style={styles. storeNameInput}
+                  placeholder="Enter store name"
+                  value={newStoreName}
+                  onChangeText={setNewStoreName}
+                  autoFocus={true}
+                />
+                
+                <View style={styles.storeModalButtonRow}>
+                  <TouchableOpacity
+                    style={[styles.storeModalButton, styles. storeModalCancelButton]}
+                    onPress={() => {
+                      setShowEditStoreModal(false);
+                      setNewStoreName('');
+                      setEditingStore(null);
+                    }}
+                  >
+                    <Text style={styles.storeModalCancelButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={[styles.storeModalButton, styles. storeModalSaveButton]}
+                    onPress={editStoreName}
+                  >
+                    <Text style={styles.storeModalSaveButtonText}>Save</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -6431,7 +6767,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     paddingHorizontal: 8,
-    maxHeight: 400,
+    marginBottom: 16,
   },
   monthCalendarCard: {
     width: '30%',
@@ -6502,6 +6838,173 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: '#2e7d32',
+  },
+  storeSelectorContainer: {
+    position: 'relative', // ADD THIS
+    flexDirection: 'row',
+    marginBottom: 16,
+    gap: 8,
+  },
+  storeSelector: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0f8ff',
+    padding: 12,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#2196f3',
+  },
+  storeSelectorLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#666',
+    marginRight: 8,
+  },
+  storeSelectorText: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1976d2',
+  },
+  storeSelectorArrow: {
+    fontSize: 12,
+    color: '#1976d2',
+  },
+  addStoreButton: {
+    backgroundColor: '#4caf50',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 12,
+    justifyContent: 'center',
+  },
+  addStoreButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  storeDropdown: {
+    position: 'absolute', // ADD THIS
+    top: 60, // ADD THIS - position below the selector
+    left: 0, // ADD THIS
+    right: 0, // ADD THIS
+    zIndex: 1000, // ADD THIS
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    maxHeight: 200,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  storeDropdownScroll: {
+    maxHeight: 190,
+  },
+  storeDropdownItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  storeDropdownItem: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 12,
+  },
+  selectedStoreDropdownItem: {
+    backgroundColor: '#e3f2fd',
+  },
+  storeDropdownText: {
+    fontSize: 16,
+    color: '#333',
+    flex: 1,
+  },
+  selectedStoreDropdownText: {
+    color: '#1976d2',
+    fontWeight: '600',
+  },
+  storeDropdownCheck: {
+    fontSize: 16,
+    color: '#1976d2',
+    fontWeight: 'bold',
+    marginLeft: 8,
+  },
+  storeActionButtons: {
+    flexDirection: 'row',
+    gap: 4,
+    paddingRight: 8,
+  },
+  editStoreButton: {
+    padding: 8,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 6,
+  },
+  deleteStoreButton: {
+    padding: 8,
+    backgroundColor: '#ffebee',
+    borderRadius: 6,
+  },
+  storeActionButtonText: {
+    fontSize: 16,
+  },
+  addStoreModalContent: {
+    width: '85%',
+    maxWidth: 400,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+  },
+  addStoreModalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#333',
+  },
+  storeNameInput: {
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 12,
+    padding: 16,
+    fontSize: 16,
+    backgroundColor: '#f8f9fa',
+    marginBottom: 20,
+  },
+  storeModalButtonRow: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  storeModalButton: {
+    flex: 1,
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  storeModalCancelButton: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  storeModalSaveButton: {
+    backgroundColor: '#2196f3',
+  },
+  storeModalCancelButtonText: {
+    color: '#666',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  storeModalSaveButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  monthsGridScroll: {
+    maxHeight: 420,
   },
 });
 
