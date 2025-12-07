@@ -98,6 +98,9 @@ const defaultLanguage = {
   deleteMonthConfirm: 'Are you sure you want to delete all sales data for',
   salesDataSaved: 'Sales data saved successfully',
   monthlySalesInfo: 'Monthly Sales Tracking is independent of daily inventory records. Use it to track overall monthly sales, purchases, or any other financial data.',
+  longPressToRename: 'Long press store name to rename',
+  storeName: 'Store',
+  addNewStore: 'Add New Store',
 };
 
 const availableLanguages = [
@@ -224,6 +227,9 @@ const languageConfigs = {
     deleteMonthConfirm: 'Are you sure you want to delete all sales data for',
     salesDataSaved: 'Sales data saved successfully',
     monthlySalesInfo: 'Monthly Sales Tracking is independent of daily inventory records. Use it to track overall monthly sales, purchases, or any other financial data.',
+    longPressToRename: 'Long press store name to rename',
+    storeName: 'Store',
+    addNewStore: 'Add New Store',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -316,6 +322,9 @@ const languageConfigs = {
     deleteMonthConfirm: '¿Está seguro de que desea eliminar todos los datos de ventas para',
     salesDataSaved: 'Datos de ventas guardados exitosamente',
     monthlySalesInfo: 'El seguimiento de ventas mensuales es independiente de los registros de inventario diario. Úselo para rastrear ventas mensuales generales, compras o cualquier otro dato financiero.',
+    longPressToRename: 'Mantén presionado el nombre de la tienda para renombrar',
+    storeName: 'Tienda',
+    addNewStore: 'Agregar Nueva Tienda',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -395,6 +404,9 @@ const languageConfigs = {
     deleteMonthConfirm: 'Êtes-vous sûr de vouloir supprimer toutes les données de ventes pour',
     salesDataSaved: 'Données de ventes enregistrées avec succès',
     monthlySalesInfo: 'Le suivi des ventes mensuelles est indépendant des enregistrements d\'inventaire quotidiens. Utilisez-le pour suivre les ventes mensuelles globales, les achats ou toute autre donnée financière.',
+    longPressToRename: 'Appuyez longuement sur le nom du magasin pour renommer',
+    storeName: 'Magasin',
+    addNewStore: 'Ajouter un Nouveau Magasin',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -474,6 +486,9 @@ const languageConfigs = {
     deleteMonthConfirm: 'Sind Sie sicher, dass Sie alle Verkaufsdaten für löschen möchten',
     salesDataSaved: 'Verkaufsdaten erfolgreich gespeichert',
     monthlySalesInfo: 'Die monatliche Umsatzverfolgung ist unabhängig von den täglichen Bestandsaufzeichnungen.  Verwenden Sie es, um Gesamtumsätze, Einkäufe oder andere Finanzdaten zu verfolgen.',
+    longPressToRename: 'Lange drücken, um den Shopnamen zu ändern',
+    storeName: 'Geschäft',
+    addNewStore: 'Neues Geschäft Hinzufügen',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -553,6 +568,9 @@ const languageConfigs = {
     deleteMonthConfirm: 'Sei sicuro di voler eliminare tutti i dati di vendita per',
     salesDataSaved: 'Dati di vendita salvati con successo',
     monthlySalesInfo: 'Il monitoraggio delle vendite mensili è indipendente dai registri di inventario giornalieri. Usalo per tracciare vendite mensili complessive, acquisti o altri dati finanziari.',
+    longPressToRename: 'Premere a lungo il nome del negozio per rinominare',
+    storeName: 'Negozio',
+    addNewStore: 'Aggiungi Nuovo Negozio',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -632,6 +650,9 @@ const languageConfigs = {
     deleteMonthConfirm: 'Tem certeza de que deseja excluir todos os dados de vendas para',
     salesDataSaved: 'Dados de vendas salvos com sucesso',
     monthlySalesInfo: 'O acompanhamento de vendas mensais é independente dos registros de inventário diário. Use-o para rastrear vendas mensais gerais, compras ou quaisquer outros dados financeiros.',
+    longPressToRename: 'Pressione longamente o nome da loja para renomear',
+    storeName: 'Loja',
+    addNewStore: 'Adicionar Nova Loja',
   },
   zh: {
     appTitle: '库存管理',
@@ -705,6 +726,9 @@ const languageConfigs = {
     deleteMonthConfirm: '您确定要删除以下月份的所有销售数据吗',
     salesDataSaved: '销售数据保存成功',
     monthlySalesInfo: '月度销售跟踪独立于每日库存记录。使用它来跟踪整体月度销售、采购或任何其他财务数据。',
+    longPressToRename: '长按商店名称以重命名',
+    storeName: '商店',
+    addNewStore: '添加新商店',
   },
   ja: {
     appTitle: '在庫管理',
@@ -778,6 +802,9 @@ const languageConfigs = {
     deleteMonthConfirm: '以下の月の売上データをすべて削除してもよろしいですか',
     salesDataSaved: '売上データが正常に保存されました',
     monthlySalesInfo: '月次売上追跡は日次在庫記録とは独立しています。全体的な月次売上、購入、その他の財務データを追跡するために使用してください。',
+    longPressToRename: '店舗名を長押しして名前を変更',
+    storeName: '店舗',
+    addNewStore: '新しい店舗を追加',
   },
   ko: {
     appTitle: '재고 관리',
@@ -857,6 +884,9 @@ const languageConfigs = {
     deleteMonthConfirm: '다음 월의 모든 판매 데이터를 삭제하시겠습니까',
     salesDataSaved: '판매 데이터가 성공적으로 저장되었습니다',
     monthlySalesInfo: '월별 판매 추적은 일일 재고 기록과 독립적입니다. 전체 월별 판매, 구매 또는 기타 재무 데이터를 추적하는 데 사용하세요.',
+    longPressToRename: '매장 이름을 길게 눌러 이름 변경',
+    storeName: '매장',
+    addNewStore: '매장 추가',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -936,6 +966,9 @@ const languageConfigs = {
     deleteMonthConfirm: 'คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลยอดขายทั้งหมดสำหรับ',
     salesDataSaved: 'บันทึกข้อมูลยอดขายเรียบร้อยแล้ว',
     monthlySalesInfo: 'การติดตามยอดขายรายเดือนเป็นอิสระจากบันทึกสินค้าคงคลังรายวัน ใช้เพื่อติดตามยอดขายรายเดือนโดยรวม การซื้อ หรือข้อมูลทางการเงินอื่นๆ',
+    longPressToRename: 'กดค้างชื่อร้านค้าเพื่อเปลี่ยนชื่อ',
+    storeName: 'ร้านค้า',
+    addNewStore: 'เพิ่มร้านค้าใหม่',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1015,6 +1048,9 @@ const languageConfigs = {
     deleteMonthConfirm: 'Bạn có chắc chắn muốn xóa tất cả dữ liệu doanh số cho',
     salesDataSaved: 'Dữ liệu doanh số đã được lưu thành công',
     monthlySalesInfo: 'Theo dõi doanh số hàng tháng độc lập với hồ sơ hàng tồn kho hàng ngày. Sử dụng nó để theo dõi doanh số hàng tháng tổng thể, mua hàng hoặc bất kỳ dữ liệu tài chính nào khác.',
+    longPressToRename: 'Nhấn giữ tên cửa hàng để đổi tên',
+    storeName: 'Cửa hàng',
+    addNewStore: 'Thêm Cửa hàng Moi',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1094,6 +1130,9 @@ const languageConfigs = {
     deleteMonthConfirm: 'Apakah Anda yakin ingin menghapus semua data penjualan untuk',
     salesDataSaved: 'Data penjualan berhasil disimpan',
     monthlySalesInfo: 'Pelacakan penjualan bulanan independen dari catatan inventaris harian. Gunakan untuk melacak penjualan bulanan keseluruhan, pembelian, atau data keuangan lainnya.',
+    longPressToRename: 'Tekan lama nama toko untuk mengganti nama',
+    storeName: 'Toko',
+    addNewStore: 'Tambah Toko Baru',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1173,6 +1212,9 @@ const languageConfigs = {
     deleteMonthConfirm: 'क्या आप वाकई सभी बिक्री डेटा हटाना चाहते हैं',
     salesDataSaved: 'बिक्री डेटा सफलतापूर्वक सहेजा गया',
     monthlySalesInfo: 'मासिक बिक्री ट्रैकिंग दैनिक इन्वेंट्री रिकॉर्ड से स्वतंत्र है। इसका उपयोग समग्र मासिक बिक्री, खरीद या किसी अन्य वित्तीय डेटा को ट्रैक करने के लिए करें।',
+    longPressToRename: 'नाम बदलने के लिए स्टोर का नाम लंबे समय तक दबाएं',
+    storeName: 'दुकान',
+    addNewStore: 'नया स्टोर जोड़ें',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1251,6 +1293,9 @@ const languageConfigs = {
     deleteMonthConfirm: 'အောက်ပါလအတွက်ရောင်းချမှုဒေတာအားလုံးကိုဖျက်လိုသည်မှာသေချာပါသလား',
     salesDataSaved: 'ရောင်းချမှုဒေတာအောင်မြင်စွာသိမ်းဆည်းပြီးပါပြီ',
     monthlySalesInfo: 'လစဉ်ရောင်းချမှုခြေရာခံခြင်းသည် နေ့စဉ်ပစ္စည်းလက်ကျန်မှတ်တမ်းများနှင့် သီးခြားဖြစ်သည်။ ၎င်းကို စုစုပေါင်းလစဉ်ရောင်းချမှု၊ ဝယ်ယူမှု သို့မဟုတ် အခြားငွေကြေးဆိုင်ရာဒေတာများကို ခြေရာခံရန် အသုံးပြုပါ။',
+    longPressToRename: 'အမည်ပြောင်းရန် စတိုးအမည်ကို ကြာကြာနှိပ်ပါ',
+    storeName: 'စတိုး',
+    addNewStore: 'စတိုးအသစ်ထည့်ပါ',
   },
 };
 
@@ -1821,6 +1866,8 @@ const InventoryApp = () => {
   const editStoreName = async () => {
     if (!newStoreName.trim()) {
       Alert.alert('Error', 'Please enter a store name');
+      setEditingStore(null);
+      setNewStoreName('');
       return;
     }
     
@@ -1834,9 +1881,8 @@ const InventoryApp = () => {
     await saveStores(updatedStores);
     setNewStoreName('');
     setEditingStore(null);
-    setShowEditStoreModal(false);
     
-    Alert.alert('Success', 'Store name updated successfully');
+    // Don't show alert, just update silently for better UX
   };
 
   // Delete store
@@ -4644,84 +4690,136 @@ const InventoryApp = () => {
                     style={styles.storeSelector}
                     onPress={() => setShowStoreDropdown(! showStoreDropdown)}
                   >
-                    <Text style={styles.storeSelectorLabel}>Store:</Text>
+                    <Text style={styles.storeSelectorLabel}>{language.storeName || 'Store'}:</Text>
                     <Text style={styles.storeSelectorText}>
                       {stores.find(s => s.id === selectedStore)?.name || 'Main Store'}
                     </Text>
                     <Text style={styles.storeSelectorArrow}>{showStoreDropdown ? '▲' : '▼'}</Text>
-                  </TouchableOpacity>
-                  
-                  <TouchableOpacity
-                    style={styles.addStoreButton}
-                    onPress={() => {
-                      setShowStoreDropdown(false); // Close dropdown first
-                      setShowAddStoreModal(true);
-                    }}
-                    activeOpacity={0.7}
-                  >
-                    <Text style={styles.addStoreButtonText}>+ Store</Text>
                   </TouchableOpacity>
                 </View>
                 
                 {/* Store Dropdown */}
                 {showStoreDropdown && (
                   <View style={styles.storeDropdown}>
-                    <ScrollView style={styles.storeDropdownScroll} nestedScrollEnabled={true}>
+                    {/* Help hint at the top - NOW WITH TRANSLATION */}
+                    <View style={styles.storeDropdownHint}>
+                      <Text style={styles.storeDropdownHintIcon}>ℹ️</Text>
+                      <Text style={styles.storeDropdownHintText}>
+                        {language.longPressToRename || 'Long press store name to rename'}
+                      </Text>
+                    </View>
+                    
+                    <ScrollView 
+                      style={styles.storeDropdownScroll} 
+                      nestedScrollEnabled={true}
+                    >
                       {stores.map(store => (
                         <View key={store.id} style={styles.storeDropdownItemContainer}>
-                          <TouchableOpacity
-                            style={[
-                              styles.storeDropdownItem,
-                              selectedStore === store.id && styles.selectedStoreDropdownItem
-                            ]}
-                            onPress={async () => {
-                              setSelectedStore(store.id);
-                              await AsyncStorage.setItem('selected_store', store.id);
-                              setShowStoreDropdown(false);
-                              loadYearlyTotal(selectedYear);
-                            }}
-                          >
-                            <Text style={[
-                              styles.storeDropdownText,
-                              selectedStore === store.id && styles.selectedStoreDropdownText
-                            ]}>
-                              {store.name}
-                            </Text>
-                            {selectedStore === store.id && (
-                              <Text style={styles. storeDropdownCheck}>✓</Text>
-                            )}
-                          </TouchableOpacity>
-                          
-                          <View style={styles.storeActionButtons}>
-                            <TouchableOpacity
-                              style={styles.editStoreButton}
-                              onPress={() => {
-                                setShowStoreDropdown(false); // Close dropdown first
-                                setEditingStore(store);
-                                setNewStoreName(store.name);
-                                setTimeout(() => {
-                                  setShowEditStoreModal(true); // Delay to ensure state updates
-                                }, 100);
-                              }}
-                              activeOpacity={0.7}
-                            >
-                              <Text style={styles.storeActionButtonText}>✏️</Text>
-                            </TouchableOpacity>
-                            
-                            {stores.length > 1 && (
+                          {editingStore?.id === store.id ?  (
+                            // Edit mode - show text input
+                            <View style={styles.editingStoreContainer}>
+                              <TextInput
+                                style={styles.editingStoreInput}
+                                value={newStoreName}
+                                onChangeText={setNewStoreName}
+                                autoFocus={true}
+                                onBlur={() => {
+                                  if (newStoreName.trim()) {
+                                    editStoreName();
+                                  } else {
+                                    setEditingStore(null);
+                                    setNewStoreName('');
+                                  }
+                                }}
+                                onSubmitEditing={() => {
+                                  if (newStoreName.trim()) {
+                                    editStoreName();
+                                    setShowStoreDropdown(false);
+                                  }
+                                }}
+                              />
                               <TouchableOpacity
-                                style={styles.deleteStoreButton}
+                                style={styles.saveEditButton}
                                 onPress={() => {
-                                  setShowStoreDropdown(false);
-                                  deleteStore(store.id);
+                                  if (newStoreName.trim()) {
+                                    editStoreName();
+                                    setShowStoreDropdown(false);
+                                  }
                                 }}
                               >
-                                <Text style={styles.storeActionButtonText}>🗑️</Text>
+                                <Text style={styles.saveEditButtonText}>✓</Text>
                               </TouchableOpacity>
-                            )}
-                          </View>
+                            </View>
+                          ) : (
+                            // Normal mode - show store name with edit icon
+                            <TouchableOpacity
+                              style={[
+                                styles.storeDropdownItem,
+                                selectedStore === store. id && styles.selectedStoreDropdownItem
+                              ]}
+                              onPress={async () => {
+                                setSelectedStore(store.id);
+                                await AsyncStorage.setItem('selected_store', store.id);
+                                setShowStoreDropdown(false);
+                                loadYearlyTotal(selectedYear);
+                              }}
+                              onLongPress={() => {
+                                setEditingStore(store);
+                                setNewStoreName(store.name);
+                              }}
+                            >
+                              <Text style={[
+                                styles.storeDropdownText,
+                                selectedStore === store.id && styles. selectedStoreDropdownText
+                              ]}>
+                                {store.name}
+                              </Text>
+                              {selectedStore === store.id && (
+                                <Text style={styles.storeDropdownCheck}>✓</Text>
+                              )}
+                            </TouchableOpacity>
+                          )}
+                          
+                          {/* Delete button */}
+                          {editingStore?.id !== store.id && stores.length > 1 && (
+                            <TouchableOpacity
+                              style={styles.deleteStoreButton}
+                              onPress={() => {
+                                setShowStoreDropdown(false);
+                                deleteStore(store. id);
+                              }}
+                            >
+                              <Text style={styles. storeActionButtonText}>🗑️</Text>
+                            </TouchableOpacity>
+                          )}
                         </View>
                       ))}
+                      
+                      {/* Add New Store Option */}
+                      <TouchableOpacity
+                        style={styles.addNewStoreOption}
+                        onPress={() => {
+                          const newStoreNumber = stores.length + 1;
+                          const newStore = {
+                            id: `store_${Date.now()}`,
+                            name: `${language.storeName || 'Store'} ${newStoreNumber}`
+                          };
+                          
+                          const updatedStores = [...stores, newStore];
+                          setStores(updatedStores);
+                          saveStores(updatedStores);
+                          setSelectedStore(newStore.id);
+                          AsyncStorage.setItem('selected_store', newStore.id);
+                          setShowStoreDropdown(false);
+                          
+                          Alert.alert('Success', `"${newStore.name}" created successfully`);
+                        }}
+                      >
+                        <Text style={styles.addNewStoreIcon}>+</Text>
+                        <Text style={styles.addNewStoreText}>
+                          {language.addNewStore || 'Add New Store'}
+                        </Text>
+                      </TouchableOpacity>
                     </ScrollView>
                   </View>
                 )}
@@ -4796,7 +4894,10 @@ const InventoryApp = () => {
         visible={showAddStoreModal}
         animationType="slide"
         transparent={true}
-        onRequestClose={() => setShowAddStoreModal(false)}
+        onRequestClose={() => {
+          setShowAddStoreModal(false);
+          setNewStoreName('');
+        }}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.modalOverlay}>
@@ -4839,14 +4940,18 @@ const InventoryApp = () => {
         </TouchableWithoutFeedback>
       </Modal>
 
-      {/* Edit Store Modal */}
+      {/* EDIT STORE MODAL - MOVE IT HERE, OUTSIDE Sales Tracking Modal */}
       <Modal
         visible={showEditStoreModal}
         animationType="slide"
         transparent={true}
-        onRequestClose={() => setShowEditStoreModal(false)}
+        onRequestClose={() => {
+          setShowEditStoreModal(false);
+          setNewStoreName('');
+          setEditingStore(null);
+        }}
       >
-        <TouchableWithoutFeedback onPress={Keyboard. dismiss}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.modalOverlay}>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -4856,7 +4961,7 @@ const InventoryApp = () => {
                 <Text style={styles.addStoreModalTitle}>Edit Store Name</Text>
                 
                 <TextInput
-                  style={styles. storeNameInput}
+                  style={styles.storeNameInput}
                   placeholder="Enter store name"
                   value={newStoreName}
                   onChangeText={setNewStoreName}
@@ -4865,7 +4970,7 @@ const InventoryApp = () => {
                 
                 <View style={styles.storeModalButtonRow}>
                   <TouchableOpacity
-                    style={[styles.storeModalButton, styles. storeModalCancelButton]}
+                    style={[styles.storeModalButton, styles.storeModalCancelButton]}
                     onPress={() => {
                       setShowEditStoreModal(false);
                       setNewStoreName('');
@@ -4876,7 +4981,7 @@ const InventoryApp = () => {
                   </TouchableOpacity>
                   
                   <TouchableOpacity
-                    style={[styles.storeModalButton, styles. storeModalSaveButton]}
+                    style={[styles.storeModalButton, styles.storeModalSaveButton]}
                     onPress={editStoreName}
                   >
                     <Text style={styles.storeModalSaveButtonText}>Save</Text>
@@ -6840,13 +6945,11 @@ const styles = StyleSheet.create({
     color: '#2e7d32',
   },
   storeSelectorContainer: {
-    position: 'relative', // ADD THIS
-    flexDirection: 'row',
+    position: 'relative',
     marginBottom: 16,
-    gap: 8,
+    zIndex: 1,
   },
   storeSelector: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f0f8ff',
@@ -6884,11 +6987,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   storeDropdown: {
-    position: 'absolute', // ADD THIS
-    top: 60, // ADD THIS - position below the selector
-    left: 0, // ADD THIS
-    right: 0, // ADD THIS
-    zIndex: 1000, // ADD THIS
+    position: 'absolute',
+    top: 60,
+    left: 0,
+    right: 0, // CHANGE from 80 to 0 - full width
+    zIndex: 1000,
     backgroundColor: '#fff',
     borderRadius: 12,
     borderWidth: 1,
@@ -7005,6 +7108,88 @@ const styles = StyleSheet.create({
   },
   monthsGridScroll: {
     maxHeight: 420,
+  },
+  editingStoreContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  editingStoreInput: {
+    flex: 1,
+    borderWidth: 2,
+    borderColor: '#2196f3',
+    borderRadius: 8,
+    padding: 10,
+    fontSize: 16,
+    backgroundColor: '#fff',
+    marginRight: 8,
+  },
+  saveEditButton: {
+    backgroundColor: '#4caf50',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveEditButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  addNewStoreOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderTopWidth: 2,
+    borderTopColor: '#4caf50',
+    backgroundColor: '#f0f8f0',
+  },
+  addNewStoreIcon: {
+    fontSize: 20,
+    color: '#4caf50',
+    fontWeight: 'bold',
+    marginRight: 8,
+  },
+  addNewStoreText: {
+    fontSize: 16,
+    color: '#4caf50',
+    fontWeight: '600',
+  },
+  storeDropdownHint: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff3cd',
+    padding: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ffc107',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+  storeDropdownHintIcon: {
+    fontSize: 14,
+    marginRight: 6,
+  },
+  storeDropdownHintText: {
+    flex: 1,
+    fontSize: 12,
+    color: '#856404',
+    fontWeight: '500',
+  },
+  editHintIcon: {
+    fontSize: 14,
+    color: '#999',
+    marginLeft: 4,
+    marginRight: 4,
+  },
+  storeDropdownItem: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 12,
   },
 });
 
