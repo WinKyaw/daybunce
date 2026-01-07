@@ -1385,13 +1385,15 @@ const InventoryApp = () => {
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [monthlyData, setMonthlyData] = useState({});
   const [yearlyTotals, setYearlyTotals] = useState({});
-  const [stores, setStores] = useState([{ id: 'default', name: 'Main Store' }]);
-  const [selectedStore, setSelectedStore] = useState('default');
+  // const [stores, setStores] = useState([{ id: 'default', name: 'Main Store' }]);
+  // const [selectedStore, setSelectedStore] = useState('default');
   const [showStoreDropdown, setShowStoreDropdown] = useState(false);
   const [showAddStoreModal, setShowAddStoreModal] = useState(false);
   const [showEditStoreModal, setShowEditStoreModal] = useState(false);
   const [newStoreName, setNewStoreName] = useState('');
   const [editingStore, setEditingStore] = useState(null);
+  const [stores, setStores] = useState([{ id: 'main_store', name: 'Main Store', isDefault: true }]);
+  const [selectedStore, setSelectedStore] = useState('main_store');
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -1555,9 +1557,18 @@ const InventoryApp = () => {
       const dateKey = formatDate(selectedDate);
       const savedData = await AsyncStorage.getItem(`inventory_${dateKey}`);
       if (savedData) {
-        setItems(JSON.parse(savedData));
+        const data = JSON.parse(savedData);
+        setItems(data);
+        
+        // Auto-sync current daily total to Main Store
+        const total = data.reduce((sum, item) => 
+          sum + (parseFloat(item.price) * parseFloat(item.unitsSold)), 0
+        );
+        await autoSyncMainStoreData(selectedDate, total.toFixed(2));
       } else {
         setItems([]);
+        // Sync 0 if no items
+        await autoSyncMainStoreData(selectedDate, '0');
       }
       cleanOldData();
     } catch (error) {
@@ -1589,6 +1600,12 @@ const InventoryApp = () => {
     try {
       const dateKey = formatDate(selectedDate);
       await AsyncStorage.setItem(`inventory_${dateKey}`, JSON.stringify(data));
+      
+      // Auto-sync to Main Store in Monthly Sales Tracking
+      const total = data.reduce((sum, item) => 
+        sum + (parseFloat(item.price) * parseFloat(item.unitsSold)), 0
+      );
+      await autoSyncMainStoreData(selectedDate, total.toFixed(2));
     } catch (error) {
       console.error('Error saving data:', error);
     }
@@ -1709,6 +1726,35 @@ const InventoryApp = () => {
       }
     } catch (error) {
       console.error('Error loading yearly total:', error);
+    }
+  };
+
+  const autoSyncMainStoreData = async (date, dailyTotal) => {
+    try {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      
+      // Format date to match monthly sales data format
+      const dateStr = `${String(day).padStart(2, '0')}/${String(month + 1).padStart(2, '0')}/${year}`;
+      
+      // Load existing monthly data for main store
+      const key = `monthly_sales_main_store_${year}_${month}`;
+      let monthData = await loadMonthlySalesData(year, month);
+      
+      // Find the day entry and update it
+      const dayIndex = monthData.findIndex(d => d.date === dateStr);
+      if (dayIndex !== -1) {
+        monthData[dayIndex].amount = parseFloat(dailyTotal) || 0;
+        
+        // Save updated data
+        await AsyncStorage.setItem(key, JSON.stringify(monthData));
+        await calculateYearlyTotal(year);
+        
+        console.log(`Auto-synced ${dailyTotal} to Main Store for ${dateStr}`);
+      }
+    } catch (error) {
+      console.error('Error auto-syncing main store data:', error);
     }
   };
 
@@ -1887,10 +1933,15 @@ const InventoryApp = () => {
 
   // Delete store
   const deleteStore = async (storeId) => {
+    if (storeId === 'main_store') {
+      Alert.alert('Cannot Delete', 'Main Store cannot be deleted as it syncs with daily inventory.');
+      return;
+    }
     if (stores.length === 1) {
       Alert.alert('Error', 'Cannot delete the last store');
       return;
     }
+    
     
     Alert.alert(
       'Delete Store',
@@ -4755,7 +4806,7 @@ const InventoryApp = () => {
                             <TouchableOpacity
                               style={[
                                 styles.storeDropdownItem,
-                                selectedStore === store. id && styles.selectedStoreDropdownItem
+                                selectedStore === store.id && styles.selectedStoreDropdownItem
                               ]}
                               onPress={async () => {
                                 setSelectedStore(store.id);
@@ -4764,15 +4815,18 @@ const InventoryApp = () => {
                                 loadYearlyTotal(selectedYear);
                               }}
                               onLongPress={() => {
-                                setEditingStore(store);
-                                setNewStoreName(store.name);
+                                if (store.id !== 'main_store') { // Prevent editing Main Store name
+                                  setEditingStore(store);
+                                  setNewStoreName(store.name);
+                                }
                               }}
                             >
                               <Text style={[
                                 styles.storeDropdownText,
-                                selectedStore === store.id && styles. selectedStoreDropdownText
+                                selectedStore === store.id && styles.selectedStoreDropdownText
                               ]}>
                                 {store.name}
+                                {store.id === 'main_store' && ' 🔄'} {/* Auto-sync indicator */}
                               </Text>
                               {selectedStore === store.id && (
                                 <Text style={styles.storeDropdownCheck}>✓</Text>
