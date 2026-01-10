@@ -1315,16 +1315,16 @@ try {
   console.warn('Could not load predefinedItems.json, using fallback data:', error);
   // Fallback data if JSON file is not found
   defaultPredefinedItems = [
-    { id: 'apples', name: 'Apples', category: 'Food', unitType: 'lb' },
-    { id: 'bananas', name: 'Bananas', category: 'Food', unitType: 'lb' },
-    { id: 'milk', name: 'Milk', category: 'Beverages', unitType: 'liters' },
-    { id: 'bread', name: 'Bread', category: 'Food', unitType: 'pcs' },
-    { id: 'eggs', name: 'Eggs', category: 'Food', unitType: 'pcs' },
-    { id: 'chicken', name: 'Chicken Breast', category: 'Food', unitType: 'lb' },
-    { id: 'rice', name: 'Rice', category: 'Food', unitType: 'kg' },
-    { id: 'water', name: 'Water Bottles', category: 'Beverages', unitType: 'pcs' },
-    { id: 'coffee', name: 'Coffee', category: 'Beverages', unitType: 'kg' },
-    { id: 'phone', name: 'Smartphone', category: 'Electronics', unitType: 'pcs' },
+    { id: 'apples', name: 'Apples', category: 'Food', unitType: 'lb', lastPrice: '' },
+    { id: 'bananas', name: 'Bananas', category: 'Food', unitType: 'lb', lastPrice: '' },
+    { id: 'milk', name: 'Milk', category: 'Beverages', unitType: 'liters', lastPrice: '' },
+    { id: 'bread', name: 'Bread', category: 'Food', unitType: 'pcs', lastPrice: '' },
+    { id: 'eggs', name: 'Eggs', category: 'Food', unitType: 'pcs', lastPrice: '' },
+    { id: 'chicken', name: 'Chicken Breast', category: 'Food', unitType: 'lb', lastPrice: '' },
+    { id: 'rice', name: 'Rice', category: 'Food', unitType: 'kg', lastPrice: '' },
+    { id: 'water', name: 'Water Bottles', category: 'Beverages', unitType: 'pcs', lastPrice: '' },
+    { id: 'coffee', name: 'Coffee', category: 'Beverages', unitType: 'kg', lastPrice: '' },
+    { id: 'phone', name: 'Smartphone', category: 'Electronics', unitType: 'pcs', lastPrice: '' },
   ];
 }
 
@@ -1538,6 +1538,7 @@ const InventoryApp = () => {
           name: itemData.name,
           category: itemData.category,
           unitType: itemData.unitType,
+          lastPrice: itemData.price,
         };
 
         const updatedPredefinedItems = [...predefinedItems, newPredefinedItem];
@@ -2029,7 +2030,7 @@ const InventoryApp = () => {
   const handlePredefinedItemSelection = (predefinedItem) => {
     setNewItem({
       name: predefinedItem.name,
-      price: '',
+      price: predefinedItem.lastPrice || '',
       unitsSold: '',
       category: predefinedItem.category,
       unitType: predefinedItem.unitType,
@@ -2106,7 +2107,24 @@ const InventoryApp = () => {
     setItems(updatedItems);
     await saveData(updatedItems);
 
-    if (isItemUnique(newItem, predefinedItems)) {
+    // Update existing predefined item's price or add new item
+    const existingPredefinedIndex = predefinedItems.findIndex(item =>
+      item.name.toLowerCase() === newItem.name.toLowerCase() &&
+      item.category === newItem.category &&
+      item.unitType === newItem.unitType
+    );
+
+    if (existingPredefinedIndex !== -1) {
+      // Update the price of existing predefined item
+      const updatedPredefinedItems = [...predefinedItems];
+      updatedPredefinedItems[existingPredefinedIndex] = {
+        ...updatedPredefinedItems[existingPredefinedIndex],
+        lastPrice: newItem.price,
+      };
+      setPredefinedItems(updatedPredefinedItems);
+      await savePredefinedItems(updatedPredefinedItems);
+    } else if (isItemUnique(newItem, predefinedItems)) {
+      // Add new predefined item with price
       await addToPredefinedItems(newItem);
     }
 
@@ -2669,7 +2687,8 @@ const InventoryApp = () => {
             id: `bulk_${Date.now()}_${index}`,
             name: parts[0],
             category: parts[1] || bulkAddCategory,
-            unitType: parts[2] || bulkAddUnitType
+            unitType: parts[2] || bulkAddUnitType,
+            lastPrice: ''
           });
         }
       });
