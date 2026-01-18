@@ -79,7 +79,7 @@ const defaultLanguage = {
   deleteItem: 'Delete Item',
   deleteItemConfirm: 'Are you sure you want to delete this item from predefined items?',
   deleteAllConfirm: 'Are you sure you want to delete all {{count}} predefined items? This action cannot be undone.',
-  bulkAddInstructions: 'Enter one item per line. You can use formats like:\n- Apple\n- Banana, Food, lb\n- Coffee, Beverages, kg',
+  bulkAddInstructions: 'Enter one item per line. You can use formats like:\n- Apple\n- Banana, Food, lb, 2.50\n- Coffee, Beverages, kg, 15.00',
   bulkAddDefaults: 'Default values for items without category/unit',
   deleteItem: 'Delete Item',
   deleteItemConfirm: 'Are you sure you want to delete this item from predefined items?',
@@ -208,7 +208,7 @@ const languageConfigs = {
     deleteItem: 'Delete Item',
     deleteItemConfirm: 'Are you sure you want to delete this item from predefined items?',
     deleteAllConfirm: 'Are you sure you want to delete all {{count}} predefined items? This action cannot be undone.',
-    bulkAddInstructions: 'Enter one item per line. You can use formats like:\n- Apple\n- Banana, Food, lb\n- Coffee, Beverages, kg',
+    bulkAddInstructions: 'Enter one item per line. You can use formats like:\n- Apple\n- Banana, Food, lb, 2.50\n- Coffee, Beverages, kg, 15.00',
     bulkAddDefaults: 'Default values for items without category/unit',
     deleteItem: 'Delete Item',
     deleteItemConfirm: 'Are you sure you want to delete this item from predefined items?',
@@ -2235,18 +2235,19 @@ const InventoryApp = () => {
     try {
       const lines = csvContent.trim().split('\n');
       const headers = lines[0].toLowerCase().split(',').map(h => h.trim());
-      
+
       const nameIndex = headers.findIndex(h => h.includes('name') || h.includes('item'));
       const categoryIndex = headers.findIndex(h => h.includes('category') || h.includes('type'));
       const unitIndex = headers.findIndex(h => h.includes('unit') || h.includes('measurement'));
-      
+      const priceIndex = headers.findIndex(h => h.includes('price') || h.includes('cost'));
+
       if (nameIndex === -1) {
         Alert.alert('Invalid CSV', 'Could not find a "name" or "item" column');
         return;
       }
 
       const importedItems = [];
-      
+
       for (let i = 1; i < lines.length; i++) {
         const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
         
@@ -2255,7 +2256,8 @@ const InventoryApp = () => {
             id: `csv_import_${Date.now()}_${i}`,
             name: values[nameIndex],
             category: values[categoryIndex] || 'Other',
-            unitType: values[unitIndex] || 'pcs'
+            unitType: values[unitIndex] || 'pcs',
+            lastPrice: values[priceIndex] || ''
           });
         }
       }
@@ -2332,15 +2334,15 @@ const InventoryApp = () => {
   const exportPredefinedItemsCSV = async () => {
     try {
       // Create CSV header
-      let csvContent = 'name,category,unitType\n';
-      
+      let csvContent = 'name,category,unitType,price\n';
+
       // Add each item as a CSV row
       predefinedItems.forEach(item => {
-        // Escape commas and quotes in the data
         const name = `"${item.name.replace(/"/g, '""')}"`;
         const category = `"${item.category.replace(/"/g, '""')}"`;
         const unitType = `"${item.unitType.replace(/"/g, '""')}"`;
-        csvContent += `${name},${category},${unitType}\n`;
+        const price = `"${(item.lastPrice || '').toString().replace(/"/g, '""')}"`;
+        csvContent += `${name},${category},${unitType},${price}\n`;
       });
       
       const filename = `predefined-items-${new Date().toISOString().split('T')[0]}.csv`;
