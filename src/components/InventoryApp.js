@@ -105,6 +105,9 @@ const defaultLanguage = {
   tax: 'Tax',
   receiptCreator: 'Receipt Creator',
   receiptCreatorPlaceholder: 'Receipt Creator Name',
+  receipt: 'Receipt',
+  items: 'Items',
+  customerName: 'Customer',
 };
 
 const availableLanguages = [
@@ -238,6 +241,9 @@ const languageConfigs = {
     tax: 'Tax',
     receiptCreator: 'Receipt Creator',
     receiptCreatorPlaceholder: 'Receipt Creator Name',
+    receipt: 'Receipt',
+    items: 'Items',
+    customerName: 'Customer',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -337,6 +343,9 @@ const languageConfigs = {
     tax: 'Impuesto',
     receiptCreator: 'Creador de Recibo',
     receiptCreatorPlaceholder: 'Nombre del Creador de Recibo',
+    receipt: 'Recibo',
+    items: 'Artículos',
+    customerName: 'Cliente',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -423,6 +432,9 @@ const languageConfigs = {
     tax: 'Taxe',
     receiptCreator: 'Créateur de Reçu',
     receiptCreatorPlaceholder: 'Nom du Créateur de Reçu',
+    receipt: 'Reçu',
+    items: 'Articles',
+    customerName: 'Client',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -509,6 +521,9 @@ const languageConfigs = {
     tax: 'Steuer',
     receiptCreator: 'Belegersteller',
     receiptCreatorPlaceholder: 'Name des Belegerstellers',
+    receipt: 'Beleg',
+    items: 'Artikel',
+    customerName: 'Kunde',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -595,6 +610,9 @@ const languageConfigs = {
     tax: 'Tassa',
     receiptCreator: 'Creatore Ricevuta',
     receiptCreatorPlaceholder: 'Nome Creatore Ricevuta',
+    receipt: 'Ricevuta',
+    items: 'Articoli',
+    customerName: 'Cliente',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -681,6 +699,9 @@ const languageConfigs = {
     tax: 'Imposto',
     receiptCreator: 'Criador de Recibo',
     receiptCreatorPlaceholder: 'Nome do Criador de Recibo',
+    receipt: 'Recibo',
+    items: 'Itens',
+    customerName: 'Cliente',
   },
   zh: {
     appTitle: '库存管理',
@@ -761,6 +782,9 @@ const languageConfigs = {
     tax: '税',
     receiptCreator: '收据创建者',
     receiptCreatorPlaceholder: '收据创建者姓名',
+    receipt: '收据',
+    items: '商品',
+    customerName: '客户',
   },
   ja: {
     appTitle: '在庫管理',
@@ -841,6 +865,9 @@ const languageConfigs = {
     tax: '税',
     receiptCreator: 'レシート作成者',
     receiptCreatorPlaceholder: 'レシート作成者名',
+    receipt: 'レシート',
+    items: '商品',
+    customerName: '顧客',
   },
   ko: {
     appTitle: '재고 관리',
@@ -927,6 +954,9 @@ const languageConfigs = {
     tax: '세금',
     receiptCreator: '영수증 생성자',
     receiptCreatorPlaceholder: '영수증 생성자 이름',
+    receipt: '영수증',
+    items: '상품',
+    customerName: '고객',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1013,6 +1043,9 @@ const languageConfigs = {
     tax: 'ภาษี',
     receiptCreator: 'ผู้สร้างใบเสร็จ',
     receiptCreatorPlaceholder: 'ชื่อผู้สร้างใบเสร็จ',
+    receipt: 'ใบเสร็จ',
+    items: 'รายการ',
+    customerName: 'ลูกค้า',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1099,6 +1132,9 @@ const languageConfigs = {
     tax: 'Thuế',
     receiptCreator: 'Người tạo hóa đơn',
     receiptCreatorPlaceholder: 'Tên người tạo hóa đơn',
+    receipt: 'Hóa đơn',
+    items: 'Mặt hàng',
+    customerName: 'Khách hàng',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1185,6 +1221,9 @@ const languageConfigs = {
     tax: 'Pajak',
     receiptCreator: 'Pembuat Tanda Terima',
     receiptCreatorPlaceholder: 'Nama Pembuat Tanda Terima',
+    receipt: 'Tanda Terima',
+    items: 'Barang',
+    customerName: 'Pelanggan',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1271,6 +1310,9 @@ const languageConfigs = {
     tax: 'कर',
     receiptCreator: 'रसीद निर्माता',
     receiptCreatorPlaceholder: 'रसीद निर्माता का नाम',
+    receipt: 'रसीद',
+    items: 'आइटम',
+    customerName: 'ग्राहक',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1356,6 +1398,9 @@ const languageConfigs = {
     tax: 'အခွန်',
     receiptCreator: 'ငွေလက်ခံဖြတ်ပိုင်းဖန်တီးသူ',
     receiptCreatorPlaceholder: 'ငွေလက်ခံဖြတ်ပိုင်းဖန်တီးသူအမည်',
+    receipt: 'ငွေလက်ခံဖြတ်ပိုင်း',
+    items: 'ပစ္စည်းများ',
+    customerName: 'ဖောက်သည်',
   },
 };
 
@@ -1541,6 +1586,13 @@ const InventoryApp = () => {
     }
   }, [selectedYear, selectedStore]);
 
+  // Load last receipt creator when cart view opens
+  useEffect(() => {
+    if (showCartView) {
+      loadLastReceiptCreator();
+    }
+  }, [showCartView]);
+
   // Load predefined items from AsyncStorage with JSON file integration
   const loadPredefinedItems = async () => {
     try {
@@ -1698,6 +1750,9 @@ const InventoryApp = () => {
   };
 
   const generateExistingReceiptHTML = (receipt) => {
+    const currentStore = stores.find(s => s.id === selectedStore);
+    const storeName = currentStore?.name || 'Main Store';
+    
     return `
       <!DOCTYPE html>
       <html>
@@ -1705,6 +1760,7 @@ const InventoryApp = () => {
           <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
             h1 { color: #333; }
+            .store-name { font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px; }
             .receipt-header { margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; }
             .receipt-items { margin:  20px 0; }
             .item-row { display: flex; justify-content: space-between; padding: 5px 0; }
@@ -1714,18 +1770,20 @@ const InventoryApp = () => {
           </style>
         </head>
         <body>
+          <div class="store-name">${storeName}</div>
+          
           <div class="receipt-header">
-            <h1>Receipt #${receipt.receiptNumber}</h1>
-            <p>Date: ${new Date(receipt.timestamp).toLocaleString()}</p>
-            <p>Customer: ${receipt.customerName}</p>
-            ${receipt.receiptCreator ? `<p>Receipt Creator: ${receipt.receiptCreator}</p>` : ''}
+            <h1>${language.receipt || 'Receipt'} #${receipt.receiptNumber}</h1>
+            <p>${language.date || 'Date'}: ${new Date(receipt.timestamp).toLocaleString()}</p>
+            ${receipt.customerName && receipt.customerName !== 'Walk-in Customer' ? `<p>${language.customerName || 'Customer'}: ${receipt.customerName}</p>` : ''}
+            ${receipt.receiptCreator ? `<p>${language.receiptCreator || 'Receipt Creator'}: ${receipt.receiptCreator}</p>` : ''}
           </div>
           
           <div class="receipt-items">
-            <h2>Items</h2>
+            <h2>${language.items || 'Items'}</h2>
             ${receipt.items.map(item => `
               <div class="item-row">
-                <span>${item.name} (${item.unitsSold} ${item.unitType})</span>
+                <span>${item.name} - ${item.unitsSold} ${item.unitType} × ${selectedCurrency}${formatNumber(parseFloat(item.price), 2)}/${item.unitType}</span>
                 <span>${selectedCurrency}${item.totalAmount}</span>
               </div>
             `).join('')}
@@ -1733,15 +1791,15 @@ const InventoryApp = () => {
           
           <div class="totals">
             <div class="total-row">
-              <span>Subtotal:</span>
+              <span>${language.subtotal || 'Subtotal'}:</span>
               <span>${selectedCurrency}${receipt.subtotal}</span>
             </div>
             <div class="total-row">
-              <span>Tax:</span>
+              <span>${language.tax || 'Tax'}:</span>
               <span>${selectedCurrency}${receipt.tax}</span>
             </div>
             <div class="total-row grand-total">
-              <span>Total:</span>
+              <span>${language.totalAmount || 'Total'}:</span>
               <span>${selectedCurrency}${receipt. total}</span>
             </div>
           </div>
@@ -2074,7 +2132,7 @@ const InventoryApp = () => {
 
   const loadLastReceiptCreator = async () => {
     try {
-      const lastCreator = await AsyncStorage.getItem('LAST_RECEIPT_CREATOR');
+      const lastCreator = await AsyncStorage.getItem('lastReceiptCreator');
       if (lastCreator) {
         setReceiptCreator(lastCreator);
       }
@@ -2087,10 +2145,10 @@ const InventoryApp = () => {
     try {
       const trimmedName = creatorName?.trim();
       if (trimmedName) {
-        await AsyncStorage.setItem('LAST_RECEIPT_CREATOR', trimmedName);
+        await AsyncStorage.setItem('lastReceiptCreator', trimmedName);
       } else {
         // Remove the saved receipt creator if an empty string is provided
-        await AsyncStorage.removeItem('LAST_RECEIPT_CREATOR');
+        await AsyncStorage.removeItem('lastReceiptCreator');
       }
     } catch (error) {
       console.error('Error saving receipt creator:', error);
@@ -5673,10 +5731,9 @@ const InventoryApp = () => {
                         ) : (
                           cartItems.map((item) => (
                             <View key={item.id} style={styles.cartItemCompact}>
-                              <Text style={styles.cartItemCompactName} numberOfLines={1}>{item.name}</Text>
-                              <Text style={styles.cartItemCompactQty}>{item.unitsSold} {item.unitType}</Text>
-                              <Text style={styles.cartItemCompactPrice}>× {selectedCurrency}{formatNumber(parseFloat(item.price), 2)}</Text>
-                              <Text style={styles.cartItemCompactTotal}>= {selectedCurrency}{item.totalAmount}</Text>
+                              <Text style={styles.cartItemCompactName} numberOfLines={1}>
+                                {item.name} - {item.unitsSold} {item.unitType} × {selectedCurrency}{formatNumber(parseFloat(item.price), 2)} = {selectedCurrency}{item.totalAmount}
+                              </Text>
                               <TouchableOpacity
                                 onPress={() => removeFromCart(item.id)}
                                 style={styles.removeCartItemCompactButton}
@@ -8037,8 +8094,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cartViewList: {
-    maxHeight: 450,
+    maxHeight: 300,
     marginBottom: 16,
+    flexGrow: 0,
   },
   emptyCartContainer: {
     padding: 60,
@@ -8118,18 +8176,19 @@ const styles = StyleSheet.create({
   cartItemCompact: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     backgroundColor: '#f8f9fa',
     borderRadius: 8,
-    paddingVertical: 8,
+    paddingVertical: 10,
     paddingHorizontal: 12,
     marginBottom: 6,
     borderLeftWidth: 3,
     borderLeftColor: '#4caf50',
   },
   cartItemCompactName: {
-    flex: 2,
-    fontSize: 14,
-    fontWeight: '600',
+    flex: 1,
+    fontSize: 13,
+    fontWeight: '500',
     color: '#333',
     marginRight: 8,
   },
