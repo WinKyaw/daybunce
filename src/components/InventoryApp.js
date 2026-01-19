@@ -5993,7 +5993,7 @@ const InventoryApp = () => {
                           style={[styles.modernButton, styles.modernSaveButton]}
                           onPress={addItemToCart}
                         >
-                          <Text style={styles.modernSaveButtonText}>Add to Cart</Text>
+                          <Text style={styles.modernSaveButtonText}>{language.addToCart}</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
