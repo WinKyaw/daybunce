@@ -1267,7 +1267,7 @@ const languageConfigs = {
     longPressToRename: 'नाम बदलने के लिए स्टोर का नाम लंबे समय तक दबाएं',
     storeName: 'दुकान',
     addNewStore: 'नया स्टोर जोड़ें',
-    subtotal: 'उपयोग',
+    subtotal: 'उप-कुल',
     tax: 'कर',
     receiptCreator: 'रसीद निर्माता',
     receiptCreatorPlaceholder: 'रसीद निर्माता का नाम',
@@ -1822,7 +1822,9 @@ const InventoryApp = () => {
         ]
       );
 
-      // Clear cart and close modal (keep receipt creator)
+      // Clear cart and close modal
+      // Note: receiptCreator is intentionally NOT cleared here as it's persisted in AsyncStorage
+      // This allows the same receipt creator to be reused for subsequent orders
       setCartItems([]);
       setCartCustomerName('');
       setShowTakeOrderModal(false);
@@ -2083,8 +2085,12 @@ const InventoryApp = () => {
 
   const saveReceiptCreator = async (creatorName) => {
     try {
-      if (creatorName && creatorName.trim()) {
-        await AsyncStorage.setItem('LAST_RECEIPT_CREATOR', creatorName.trim());
+      const trimmedName = creatorName?.trim();
+      if (trimmedName) {
+        await AsyncStorage.setItem('LAST_RECEIPT_CREATOR', trimmedName);
+      } else {
+        // Remove the saved receipt creator if an empty string is provided
+        await AsyncStorage.removeItem('LAST_RECEIPT_CREATOR');
       }
     } catch (error) {
       console.error('Error saving receipt creator:', error);
