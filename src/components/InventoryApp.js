@@ -2071,7 +2071,7 @@ const InventoryApp = () => {
 
   const generateExistingReceiptHTML = (receipt) => {
     const currentStore = stores.find(s => s.id === selectedStore);
-    const storeName = currentStore?.name || language.appTitle;
+    const storeName = currentStore?.name || customAppTitle || language.appTitle;
     
     return `
       <!DOCTYPE html>
