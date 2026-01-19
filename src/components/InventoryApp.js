@@ -1783,7 +1783,7 @@ const InventoryApp = () => {
             <h2>${language.items || 'Items'}</h2>
             ${receipt.items.map(item => `
               <div class="item-row">
-                <span>${item.name} - ${item.unitsSold} ${item.unitType} × ${selectedCurrency}${formatNumber(parseFloat(item.price), 2)}/${item.unitType}</span>
+                <span>${item.name} - ${item.unitsSold} ${item.unitType} × ${selectedCurrency}${formatNumber(parseFloat(item.price), 2)}</span>
                 <span>${selectedCurrency}${item.totalAmount}</span>
               </div>
             `).join('')}
@@ -1800,7 +1800,7 @@ const InventoryApp = () => {
             </div>
             <div class="total-row grand-total">
               <span>${language.totalAmount || 'Total'}:</span>
-              <span>${selectedCurrency}${receipt. total}</span>
+              <span>${selectedCurrency}${receipt.total}</span>
             </div>
           </div>
         </body>
