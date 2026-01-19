@@ -114,6 +114,12 @@ const defaultLanguage = {
   customerInformation: 'Customer Information (Optional)',
   checkout: 'Checkout',
   addToCart: 'Add to Cart',
+  receiptHistory: 'Receipt History',
+  voided: 'Voided',
+  markAsVoided: 'Mark as Voided',
+  unmarkAsVoided: 'Unmark as Voided',
+  receiptNumber: 'Receipt #',
+  viewReceiptHistory: 'View receipt history',
 };
 
 const availableLanguages = [
@@ -260,6 +266,12 @@ const languageConfigs = {
     receiptSaved: 'Receipt created successfully!',
     printReceipt: 'Print',
     takeOrder: 'Take Order',
+    receiptHistory: 'Receipt History',
+    voided: 'Voided',
+    markAsVoided: 'Mark as Voided',
+    unmarkAsVoided: 'Unmark as Voided',
+    receiptNumber: 'Receipt #',
+    viewReceiptHistory: 'View receipt history',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -372,6 +384,12 @@ const languageConfigs = {
     receiptSaved: '¡Recibo creado exitosamente!',
     printReceipt: 'Imprimir',
     takeOrder: 'Tomar Pedido',
+    receiptHistory: 'Historial de Recibos',
+    voided: 'Anulado',
+    markAsVoided: 'Marcar como Anulado',
+    unmarkAsVoided: 'Desmarcar como Anulado',
+    receiptNumber: 'Recibo #',
+    viewReceiptHistory: 'Ver historial de recibos',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -472,6 +490,12 @@ const languageConfigs = {
     printReceipt: 'Imprimer',
     takeOrder: 'Prendre une Commande',
     tapToViewReceipt: 'Appuyez pour voir le résumé quotidien',
+    receiptHistory: 'Historique des Reçus',
+    voided: 'Annulé',
+    markAsVoided: 'Marquer comme Annulé',
+    unmarkAsVoided: 'Démarquer comme Annulé',
+    receiptNumber: 'Reçu #',
+    viewReceiptHistory: 'Voir l\'historique des reçus',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -572,6 +596,12 @@ const languageConfigs = {
     printReceipt: 'Drucken',
     takeOrder: 'Bestellung aufgeben',
     tapToViewReceipt: 'Tippen Sie, um die tägliche Zusammenfassung anzuzeigen',
+    receiptHistory: 'Belegverlauf',
+    voided: 'Ungültig',
+    markAsVoided: 'Als ungültig markieren',
+    unmarkAsVoided: 'Ungültig-Markierung entfernen',
+    receiptNumber: 'Beleg #',
+    viewReceiptHistory: 'Belegverlauf anzeigen',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -672,6 +702,12 @@ const languageConfigs = {
     printReceipt: 'Stampa',
     takeOrder: 'Prendi Ordine',
     tapToViewReceipt: 'Tocca per visualizzare il riepilogo quotidiano',
+    receiptHistory: 'Cronologia Ricevute',
+    voided: 'Annullato',
+    markAsVoided: 'Contrassegna come Annullato',
+    unmarkAsVoided: 'Rimuovi Annullamento',
+    receiptNumber: 'Ricevuta #',
+    viewReceiptHistory: 'Visualizza cronologia ricevute',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -772,6 +808,12 @@ const languageConfigs = {
     printReceipt: 'Imprimir',
     takeOrder: 'Fazer Pedido',
     tapToViewReceipt: 'Toque para ver o resumo diário',
+    receiptHistory: 'Histórico de Recibos',
+    voided: 'Anulado',
+    markAsVoided: 'Marcar como Anulado',
+    unmarkAsVoided: 'Desmarcar como Anulado',
+    receiptNumber: 'Recibo #',
+    viewReceiptHistory: 'Ver histórico de recibos',
   },
   zh: {
     appTitle: '库存管理',
@@ -866,6 +908,12 @@ const languageConfigs = {
     printReceipt: '打印',
     takeOrder: '接受订单',
     tapToViewReceipt: '点击查看每日总结',
+    receiptHistory: '收据历史',
+    voided: '已作废',
+    markAsVoided: '标记为已作废',
+    unmarkAsVoided: '取消作废标记',
+    receiptNumber: '收据 #',
+    viewReceiptHistory: '查看收据历史',
   },
   ja: {
     appTitle: '在庫管理',
@@ -960,6 +1008,12 @@ const languageConfigs = {
     printReceipt: '印刷',
     takeOrder: '注文を受け付ける',
     tapToViewReceipt: 'タップして日次レポートを表示',
+    receiptHistory: 'レシート履歴',
+    voided: '無効',
+    markAsVoided: '無効としてマーク',
+    unmarkAsVoided: '無効マークを解除',
+    receiptNumber: 'レシート #',
+    viewReceiptHistory: 'レシート履歴を表示',
   },
   ko: {
     appTitle: '재고 관리',
@@ -1060,6 +1114,12 @@ const languageConfigs = {
     printReceipt: '인쇄',
     takeOrder: '주문 받기',
     tapToViewReceipt: '탭하여 일일 요약 보기',
+    receiptHistory: '영수증 내역',
+    voided: '무효화됨',
+    markAsVoided: '무효로 표시',
+    unmarkAsVoided: '무효 표시 해제',
+    receiptNumber: '영수증 #',
+    viewReceiptHistory: '영수증 내역 보기',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1160,6 +1220,12 @@ const languageConfigs = {
     printReceipt: 'พิมพ์',
     takeOrder: 'รับคำสั่งซื้อ',
     tapToViewReceipt: 'แตะเพื่อดูสรุปรายวัน',
+    receiptHistory: 'ประวัติใบเสร็จ',
+    voided: 'ยกเลิกแล้ว',
+    markAsVoided: 'ทำเครื่องหมายว่ายกเลิก',
+    unmarkAsVoided: 'ยกเลิกการทำเครื่องหมาย',
+    receiptNumber: 'ใบเสร็จ #',
+    viewReceiptHistory: 'ดูประวัติใบเสร็จ',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1260,6 +1326,12 @@ const languageConfigs = {
     printReceipt: 'In',
     takeOrder: 'Nhận Đơn Hàng',
     tapToViewReceipt: 'Nhấn để xem tóm tắt hàng ngày',
+    receiptHistory: 'Lịch Sử Hóa Đơn',
+    voided: 'Đã Hủy',
+    markAsVoided: 'Đánh Dấu Đã Hủy',
+    unmarkAsVoided: 'Bỏ Đánh Dấu Đã Hủy',
+    receiptNumber: 'Hóa Đơn #',
+    viewReceiptHistory: 'Xem lịch sử hóa đơn',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1360,6 +1432,12 @@ const languageConfigs = {
     printReceipt: 'Cetak',
     takeOrder: 'Terima Pesanan',
     tapToViewReceipt: 'Ketuk untuk melihat ringkasan harian',
+    receiptHistory: 'Riwayat Struk',
+    voided: 'Dibatalkan',
+    markAsVoided: 'Tandai Sebagai Dibatalkan',
+    unmarkAsVoided: 'Hapus Tanda Dibatalkan',
+    receiptNumber: 'Struk #',
+    viewReceiptHistory: 'Lihat riwayat struk',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1460,6 +1538,12 @@ const languageConfigs = {
     printReceipt: 'प्रिंट',
     takeOrder: 'ऑर्डर लें',
     tapToViewReceipt: 'दैनिक सारांश देखने के लिए टैप करें',
+    receiptHistory: 'रसीद इतिहास',
+    voided: 'रद्द किया गया',
+    markAsVoided: 'रद्द के रूप में चिह्नित करें',
+    unmarkAsVoided: 'रद्द चिह्न हटाएं',
+    receiptNumber: 'रसीद #',
+    viewReceiptHistory: 'रसीद इतिहास देखें',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1559,6 +1643,12 @@ const languageConfigs = {
     printReceipt: 'ပရင့်ထုတ်ပါ',
     takeOrder: 'မှာယူမှု လက်ခံမည်',
     tapToViewReceipt: 'နေ့စဥ်အနှစ်ချုပ် ကြည့်ရန် တို့ပါ',
+    receiptHistory: 'ရောင်းချမှတ်တမ်းမှတ်တမ်း',
+    voided: 'ပယ်ဖျက်ပြီး',
+    markAsVoided: 'ပယ်ဖျက်ပြီးအဖြစ် မှတ်သားရန်',
+    unmarkAsVoided: 'ပယ်ဖျက်မှတ်သား ဖယ်ရှားရန်',
+    receiptNumber: 'ရောင်းချမှတ်တမ်း #',
+    viewReceiptHistory: 'ရောင်းချမှတ်တမ်းမှတ်တမ်း ကြည့်ရန်',
   },
 };
 
@@ -1666,6 +1756,8 @@ const InventoryApp = () => {
   const [receiptCreator, setReceiptCreator] = useState('');
   const [taxSettings, setTaxSettings] = useState({ type: 'percentage', value: 0 });
   const [receiptHistory, setReceiptHistory] = useState([]);
+  const [showReceiptHistoryModal, setShowReceiptHistoryModal] = useState(false);
+  const [selectedReceiptDetail, setSelectedReceiptDetail] = useState(null);
 
   
   // New state for dynamic predefined items
@@ -1909,7 +2001,7 @@ const InventoryApp = () => {
 
   const generateExistingReceiptHTML = (receipt) => {
     const currentStore = stores.find(s => s.id === selectedStore);
-    const storeName = currentStore?.name || customAppTitle || language.appTitle;
+    const storeName = currentStore?.name || language.appTitle;
     
     return `
       <!DOCTYPE html>
@@ -2049,6 +2141,28 @@ const InventoryApp = () => {
     } catch (error) {
       console.error('Checkout error:', error);
       Alert.alert('Error', 'Could not complete checkout');
+    }
+  };
+
+  // Toggle voided status for a receipt
+  const toggleReceiptVoided = async (receiptId) => {
+    try {
+      const updatedHistory = receiptHistory.map(receipt => {
+        if (receipt.id === receiptId) {
+          return { ...receipt, voided: !receipt.voided };
+        }
+        return receipt;
+      });
+      setReceiptHistory(updatedHistory);
+      await AsyncStorage.setItem('receipt_history', JSON.stringify(updatedHistory));
+      
+      // Update selected receipt detail if it's the one being toggled
+      if (selectedReceiptDetail && selectedReceiptDetail.id === receiptId) {
+        setSelectedReceiptDetail({ ...selectedReceiptDetail, voided: !selectedReceiptDetail.voided });
+      }
+    } catch (error) {
+      console.error('Error toggling voided status:', error);
+      Alert.alert('Error', 'Could not update receipt status');
     }
   };
 
@@ -5252,6 +5366,17 @@ const InventoryApp = () => {
                   <Text style={styles.salesTrackingButtonText}>📊 {language.monthlySalesTracking}</Text>
                 </TouchableOpacity>
                 
+                {/* Receipt History Button */}
+                <TouchableOpacity
+                  style={styles.salesTrackingButton}
+                  onPress={() => {
+                    setShowSettingsModal(false);
+                    setShowReceiptHistoryModal(true);
+                  }}
+                >
+                  <Text style={styles.salesTrackingButtonText}>📜 {language.receiptHistory}</Text>
+                </TouchableOpacity>
+                
                 <View style={styles.settingsButtonRow}>
                   <TouchableOpacity
                     style={[styles.settingsButton, styles.settingsCancelButton]}
@@ -5277,6 +5402,198 @@ const InventoryApp = () => {
                     <Text style={styles.settingsSaveButtonText}>{language.save}</Text>
                   </TouchableOpacity>
                 </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      {/* Receipt History List Modal */}
+      <Modal
+        visible={showReceiptHistoryModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowReceiptHistoryModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setShowReceiptHistoryModal(false)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.fixedSettingsModalContent}>
+                <Text style={styles.settingsTitle}>{language.receiptHistory || 'Receipt History'}</Text>
+                
+                <ScrollView 
+                  style={styles.settingsScrollView}
+                  showsVerticalScrollIndicator={true}
+                  contentContainerStyle={{ paddingBottom: 20 }}
+                >
+                  {receiptHistory.length === 0 ? (
+                    <Text style={styles.noItemsText}>{language.noItems || 'No receipts found'}</Text>
+                  ) : (
+                    receiptHistory.map((receipt) => (
+                      <TouchableOpacity
+                        key={receipt.id}
+                        style={[
+                          styles.receiptHistoryItem,
+                          receipt.voided && styles.receiptHistoryItemVoided
+                        ]}
+                        onPress={() => {
+                          setSelectedReceiptDetail(receipt);
+                          setShowReceiptHistoryModal(false);
+                        }}
+                      >
+                        <View style={styles.receiptHistoryItemHeader}>
+                          <Text style={[
+                            styles.receiptHistoryItemNumber,
+                            receipt.voided && styles.receiptHistoryItemTextVoided
+                          ]}>
+                            {language.receiptNumber || 'Receipt #'}{receipt.receiptNumber}
+                          </Text>
+                          {receipt.voided && (
+                            <View style={styles.voidedBadge}>
+                              <Text style={styles.voidedBadgeText}>{language.voided || 'VOIDED'}</Text>
+                            </View>
+                          )}
+                        </View>
+                        <Text style={[
+                          styles.receiptHistoryItemDate,
+                          receipt.voided && styles.receiptHistoryItemTextVoided
+                        ]}>
+                          {new Date(receipt.timestamp).toLocaleString()}
+                        </Text>
+                        <Text style={[
+                          styles.receiptHistoryItemCustomer,
+                          receipt.voided && styles.receiptHistoryItemTextVoided
+                        ]}>
+                          {language.customerName || 'Customer'}: {receipt.customerName}
+                        </Text>
+                        <Text style={[
+                          styles.receiptHistoryItemTotal,
+                          receipt.voided && styles.receiptHistoryItemTextVoided
+                        ]}>
+                          {language.totalAmount || 'Total'}: {language.currency}{receipt.total}
+                        </Text>
+                      </TouchableOpacity>
+                    ))
+                  )}
+                </ScrollView>
+                
+                <TouchableOpacity
+                  style={[styles.settingsButton, styles.settingsCancelButton]}
+                  onPress={() => setShowReceiptHistoryModal(false)}
+                >
+                  <Text style={styles.settingsCancelButtonText}>{language.close || 'Close'}</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      {/* Receipt Detail Modal */}
+      <Modal
+        visible={selectedReceiptDetail !== null}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setSelectedReceiptDetail(null)}
+      >
+        <TouchableWithoutFeedback onPress={() => setSelectedReceiptDetail(null)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.fixedSettingsModalContent}>
+                {selectedReceiptDetail && (
+                  <>
+                    <View style={styles.receiptDetailHeader}>
+                      <Text style={styles.settingsTitle}>
+                        {language.receiptNumber || 'Receipt #'}{selectedReceiptDetail.receiptNumber}
+                      </Text>
+                      {selectedReceiptDetail.voided && (
+                        <View style={styles.voidedBadge}>
+                          <Text style={styles.voidedBadgeText}>{language.voided || 'VOIDED'}</Text>
+                        </View>
+                      )}
+                    </View>
+                    
+                    <ScrollView 
+                      style={styles.settingsScrollView}
+                      showsVerticalScrollIndicator={true}
+                      contentContainerStyle={{ paddingBottom: 20 }}
+                    >
+                      <View style={styles.receiptDetailSection}>
+                        <Text style={styles.receiptDetailLabel}>{language.date || 'Date'}:</Text>
+                        <Text style={styles.receiptDetailValue}>
+                          {new Date(selectedReceiptDetail.timestamp).toLocaleString()}
+                        </Text>
+                      </View>
+                      
+                      <View style={styles.receiptDetailSection}>
+                        <Text style={styles.receiptDetailLabel}>{language.customerName || 'Customer'}:</Text>
+                        <Text style={styles.receiptDetailValue}>{selectedReceiptDetail.customerName}</Text>
+                      </View>
+                      
+                      {selectedReceiptDetail.receiptCreator && (
+                        <View style={styles.receiptDetailSection}>
+                          <Text style={styles.receiptDetailLabel}>{language.receiptCreator || 'Receipt Creator'}:</Text>
+                          <Text style={styles.receiptDetailValue}>{selectedReceiptDetail.receiptCreator}</Text>
+                        </View>
+                      )}
+                      
+                      <Text style={styles.receiptDetailSectionTitle}>{language.items || 'Items'}:</Text>
+                      {selectedReceiptDetail.items.map((item, index) => (
+                        <View key={index} style={styles.receiptDetailItem}>
+                          <Text style={styles.receiptDetailItemName}>{item.name}</Text>
+                          <Text style={styles.receiptDetailItemDetails}>
+                            {item.unitsSold} {item.unitType} × {language.currency}{item.price}
+                          </Text>
+                          <Text style={styles.receiptDetailItemTotal}>
+                            {language.currency}{item.totalAmount}
+                          </Text>
+                        </View>
+                      ))}
+                      
+                      <View style={styles.receiptDetailTotals}>
+                        <View style={styles.receiptDetailTotalRow}>
+                          <Text style={styles.receiptDetailTotalLabel}>{language.subtotal || 'Subtotal'}:</Text>
+                          <Text style={styles.receiptDetailTotalValue}>
+                            {language.currency}{selectedReceiptDetail.subtotal}
+                          </Text>
+                        </View>
+                        <View style={styles.receiptDetailTotalRow}>
+                          <Text style={styles.receiptDetailTotalLabel}>{language.tax || 'Tax'}:</Text>
+                          <Text style={styles.receiptDetailTotalValue}>
+                            {language.currency}{selectedReceiptDetail.tax}
+                          </Text>
+                        </View>
+                        <View style={styles.receiptDetailTotalRow}>
+                          <Text style={styles.receiptDetailTotalLabelBold}>{language.totalAmount || 'Total'}:</Text>
+                          <Text style={styles.receiptDetailTotalValueBold}>
+                            {language.currency}{selectedReceiptDetail.total}
+                          </Text>
+                        </View>
+                      </View>
+                    </ScrollView>
+                    
+                    <View style={styles.settingsButtonRow}>
+                      <TouchableOpacity
+                        style={[styles.settingsButton, styles.settingsCancelButton]}
+                        onPress={() => setSelectedReceiptDetail(null)}
+                      >
+                        <Text style={styles.settingsCancelButtonText}>{language.close || 'Close'}</Text>
+                      </TouchableOpacity>
+                      
+                      <TouchableOpacity
+                        style={[styles.settingsButton, styles.settingsSaveButton]}
+                        onPress={() => toggleReceiptVoided(selectedReceiptDetail.id)}
+                      >
+                        <Text style={styles.settingsSaveButtonText}>
+                          {selectedReceiptDetail.voided 
+                            ? (language.unmarkAsVoided || 'Unmark as Voided')
+                            : (language.markAsVoided || 'Mark as Voided')
+                          }
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </>
+                )}
               </View>
             </TouchableWithoutFeedback>
           </View>
@@ -8451,6 +8768,145 @@ const styles = StyleSheet.create({
     maxWidth: 500,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  receiptHistoryItem: {
+    backgroundColor: '#fff',
+    padding: 15,
+    marginVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  receiptHistoryItemVoided: {
+    backgroundColor: '#f5f5f5',
+    opacity: 0.7,
+  },
+  receiptHistoryItemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  receiptHistoryItemNumber: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  receiptHistoryItemDate: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 4,
+  },
+  receiptHistoryItemCustomer: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 4,
+  },
+  receiptHistoryItemTotal: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#4CAF50',
+    marginTop: 4,
+  },
+  receiptHistoryItemTextVoided: {
+    textDecorationLine: 'line-through',
+    color: '#999',
+  },
+  voidedBadge: {
+    backgroundColor: '#f44336',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 4,
+  },
+  voidedBadgeText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  receiptDetailHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  receiptDetailSection: {
+    marginBottom: 12,
+  },
+  receiptDetailLabel: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 4,
+  },
+  receiptDetailValue: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+  },
+  receiptDetailSectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginTop: 16,
+    marginBottom: 12,
+  },
+  receiptDetailItem: {
+    backgroundColor: '#f9f9f9',
+    padding: 12,
+    marginVertical: 6,
+    borderRadius: 6,
+    borderLeftWidth: 3,
+    borderLeftColor: '#4CAF50',
+  },
+  receiptDetailItemName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
+  },
+  receiptDetailItemDetails: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 4,
+  },
+  receiptDetailItemTotal: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#4CAF50',
+  },
+  receiptDetailTotals: {
+    marginTop: 20,
+    paddingTop: 15,
+    borderTopWidth: 2,
+    borderTopColor: '#e0e0e0',
+  },
+  receiptDetailTotalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  receiptDetailTotalLabel: {
+    fontSize: 16,
+    color: '#666',
+  },
+  receiptDetailTotalValue: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+  },
+  receiptDetailTotalLabelBold: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  receiptDetailTotalValueBold: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#4CAF50',
   },
 });
 
