@@ -1841,7 +1841,7 @@ const InventoryApp = () => {
 
   const generateExistingReceiptHTML = (receipt) => {
     const currentStore = stores.find(s => s.id === selectedStore);
-    const storeName = currentStore?.name || 'Main Store';
+    const storeName = currentStore?.name || customAppTitle || language.appTitle;
     
     return `
       <!DOCTYPE html>
@@ -5815,8 +5815,8 @@ const InventoryApp = () => {
                         {cartItems. length === 0 ? (
                           <View style={styles. emptyCartContainer}>
                             <Text style={styles.emptyCartIcon}>🛒</Text>
-                            <Text style={styles.emptyCartText}>Your cart is empty</Text>
-                            <Text style={styles.emptyCartSubtext}>Add items from the list</Text>
+                            <Text style={styles.emptyCartText}>{language.emptyCart}</Text>
+                            <Text style={styles.emptyCartSubtext}>{language.addItemsFromList}</Text>
                           </View>
                         ) : (
                           cartItems.map((item) => (
@@ -5863,7 +5863,7 @@ const InventoryApp = () => {
                       {/* Customer Info (Optional) */}
                       <View style={styles.customerInfoSection}>
                         <Text style={styles. sectionTitle}>
-                          {language.customerInformation || 'Customer Information (Optional)'}
+                          {language.customerInformation}
                         </Text>
                         <TextInput
                           style={styles. modernInput}
@@ -5886,7 +5886,7 @@ const InventoryApp = () => {
                           onPress={handleCartCheckout}
                         >
                           <Text style={styles.checkoutButtonText}>
-                            ✓ Checkout ({cartItems.length} items)
+                            ✓ {language.checkout} ({cartItems.length} {language.items})
                           </Text>
                         </TouchableOpacity>
                       )}
@@ -5924,7 +5924,7 @@ const InventoryApp = () => {
                     style={styles.keyboardAvoidingView}
                   >
                     <View style={styles.modernModalContent}>
-                      <Text style={styles.modernModalTitle}>Add to Cart</Text>
+                      <Text style={styles.modernModalTitle}>{language.addToCart}</Text>
 
                       {/* Item Display */}
                       <View style={styles.predefinedItemDisplay}>
