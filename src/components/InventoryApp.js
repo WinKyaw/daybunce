@@ -101,6 +101,10 @@ const defaultLanguage = {
   longPressToRename: 'Long press store name to rename',
   storeName: 'Store',
   addNewStore: 'Add New Store',
+  subtotal: 'Subtotal',
+  tax: 'Tax',
+  receiptCreator: 'Receipt Creator',
+  receiptCreatorPlaceholder: 'Receipt Creator Name',
 };
 
 const availableLanguages = [
@@ -230,6 +234,10 @@ const languageConfigs = {
     longPressToRename: 'Long press store name to rename',
     storeName: 'Store',
     addNewStore: 'Add New Store',
+    subtotal: 'Subtotal',
+    tax: 'Tax',
+    receiptCreator: 'Receipt Creator',
+    receiptCreatorPlaceholder: 'Receipt Creator Name',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -1400,7 +1408,7 @@ const InventoryApp = () => {
   const [showAddToCartModal, setShowAddToCartModal] = useState(false);
   const [selectedItemForCart, setSelectedItemForCart] = useState(null);
   const [cartCustomerName, setCartCustomerName] = useState('');
-  const [cartCustomerPhone, setCartCustomerPhone] = useState('');
+  const [receiptCreator, setReceiptCreator] = useState('');
   const [taxSettings, setTaxSettings] = useState({ type: 'percentage', value: 0 });
   const [receiptHistory, setReceiptHistory] = useState([]);
 
@@ -1441,6 +1449,7 @@ const InventoryApp = () => {
       await loadDailyConfirmation(selectedDate);
       await loadTaxSettings();  // Add this line
       await loadReceiptHistory();  // Add this line
+      await loadLastReceiptCreator();  // Add this line
     };
     
     initializeApp();
@@ -1657,7 +1666,7 @@ const InventoryApp = () => {
             <h1>Receipt #${receipt.receiptNumber}</h1>
             <p>Date: ${new Date(receipt.timestamp).toLocaleString()}</p>
             <p>Customer: ${receipt.customerName}</p>
-            ${receipt.customerPhone ? `<p>Phone: ${receipt.customerPhone}</p>` : ''}
+            ${receipt.receiptCreator ? `<p>Receipt Creator: ${receipt.receiptCreator}</p>` : ''}
           </div>
           
           <div class="receipt-items">
@@ -1726,7 +1735,7 @@ const InventoryApp = () => {
         timestamp: new Date().toISOString(),
         date: formatDate(selectedDate),
         customerName: cartCustomerName || 'Walk-in Customer',
-        customerPhone: cartCustomerPhone || '',
+        receiptCreator: receiptCreator || '',
         items: cartItems,
         subtotal: totals.subtotal,
         tax: totals.tax,
@@ -1738,6 +1747,9 @@ const InventoryApp = () => {
       const updatedHistory = [receipt, ...receiptHistory];
       setReceiptHistory(updatedHistory);
       await AsyncStorage.setItem('receipt_history', JSON.stringify(updatedHistory));
+
+      // Save receipt creator for future use
+      await saveReceiptCreator(receiptCreator);
 
       // Show success and reset
       Alert.alert(
@@ -1758,10 +1770,9 @@ const InventoryApp = () => {
         ]
       );
 
-      // Clear cart and close modal
+      // Clear cart and close modal (keep receipt creator)
       setCartItems([]);
       setCartCustomerName('');
-      setCartCustomerPhone('');
       setShowTakeOrderModal(false);
       setShowCartView(false);
 
@@ -2004,6 +2015,27 @@ const InventoryApp = () => {
       }
     } catch (error) {
       console.error('Error loading receipt history:', error);
+    }
+  };
+
+  const loadLastReceiptCreator = async () => {
+    try {
+      const lastCreator = await AsyncStorage.getItem('LAST_RECEIPT_CREATOR');
+      if (lastCreator) {
+        setReceiptCreator(lastCreator);
+      }
+    } catch (error) {
+      console.error('Error loading last receipt creator:', error);
+    }
+  };
+
+  const saveReceiptCreator = async (creatorName) => {
+    try {
+      if (creatorName && creatorName.trim()) {
+        await AsyncStorage.setItem('LAST_RECEIPT_CREATOR', creatorName.trim());
+      }
+    } catch (error) {
+      console.error('Error saving receipt creator:', error);
     }
   };
 
@@ -5582,25 +5614,17 @@ const InventoryApp = () => {
                           </View>
                         ) : (
                           cartItems.map((item) => (
-                            <View key={item.id} style={styles.cartItemCard}>
-                              <View style={styles.cartItemHeader}>
-                                <Text style={styles.cartItemName}>{item.name}</Text>
-                                <TouchableOpacity
-                                  onPress={() => removeFromCart(item.id)}
-                                  style={styles.removeCartItemButton}
-                                >
-                                  <Text style={styles.removeCartItemText}>✕</Text>
-                                </TouchableOpacity>
-                              </View>
-                              <View style={styles.cartItemDetails}>
-                                <Text style={styles.cartItemDetail}>
-                                  {item.unitsSold} {item.unitType} × {selectedCurrency}{formatNumber(parseFloat(item.price), 2)}
-                                </Text>
-                                <Text style={styles.cartItemTotal}>
-                                  {selectedCurrency}{item.totalAmount}
-                                </Text>
-                              </View>
-                              <Text style={styles.cartItemCategory}>{item.category}</Text>
+                            <View key={item.id} style={styles.cartItemCompact}>
+                              <Text style={styles.cartItemCompactName} numberOfLines={1}>{item.name}</Text>
+                              <Text style={styles.cartItemCompactQty}>{item.unitsSold} {item.unitType}</Text>
+                              <Text style={styles.cartItemCompactPrice}>× {selectedCurrency}{formatNumber(parseFloat(item.price), 2)}</Text>
+                              <Text style={styles.cartItemCompactTotal}>= {selectedCurrency}{item.totalAmount}</Text>
+                              <TouchableOpacity
+                                onPress={() => removeFromCart(item.id)}
+                                style={styles.removeCartItemCompactButton}
+                              >
+                                <Text style={styles.removeCartItemCompactText}>✕</Text>
+                              </TouchableOpacity>
                             </View>
                           ))
                         )}
@@ -5644,10 +5668,9 @@ const InventoryApp = () => {
                         />
                         <TextInput
                           style={styles.modernInput}
-                          placeholder={language. customerPhone || "Customer Phone"}
-                          value={cartCustomerPhone}
-                          onChangeText={setCartCustomerPhone}
-                          keyboardType="phone-pad"
+                          placeholder={language.receiptCreatorPlaceholder || "Receipt Creator Name"}
+                          value={receiptCreator}
+                          onChangeText={setReceiptCreator}
                         />
                       </View>
 
@@ -7535,15 +7558,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#e8f5e8',
-    padding: 16,
-    borderRadius: 8,
-    marginTop: 12,
+    paddingVertical: 4,
   },
   totalLabel: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2e7d32',
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
   },
   totalAmount: {
     fontSize: 18,
@@ -7959,7 +7979,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cartViewList: {
-    maxHeight: 350,
+    maxHeight: 450,
     marginBottom: 16,
   },
   emptyCartContainer: {
@@ -8037,13 +8057,82 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: 4,
   },
+  cartItemCompact: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginBottom: 6,
+    borderLeftWidth: 3,
+    borderLeftColor: '#4caf50',
+  },
+  cartItemCompactName: {
+    flex: 2,
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+    marginRight: 8,
+  },
+  cartItemCompactQty: {
+    fontSize: 13,
+    color: '#666',
+    marginRight: 4,
+  },
+  cartItemCompactPrice: {
+    fontSize: 13,
+    color: '#666',
+    marginRight: 4,
+  },
+  cartItemCompactTotal: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#4caf50',
+    marginRight: 8,
+  },
+  removeCartItemCompactButton: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#f44336',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  removeCartItemCompactText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+    lineHeight: 14,
+  },
   cartTotalsSection: {
     backgroundColor: '#f0f8ff',
-    padding: 16,
+    padding: 12,
     borderRadius: 12,
     marginBottom: 16,
     borderWidth: 2,
     borderColor: '#2196f3',
+  },
+  totalValue: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+  },
+  grandTotalRow: {
+    marginTop: 6,
+    paddingTop: 6,
+    borderTopWidth: 1,
+    borderTopColor: '#2196f3',
+  },
+  grandTotalLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2196f3',
+  },
+  grandTotalValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2196f3',
   },
   customerInfoSection: {
     marginBottom: 16,
