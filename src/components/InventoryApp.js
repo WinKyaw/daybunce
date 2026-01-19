@@ -101,6 +101,10 @@ const defaultLanguage = {
   longPressToRename: 'Long press store name to rename',
   storeName: 'Store',
   addNewStore: 'Add New Store',
+  subtotal: 'Subtotal',
+  tax: 'Tax',
+  receiptCreator: 'Receipt Creator',
+  receiptCreatorPlaceholder: 'Receipt Creator Name',
 };
 
 const availableLanguages = [
@@ -230,6 +234,10 @@ const languageConfigs = {
     longPressToRename: 'Long press store name to rename',
     storeName: 'Store',
     addNewStore: 'Add New Store',
+    subtotal: 'Subtotal',
+    tax: 'Tax',
+    receiptCreator: 'Receipt Creator',
+    receiptCreatorPlaceholder: 'Receipt Creator Name',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -325,6 +333,10 @@ const languageConfigs = {
     longPressToRename: 'Mantén presionado el nombre de la tienda para renombrar',
     storeName: 'Tienda',
     addNewStore: 'Agregar Nueva Tienda',
+    subtotal: 'Subtotal',
+    tax: 'Impuesto',
+    receiptCreator: 'Creador de Recibo',
+    receiptCreatorPlaceholder: 'Nombre del Creador de Recibo',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -407,6 +419,10 @@ const languageConfigs = {
     longPressToRename: 'Appuyez longuement sur le nom du magasin pour renommer',
     storeName: 'Magasin',
     addNewStore: 'Ajouter un Nouveau Magasin',
+    subtotal: 'Sous-total',
+    tax: 'Taxe',
+    receiptCreator: 'Créateur de Reçu',
+    receiptCreatorPlaceholder: 'Nom du Créateur de Reçu',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -489,6 +505,10 @@ const languageConfigs = {
     longPressToRename: 'Lange drücken, um den Shopnamen zu ändern',
     storeName: 'Geschäft',
     addNewStore: 'Neues Geschäft Hinzufügen',
+    subtotal: 'Zwischensumme',
+    tax: 'Steuer',
+    receiptCreator: 'Belegersteller',
+    receiptCreatorPlaceholder: 'Name des Belegerstellers',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -571,6 +591,10 @@ const languageConfigs = {
     longPressToRename: 'Premere a lungo il nome del negozio per rinominare',
     storeName: 'Negozio',
     addNewStore: 'Aggiungi Nuovo Negozio',
+    subtotal: 'Subtotale',
+    tax: 'Tassa',
+    receiptCreator: 'Creatore Ricevuta',
+    receiptCreatorPlaceholder: 'Nome Creatore Ricevuta',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -653,6 +677,10 @@ const languageConfigs = {
     longPressToRename: 'Pressione longamente o nome da loja para renomear',
     storeName: 'Loja',
     addNewStore: 'Adicionar Nova Loja',
+    subtotal: 'Subtotal',
+    tax: 'Imposto',
+    receiptCreator: 'Criador de Recibo',
+    receiptCreatorPlaceholder: 'Nome do Criador de Recibo',
   },
   zh: {
     appTitle: '库存管理',
@@ -729,6 +757,10 @@ const languageConfigs = {
     longPressToRename: '长按商店名称以重命名',
     storeName: '商店',
     addNewStore: '添加新商店',
+    subtotal: '小计',
+    tax: '税',
+    receiptCreator: '收据创建者',
+    receiptCreatorPlaceholder: '收据创建者姓名',
   },
   ja: {
     appTitle: '在庫管理',
@@ -805,6 +837,10 @@ const languageConfigs = {
     longPressToRename: '店舗名を長押しして名前を変更',
     storeName: '店舗',
     addNewStore: '新しい店舗を追加',
+    subtotal: '小計',
+    tax: '税',
+    receiptCreator: 'レシート作成者',
+    receiptCreatorPlaceholder: 'レシート作成者名',
   },
   ko: {
     appTitle: '재고 관리',
@@ -887,6 +923,10 @@ const languageConfigs = {
     longPressToRename: '매장 이름을 길게 눌러 이름 변경',
     storeName: '매장',
     addNewStore: '매장 추가',
+    subtotal: '소계',
+    tax: '세금',
+    receiptCreator: '영수증 생성자',
+    receiptCreatorPlaceholder: '영수증 생성자 이름',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -969,6 +1009,10 @@ const languageConfigs = {
     longPressToRename: 'กดค้างชื่อร้านค้าเพื่อเปลี่ยนชื่อ',
     storeName: 'ร้านค้า',
     addNewStore: 'เพิ่มร้านค้าใหม่',
+    subtotal: 'ยอดรวมย่อย',
+    tax: 'ภาษี',
+    receiptCreator: 'ผู้สร้างใบเสร็จ',
+    receiptCreatorPlaceholder: 'ชื่อผู้สร้างใบเสร็จ',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1050,7 +1094,11 @@ const languageConfigs = {
     monthlySalesInfo: 'Theo dõi doanh số hàng tháng độc lập với hồ sơ hàng tồn kho hàng ngày. Sử dụng nó để theo dõi doanh số hàng tháng tổng thể, mua hàng hoặc bất kỳ dữ liệu tài chính nào khác.',
     longPressToRename: 'Nhấn giữ tên cửa hàng để đổi tên',
     storeName: 'Cửa hàng',
-    addNewStore: 'Thêm Cửa hàng Moi',
+    addNewStore: 'Thêm Cửa hàng Mới',
+    subtotal: 'Tổng phụ',
+    tax: 'Thuế',
+    receiptCreator: 'Người tạo hóa đơn',
+    receiptCreatorPlaceholder: 'Tên người tạo hóa đơn',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1133,6 +1181,10 @@ const languageConfigs = {
     longPressToRename: 'Tekan lama nama toko untuk mengganti nama',
     storeName: 'Toko',
     addNewStore: 'Tambah Toko Baru',
+    subtotal: 'Subtotal',
+    tax: 'Pajak',
+    receiptCreator: 'Pembuat Tanda Terima',
+    receiptCreatorPlaceholder: 'Nama Pembuat Tanda Terima',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1215,6 +1267,10 @@ const languageConfigs = {
     longPressToRename: 'नाम बदलने के लिए स्टोर का नाम लंबे समय तक दबाएं',
     storeName: 'दुकान',
     addNewStore: 'नया स्टोर जोड़ें',
+    subtotal: 'उप-कुल',
+    tax: 'कर',
+    receiptCreator: 'रसीद निर्माता',
+    receiptCreatorPlaceholder: 'रसीद निर्माता का नाम',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1296,6 +1352,10 @@ const languageConfigs = {
     longPressToRename: 'အမည်ပြောင်းရန် စတိုးအမည်ကို ကြာကြာနှိပ်ပါ',
     storeName: 'စတိုး',
     addNewStore: 'စတိုးအသစ်ထည့်ပါ',
+    subtotal: 'စုစုပေါင်းခွဲ',
+    tax: 'အခွန်',
+    receiptCreator: 'ငွေလက်ခံဖြတ်ပိုင်းဖန်တီးသူ',
+    receiptCreatorPlaceholder: 'ငွေလက်ခံဖြတ်ပိုင်းဖန်တီးသူအမည်',
   },
 };
 
@@ -1400,7 +1460,7 @@ const InventoryApp = () => {
   const [showAddToCartModal, setShowAddToCartModal] = useState(false);
   const [selectedItemForCart, setSelectedItemForCart] = useState(null);
   const [cartCustomerName, setCartCustomerName] = useState('');
-  const [cartCustomerPhone, setCartCustomerPhone] = useState('');
+  const [receiptCreator, setReceiptCreator] = useState('');
   const [taxSettings, setTaxSettings] = useState({ type: 'percentage', value: 0 });
   const [receiptHistory, setReceiptHistory] = useState([]);
 
@@ -1441,6 +1501,7 @@ const InventoryApp = () => {
       await loadDailyConfirmation(selectedDate);
       await loadTaxSettings();  // Add this line
       await loadReceiptHistory();  // Add this line
+      await loadLastReceiptCreator();  // Add this line
     };
     
     initializeApp();
@@ -1657,7 +1718,7 @@ const InventoryApp = () => {
             <h1>Receipt #${receipt.receiptNumber}</h1>
             <p>Date: ${new Date(receipt.timestamp).toLocaleString()}</p>
             <p>Customer: ${receipt.customerName}</p>
-            ${receipt.customerPhone ? `<p>Phone: ${receipt.customerPhone}</p>` : ''}
+            ${receipt.receiptCreator ? `<p>Receipt Creator: ${receipt.receiptCreator}</p>` : ''}
           </div>
           
           <div class="receipt-items">
@@ -1726,7 +1787,7 @@ const InventoryApp = () => {
         timestamp: new Date().toISOString(),
         date: formatDate(selectedDate),
         customerName: cartCustomerName || 'Walk-in Customer',
-        customerPhone: cartCustomerPhone || '',
+        receiptCreator: receiptCreator || '',
         items: cartItems,
         subtotal: totals.subtotal,
         tax: totals.tax,
@@ -1738,6 +1799,9 @@ const InventoryApp = () => {
       const updatedHistory = [receipt, ...receiptHistory];
       setReceiptHistory(updatedHistory);
       await AsyncStorage.setItem('receipt_history', JSON.stringify(updatedHistory));
+
+      // Save receipt creator for future use
+      await saveReceiptCreator(receiptCreator);
 
       // Show success and reset
       Alert.alert(
@@ -1759,9 +1823,10 @@ const InventoryApp = () => {
       );
 
       // Clear cart and close modal
+      // Note: receiptCreator is intentionally NOT cleared here as it's persisted in AsyncStorage
+      // This allows the same receipt creator to be reused for subsequent orders
       setCartItems([]);
       setCartCustomerName('');
-      setCartCustomerPhone('');
       setShowTakeOrderModal(false);
       setShowCartView(false);
 
@@ -2004,6 +2069,31 @@ const InventoryApp = () => {
       }
     } catch (error) {
       console.error('Error loading receipt history:', error);
+    }
+  };
+
+  const loadLastReceiptCreator = async () => {
+    try {
+      const lastCreator = await AsyncStorage.getItem('LAST_RECEIPT_CREATOR');
+      if (lastCreator) {
+        setReceiptCreator(lastCreator);
+      }
+    } catch (error) {
+      console.error('Error loading last receipt creator:', error);
+    }
+  };
+
+  const saveReceiptCreator = async (creatorName) => {
+    try {
+      const trimmedName = creatorName?.trim();
+      if (trimmedName) {
+        await AsyncStorage.setItem('LAST_RECEIPT_CREATOR', trimmedName);
+      } else {
+        // Remove the saved receipt creator if an empty string is provided
+        await AsyncStorage.removeItem('LAST_RECEIPT_CREATOR');
+      }
+    } catch (error) {
+      console.error('Error saving receipt creator:', error);
     }
   };
 
@@ -5582,25 +5672,17 @@ const InventoryApp = () => {
                           </View>
                         ) : (
                           cartItems.map((item) => (
-                            <View key={item.id} style={styles.cartItemCard}>
-                              <View style={styles.cartItemHeader}>
-                                <Text style={styles.cartItemName}>{item.name}</Text>
-                                <TouchableOpacity
-                                  onPress={() => removeFromCart(item.id)}
-                                  style={styles.removeCartItemButton}
-                                >
-                                  <Text style={styles.removeCartItemText}>✕</Text>
-                                </TouchableOpacity>
-                              </View>
-                              <View style={styles.cartItemDetails}>
-                                <Text style={styles.cartItemDetail}>
-                                  {item.unitsSold} {item.unitType} × {selectedCurrency}{formatNumber(parseFloat(item.price), 2)}
-                                </Text>
-                                <Text style={styles.cartItemTotal}>
-                                  {selectedCurrency}{item.totalAmount}
-                                </Text>
-                              </View>
-                              <Text style={styles.cartItemCategory}>{item.category}</Text>
+                            <View key={item.id} style={styles.cartItemCompact}>
+                              <Text style={styles.cartItemCompactName} numberOfLines={1}>{item.name}</Text>
+                              <Text style={styles.cartItemCompactQty}>{item.unitsSold} {item.unitType}</Text>
+                              <Text style={styles.cartItemCompactPrice}>× {selectedCurrency}{formatNumber(parseFloat(item.price), 2)}</Text>
+                              <Text style={styles.cartItemCompactTotal}>= {selectedCurrency}{item.totalAmount}</Text>
+                              <TouchableOpacity
+                                onPress={() => removeFromCart(item.id)}
+                                style={styles.removeCartItemCompactButton}
+                              >
+                                <Text style={styles.removeCartItemCompactText}>✕</Text>
+                              </TouchableOpacity>
                             </View>
                           ))
                         )}
@@ -5644,10 +5726,9 @@ const InventoryApp = () => {
                         />
                         <TextInput
                           style={styles.modernInput}
-                          placeholder={language. customerPhone || "Customer Phone"}
-                          value={cartCustomerPhone}
-                          onChangeText={setCartCustomerPhone}
-                          keyboardType="phone-pad"
+                          placeholder={language.receiptCreatorPlaceholder || "Receipt Creator Name"}
+                          value={receiptCreator}
+                          onChangeText={setReceiptCreator}
                         />
                       </View>
 
@@ -7535,15 +7616,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#e8f5e8',
-    padding: 16,
-    borderRadius: 8,
-    marginTop: 12,
+    paddingVertical: 4,
   },
   totalLabel: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2e7d32',
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
   },
   totalAmount: {
     fontSize: 18,
@@ -7959,7 +8037,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cartViewList: {
-    maxHeight: 350,
+    maxHeight: 450,
     marginBottom: 16,
   },
   emptyCartContainer: {
@@ -8037,13 +8115,82 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: 4,
   },
+  cartItemCompact: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginBottom: 6,
+    borderLeftWidth: 3,
+    borderLeftColor: '#4caf50',
+  },
+  cartItemCompactName: {
+    flex: 2,
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+    marginRight: 8,
+  },
+  cartItemCompactQty: {
+    fontSize: 13,
+    color: '#666',
+    marginRight: 4,
+  },
+  cartItemCompactPrice: {
+    fontSize: 13,
+    color: '#666',
+    marginRight: 4,
+  },
+  cartItemCompactTotal: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#4caf50',
+    marginRight: 8,
+  },
+  removeCartItemCompactButton: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#f44336',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  removeCartItemCompactText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+    lineHeight: 14,
+  },
   cartTotalsSection: {
     backgroundColor: '#f0f8ff',
-    padding: 16,
+    padding: 12,
     borderRadius: 12,
     marginBottom: 16,
     borderWidth: 2,
     borderColor: '#2196f3',
+  },
+  totalValue: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+  },
+  grandTotalRow: {
+    marginTop: 6,
+    paddingTop: 6,
+    borderTopWidth: 1,
+    borderTopColor: '#2196f3',
+  },
+  grandTotalLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2196f3',
+  },
+  grandTotalValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2196f3',
   },
   customerInfoSection: {
     marginBottom: 16,
