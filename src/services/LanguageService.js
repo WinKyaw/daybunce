@@ -89,7 +89,14 @@ const DEFAULT_TRANSLATIONS = {
     beauty: 'Beauty',
     sports: 'Sports',
     home: 'Home',
-    other: 'Other'
+    other: 'Other',
+    
+    // Receipt and Cart
+    receiptCreated: 'Success',
+    receiptSaved: 'Receipt created successfully!',
+    printReceipt: 'Print',
+    takeOrder: 'Take Order',
+    tapToViewReceipt: 'Tap to view daily summary'
   },
   
   my: {
@@ -170,7 +177,14 @@ const DEFAULT_TRANSLATIONS = {
     beauty: 'လှပမှု',
     sports: 'အားကစား',
     home: 'အိမ်',
-    other: 'အခြား'
+    other: 'အခြား',
+    
+    // Receipt and Cart
+    receiptCreated: 'အောင်မြင်သည်',
+    receiptSaved: 'ရောင်းချမှတ်တမ်း ဖန်တီးပြီးပါပြီ!',
+    printReceipt: 'ပရင့်ထုတ်ပါ',
+    takeOrder: 'မှာယူမှု လက်ခံမည်',
+    tapToViewReceipt: 'နေ့စဥ်အနှစ်ချုပ် ကြည့်ရန် တို့ပါ'
   }
 };
 

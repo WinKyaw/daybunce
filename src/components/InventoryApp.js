@@ -215,7 +215,7 @@ const languageConfigs = {
     deleteAllItems: 'Delete All Items',
     deleteAllDescription: 'Remove all predefined items',
     showingItems: 'Showing {{count}} of {{total}} filtered items ({{all}} total)',
-    tapToViewReceipt: 'Tap to view receipt',
+    tapToViewReceipt: 'Tap to view daily summary',
     totalItems: 'Total Items',
     delete: 'Delete',
     deleteItem: 'Delete Item',
@@ -256,6 +256,10 @@ const languageConfigs = {
     customerInformation: 'Customer Information (Optional)',
     checkout: 'Checkout',
     addToCart: 'Add to Cart',
+    receiptCreated: 'Success',
+    receiptSaved: 'Receipt created successfully!',
+    printReceipt: 'Print',
+    takeOrder: 'Take Order',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -311,7 +315,7 @@ const languageConfigs = {
     deleteAllItems: 'Eliminar Todos los Artículos',
     deleteAllDescription: 'Eliminar todos los artículos predefinidos',
     showingItems: 'Mostrando {{count}} de {{total}} artículos filtrados ({{all}} total)',
-    tapToViewReceipt: 'Toque para ver el recibo',
+    tapToViewReceipt: 'Toque para ver el resumen diario',
     bulkActions: 'Acciones Masivas',
     managePredefined: 'Administre su colección de artículos predefinidos',
     bulkAddItems: 'Agregar Artículos Masivamente',
@@ -364,6 +368,10 @@ const languageConfigs = {
     customerInformation: 'Información del Cliente (Opcional)',
     checkout: 'Pagar',
     addToCart: 'Agregar al Carrito',
+    receiptCreated: 'Éxito',
+    receiptSaved: '¡Recibo creado exitosamente!',
+    printReceipt: 'Imprimir',
+    takeOrder: 'Tomar Pedido',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -459,6 +467,11 @@ const languageConfigs = {
     customerInformation: 'Informations Client (Optionnel)',
     checkout: 'Payer',
     addToCart: 'Ajouter au Panier',
+    receiptCreated: 'Succès',
+    receiptSaved: 'Reçu créé avec succès!',
+    printReceipt: 'Imprimer',
+    takeOrder: 'Prendre une Commande',
+    tapToViewReceipt: 'Appuyez pour voir le résumé quotidien',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -554,6 +567,11 @@ const languageConfigs = {
     customerInformation: 'Kundeninformationen (Optional)',
     checkout: 'Zur Kasse',
     addToCart: 'In den Warenkorb',
+    receiptCreated: 'Erfolg',
+    receiptSaved: 'Beleg erfolgreich erstellt!',
+    printReceipt: 'Drucken',
+    takeOrder: 'Bestellung aufgeben',
+    tapToViewReceipt: 'Tippen Sie, um die tägliche Zusammenfassung anzuzeigen',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -649,6 +667,11 @@ const languageConfigs = {
     customerInformation: 'Informazioni Cliente (Opzionale)',
     checkout: 'Checkout',
     addToCart: 'Aggiungi al Carrello',
+    receiptCreated: 'Successo',
+    receiptSaved: 'Ricevuta creata con successo!',
+    printReceipt: 'Stampa',
+    takeOrder: 'Prendi Ordine',
+    tapToViewReceipt: 'Tocca per visualizzare il riepilogo quotidiano',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -744,6 +767,11 @@ const languageConfigs = {
     customerInformation: 'Informações do Cliente (Opcional)',
     checkout: 'Finalizar Compra',
     addToCart: 'Adicionar ao Carrinho',
+    receiptCreated: 'Sucesso',
+    receiptSaved: 'Recibo criado com sucesso!',
+    printReceipt: 'Imprimir',
+    takeOrder: 'Fazer Pedido',
+    tapToViewReceipt: 'Toque para ver o resumo diário',
   },
   zh: {
     appTitle: '库存管理',
@@ -833,6 +861,11 @@ const languageConfigs = {
     customerInformation: '客户信息（可选）',
     checkout: '结账',
     addToCart: '加入购物车',
+    receiptCreated: '成功',
+    receiptSaved: '收据创建成功！',
+    printReceipt: '打印',
+    takeOrder: '接受订单',
+    tapToViewReceipt: '点击查看每日总结',
   },
   ja: {
     appTitle: '在庫管理',
@@ -922,6 +955,11 @@ const languageConfigs = {
     customerInformation: '顧客情報（オプション）',
     checkout: 'チェックアウト',
     addToCart: 'カートに追加',
+    receiptCreated: '成功',
+    receiptSaved: 'レシートが正常に作成されました！',
+    printReceipt: '印刷',
+    takeOrder: '注文を受け付ける',
+    tapToViewReceipt: 'タップして日次レポートを表示',
   },
   ko: {
     appTitle: '재고 관리',
@@ -1017,6 +1055,11 @@ const languageConfigs = {
     customerInformation: '고객 정보 (선택 사항)',
     checkout: '결제',
     addToCart: '장바구니에 담기',
+    receiptCreated: '성공',
+    receiptSaved: '영수증이 성공적으로 생성되었습니다!',
+    printReceipt: '인쇄',
+    takeOrder: '주문 받기',
+    tapToViewReceipt: '탭하여 일일 요약 보기',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1112,6 +1155,11 @@ const languageConfigs = {
     customerInformation: 'ข้อมูลลูกค้า (ไม่บังคับ)',
     checkout: 'ชำระเงิน',
     addToCart: 'เพิ่มลงตะกร้า',
+    receiptCreated: 'สำเร็จ',
+    receiptSaved: 'ใบเสร็จถูกสร้างสำเร็จแล้ว!',
+    printReceipt: 'พิมพ์',
+    takeOrder: 'รับคำสั่งซื้อ',
+    tapToViewReceipt: 'แตะเพื่อดูสรุปรายวัน',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1207,6 +1255,11 @@ const languageConfigs = {
     customerInformation: 'Thông tin Khách hàng (Không bắt buộc)',
     checkout: 'Thanh toán',
     addToCart: 'Thêm vào Giỏ',
+    receiptCreated: 'Thành Công',
+    receiptSaved: 'Hóa đơn đã được tạo thành công!',
+    printReceipt: 'In',
+    takeOrder: 'Nhận Đơn Hàng',
+    tapToViewReceipt: 'Nhấn để xem tóm tắt hàng ngày',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1302,6 +1355,11 @@ const languageConfigs = {
     customerInformation: 'Informasi Pelanggan (Opsional)',
     checkout: 'Checkout',
     addToCart: 'Tambah ke Keranjang',
+    receiptCreated: 'Berhasil',
+    receiptSaved: 'Tanda Terima berhasil dibuat!',
+    printReceipt: 'Cetak',
+    takeOrder: 'Terima Pesanan',
+    tapToViewReceipt: 'Ketuk untuk melihat ringkasan harian',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1397,6 +1455,11 @@ const languageConfigs = {
     customerInformation: 'ग्राहक जानकारी (वैकल्पिक)',
     checkout: 'चेकआउट',
     addToCart: 'कार्ट में जोड़ें',
+    receiptCreated: 'सफलता',
+    receiptSaved: 'रसीद सफलतापूर्वक बनाई गई!',
+    printReceipt: 'प्रिंट',
+    takeOrder: 'ऑर्डर लें',
+    tapToViewReceipt: 'दैनिक सारांश देखने के लिए टैप करें',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1491,6 +1554,11 @@ const languageConfigs = {
     customerInformation: 'ဖောက်သည်အချက်အလက် (ရွေးချယ်ခွင့်)',
     checkout: 'ငွေရှင်းရန်',
     addToCart: 'ခြင်းတောင်းထဲသို့ထည့်ရန်',
+    receiptCreated: 'အောင်မြင်သည်',
+    receiptSaved: 'ရောင်းချမှတ်တမ်း ဖန်တီးပြီးပါပြီ!',
+    printReceipt: 'ပရင့်ထုတ်ပါ',
+    takeOrder: 'မှာယူမှု လက်ခံမည်',
+    tapToViewReceipt: 'နေ့စဥ်အနှစ်ချုပ် ကြည့်ရန် တို့ပါ',
   },
 };
 
@@ -1711,7 +1779,7 @@ const InventoryApp = () => {
         // Remove duplicates from default items too
         const uniqueMap = new Map();
         defaultPredefinedItems.forEach(item => {
-          const key = `${item.name.toLowerCase()}_${item.category}_${item. unitType}`;
+          const key = `${item.name.toLowerCase()}_${item.category}_${item.unitType}`;
           if (!uniqueMap.has(key)) {
             uniqueMap.set(key, item);
           }
@@ -1954,7 +2022,7 @@ const InventoryApp = () => {
       // Show success and reset
       Alert.alert(
         language.receiptCreated || 'Success',
-        `${language.receiptSaved || 'Receipt created successfully!'}\n\nItems:  ${cartItems.length}\nTotal: ${language.currency}${totals.total}`,
+        `${language.receiptSaved || 'Receipt created successfully!'}\n\n${language.items || 'Items'}:  ${cartItems.length}\nTotal: ${language.currency}${totals.total}`,
         [
           {
             text: language.printReceipt || 'Print',
@@ -1993,7 +2061,7 @@ const InventoryApp = () => {
 
   // Handle predefined item selection for cart
   const handlePredefinedItemForCart = (item) => {
-    console.log('Item tapped:', item. name);
+    console.log('Item tapped:', item.name);
     
     setSelectedItemForCart({
       name: item.name,
@@ -2282,7 +2350,7 @@ const InventoryApp = () => {
       language.deleteMonth,
       `${language.deleteMonthConfirm} ${monthName}?`,
       [
-        { text: language. cancel, style: 'cancel' },
+        { text: language.cancel, style: 'cancel' },
         {
           text: language.delete,
           style: 'destructive',
@@ -2307,7 +2375,7 @@ const InventoryApp = () => {
               setShowMonthlyDataModal(false);
               setShowSalesTrackingModal(true);
               
-              Alert.alert(language. successTitle, 'All daily amounts reset to 0');
+              Alert.alert(language.successTitle, 'All daily amounts reset to 0');
             } catch (error) {
               console.error('Error resetting monthly data:', error);
               Alert. alert('Error', 'Could not reset monthly data');
@@ -3717,7 +3785,7 @@ const InventoryApp = () => {
           style={styles.dateButton}
           onPress={() => setShowCalendarModal(true)}
         >
-          <Text style={styles. dateText}>📅 {selectedDate.toDateString()}</Text>
+          <Text style={styles.dateText}>📅 {selectedDate.toDateString()}</Text>
         </TouchableOpacity>
         
         {/* + Add Item Button */}
@@ -5166,10 +5234,10 @@ const InventoryApp = () => {
                 </ScrollView> 
 
                 {/* Info text about Monthly Sales Tracking */}
-                <View style={styles. trackingInfoContainer}>
+                <View style={styles.trackingInfoContainer}>
                   <Text style={styles.trackingInfoIcon}>ℹ️</Text>
                   <Text style={styles.trackingInfoText}>
-                    {language. monthlySalesInfo || 'Monthly Sales Tracking is independent of daily inventory records.  Use it to track overall monthly sales, purchases, or any other financial data.'}
+                    {language.monthlySalesInfo || 'Monthly Sales Tracking is independent of daily inventory records.  Use it to track overall monthly sales, purchases, or any other financial data.'}
                   </Text>
                 </View>  
 
@@ -5186,7 +5254,7 @@ const InventoryApp = () => {
                 
                 <View style={styles.settingsButtonRow}>
                   <TouchableOpacity
-                    style={[styles.settingsButton, styles. settingsCancelButton]}
+                    style={[styles.settingsButton, styles.settingsCancelButton]}
                     onPress={() => {
                       setShowSettingsModal(false);
                       setShowLanguageDropdown(false);
@@ -5206,7 +5274,7 @@ const InventoryApp = () => {
                       setShowCurrencyDropdown(false);
                     }}
                   >
-                    <Text style={styles. settingsSaveButtonText}>{language.save}</Text>
+                    <Text style={styles.settingsSaveButtonText}>{language.save}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -5392,7 +5460,7 @@ const InventoryApp = () => {
                                 deleteStore(store. id);
                               }}
                             >
-                              <Text style={styles. storeActionButtonText}>🗑️</Text>
+                              <Text style={styles.storeActionButtonText}>🗑️</Text>
                             </TouchableOpacity>
                           )}
                         </View>
@@ -5452,8 +5520,8 @@ const InventoryApp = () => {
                 
                 {/* Months Grid */}
                 <ScrollView style={styles.monthsGridScroll}>
-                  <View style={styles. monthsCalendarGrid}>
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].  map((monthIndex) => {
+                  <View style={styles.monthsCalendarGrid}>
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((monthIndex) => {
                       const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                       return (
                         <TouchableOpacity
@@ -5471,7 +5539,7 @@ const InventoryApp = () => {
                 
                 {/* Yearly Total */}
                 <View style={styles.yearlyTotalContainer}>
-                  <Text style={styles.yearlyTotalLabel}>{language. yearlyTotal}:</Text>
+                  <Text style={styles.yearlyTotalLabel}>{language.yearlyTotal}:</Text>
                   <Text style={styles.yearlyTotalAmount}>
                     {selectedCurrency}{formatCurrency(yearlyTotals[`${selectedStore}_${selectedYear}`] || 0)}
                   </Text>
@@ -5619,10 +5687,10 @@ const InventoryApp = () => {
                     {selectedMonth !== null && new Date(selectedYear, selectedMonth). toLocaleString('default', { month: 'long', year: 'numeric' })}
                   </Text>
                   <TouchableOpacity
-                    style={styles. deleteMonthButton}
+                    style={styles.deleteMonthButton}
                     onPress={() => deleteMonthlyData(selectedYear, selectedMonth)}
                   >
-                    <Text style={styles.deleteMonthButtonText}>🗑️ {language. deleteMonth}</Text>
+                    <Text style={styles.deleteMonthButtonText}>🗑️ {language.deleteMonth}</Text>
                   </TouchableOpacity>
                 </View>
                 
@@ -5641,7 +5709,7 @@ const InventoryApp = () => {
                 </View>
                 
                 {/* Table Header */}
-                <View style={styles. tableHeader}>
+                <View style={styles.tableHeader}>
                   <Text style={styles.tableHeaderCell}>{language.date}</Text>
                   <Text style={styles.tableHeaderCellAmount}>{language.dailySaleAmount}</Text>
                 </View>
@@ -5708,7 +5776,7 @@ const InventoryApp = () => {
           <View style={styles.modalOverlay}>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-              style={styles. keyboardAvoidingView}
+              style={styles.keyboardAvoidingView}
             >
               <TouchableWithoutFeedback>
                 <View style={styles.takeOrderModalContent}>
@@ -5738,7 +5806,7 @@ const InventoryApp = () => {
                         style={styles.backToItemsButton}
                         onPress={() => setShowCartView(false)}
                       >
-                        <Text style={styles.backToItemsText}>← Items</Text>
+                        <Text style={styles.backToItemsText}>← {language.items || 'Items'}</Text>
                       </TouchableOpacity>
                     )}
                   </View>
@@ -5749,7 +5817,7 @@ const InventoryApp = () => {
                       {/* Predefined Items Search */}
                       <View style={styles.predefinedSearchContainer}>
                         <TextInput
-                          style={styles. predefinedSearchInput}
+                          style={styles.predefinedSearchInput}
                           placeholder={language.searchPlaceholder || "Search items..."}
                           value={predefinedSearchText}
                           onChangeText={setPredefinedSearchText}
@@ -5759,7 +5827,7 @@ const InventoryApp = () => {
                           style={styles.predefinedFilterButton}
                           onPress={() => setShowPredefinedCategoryModal(true)}
                         >
-                          <Text style={styles. predefinedFilterIcon}>☰</Text>
+                          <Text style={styles.predefinedFilterIcon}>☰</Text>
                         </TouchableOpacity>
                       </View>
 
@@ -5778,15 +5846,15 @@ const InventoryApp = () => {
                       >
                         {getFilteredPredefinedItems. length === 0 ? (
                           <View style={styles.noPredefinedItemsContainer}>
-                            <Text style={styles. noPredefinedItemsText}>
+                            <Text style={styles.noPredefinedItemsText}>
                               No items found matching your search
                             </Text>
                           </View>
                         ) : (
                           getFilteredPredefinedItems.map(item => (
                             <TouchableOpacity
-                              key={item. id}
-                              style={styles. takeOrderItemOption}
+                              key={item.id}
+                              style={styles.takeOrderItemOption}
                               onPress={() => {
                                 console.log('Item tapped:', item.name);
                                 handlePredefinedItemForCart(item);
@@ -5813,7 +5881,7 @@ const InventoryApp = () => {
                       {/* Cart View */}
                       <ScrollView style={styles.cartViewList}>
                         {cartItems. length === 0 ? (
-                          <View style={styles. emptyCartContainer}>
+                          <View style={styles.emptyCartContainer}>
                             <Text style={styles.emptyCartIcon}>🛒</Text>
                             <Text style={styles.emptyCartText}>{language.emptyCart}</Text>
                             <Text style={styles.emptyCartSubtext}>{language.addItemsFromList}</Text>
@@ -5862,12 +5930,12 @@ const InventoryApp = () => {
 
                       {/* Customer Info (Optional) */}
                       <View style={styles.customerInfoSection}>
-                        <Text style={styles. sectionTitle}>
+                        <Text style={styles.sectionTitle}>
                           {language.customerInformation}
                         </Text>
                         <TextInput
-                          style={styles. modernInput}
-                          placeholder={language. customerName || "Customer Name"}
+                          style={styles.modernInput}
+                          placeholder={language.customerName || "Customer Name"}
                           value={cartCustomerName}
                           onChangeText={setCartCustomerName}
                         />
@@ -5953,7 +6021,7 @@ const InventoryApp = () => {
                           keyboardType="decimal-pad"
                         />
                         <TextInput
-                          style={[styles. modernInput, { flex: 1, marginLeft: 8 }]}
+                          style={[styles.modernInput, { flex: 1, marginLeft: 8 }]}
                           placeholder={language.unitsSold}
                           value={selectedItemForCart?.unitsSold}
                           onChangeText={(text) => {
