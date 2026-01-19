@@ -1094,7 +1094,7 @@ const languageConfigs = {
     monthlySalesInfo: 'Theo dõi doanh số hàng tháng độc lập với hồ sơ hàng tồn kho hàng ngày. Sử dụng nó để theo dõi doanh số hàng tháng tổng thể, mua hàng hoặc bất kỳ dữ liệu tài chính nào khác.',
     longPressToRename: 'Nhấn giữ tên cửa hàng để đổi tên',
     storeName: 'Cửa hàng',
-    addNewStore: 'Thêm Cửa hàng Moi',
+    addNewStore: 'Thêm Cửa hàng Mới',
     subtotal: 'Tổng phụ',
     tax: 'Thuế',
     receiptCreator: 'Người tạo hóa đơn',
