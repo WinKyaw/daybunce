@@ -215,7 +215,7 @@ const languageConfigs = {
     deleteAllItems: 'Delete All Items',
     deleteAllDescription: 'Remove all predefined items',
     showingItems: 'Showing {{count}} of {{total}} filtered items ({{all}} total)',
-    tapToViewReceipt: 'Tap to view receipt',
+    tapToViewReceipt: 'Tap to view daily summary',
     totalItems: 'Total Items',
     delete: 'Delete',
     deleteItem: 'Delete Item',
@@ -256,6 +256,10 @@ const languageConfigs = {
     customerInformation: 'Customer Information (Optional)',
     checkout: 'Checkout',
     addToCart: 'Add to Cart',
+    receiptCreated: 'Success',
+    receiptSaved: 'Receipt created successfully!',
+    printReceipt: 'Print',
+    takeOrder: 'Take Order',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -311,7 +315,7 @@ const languageConfigs = {
     deleteAllItems: 'Eliminar Todos los Artículos',
     deleteAllDescription: 'Eliminar todos los artículos predefinidos',
     showingItems: 'Mostrando {{count}} de {{total}} artículos filtrados ({{all}} total)',
-    tapToViewReceipt: 'Toque para ver el recibo',
+    tapToViewReceipt: 'Toque para ver el resumen diario',
     bulkActions: 'Acciones Masivas',
     managePredefined: 'Administre su colección de artículos predefinidos',
     bulkAddItems: 'Agregar Artículos Masivamente',
@@ -364,6 +368,10 @@ const languageConfigs = {
     customerInformation: 'Información del Cliente (Opcional)',
     checkout: 'Pagar',
     addToCart: 'Agregar al Carrito',
+    receiptCreated: 'Éxito',
+    receiptSaved: '¡Recibo creado exitosamente!',
+    printReceipt: 'Imprimir',
+    takeOrder: 'Tomar Pedido',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -459,6 +467,11 @@ const languageConfigs = {
     customerInformation: 'Informations Client (Optionnel)',
     checkout: 'Payer',
     addToCart: 'Ajouter au Panier',
+    receiptCreated: 'Succès',
+    receiptSaved: 'Reçu créé avec succès!',
+    printReceipt: 'Imprimer',
+    takeOrder: 'Prendre une Commande',
+    tapToViewReceipt: 'Appuyez pour voir le résumé quotidien',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -554,6 +567,11 @@ const languageConfigs = {
     customerInformation: 'Kundeninformationen (Optional)',
     checkout: 'Zur Kasse',
     addToCart: 'In den Warenkorb',
+    receiptCreated: 'Erfolg',
+    receiptSaved: 'Beleg erfolgreich erstellt!',
+    printReceipt: 'Drucken',
+    takeOrder: 'Bestellung aufgeben',
+    tapToViewReceipt: 'Tippen Sie, um die tägliche Zusammenfassung anzuzeigen',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -649,6 +667,11 @@ const languageConfigs = {
     customerInformation: 'Informazioni Cliente (Opzionale)',
     checkout: 'Checkout',
     addToCart: 'Aggiungi al Carrello',
+    receiptCreated: 'Successo',
+    receiptSaved: 'Ricevuta creata con successo!',
+    printReceipt: 'Stampa',
+    takeOrder: 'Prendi Ordine',
+    tapToViewReceipt: 'Tocca per visualizzare il riepilogo quotidiano',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -744,6 +767,11 @@ const languageConfigs = {
     customerInformation: 'Informações do Cliente (Opcional)',
     checkout: 'Finalizar Compra',
     addToCart: 'Adicionar ao Carrinho',
+    receiptCreated: 'Sucesso',
+    receiptSaved: 'Recibo criado com sucesso!',
+    printReceipt: 'Imprimir',
+    takeOrder: 'Fazer Pedido',
+    tapToViewReceipt: 'Toque para ver o resumo diário',
   },
   zh: {
     appTitle: '库存管理',
@@ -833,6 +861,11 @@ const languageConfigs = {
     customerInformation: '客户信息（可选）',
     checkout: '结账',
     addToCart: '加入购物车',
+    receiptCreated: '成功',
+    receiptSaved: '收据创建成功！',
+    printReceipt: '打印',
+    takeOrder: '接受订单',
+    tapToViewReceipt: '点击查看每日总结',
   },
   ja: {
     appTitle: '在庫管理',
@@ -922,6 +955,11 @@ const languageConfigs = {
     customerInformation: '顧客情報（オプション）',
     checkout: 'チェックアウト',
     addToCart: 'カートに追加',
+    receiptCreated: '成功',
+    receiptSaved: 'レシートが正常に作成されました！',
+    printReceipt: '印刷',
+    takeOrder: '注文を受け付ける',
+    tapToViewReceipt: 'タップして日次レポートを表示',
   },
   ko: {
     appTitle: '재고 관리',
@@ -1017,6 +1055,11 @@ const languageConfigs = {
     customerInformation: '고객 정보 (선택 사항)',
     checkout: '결제',
     addToCart: '장바구니에 담기',
+    receiptCreated: '성공',
+    receiptSaved: '영수증이 성공적으로 생성되었습니다!',
+    printReceipt: '인쇄',
+    takeOrder: '주문 받기',
+    tapToViewReceipt: '탭하여 일일 요약 보기',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1112,6 +1155,11 @@ const languageConfigs = {
     customerInformation: 'ข้อมูลลูกค้า (ไม่บังคับ)',
     checkout: 'ชำระเงิน',
     addToCart: 'เพิ่มลงตะกร้า',
+    receiptCreated: 'สำเร็จ',
+    receiptSaved: 'ใบเสร็จถูกสร้างสำเร็จแล้ว!',
+    printReceipt: 'พิมพ์',
+    takeOrder: 'รับคำสั่งซื้อ',
+    tapToViewReceipt: 'แตะเพื่อดูสรุปรายวัน',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1207,6 +1255,11 @@ const languageConfigs = {
     customerInformation: 'Thông tin Khách hàng (Không bắt buộc)',
     checkout: 'Thanh toán',
     addToCart: 'Thêm vào Giỏ',
+    receiptCreated: 'Thành Công',
+    receiptSaved: 'Hóa đơn đã được tạo thành công!',
+    printReceipt: 'In',
+    takeOrder: 'Nhận Đơn Hàng',
+    tapToViewReceipt: 'Nhấn để xem tóm tắt hàng ngày',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1302,6 +1355,11 @@ const languageConfigs = {
     customerInformation: 'Informasi Pelanggan (Opsional)',
     checkout: 'Checkout',
     addToCart: 'Tambah ke Keranjang',
+    receiptCreated: 'Berhasil',
+    receiptSaved: 'Tanda Terima berhasil dibuat!',
+    printReceipt: 'Cetak',
+    takeOrder: 'Terima Pesanan',
+    tapToViewReceipt: 'Ketuk untuk melihat ringkasan harian',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1397,6 +1455,11 @@ const languageConfigs = {
     customerInformation: 'ग्राहक जानकारी (वैकल्पिक)',
     checkout: 'चेकआउट',
     addToCart: 'कार्ट में जोड़ें',
+    receiptCreated: 'सफलता',
+    receiptSaved: 'रसीद सफलतापूर्वक बनाई गई!',
+    printReceipt: 'प्रिंट',
+    takeOrder: 'ऑर्डर लें',
+    tapToViewReceipt: 'दैनिक सारांश देखने के लिए टैप करें',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1491,6 +1554,11 @@ const languageConfigs = {
     customerInformation: 'ဖောက်သည်အချက်အလက် (ရွေးချယ်ခွင့်)',
     checkout: 'ငွေရှင်းရန်',
     addToCart: 'ခြင်းတောင်းထဲသို့ထည့်ရန်',
+    receiptCreated: 'အောင်မြင်သည်',
+    receiptSaved: 'ရောင်းချမှတ်တမ်း ဖန်တီးပြီးပါပြီ!',
+    printReceipt: 'ပရင့်ထုတ်ပါ',
+    takeOrder: 'မှာယူမှု လက်ခံမည်',
+    tapToViewReceipt: 'နေ့စဥ်အနှစ်ချုပ် ကြည့်ရန် တို့ပါ',
   },
 };
 
@@ -1954,7 +2022,7 @@ const InventoryApp = () => {
       // Show success and reset
       Alert.alert(
         language.receiptCreated || 'Success',
-        `${language.receiptSaved || 'Receipt created successfully!'}\n\nItems:  ${cartItems.length}\nTotal: ${language.currency}${totals.total}`,
+        `${language.receiptSaved || 'Receipt created successfully!'}\n\n${language.items || 'Items'}:  ${cartItems.length}\nTotal: ${language.currency}${totals.total}`,
         [
           {
             text: language.printReceipt || 'Print',
@@ -5738,7 +5806,7 @@ const InventoryApp = () => {
                         style={styles.backToItemsButton}
                         onPress={() => setShowCartView(false)}
                       >
-                        <Text style={styles.backToItemsText}>← Items</Text>
+                        <Text style={styles.backToItemsText}>← {language.items || 'Items'}</Text>
                       </TouchableOpacity>
                     )}
                   </View>
