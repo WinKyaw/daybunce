@@ -5716,7 +5716,7 @@ const InventoryApp = () => {
                   {/* Header with Cart Icon */}
                   <View style={styles.takeOrderHeader}>
                     <Text style={styles.modernModalTitle}>
-                      {showCartView ? (language.cart || 'Shopping Cart') : (language.takeOrder || 'Take Order')}
+                      {showCartView ? language.cart : (language.takeOrder || 'Take Order')}
                     </Text>
                     
                     {! showCartView && (
