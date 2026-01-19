@@ -114,6 +114,12 @@ const defaultLanguage = {
   customerInformation: 'Customer Information (Optional)',
   checkout: 'Checkout',
   addToCart: 'Add to Cart',
+  receiptHistory: 'Receipt History',
+  voided: 'Voided',
+  markAsVoided: 'Mark as Voided',
+  unmarkAsVoided: 'Unmark as Voided',
+  receiptNumber: 'Receipt #',
+  viewReceiptHistory: 'View receipt history',
 };
 
 const availableLanguages = [
@@ -260,6 +266,12 @@ const languageConfigs = {
     receiptSaved: 'Receipt created successfully!',
     printReceipt: 'Print',
     takeOrder: 'Take Order',
+    receiptHistory: 'Receipt History',
+    voided: 'Voided',
+    markAsVoided: 'Mark as Voided',
+    unmarkAsVoided: 'Unmark as Voided',
+    receiptNumber: 'Receipt #',
+    viewReceiptHistory: 'View receipt history',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -372,6 +384,12 @@ const languageConfigs = {
     receiptSaved: '¡Recibo creado exitosamente!',
     printReceipt: 'Imprimir',
     takeOrder: 'Tomar Pedido',
+    receiptHistory: 'Historial de Recibos',
+    voided: 'Anulado',
+    markAsVoided: 'Marcar como Anulado',
+    unmarkAsVoided: 'Desmarcar como Anulado',
+    receiptNumber: 'Recibo #',
+    viewReceiptHistory: 'Ver historial de recibos',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -472,6 +490,12 @@ const languageConfigs = {
     printReceipt: 'Imprimer',
     takeOrder: 'Prendre une Commande',
     tapToViewReceipt: 'Appuyez pour voir le résumé quotidien',
+    receiptHistory: 'Historique des Reçus',
+    voided: 'Annulé',
+    markAsVoided: 'Marquer comme Annulé',
+    unmarkAsVoided: 'Démarquer comme Annulé',
+    receiptNumber: 'Reçu #',
+    viewReceiptHistory: 'Voir l\'historique des reçus',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -572,6 +596,12 @@ const languageConfigs = {
     printReceipt: 'Drucken',
     takeOrder: 'Bestellung aufgeben',
     tapToViewReceipt: 'Tippen Sie, um die tägliche Zusammenfassung anzuzeigen',
+    receiptHistory: 'Belegverlauf',
+    voided: 'Ungültig',
+    markAsVoided: 'Als ungültig markieren',
+    unmarkAsVoided: 'Ungültig-Markierung entfernen',
+    receiptNumber: 'Beleg #',
+    viewReceiptHistory: 'Belegverlauf anzeigen',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -672,6 +702,12 @@ const languageConfigs = {
     printReceipt: 'Stampa',
     takeOrder: 'Prendi Ordine',
     tapToViewReceipt: 'Tocca per visualizzare il riepilogo quotidiano',
+    receiptHistory: 'Cronologia Ricevute',
+    voided: 'Annullato',
+    markAsVoided: 'Contrassegna come Annullato',
+    unmarkAsVoided: 'Rimuovi Annullamento',
+    receiptNumber: 'Ricevuta #',
+    viewReceiptHistory: 'Visualizza cronologia ricevute',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -772,6 +808,12 @@ const languageConfigs = {
     printReceipt: 'Imprimir',
     takeOrder: 'Fazer Pedido',
     tapToViewReceipt: 'Toque para ver o resumo diário',
+    receiptHistory: 'Histórico de Recibos',
+    voided: 'Anulado',
+    markAsVoided: 'Marcar como Anulado',
+    unmarkAsVoided: 'Desmarcar como Anulado',
+    receiptNumber: 'Recibo #',
+    viewReceiptHistory: 'Ver histórico de recibos',
   },
   zh: {
     appTitle: '库存管理',
@@ -866,6 +908,12 @@ const languageConfigs = {
     printReceipt: '打印',
     takeOrder: '接受订单',
     tapToViewReceipt: '点击查看每日总结',
+    receiptHistory: '收据历史',
+    voided: '已作废',
+    markAsVoided: '标记为已作废',
+    unmarkAsVoided: '取消作废标记',
+    receiptNumber: '收据 #',
+    viewReceiptHistory: '查看收据历史',
   },
   ja: {
     appTitle: '在庫管理',
@@ -960,6 +1008,12 @@ const languageConfigs = {
     printReceipt: '印刷',
     takeOrder: '注文を受け付ける',
     tapToViewReceipt: 'タップして日次レポートを表示',
+    receiptHistory: 'レシート履歴',
+    voided: '無効',
+    markAsVoided: '無効としてマーク',
+    unmarkAsVoided: '無効マークを解除',
+    receiptNumber: 'レシート #',
+    viewReceiptHistory: 'レシート履歴を表示',
   },
   ko: {
     appTitle: '재고 관리',
@@ -1060,6 +1114,12 @@ const languageConfigs = {
     printReceipt: '인쇄',
     takeOrder: '주문 받기',
     tapToViewReceipt: '탭하여 일일 요약 보기',
+    receiptHistory: '영수증 내역',
+    voided: '무효화됨',
+    markAsVoided: '무효로 표시',
+    unmarkAsVoided: '무효 표시 해제',
+    receiptNumber: '영수증 #',
+    viewReceiptHistory: '영수증 내역 보기',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1160,6 +1220,12 @@ const languageConfigs = {
     printReceipt: 'พิมพ์',
     takeOrder: 'รับคำสั่งซื้อ',
     tapToViewReceipt: 'แตะเพื่อดูสรุปรายวัน',
+    receiptHistory: 'ประวัติใบเสร็จ',
+    voided: 'ยกเลิกแล้ว',
+    markAsVoided: 'ทำเครื่องหมายว่ายกเลิก',
+    unmarkAsVoided: 'ยกเลิกการทำเครื่องหมาย',
+    receiptNumber: 'ใบเสร็จ #',
+    viewReceiptHistory: 'ดูประวัติใบเสร็จ',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1260,6 +1326,12 @@ const languageConfigs = {
     printReceipt: 'In',
     takeOrder: 'Nhận Đơn Hàng',
     tapToViewReceipt: 'Nhấn để xem tóm tắt hàng ngày',
+    receiptHistory: 'Lịch Sử Hóa Đơn',
+    voided: 'Đã Hủy',
+    markAsVoided: 'Đánh Dấu Đã Hủy',
+    unmarkAsVoided: 'Bỏ Đánh Dấu Đã Hủy',
+    receiptNumber: 'Hóa Đơn #',
+    viewReceiptHistory: 'Xem lịch sử hóa đơn',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1360,6 +1432,12 @@ const languageConfigs = {
     printReceipt: 'Cetak',
     takeOrder: 'Terima Pesanan',
     tapToViewReceipt: 'Ketuk untuk melihat ringkasan harian',
+    receiptHistory: 'Riwayat Struk',
+    voided: 'Dibatalkan',
+    markAsVoided: 'Tandai Sebagai Dibatalkan',
+    unmarkAsVoided: 'Hapus Tanda Dibatalkan',
+    receiptNumber: 'Struk #',
+    viewReceiptHistory: 'Lihat riwayat struk',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1460,6 +1538,12 @@ const languageConfigs = {
     printReceipt: 'प्रिंट',
     takeOrder: 'ऑर्डर लें',
     tapToViewReceipt: 'दैनिक सारांश देखने के लिए टैप करें',
+    receiptHistory: 'रसीद इतिहास',
+    voided: 'रद्द किया गया',
+    markAsVoided: 'रद्द के रूप में चिह्नित करें',
+    unmarkAsVoided: 'रद्द चिह्न हटाएं',
+    receiptNumber: 'रसीद #',
+    viewReceiptHistory: 'रसीद इतिहास देखें',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1559,6 +1643,12 @@ const languageConfigs = {
     printReceipt: 'ပရင့်ထုတ်ပါ',
     takeOrder: 'မှာယူမှု လက်ခံမည်',
     tapToViewReceipt: 'နေ့စဥ်အနှစ်ချုပ် ကြည့်ရန် တို့ပါ',
+    receiptHistory: 'ရောင်းချမှတ်တမ်းမှတ်တမ်း',
+    voided: 'ပယ်ဖျက်ပြီး',
+    markAsVoided: 'ပယ်ဖျက်ပြီးအဖြစ် မှတ်သားရန်',
+    unmarkAsVoided: 'ပယ်ဖျက်မှတ်သား ဖယ်ရှားရန်',
+    receiptNumber: 'ရောင်းချမှတ်တမ်း #',
+    viewReceiptHistory: 'ရောင်းချမှတ်တမ်းမှတ်တမ်း ကြည့်ရန်',
   },
 };
 
@@ -1909,7 +1999,7 @@ const InventoryApp = () => {
 
   const generateExistingReceiptHTML = (receipt) => {
     const currentStore = stores.find(s => s.id === selectedStore);
-    const storeName = currentStore?.name || customAppTitle || language.appTitle;
+    const storeName = currentStore?.name || language.appTitle;
     
     return `
       <!DOCTYPE html>
