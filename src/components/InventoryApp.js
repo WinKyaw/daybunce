@@ -1394,6 +1394,16 @@ const InventoryApp = () => {
   const [editingStore, setEditingStore] = useState(null);
   const [stores, setStores] = useState([{ id: 'main_store', name: 'Main Store', isDefault: true }]);
   const [selectedStore, setSelectedStore] = useState('main_store');
+  const [showTakeOrderModal, setShowTakeOrderModal] = useState(false);
+  const [showCartView, setShowCartView] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [showAddToCartModal, setShowAddToCartModal] = useState(false);
+  const [selectedItemForCart, setSelectedItemForCart] = useState(null);
+  const [cartCustomerName, setCartCustomerName] = useState('');
+  const [cartCustomerPhone, setCartCustomerPhone] = useState('');
+  const [taxSettings, setTaxSettings] = useState({ type: 'percentage', value: 0 });
+  const [receiptHistory, setReceiptHistory] = useState([]);
+
   
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -1424,11 +1434,13 @@ const InventoryApp = () => {
 
   useEffect(() => {
     const initializeApp = async () => {
-      await loadSettings(); // Load settings first
+      await loadSettings();
       await loadData();
-      await loadLanguageConfig(); // This might be redundant now
+      await loadLanguageConfig();
       await loadPredefinedItems();
       await loadDailyConfirmation(selectedDate);
+      await loadTaxSettings();  // Add this line
+      await loadReceiptHistory();  // Add this line
     };
     
     initializeApp();
@@ -1475,27 +1487,36 @@ const InventoryApp = () => {
       if (savedPredefinedItems) {
         const saved = JSON.parse(savedPredefinedItems);
         
-        // Check if we need to merge with updated JSON file data
-        const jsonFileItems = defaultPredefinedItems || [];
-        const savedIds = new Set(saved.map(item => item.id));
+        // Create a Map to remove duplicates (keeps first occurrence)
+        const uniqueMap = new Map();
+        saved.forEach(item => {
+          const key = `${item.name.toLowerCase()}_${item.category}_${item.unitType}`;
+          if (!uniqueMap.has(key)) {
+            uniqueMap. set(key, item);
+          }
+        });
         
-        // Add any new items from JSON file that aren't already saved
-        const newItemsFromJson = jsonFileItems.filter(item => !savedIds.has(item.id));
+        const uniqueItems = Array.from(uniqueMap.values());
         
-        if (newItemsFromJson.length > 0) {
-          const mergedItems = [...saved, ...newItemsFromJson];
-          setPredefinedItems(mergedItems);
-          await savePredefinedItems(mergedItems);
-          console.log(`Loaded predefined items from storage and added ${newItemsFromJson.length} new items from JSON file`);
-        } else {
-          setPredefinedItems(saved);
-          console.log('Loaded predefined items from storage');
-        }
+        console.log(`Loaded ${saved.length} items, removed ${saved.length - uniqueItems.length} duplicates`);
+        
+        setPredefinedItems(uniqueItems);
+        
+        // Always save the cleaned data back
+        await savePredefinedItems(uniqueItems);
       } else {
-        // Initialize with items from JSON file if no saved data exists
-        setPredefinedItems(defaultPredefinedItems);
-        await savePredefinedItems(defaultPredefinedItems);
-        console.log('Initialized predefined items from JSON file');
+        // Remove duplicates from default items too
+        const uniqueMap = new Map();
+        defaultPredefinedItems.forEach(item => {
+          const key = `${item.name.toLowerCase()}_${item.category}_${item. unitType}`;
+          if (!uniqueMap.has(key)) {
+            uniqueMap.set(key, item);
+          }
+        });
+        const uniqueDefaults = Array.from(uniqueMap.values());
+        
+        setPredefinedItems(uniqueDefaults);
+        await savePredefinedItems(uniqueDefaults);
       }
     } catch (error) {
       console.error('Error loading predefined items:', error);
@@ -1551,6 +1572,228 @@ const InventoryApp = () => {
     } catch (error) {
       console.error('Error adding to predefined items:', error);
     }
+  };
+
+  // ============ TAKE ORDER / CART FUNCTIONS ============
+
+  // Add item to cart (not to database yet)
+  const addItemToCart = () => {
+    if (! selectedItemForCart || !selectedItemForCart.price || !selectedItemForCart.unitsSold) {
+      Alert.alert('Error', 'Please fill in all required fields');
+      return;
+    }
+
+    const cartItem = {
+      id: Date.now().toString() + Math.random(),
+      name: selectedItemForCart.name,
+      price: selectedItemForCart.price,
+      unitsSold: selectedItemForCart. unitsSold,
+      category: selectedItemForCart.category,
+      unitType: selectedItemForCart.unitType,
+      totalAmount: calculateAmount(selectedItemForCart.price, selectedItemForCart.unitsSold),
+    };
+
+    setCartItems([...cartItems, cartItem]);
+    
+    // Update last price for predefined item
+    const predefinedIndex = predefinedItems.findIndex(
+      p => p.name. toLowerCase() === selectedItemForCart. name.toLowerCase()
+    );
+    if (predefinedIndex !== -1) {
+      const updatedPredefined = [... predefinedItems];
+      updatedPredefined[predefinedIndex]. lastPrice = selectedItemForCart.price;
+      setPredefinedItems(updatedPredefined);
+      savePredefinedItems(updatedPredefined);
+    }
+
+    // Close modal and reset
+    setShowAddToCartModal(false);
+    setSelectedItemForCart(null);
+  };
+
+  // Remove item from cart
+  const removeFromCart = (itemId) => {
+    setCartItems(cartItems.filter(item => item.id !== itemId));
+  };
+
+  // Calculate cart totals
+  const calculateCartTotals = () => {
+    const subtotal = cartItems.reduce((sum, item) => 
+      sum + parseFloat(item.totalAmount || 0), 0
+    );
+    
+    let tax = 0;
+    if (taxSettings.type === 'percentage') {
+      tax = (subtotal * parseFloat(taxSettings.value || 0)) / 100;
+    } else {
+      tax = parseFloat(taxSettings.value || 0);
+    }
+    
+    return {
+      subtotal:  subtotal. toFixed(2),
+      tax: tax.toFixed(2),
+      total: (subtotal + tax).toFixed(2)
+    };
+  };
+
+  const generateExistingReceiptHTML = (receipt) => {
+    return `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            h1 { color: #333; }
+            .receipt-header { margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+            .receipt-items { margin:  20px 0; }
+            .item-row { display: flex; justify-content: space-between; padding: 5px 0; }
+            .totals { margin-top: 20px; border-top: 2px solid #333; padding-top: 10px; }
+            .total-row { display: flex; justify-content: space-between; padding: 3px 0; }
+            . grand-total { font-weight: bold; font-size: 1.2em; }
+          </style>
+        </head>
+        <body>
+          <div class="receipt-header">
+            <h1>Receipt #${receipt.receiptNumber}</h1>
+            <p>Date: ${new Date(receipt.timestamp).toLocaleString()}</p>
+            <p>Customer: ${receipt.customerName}</p>
+            ${receipt.customerPhone ? `<p>Phone: ${receipt.customerPhone}</p>` : ''}
+          </div>
+          
+          <div class="receipt-items">
+            <h2>Items</h2>
+            ${receipt.items.map(item => `
+              <div class="item-row">
+                <span>${item.name} (${item.unitsSold} ${item.unitType})</span>
+                <span>${selectedCurrency}${item.totalAmount}</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="totals">
+            <div class="total-row">
+              <span>Subtotal:</span>
+              <span>${selectedCurrency}${receipt.subtotal}</span>
+            </div>
+            <div class="total-row">
+              <span>Tax:</span>
+              <span>${selectedCurrency}${receipt.tax}</span>
+            </div>
+            <div class="total-row grand-total">
+              <span>Total:</span>
+              <span>${selectedCurrency}${receipt. total}</span>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+  };
+
+  // Checkout - Save all cart items to database
+  const handleCartCheckout = async () => {
+    if (cartItems.length === 0) {
+      Alert.alert('Error', 'Cart is empty');
+      return;
+    }
+
+    try {
+      // Save each cart item to the main items table
+      const newItems = [];
+      for (const cartItem of cartItems) {
+        const item = {
+          id: `${Date.now()}_${Math.random()}`,
+          name: cartItem.name,
+          price: cartItem.price,
+          unitsSold: cartItem.unitsSold,
+          category: cartItem.category,
+          unitType: cartItem.unitType,
+          totalAmount: cartItem.totalAmount,
+          timestamp: new Date().toISOString(),
+        };
+        newItems.push(item);
+      }
+
+      // Add all items to existing items
+      const updatedItems = [...items, ...newItems];
+      setItems(updatedItems);
+      await saveData(updatedItems);
+
+      // Create receipt for history
+      const totals = calculateCartTotals();
+      const receipt = {
+        id: Date.now().toString(),
+        receiptNumber: `R${Date.now().toString().slice(-8)}`,
+        timestamp: new Date().toISOString(),
+        date: formatDate(selectedDate),
+        customerName: cartCustomerName || 'Walk-in Customer',
+        customerPhone: cartCustomerPhone || '',
+        items: cartItems,
+        subtotal: totals.subtotal,
+        tax: totals.tax,
+        total: totals. total,
+        taxSettings: { ... taxSettings },
+      };
+
+      // Save to receipt history
+      const updatedHistory = [receipt, ...receiptHistory];
+      setReceiptHistory(updatedHistory);
+      await AsyncStorage.setItem('receipt_history', JSON.stringify(updatedHistory));
+
+      // Show success and reset
+      Alert.alert(
+        language.receiptCreated || 'Success',
+        `${language.receiptSaved || 'Receipt created successfully!'}\n\nItems:  ${cartItems.length}\nTotal: ${language.currency}${totals.total}`,
+        [
+          {
+            text: language.printReceipt || 'Print',
+            onPress: async () => {
+              const html = generateExistingReceiptHTML(receipt);
+              await Print. printAsync({ html });
+            }
+          },
+          {
+            text: language.close || 'OK',
+            style: 'default'
+          }
+        ]
+      );
+
+      // Clear cart and close modal
+      setCartItems([]);
+      setCartCustomerName('');
+      setCartCustomerPhone('');
+      setShowTakeOrderModal(false);
+      setShowCartView(false);
+
+    } catch (error) {
+      console.error('Checkout error:', error);
+      Alert.alert('Error', 'Could not complete checkout');
+    }
+  };
+
+  // Add this function after formatNumber and before loadPredefinedItems
+  const calculateAmount = (price, unitsSold) => {
+    const p = parseFloat(price) || 0;
+    const u = parseFloat(unitsSold) || 0;
+    return (p * u).toFixed(2);
+  };
+
+  // Handle predefined item selection for cart
+  const handlePredefinedItemForCart = (item) => {
+    console.log('Item tapped:', item. name);
+    
+    setSelectedItemForCart({
+      name: item.name,
+      category: item.category,
+      unitType: item.unitType,
+      price: item.lastPrice || '',
+      unitsSold: '',
+    });
+    
+    // Small delay to ensure state is set
+    setTimeout(() => {
+      setShowAddToCartModal(true);
+    }, 50);
   };
 
   const loadData = async () => {
@@ -1727,6 +1970,40 @@ const InventoryApp = () => {
       }
     } catch (error) {
       console.error('Error loading yearly total:', error);
+    }
+  };
+
+  const loadTaxSettings = async () => {
+    try {
+      const savedSettings = await AsyncStorage.getItem('tax_settings');
+      if (savedSettings) {
+        setTaxSettings(JSON.parse(savedSettings));
+      }
+    } catch (error) {
+      console.error('Error loading tax settings:', error);
+    }
+  };
+
+  const loadReceiptHistory = async () => {
+    try {
+      const savedHistory = await AsyncStorage.getItem('receipt_history');
+      if (savedHistory) {
+        const history = JSON.parse(savedHistory);
+        // Filter to last 90 days
+        const ninetyDaysAgo = new Date();
+        ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+        const filteredHistory = history.filter(receipt => 
+          new Date(receipt.timestamp) >= ninetyDaysAgo
+        );
+        setReceiptHistory(filteredHistory);
+        
+        // Save filtered history back
+        if (filteredHistory.length !== history.length) {
+          await AsyncStorage.setItem('receipt_history', JSON.stringify(filteredHistory));
+        }
+      }
+    } catch (error) {
+      console.error('Error loading receipt history:', error);
     }
   };
 
@@ -3202,23 +3479,22 @@ const InventoryApp = () => {
           style={styles.dateButton}
           onPress={() => setShowCalendarModal(true)}
         >
-          <Text style={styles.dateText}>📅 {selectedDate.toDateString()}</Text>
+          <Text style={styles. dateText}>📅 {selectedDate.toDateString()}</Text>
         </TouchableOpacity>
-        <View style={styles.confirmDayContainer}>
-          <TouchableOpacity
-            style={[
-              styles.materialSwitch,
-              isDayConfirmed && styles.materialSwitchActive
-            ]}
-            onPress={toggleDayConfirmation}
-            activeOpacity={0.8}
-          >
-            <View style={[
-              styles.materialSwitchThumb,
-              isDayConfirmed && styles.materialSwitchThumbActive
-            ]} />
-          </TouchableOpacity>
-        </View>
+        
+        {/* + Add Item Button */}
+        <TouchableOpacity
+          style={styles.headerAddItemButton}
+          onPress={() => {
+            console.log('Add Item button clicked'); // Debug log
+            // setShowPredefinedItemsModal(true);
+            setShowTakeOrderModal(false); // Close Take Order if open
+            setShowAddToCartModal(false); // Close cart modal if open  
+            openAddModal();
+          }}
+        >
+          <Text style={styles.headerAddItemButtonText}>+ {language.addItem}</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Conditional DateTimePicker with error handling */}
@@ -3369,11 +3645,25 @@ const InventoryApp = () => {
       </ScrollView>
 
       {/* Add Item Button */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.addButton}
         onPress={openAddModal}
       >
         <Text style={styles.addButtonText}>+ {language.addItem}</Text>
+      </TouchableOpacity> */}
+
+      {/* Take Order Button */}
+      <TouchableOpacity
+        style={styles.takeOrderButton}
+        onPress={() => {
+          // Reset search/filters when opening
+          setPredefinedSearchText('');
+          setPredefinedFilterCategory('All');
+          setLoadedItemsCount(20);
+          setShowTakeOrderModal(true);
+        }}
+      >
+        <Text style={styles.takeOrderButtonText}>{language.takeOrder || 'Take Order'}</Text>
       </TouchableOpacity>
 
       {/* Bottom Navigation Bar */}
@@ -5165,6 +5455,329 @@ const InventoryApp = () => {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
+
+      {/* Take Order Modal - Cart System */}
+      <Modal
+        visible={showTakeOrderModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => {
+          setShowTakeOrderModal(false);
+          setShowCartView(false);
+        }}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.modalOverlay}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={styles. keyboardAvoidingView}
+            >
+              <TouchableWithoutFeedback>
+                <View style={styles.takeOrderModalContent}>
+                  
+                  {/* Header with Cart Icon */}
+                  <View style={styles.takeOrderHeader}>
+                    <Text style={styles.modernModalTitle}>
+                      {showCartView ? (language.cart || 'Shopping Cart') : (language.takeOrder || 'Take Order')}
+                    </Text>
+                    
+                    {! showCartView && (
+                      <TouchableOpacity
+                        style={styles.cartIconButton}
+                        onPress={() => setShowCartView(true)}
+                      >
+                        <Text style={styles.cartIcon}>🛒</Text>
+                        {cartItems.length > 0 && (
+                          <View style={styles.cartBadge}>
+                            <Text style={styles.cartBadgeText}>{cartItems.length}</Text>
+                          </View>
+                        )}
+                      </TouchableOpacity>
+                    )}
+                    
+                    {showCartView && (
+                      <TouchableOpacity
+                        style={styles.backToItemsButton}
+                        onPress={() => setShowCartView(false)}
+                      >
+                        <Text style={styles.backToItemsText}>← Items</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                  
+                  {/* Show either Item List or Cart View */}
+                  {! showCartView ?  (
+                    <>
+                      {/* Predefined Items Search */}
+                      <View style={styles.predefinedSearchContainer}>
+                        <TextInput
+                          style={styles. predefinedSearchInput}
+                          placeholder={language.searchPlaceholder || "Search items..."}
+                          value={predefinedSearchText}
+                          onChangeText={setPredefinedSearchText}
+                          clearButtonMode="while-editing"
+                        />
+                        <TouchableOpacity
+                          style={styles.predefinedFilterButton}
+                          onPress={() => setShowPredefinedCategoryModal(true)}
+                        >
+                          <Text style={styles. predefinedFilterIcon}>☰</Text>
+                        </TouchableOpacity>
+                      </View>
+
+                      {/* Predefined Items List */}
+                      <Text style={styles.sectionTitle}>{language.predefinedItems || 'Select Items'}</Text>
+                      <ScrollView 
+                        style={styles.takeOrderItemsList}
+                        onScroll={({ nativeEvent }) => {
+                          const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
+                          const paddingToBottom = 20;
+                          if (layoutMeasurement.height + contentOffset.y >= contentSize. height - paddingToBottom) {
+                            loadMoreItems();
+                          }
+                        }}
+                        scrollEventThrottle={400}
+                      >
+                        {getFilteredPredefinedItems. length === 0 ? (
+                          <View style={styles.noPredefinedItemsContainer}>
+                            <Text style={styles. noPredefinedItemsText}>
+                              No items found matching your search
+                            </Text>
+                          </View>
+                        ) : (
+                          getFilteredPredefinedItems.map(item => (
+                            <TouchableOpacity
+                              key={item. id}
+                              style={styles. takeOrderItemOption}
+                              onPress={() => {
+                                console.log('Item tapped:', item.name);
+                                handlePredefinedItemForCart(item);
+                              }}
+                              activeOpacity={0.7}
+                            >
+                              <View style={styles.predefinedItemInfo}>
+                                <Text style={styles.predefinedItemName}>{item.name}</Text>
+                                <View style={styles.predefinedItemDetailsRow}>
+                                  <View style={styles.predefinedCategoryBadge}>
+                                    <Text style={styles.predefinedCategoryText}>{item.category}</Text>
+                                  </View>
+                                  <Text style={styles.predefinedUnitText}>{item.unitType}</Text>
+                                </View>
+                              </View>
+                              <Text style={styles.selectArrow}>+</Text>
+                            </TouchableOpacity>
+                          ))
+                        )}
+                      </ScrollView>
+                    </>
+                  ) : (
+                    <>
+                      {/* Cart View */}
+                      <ScrollView style={styles.cartViewList}>
+                        {cartItems. length === 0 ? (
+                          <View style={styles. emptyCartContainer}>
+                            <Text style={styles.emptyCartIcon}>🛒</Text>
+                            <Text style={styles.emptyCartText}>Your cart is empty</Text>
+                            <Text style={styles.emptyCartSubtext}>Add items from the list</Text>
+                          </View>
+                        ) : (
+                          cartItems.map((item) => (
+                            <View key={item.id} style={styles.cartItemCard}>
+                              <View style={styles.cartItemHeader}>
+                                <Text style={styles.cartItemName}>{item.name}</Text>
+                                <TouchableOpacity
+                                  onPress={() => removeFromCart(item.id)}
+                                  style={styles.removeCartItemButton}
+                                >
+                                  <Text style={styles.removeCartItemText}>✕</Text>
+                                </TouchableOpacity>
+                              </View>
+                              <View style={styles.cartItemDetails}>
+                                <Text style={styles.cartItemDetail}>
+                                  {item.unitsSold} {item.unitType} × {selectedCurrency}{formatNumber(parseFloat(item.price), 2)}
+                                </Text>
+                                <Text style={styles.cartItemTotal}>
+                                  {selectedCurrency}{item.totalAmount}
+                                </Text>
+                              </View>
+                              <Text style={styles.cartItemCategory}>{item.category}</Text>
+                            </View>
+                          ))
+                        )}
+                      </ScrollView>
+
+                      {/* Cart Totals */}
+                      {cartItems.length > 0 && (
+                        <View style={styles.cartTotalsSection}>
+                          {(() => {
+                            const totals = calculateCartTotals();
+                            return (
+                              <>
+                                <View style={styles.totalRow}>
+                                  <Text style={styles.totalLabel}>{language.subtotal}:</Text>
+                                  <Text style={styles.totalValue}>{selectedCurrency}{formatCurrency(totals.subtotal)}</Text>
+                                </View>
+                                <View style={styles.totalRow}>
+                                  <Text style={styles.totalLabel}>{language.tax}:</Text>
+                                  <Text style={styles.totalValue}>{selectedCurrency}{formatCurrency(totals.tax)}</Text>
+                                </View>
+                                <View style={[styles.totalRow, styles.grandTotalRow]}>
+                                  <Text style={styles.grandTotalLabel}>{language.totalAmount}:</Text>
+                                  <Text style={styles.grandTotalValue}>{selectedCurrency}{formatCurrency(totals.total)}</Text>
+                                </View>
+                              </>
+                            );
+                          })()}
+                        </View>
+                      )}
+
+                      {/* Customer Info (Optional) */}
+                      <View style={styles.customerInfoSection}>
+                        <Text style={styles. sectionTitle}>
+                          {language.customerInformation || 'Customer Information (Optional)'}
+                        </Text>
+                        <TextInput
+                          style={styles. modernInput}
+                          placeholder={language. customerName || "Customer Name"}
+                          value={cartCustomerName}
+                          onChangeText={setCartCustomerName}
+                        />
+                        <TextInput
+                          style={styles.modernInput}
+                          placeholder={language. customerPhone || "Customer Phone"}
+                          value={cartCustomerPhone}
+                          onChangeText={setCartCustomerPhone}
+                          keyboardType="phone-pad"
+                        />
+                      </View>
+
+                      {/* Checkout Button */}
+                      {cartItems.length > 0 && (
+                        <TouchableOpacity
+                          style={styles.checkoutButton}
+                          onPress={handleCartCheckout}
+                        >
+                          <Text style={styles.checkoutButtonText}>
+                            ✓ Checkout ({cartItems.length} items)
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    </>
+                  )}
+                  
+                  {/* Close Button */}
+                  <TouchableOpacity
+                    style={styles.closeTakeOrderButton}
+                    onPress={() => {
+                      setShowTakeOrderModal(false);
+                      setShowCartView(false);
+                    }}
+                  >
+                    <Text style={styles.closeTakeOrderButtonText}>{language.close || 'Close'}</Text>
+                  </TouchableOpacity>
+                </View>
+              </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+
+            {/* Add to Cart Modal */}
+            <Modal
+              visible={showAddToCartModal}
+              animationType="slide"
+              transparent={true}
+              onRequestClose={() => {
+                setShowAddToCartModal(false);
+                setSelectedItemForCart(null);
+              }}
+            >
+              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.modalOverlay}>
+                  <KeyboardAvoidingView
+                    behavior={Platform. OS === 'ios' ? 'padding' : 'height'}
+                    style={styles.keyboardAvoidingView}
+                  >
+                    <View style={styles.modernModalContent}>
+                      <Text style={styles.modernModalTitle}>Add to Cart</Text>
+
+                      {/* Item Display */}
+                      <View style={styles.predefinedItemDisplay}>
+                        <Text style={styles.predefinedItemDisplayName}>
+                          {selectedItemForCart?. name}
+                        </Text>
+                        <Text style={styles.predefinedItemDisplayDetails}>
+                          {selectedItemForCart?.category} • {selectedItemForCart?.unitType}
+                        </Text>
+                      </View>
+
+                      {/* Price and Units */}
+                      <View style={styles.modernInputRow}>
+                        <TextInput
+                          style={[styles.modernInput, { flex: 1, marginRight: 8 }]}
+                          placeholder={language.price}
+                          value={selectedItemForCart?.price}
+                          onChangeText={(text) => {
+                            const numericValue = text.replace(/[^0-9.]/g, '');
+                            const parts = numericValue.split('.');
+                            const filteredValue = parts.length > 2 
+                              ? parts[0] + '.' + parts. slice(1).join('') 
+                              : numericValue;
+                            setSelectedItemForCart(prev => ({ ...prev, price: filteredValue }));
+                          }}
+                          keyboardType="decimal-pad"
+                        />
+                        <TextInput
+                          style={[styles. modernInput, { flex: 1, marginLeft: 8 }]}
+                          placeholder={language.unitsSold}
+                          value={selectedItemForCart?.unitsSold}
+                          onChangeText={(text) => {
+                            const numericValue = text.replace(/[^0-9.]/g, '');
+                            const parts = numericValue. split('.');
+                            const filteredValue = parts.length > 2 
+                              ? parts[0] + '.' + parts.slice(1).join('') 
+                              : numericValue;
+                            setSelectedItemForCart(prev => ({ ...prev, unitsSold: filteredValue }));
+                          }}
+                          keyboardType="decimal-pad"
+                        />
+                      </View>
+
+                      {/* Total Amount */}
+                      {selectedItemForCart?. price && selectedItemForCart?.unitsSold && (
+                        <View style={styles.totalAmountContainer}>
+                          <Text style={styles.totalAmountText}>
+                            Total: {selectedCurrency}{calculateAmount(selectedItemForCart.price, selectedItemForCart.unitsSold)}
+                          </Text>
+                        </View>
+                      )}
+
+                      {/* Buttons */}
+                      <View style={styles.modernButtonRow}>
+                        <TouchableOpacity
+                          style={[styles.modernButton, styles.modernCancelButton]}
+                          onPress={() => {
+                            setShowAddToCartModal(false);
+                            setSelectedItemForCart(null);
+                          }}
+                        >
+                          <Text style={styles.modernCancelButtonText}>{language.cancel}</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          style={[styles.modernButton, styles.modernSaveButton]}
+                          onPress={addItemToCart}
+                        >
+                          <Text style={styles.modernSaveButtonText}>Add to Cart</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </KeyboardAvoidingView>
+                </View>
+              </TouchableWithoutFeedback>
+            </Modal>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      
     </SafeAreaView>
   );
 };
@@ -7265,6 +7878,215 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 12,
+  },
+  takeOrderButton: {
+    position: 'absolute',
+    bottom: 100,
+    right: 20,
+    backgroundColor: '#4caf50',
+    borderRadius: 50,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity:  0.3,
+    shadowRadius: 4,
+    zIndex: 1000,
+  },
+  takeOrderButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  takeOrderModalContent: {
+    width: '100%',
+    maxWidth: 600,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+    maxHeight: '90%',
+  },
+  takeOrderHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems:  'center',
+    marginBottom: 16,
+  },
+  cartIconButton: {
+    position:  'relative',
+    padding: 8,
+  },
+  cartIcon: {
+    fontSize: 24,
+  },
+  cartBadge: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: '#f44336',
+    borderRadius:  10,
+    minWidth: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cartBadgeText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  backToItemsButton: {
+    padding: 8,
+  },
+  backToItemsText: {
+    color: '#2196f3',
+    fontSize:  16,
+    fontWeight: '600',
+  },
+  takeOrderItemsList: {
+    maxHeight: 400,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  takeOrderItemOption: {
+    backgroundColor: '#fff',
+    padding: 16,
+    marginBottom: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  cartViewList: {
+    maxHeight: 350,
+    marginBottom: 16,
+  },
+  emptyCartContainer: {
+    padding: 60,
+    alignItems: 'center',
+  },
+  emptyCartIcon: {
+    fontSize: 64,
+    marginBottom: 16,
+  },
+  emptyCartText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#666',
+    marginBottom: 4,
+  },
+  emptyCartSubtext: {
+    fontSize: 14,
+    color:  '#999',
+  },
+  cartItemCard: {
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#4caf50',
+  },
+  cartItemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  cartItemName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    flex: 1,
+  },
+  removeCartItemButton: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#f44336',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  removeCartItemText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  cartItemDetails: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  cartItemDetail: {
+    fontSize: 14,
+    color:  '#666',
+  },
+  cartItemTotal: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#4caf50',
+  },
+  cartItemCategory: {
+    fontSize: 12,
+    color: '#999',
+    backgroundColor: '#e0e0e0',
+    paddingHorizontal: 8,
+    paddingVertical:  2,
+    borderRadius: 4,
+    alignSelf: 'flex-start',
+    marginTop: 4,
+  },
+  cartTotalsSection: {
+    backgroundColor: '#f0f8ff',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#2196f3',
+  },
+  customerInfoSection: {
+    marginBottom: 16,
+  },
+  checkoutButton: {
+    backgroundColor: '#4caf50',
+    padding: 18,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  checkoutButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  closeTakeOrderButton: {
+    backgroundColor: '#e0e0e0',
+    padding: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  closeTakeOrderButtonText:  {
+    color: '#666',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  nestedModalOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right:  0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems:  'center',
+    zIndex: 1000,
+  },
+  nestedModalContainer: {
+    width: '90%',
+    maxWidth: 500,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
