@@ -5521,7 +5521,7 @@ const InventoryApp = () => {
                 {/* Months Grid */}
                 <ScrollView style={styles.monthsGridScroll}>
                   <View style={styles.monthsCalendarGrid}>
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].  map((monthIndex) => {
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((monthIndex) => {
                       const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                       return (
                         <TouchableOpacity
