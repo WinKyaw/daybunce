@@ -108,6 +108,12 @@ const defaultLanguage = {
   receipt: 'Receipt',
   items: 'Items',
   customerName: 'Customer',
+  cart: 'Shopping Cart',
+  emptyCart: 'Your cart is empty',
+  addItemsFromList: 'Add items from the list',
+  customerInformation: 'Customer Information (Optional)',
+  checkout: 'Checkout',
+  addToCart: 'Add to Cart',
 };
 
 const availableLanguages = [
@@ -244,6 +250,12 @@ const languageConfigs = {
     receipt: 'Receipt',
     items: 'Items',
     customerName: 'Customer',
+    cart: 'Shopping Cart',
+    emptyCart: 'Your cart is empty',
+    addItemsFromList: 'Add items from the list',
+    customerInformation: 'Customer Information (Optional)',
+    checkout: 'Checkout',
+    addToCart: 'Add to Cart',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -346,6 +358,12 @@ const languageConfigs = {
     receipt: 'Recibo',
     items: 'Artículos',
     customerName: 'Cliente',
+    cart: 'Carrito de Compras',
+    emptyCart: 'Tu carrito está vacío',
+    addItemsFromList: 'Agregar artículos de la lista',
+    customerInformation: 'Información del Cliente (Opcional)',
+    checkout: 'Pagar',
+    addToCart: 'Agregar al Carrito',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -435,6 +453,12 @@ const languageConfigs = {
     receipt: 'Reçu',
     items: 'Articles',
     customerName: 'Client',
+    cart: 'Panier',
+    emptyCart: 'Votre panier est vide',
+    addItemsFromList: 'Ajouter des articles de la liste',
+    customerInformation: 'Informations Client (Optionnel)',
+    checkout: 'Payer',
+    addToCart: 'Ajouter au Panier',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -524,6 +548,12 @@ const languageConfigs = {
     receipt: 'Beleg',
     items: 'Artikel',
     customerName: 'Kunde',
+    cart: 'Warenkorb',
+    emptyCart: 'Ihr Warenkorb ist leer',
+    addItemsFromList: 'Artikel aus der Liste hinzufügen',
+    customerInformation: 'Kundeninformationen (Optional)',
+    checkout: 'Zur Kasse',
+    addToCart: 'In den Warenkorb',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -613,6 +643,12 @@ const languageConfigs = {
     receipt: 'Ricevuta',
     items: 'Articoli',
     customerName: 'Cliente',
+    cart: 'Carrello',
+    emptyCart: 'Il tuo carrello è vuoto',
+    addItemsFromList: 'Aggiungi articoli dalla lista',
+    customerInformation: 'Informazioni Cliente (Opzionale)',
+    checkout: 'Checkout',
+    addToCart: 'Aggiungi al Carrello',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -702,6 +738,12 @@ const languageConfigs = {
     receipt: 'Recibo',
     items: 'Itens',
     customerName: 'Cliente',
+    cart: 'Carrinho de Compras',
+    emptyCart: 'Seu carrinho está vazio',
+    addItemsFromList: 'Adicionar itens da lista',
+    customerInformation: 'Informações do Cliente (Opcional)',
+    checkout: 'Finalizar Compra',
+    addToCart: 'Adicionar ao Carrinho',
   },
   zh: {
     appTitle: '库存管理',
@@ -785,6 +827,12 @@ const languageConfigs = {
     receipt: '收据',
     items: '商品',
     customerName: '客户',
+    cart: '购物车',
+    emptyCart: '您的购物车是空的',
+    addItemsFromList: '从列表中添加商品',
+    customerInformation: '客户信息（可选）',
+    checkout: '结账',
+    addToCart: '加入购物车',
   },
   ja: {
     appTitle: '在庫管理',
@@ -868,6 +916,12 @@ const languageConfigs = {
     receipt: 'レシート',
     items: '商品',
     customerName: '顧客',
+    cart: 'ショッピングカート',
+    emptyCart: 'カートは空です',
+    addItemsFromList: 'リストから商品を追加',
+    customerInformation: '顧客情報（オプション）',
+    checkout: 'チェックアウト',
+    addToCart: 'カートに追加',
   },
   ko: {
     appTitle: '재고 관리',
@@ -957,6 +1011,12 @@ const languageConfigs = {
     receipt: '영수증',
     items: '상품',
     customerName: '고객',
+    cart: '장바구니',
+    emptyCart: '장바구니가 비어 있습니다',
+    addItemsFromList: '목록에서 상품 추가',
+    customerInformation: '고객 정보 (선택 사항)',
+    checkout: '결제',
+    addToCart: '장바구니에 담기',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1046,6 +1106,12 @@ const languageConfigs = {
     receipt: 'ใบเสร็จ',
     items: 'รายการ',
     customerName: 'ลูกค้า',
+    cart: 'ตะกร้าสินค้า',
+    emptyCart: 'ตะกร้าของคุณว่างเปล่า',
+    addItemsFromList: 'เพิ่มสินค้าจากรายการ',
+    customerInformation: 'ข้อมูลลูกค้า (ไม่บังคับ)',
+    checkout: 'ชำระเงิน',
+    addToCart: 'เพิ่มลงตะกร้า',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1135,6 +1201,12 @@ const languageConfigs = {
     receipt: 'Hóa đơn',
     items: 'Mặt hàng',
     customerName: 'Khách hàng',
+    cart: 'Giỏ hàng',
+    emptyCart: 'Giỏ hàng của bạn trống',
+    addItemsFromList: 'Thêm sản phẩm từ danh sách',
+    customerInformation: 'Thông tin Khách hàng (Không bắt buộc)',
+    checkout: 'Thanh toán',
+    addToCart: 'Thêm vào Giỏ',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1224,6 +1296,12 @@ const languageConfigs = {
     receipt: 'Tanda Terima',
     items: 'Barang',
     customerName: 'Pelanggan',
+    cart: 'Keranjang Belanja',
+    emptyCart: 'Keranjang Anda kosong',
+    addItemsFromList: 'Tambahkan barang dari daftar',
+    customerInformation: 'Informasi Pelanggan (Opsional)',
+    checkout: 'Checkout',
+    addToCart: 'Tambah ke Keranjang',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1313,6 +1391,12 @@ const languageConfigs = {
     receipt: 'रसीद',
     items: 'आइटम',
     customerName: 'ग्राहक',
+    cart: 'शॉपिंग कार्ट',
+    emptyCart: 'आपकी कार्ट खाली है',
+    addItemsFromList: 'सूची से आइटम जोड़ें',
+    customerInformation: 'ग्राहक जानकारी (वैकल्पिक)',
+    checkout: 'चेकआउट',
+    addToCart: 'कार्ट में जोड़ें',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1401,6 +1485,12 @@ const languageConfigs = {
     receipt: 'ငွေလက်ခံဖြတ်ပိုင်း',
     items: 'ပစ္စည်းများ',
     customerName: 'ဖောက်သည်',
+    cart: 'စျေးဝယ်ခြင်းတောင်း',
+    emptyCart: 'သင့်ခြင်းတောင်းသည် ဗလာဖြစ်နေသည်',
+    addItemsFromList: 'စာရင်းမှ ပစ္စည်းများထည့်ပါ',
+    customerInformation: 'ဖောက်သည်အချက်အလက် (ရွေးချယ်ခွင့်)',
+    checkout: 'ငွေရှင်းရန်',
+    addToCart: 'ခြင်းတောင်းထဲသို့ထည့်ရန်',
   },
 };
 
@@ -1751,7 +1841,7 @@ const InventoryApp = () => {
 
   const generateExistingReceiptHTML = (receipt) => {
     const currentStore = stores.find(s => s.id === selectedStore);
-    const storeName = currentStore?.name || 'Main Store';
+    const storeName = currentStore?.name || customAppTitle || language.appTitle;
     
     return `
       <!DOCTYPE html>
@@ -5626,7 +5716,7 @@ const InventoryApp = () => {
                   {/* Header with Cart Icon */}
                   <View style={styles.takeOrderHeader}>
                     <Text style={styles.modernModalTitle}>
-                      {showCartView ? (language.cart || 'Shopping Cart') : (language.takeOrder || 'Take Order')}
+                      {showCartView ? language.cart : (language.takeOrder || 'Take Order')}
                     </Text>
                     
                     {! showCartView && (
@@ -5725,8 +5815,8 @@ const InventoryApp = () => {
                         {cartItems. length === 0 ? (
                           <View style={styles. emptyCartContainer}>
                             <Text style={styles.emptyCartIcon}>🛒</Text>
-                            <Text style={styles.emptyCartText}>Your cart is empty</Text>
-                            <Text style={styles.emptyCartSubtext}>Add items from the list</Text>
+                            <Text style={styles.emptyCartText}>{language.emptyCart}</Text>
+                            <Text style={styles.emptyCartSubtext}>{language.addItemsFromList}</Text>
                           </View>
                         ) : (
                           cartItems.map((item) => (
@@ -5773,7 +5863,7 @@ const InventoryApp = () => {
                       {/* Customer Info (Optional) */}
                       <View style={styles.customerInfoSection}>
                         <Text style={styles. sectionTitle}>
-                          {language.customerInformation || 'Customer Information (Optional)'}
+                          {language.customerInformation}
                         </Text>
                         <TextInput
                           style={styles. modernInput}
@@ -5796,7 +5886,7 @@ const InventoryApp = () => {
                           onPress={handleCartCheckout}
                         >
                           <Text style={styles.checkoutButtonText}>
-                            ✓ Checkout ({cartItems.length} items)
+                            ✓ {language.checkout} ({cartItems.length} {language.items})
                           </Text>
                         </TouchableOpacity>
                       )}
@@ -5834,7 +5924,7 @@ const InventoryApp = () => {
                     style={styles.keyboardAvoidingView}
                   >
                     <View style={styles.modernModalContent}>
-                      <Text style={styles.modernModalTitle}>Add to Cart</Text>
+                      <Text style={styles.modernModalTitle}>{language.addToCart}</Text>
 
                       {/* Item Display */}
                       <View style={styles.predefinedItemDisplay}>
@@ -5903,7 +5993,7 @@ const InventoryApp = () => {
                           style={[styles.modernButton, styles.modernSaveButton]}
                           onPress={addItemToCart}
                         >
-                          <Text style={styles.modernSaveButtonText}>Add to Cart</Text>
+                          <Text style={styles.modernSaveButtonText}>{language.addToCart}</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
