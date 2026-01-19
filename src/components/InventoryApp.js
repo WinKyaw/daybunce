@@ -1779,7 +1779,7 @@ const InventoryApp = () => {
         // Remove duplicates from default items too
         const uniqueMap = new Map();
         defaultPredefinedItems.forEach(item => {
-          const key = `${item.name.toLowerCase()}_${item.category}_${item. unitType}`;
+          const key = `${item.name.toLowerCase()}_${item.category}_${item.unitType}`;
           if (!uniqueMap.has(key)) {
             uniqueMap.set(key, item);
           }
@@ -2061,7 +2061,7 @@ const InventoryApp = () => {
 
   // Handle predefined item selection for cart
   const handlePredefinedItemForCart = (item) => {
-    console.log('Item tapped:', item. name);
+    console.log('Item tapped:', item.name);
     
     setSelectedItemForCart({
       name: item.name,
@@ -2350,7 +2350,7 @@ const InventoryApp = () => {
       language.deleteMonth,
       `${language.deleteMonthConfirm} ${monthName}?`,
       [
-        { text: language. cancel, style: 'cancel' },
+        { text: language.cancel, style: 'cancel' },
         {
           text: language.delete,
           style: 'destructive',
@@ -2375,7 +2375,7 @@ const InventoryApp = () => {
               setShowMonthlyDataModal(false);
               setShowSalesTrackingModal(true);
               
-              Alert.alert(language. successTitle, 'All daily amounts reset to 0');
+              Alert.alert(language.successTitle, 'All daily amounts reset to 0');
             } catch (error) {
               console.error('Error resetting monthly data:', error);
               Alert. alert('Error', 'Could not reset monthly data');
@@ -3785,7 +3785,7 @@ const InventoryApp = () => {
           style={styles.dateButton}
           onPress={() => setShowCalendarModal(true)}
         >
-          <Text style={styles. dateText}>📅 {selectedDate.toDateString()}</Text>
+          <Text style={styles.dateText}>📅 {selectedDate.toDateString()}</Text>
         </TouchableOpacity>
         
         {/* + Add Item Button */}
@@ -5234,10 +5234,10 @@ const InventoryApp = () => {
                 </ScrollView> 
 
                 {/* Info text about Monthly Sales Tracking */}
-                <View style={styles. trackingInfoContainer}>
+                <View style={styles.trackingInfoContainer}>
                   <Text style={styles.trackingInfoIcon}>ℹ️</Text>
                   <Text style={styles.trackingInfoText}>
-                    {language. monthlySalesInfo || 'Monthly Sales Tracking is independent of daily inventory records.  Use it to track overall monthly sales, purchases, or any other financial data.'}
+                    {language.monthlySalesInfo || 'Monthly Sales Tracking is independent of daily inventory records.  Use it to track overall monthly sales, purchases, or any other financial data.'}
                   </Text>
                 </View>  
 
@@ -5254,7 +5254,7 @@ const InventoryApp = () => {
                 
                 <View style={styles.settingsButtonRow}>
                   <TouchableOpacity
-                    style={[styles.settingsButton, styles. settingsCancelButton]}
+                    style={[styles.settingsButton, styles.settingsCancelButton]}
                     onPress={() => {
                       setShowSettingsModal(false);
                       setShowLanguageDropdown(false);
@@ -5274,7 +5274,7 @@ const InventoryApp = () => {
                       setShowCurrencyDropdown(false);
                     }}
                   >
-                    <Text style={styles. settingsSaveButtonText}>{language.save}</Text>
+                    <Text style={styles.settingsSaveButtonText}>{language.save}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -5460,7 +5460,7 @@ const InventoryApp = () => {
                                 deleteStore(store. id);
                               }}
                             >
-                              <Text style={styles. storeActionButtonText}>🗑️</Text>
+                              <Text style={styles.storeActionButtonText}>🗑️</Text>
                             </TouchableOpacity>
                           )}
                         </View>
@@ -5520,7 +5520,7 @@ const InventoryApp = () => {
                 
                 {/* Months Grid */}
                 <ScrollView style={styles.monthsGridScroll}>
-                  <View style={styles. monthsCalendarGrid}>
+                  <View style={styles.monthsCalendarGrid}>
                     {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].  map((monthIndex) => {
                       const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                       return (
@@ -5539,7 +5539,7 @@ const InventoryApp = () => {
                 
                 {/* Yearly Total */}
                 <View style={styles.yearlyTotalContainer}>
-                  <Text style={styles.yearlyTotalLabel}>{language. yearlyTotal}:</Text>
+                  <Text style={styles.yearlyTotalLabel}>{language.yearlyTotal}:</Text>
                   <Text style={styles.yearlyTotalAmount}>
                     {selectedCurrency}{formatCurrency(yearlyTotals[`${selectedStore}_${selectedYear}`] || 0)}
                   </Text>
@@ -5687,10 +5687,10 @@ const InventoryApp = () => {
                     {selectedMonth !== null && new Date(selectedYear, selectedMonth). toLocaleString('default', { month: 'long', year: 'numeric' })}
                   </Text>
                   <TouchableOpacity
-                    style={styles. deleteMonthButton}
+                    style={styles.deleteMonthButton}
                     onPress={() => deleteMonthlyData(selectedYear, selectedMonth)}
                   >
-                    <Text style={styles.deleteMonthButtonText}>🗑️ {language. deleteMonth}</Text>
+                    <Text style={styles.deleteMonthButtonText}>🗑️ {language.deleteMonth}</Text>
                   </TouchableOpacity>
                 </View>
                 
@@ -5709,7 +5709,7 @@ const InventoryApp = () => {
                 </View>
                 
                 {/* Table Header */}
-                <View style={styles. tableHeader}>
+                <View style={styles.tableHeader}>
                   <Text style={styles.tableHeaderCell}>{language.date}</Text>
                   <Text style={styles.tableHeaderCellAmount}>{language.dailySaleAmount}</Text>
                 </View>
@@ -5776,7 +5776,7 @@ const InventoryApp = () => {
           <View style={styles.modalOverlay}>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-              style={styles. keyboardAvoidingView}
+              style={styles.keyboardAvoidingView}
             >
               <TouchableWithoutFeedback>
                 <View style={styles.takeOrderModalContent}>
@@ -5817,7 +5817,7 @@ const InventoryApp = () => {
                       {/* Predefined Items Search */}
                       <View style={styles.predefinedSearchContainer}>
                         <TextInput
-                          style={styles. predefinedSearchInput}
+                          style={styles.predefinedSearchInput}
                           placeholder={language.searchPlaceholder || "Search items..."}
                           value={predefinedSearchText}
                           onChangeText={setPredefinedSearchText}
@@ -5827,7 +5827,7 @@ const InventoryApp = () => {
                           style={styles.predefinedFilterButton}
                           onPress={() => setShowPredefinedCategoryModal(true)}
                         >
-                          <Text style={styles. predefinedFilterIcon}>☰</Text>
+                          <Text style={styles.predefinedFilterIcon}>☰</Text>
                         </TouchableOpacity>
                       </View>
 
@@ -5846,15 +5846,15 @@ const InventoryApp = () => {
                       >
                         {getFilteredPredefinedItems. length === 0 ? (
                           <View style={styles.noPredefinedItemsContainer}>
-                            <Text style={styles. noPredefinedItemsText}>
+                            <Text style={styles.noPredefinedItemsText}>
                               No items found matching your search
                             </Text>
                           </View>
                         ) : (
                           getFilteredPredefinedItems.map(item => (
                             <TouchableOpacity
-                              key={item. id}
-                              style={styles. takeOrderItemOption}
+                              key={item.id}
+                              style={styles.takeOrderItemOption}
                               onPress={() => {
                                 console.log('Item tapped:', item.name);
                                 handlePredefinedItemForCart(item);
@@ -5881,7 +5881,7 @@ const InventoryApp = () => {
                       {/* Cart View */}
                       <ScrollView style={styles.cartViewList}>
                         {cartItems. length === 0 ? (
-                          <View style={styles. emptyCartContainer}>
+                          <View style={styles.emptyCartContainer}>
                             <Text style={styles.emptyCartIcon}>🛒</Text>
                             <Text style={styles.emptyCartText}>{language.emptyCart}</Text>
                             <Text style={styles.emptyCartSubtext}>{language.addItemsFromList}</Text>
@@ -5930,12 +5930,12 @@ const InventoryApp = () => {
 
                       {/* Customer Info (Optional) */}
                       <View style={styles.customerInfoSection}>
-                        <Text style={styles. sectionTitle}>
+                        <Text style={styles.sectionTitle}>
                           {language.customerInformation}
                         </Text>
                         <TextInput
-                          style={styles. modernInput}
-                          placeholder={language. customerName || "Customer Name"}
+                          style={styles.modernInput}
+                          placeholder={language.customerName || "Customer Name"}
                           value={cartCustomerName}
                           onChangeText={setCartCustomerName}
                         />
@@ -6021,7 +6021,7 @@ const InventoryApp = () => {
                           keyboardType="decimal-pad"
                         />
                         <TextInput
-                          style={[styles. modernInput, { flex: 1, marginLeft: 8 }]}
+                          style={[styles.modernInput, { flex: 1, marginLeft: 8 }]}
                           placeholder={language.unitsSold}
                           value={selectedItemForCart?.unitsSold}
                           onChangeText={(text) => {
