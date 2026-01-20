@@ -2295,7 +2295,7 @@ const InventoryApp = () => {
             text: language.printReceipt || 'Print',
             onPress: async () => {
               const html = generateExistingReceiptHTML(receipt);
-              await Print. printAsync({ html });
+              await Print.printAsync({ html });
             }
           },
           {
