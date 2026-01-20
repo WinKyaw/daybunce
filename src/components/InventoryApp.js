@@ -1912,6 +1912,9 @@ const InventoryApp = () => {
   const [receiptHistory, setReceiptHistory] = useState([]);
   const [showReceiptHistoryModal, setShowReceiptHistoryModal] = useState(false);
   const [selectedReceiptDetail, setSelectedReceiptDetail] = useState(null);
+  const [receiptHistoryDate, setReceiptHistoryDate] = useState(new Date());
+  const [loadedReceiptsCount, setLoadedReceiptsCount] = useState(20);
+  const [showReceiptCalendarModal, setShowReceiptCalendarModal] = useState(false);
 
   
   // New state for dynamic predefined items
@@ -1996,6 +1999,14 @@ const InventoryApp = () => {
       loadLastReceiptCreator();
     }
   }, [showCartView]);
+
+  // Reset receipt history pagination and date when modal opens
+  useEffect(() => {
+    if (showReceiptHistoryModal) {
+      setReceiptHistoryDate(new Date());
+      setLoadedReceiptsCount(20);
+    }
+  }, [showReceiptHistoryModal]);
 
   // Load predefined items from AsyncStorage with JSON file integration
   const loadPredefinedItems = async () => {
@@ -2445,6 +2456,162 @@ const InventoryApp = () => {
   const formatCurrency = (amount) => {
     const num = parseFloat(amount) || 0;
     return num.toFixed(2); // Always show 2 decimal places
+  };
+
+  // Filter receipts by date
+  const getReceiptsForDate = (date) => {
+    const dateKey = formatDate(date);
+    return receiptHistory.filter(receipt => {
+      const receiptDateKey = formatDate(new Date(receipt.timestamp));
+      return receiptDateKey === dateKey;
+    });
+  };
+
+  // Generate daily receipts export HTML
+  const generateDailyReceiptsHTML = (date, receipts) => {
+    const dateStr = date.toLocaleDateString();
+    const timeStr = new Date().toLocaleTimeString();
+    const totalAmount = receipts.reduce((sum, r) => sum + parseFloat(r.total || 0), 0);
+    
+    const receiptsHTML = receipts.map((receipt, index) => `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${receipt.receiptNumber}</td>
+        <td>${new Date(receipt.timestamp).toLocaleTimeString()}</td>
+        <td>${receipt.customerName || '-'}</td>
+        <td>${receipt.items.length}</td>
+        <td style="text-align: right;">${selectedCurrency}${formatCurrency(receipt.total)}</td>
+      </tr>
+    `).join('');
+    
+    return `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${language.dailyReceiptsReport || 'Daily Receipts Report'}</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+          }
+          .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+          }
+          .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+          }
+          .date-info {
+            color: #666;
+            font-size: 14px;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+          }
+          th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+          }
+          th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+          }
+          .summary {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+          }
+          .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 16px;
+          }
+          .summary-total {
+            font-weight: bold;
+            font-size: 18px;
+            border-top: 2px solid #333;
+            margin-top: 10px;
+            padding-top: 10px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="title">${language.dailyReceiptsReport || 'Daily Receipts Report'}</div>
+          <div class="date-info">
+            ${language.date || 'Date'}: ${dateStr}<br>
+            ${language.generatedAt || 'Generated'}: ${timeStr}
+          </div>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th width="8%">#</th>
+              <th width="15%">${language.receiptNumber || 'Receipt #'}</th>
+              <th width="15%">${language.time || 'Time'}</th>
+              <th width="25%">${language.customerName || 'Customer'}</th>
+              <th width="12%">${language.items || 'Items'}</th>
+              <th width="25%" style="text-align: right;">${language.totalAmount || 'Total'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${receiptsHTML || '<tr><td colspan="6" style="text-align: center; color: #666;">No receipts</td></tr>'}
+          </tbody>
+        </table>
+        
+        <div class="summary">
+          <div class="summary-item">
+            <span>${language.totalReceipts || 'Total Receipts'}:</span>
+            <span>${receipts.length}</span>
+          </div>
+          <div class="summary-item summary-total">
+            <span>${language.totalAmount || 'Total Amount'}:</span>
+            <span>${selectedCurrency}${formatCurrency(totalAmount)}</span>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+  };
+
+  // Export daily receipts
+  const exportDailyReceipts = async (date) => {
+    try {
+      const receiptsForDate = getReceiptsForDate(date);
+      const nonVoidedReceipts = receiptsForDate.filter(r => !r.voided);
+      
+      if (nonVoidedReceipts.length === 0) {
+        Alert.alert(
+          language.noReceiptsOnDate || 'No receipts on this date',
+          language.selectDifferentDate || 'Please select a different date'
+        );
+        return;
+      }
+      
+      const html = generateDailyReceiptsHTML(date, nonVoidedReceipts);
+      const { uri } = await Print.printToFileAsync({ html });
+      await Sharing.shareAsync(uri);
+    } catch (error) {
+      console.error('Error exporting receipts:', error);
+      Alert.alert(
+        language.error || 'Error',
+        language.exportError || 'Failed to export receipts'
+      );
+    }
   };
 
   // Get days in month with day names
@@ -5631,63 +5798,119 @@ const InventoryApp = () => {
           <View style={styles.modalOverlay}>
             <TouchableWithoutFeedback>
               <View style={styles.fixedSettingsModalContent}>
-                <Text style={styles.settingsTitle}>{language.receiptHistory || 'Receipt History'}</Text>
+                {/* Header with Date Selector */}
+                <View style={styles.receiptHistoryHeader}>
+                  <Text style={styles.settingsTitle}>{language.receiptHistory || 'Receipt History'}</Text>
+                  <TouchableOpacity
+                    style={styles.receiptDateButton}
+                    onPress={() => setShowReceiptCalendarModal(true)}
+                  >
+                    <Text style={styles.receiptDateText}>
+                      📅 {receiptHistoryDate.toLocaleDateString()}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
                 
-                <ScrollView 
-                  style={styles.settingsScrollView}
-                  showsVerticalScrollIndicator={true}
-                  contentContainerStyle={{ paddingBottom: 20 }}
-                >
-                  {receiptHistory.length === 0 ? (
-                    <Text style={styles.noItemsText}>{language.noItems || 'No receipts found'}</Text>
-                  ) : (
-                    receiptHistory.map((receipt) => (
-                      <TouchableOpacity
-                        key={receipt.id}
-                        style={[
-                          styles.receiptHistoryItem,
-                          receipt.voided && styles.receiptHistoryItemVoided
-                        ]}
-                        onPress={() => {
-                          setSelectedReceiptDetail(receipt);
-                          setShowReceiptHistoryModal(false);
-                        }}
+                {/* Receipt Count Indicator */}
+                {(() => {
+                  const filteredReceipts = getReceiptsForDate(receiptHistoryDate);
+                  const displayedReceipts = filteredReceipts.slice(0, loadedReceiptsCount);
+                  
+                  return (
+                    <>
+                      <Text style={styles.receiptCountText}>
+                        {filteredReceipts.length > 0
+                          ? (language.receiptsOnDate || '{{count}} receipts on {{date}}')
+                              .replace('{{count}}', filteredReceipts.length)
+                              .replace('{{date}}', receiptHistoryDate.toLocaleDateString())
+                          : (language.noReceiptsOnDate || 'No receipts on this date')
+                        }
+                      </Text>
+                      
+                      <ScrollView 
+                        style={styles.settingsScrollView}
+                        showsVerticalScrollIndicator={true}
+                        contentContainerStyle={{ paddingBottom: 20 }}
                       >
-                        <View style={styles.receiptHistoryItemHeader}>
-                          <Text style={[
-                            styles.receiptHistoryItemNumber,
-                            receipt.voided && styles.receiptHistoryItemTextVoided
-                          ]}>
-                            {language.receiptNumber || 'Receipt #'}{receipt.receiptNumber}
-                          </Text>
-                          {receipt.voided && (
-                            <View style={styles.voidedBadge}>
-                              <Text style={styles.voidedBadgeText}>{language.voided || 'VOIDED'}</Text>
-                            </View>
-                          )}
-                        </View>
-                        <Text style={[
-                          styles.receiptHistoryItemDate,
-                          receipt.voided && styles.receiptHistoryItemTextVoided
-                        ]}>
-                          {new Date(receipt.timestamp).toLocaleString()}
-                        </Text>
-                        <Text style={[
-                          styles.receiptHistoryItemCustomer,
-                          receipt.voided && styles.receiptHistoryItemTextVoided
-                        ]}>
-                          {language.customerName || 'Customer'}: {receipt.customerName}
-                        </Text>
-                        <Text style={[
-                          styles.receiptHistoryItemTotal,
-                          receipt.voided && styles.receiptHistoryItemTextVoided
-                        ]}>
-                          {language.totalAmount || 'Total'}: {language.currency}{receipt.total}
+                        {displayedReceipts.length === 0 ? (
+                          <Text style={styles.noItemsText}>{language.noReceiptsOnDate || 'No receipts on this date'}</Text>
+                        ) : (
+                          <>
+                            {displayedReceipts.map((receipt) => (
+                              <TouchableOpacity
+                                key={receipt.id}
+                                style={[
+                                  styles.receiptHistoryItem,
+                                  receipt.voided && styles.receiptHistoryItemVoided
+                                ]}
+                                onPress={() => {
+                                  setSelectedReceiptDetail(receipt);
+                                  setShowReceiptHistoryModal(false);
+                                }}
+                              >
+                                <View style={styles.receiptHistoryItemHeader}>
+                                  <Text style={[
+                                    styles.receiptHistoryItemNumber,
+                                    receipt.voided && styles.receiptHistoryItemTextVoided
+                                  ]}>
+                                    {language.receiptNumber || 'Receipt #'}{receipt.receiptNumber}
+                                  </Text>
+                                  {receipt.voided && (
+                                    <View style={styles.voidedBadge}>
+                                      <Text style={styles.voidedBadgeText}>{language.voided || 'VOIDED'}</Text>
+                                    </View>
+                                  )}
+                                </View>
+                                <Text style={[
+                                  styles.receiptHistoryItemDate,
+                                  receipt.voided && styles.receiptHistoryItemTextVoided
+                                ]}>
+                                  {new Date(receipt.timestamp).toLocaleString()}
+                                </Text>
+                                <Text style={[
+                                  styles.receiptHistoryItemCustomer,
+                                  receipt.voided && styles.receiptHistoryItemTextVoided
+                                ]}>
+                                  {language.customerName || 'Customer'}: {receipt.customerName}
+                                </Text>
+                                <Text style={[
+                                  styles.receiptHistoryItemTotal,
+                                  receipt.voided && styles.receiptHistoryItemTextVoided
+                                ]}>
+                                  {language.totalAmount || 'Total'}: {language.currency}{receipt.total}
+                                </Text>
+                              </TouchableOpacity>
+                            ))}
+                            
+                            {/* Load More Button */}
+                            {filteredReceipts.length > loadedReceiptsCount && (
+                              <TouchableOpacity
+                                style={styles.loadMoreButton}
+                                onPress={() => setLoadedReceiptsCount(prev => prev + 20)}
+                              >
+                                <Text style={styles.loadMoreButtonText}>{language.loadMoreReceipts || 'Load More Receipts'}</Text>
+                              </TouchableOpacity>
+                            )}
+                          </>
+                        )}
+                      </ScrollView>
+                      
+                      {/* Export Button */}
+                      <TouchableOpacity
+                        style={[
+                          styles.exportReceiptsButton,
+                          filteredReceipts.length === 0 && { opacity: 0.5 }
+                        ]}
+                        onPress={() => exportDailyReceipts(receiptHistoryDate)}
+                        disabled={filteredReceipts.length === 0}
+                      >
+                        <Text style={styles.exportReceiptsButtonText}>
+                          📄 {language.exportDailyReceipts || 'Export Day\'s Receipts'}
                         </Text>
                       </TouchableOpacity>
-                    ))
-                  )}
-                </ScrollView>
+                    </>
+                  );
+                })()}
                 
                 <TouchableOpacity
                   style={styles.receiptHistoryCloseButton}
@@ -5806,6 +6029,39 @@ const InventoryApp = () => {
                     </View>
                   </>
                 )}
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      {/* Receipt History Calendar Modal */}
+      <Modal
+        visible={showReceiptCalendarModal}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={() => setShowReceiptCalendarModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setShowReceiptCalendarModal(false)}>
+          <View style={styles.calendarModalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.calendarModalContent}>
+                <Calendar
+                  current={formatDate(receiptHistoryDate)}
+                  onDayPress={(day) => {
+                    const [year, month, dayNum] = day.dateString.split('-');
+                    const newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(dayNum), 12, 0, 0);
+                    setReceiptHistoryDate(newDate);
+                    setLoadedReceiptsCount(20); // Reset pagination when date changes
+                    setShowReceiptCalendarModal(false);
+                  }}
+                  markedDates={{
+                    [formatDate(receiptHistoryDate)]: {
+                      selected: true,
+                      selectedColor: '#2196f3'
+                    }
+                  }}
+                />
               </View>
             </TouchableWithoutFeedback>
           </View>
@@ -9162,6 +9418,57 @@ const styles = StyleSheet.create({
     color: '#666',
     fontSize: 14,
     fontWeight: '500',
+  },
+  receiptHistoryHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  receiptDateButton: {
+    padding: 8,
+    borderRadius: 8,
+    backgroundColor: '#e3f2fd',
+    borderWidth: 1,
+    borderColor: '#2196f3',
+  },
+  receiptDateText: {
+    fontSize: 14,
+    color: '#1976d2',
+    fontWeight: '600',
+  },
+  receiptCountText: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  exportReceiptsButton: {
+    padding: 14,
+    borderRadius: 10,
+    backgroundColor: '#4caf50',
+    marginTop: 12,
+    marginBottom: 8,
+    alignItems: 'center',
+  },
+  exportReceiptsButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  loadMoreButton: {
+    padding: 12,
+    borderRadius: 8,
+    backgroundColor: '#f5f5f5',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    marginTop: 12,
+    alignItems: 'center',
+  },
+  loadMoreButtonText: {
+    color: '#666',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
 
