@@ -2000,14 +2000,6 @@ const InventoryApp = () => {
     }
   }, [showCartView]);
 
-  // Reset receipt history pagination and date when modal opens
-  useEffect(() => {
-    if (showReceiptHistoryModal) {
-      setReceiptHistoryDate(new Date());
-      setLoadedReceiptsCount(20);
-    }
-  }, [showReceiptHistoryModal]);
-
   // Load predefined items from AsyncStorage with JSON file integration
   const loadPredefinedItems = async () => {
     try {
