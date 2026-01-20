@@ -272,6 +272,11 @@ const languageConfigs = {
     unmarkAsVoided: 'Unmark as Voided',
     receiptNumber: 'Receipt #',
     viewReceiptHistory: 'View receipt history',
+    taxSettings: 'Tax Settings',
+    taxType: 'Tax Type',
+    taxPercentage: 'Percentage (%)',
+    taxFixedAmount: 'Fixed Amount',
+    taxValue: 'Tax Value',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -390,6 +395,11 @@ const languageConfigs = {
     unmarkAsVoided: 'Desmarcar como Anulado',
     receiptNumber: 'Recibo #',
     viewReceiptHistory: 'Ver historial de recibos',
+    taxSettings: 'Configuración de Impuestos',
+    taxType: 'Tipo de Impuesto',
+    taxPercentage: 'Porcentaje (%)',
+    taxFixedAmount: 'Monto Fijo',
+    taxValue: 'Valor del Impuesto',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -496,6 +506,11 @@ const languageConfigs = {
     unmarkAsVoided: 'Démarquer comme Annulé',
     receiptNumber: 'Reçu #',
     viewReceiptHistory: 'Voir l\'historique des reçus',
+    taxSettings: 'Paramètres de Taxe',
+    taxType: 'Type de Taxe',
+    taxPercentage: 'Pourcentage (%)',
+    taxFixedAmount: 'Montant Fixe',
+    taxValue: 'Valeur de la Taxe',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -602,6 +617,11 @@ const languageConfigs = {
     unmarkAsVoided: 'Ungültig-Markierung entfernen',
     receiptNumber: 'Beleg #',
     viewReceiptHistory: 'Belegverlauf anzeigen',
+    taxSettings: 'Steuereinstellungen',
+    taxType: 'Steuertyp',
+    taxPercentage: 'Prozentsatz (%)',
+    taxFixedAmount: 'Fester Betrag',
+    taxValue: 'Steuerwert',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -708,6 +728,11 @@ const languageConfigs = {
     unmarkAsVoided: 'Rimuovi Annullamento',
     receiptNumber: 'Ricevuta #',
     viewReceiptHistory: 'Visualizza cronologia ricevute',
+    taxSettings: 'Impostazioni Fiscali',
+    taxType: 'Tipo di Imposta',
+    taxPercentage: 'Percentuale (%)',
+    taxFixedAmount: 'Importo Fisso',
+    taxValue: 'Valore Fiscale',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -814,6 +839,11 @@ const languageConfigs = {
     unmarkAsVoided: 'Desmarcar como Anulado',
     receiptNumber: 'Recibo #',
     viewReceiptHistory: 'Ver histórico de recibos',
+    taxSettings: 'Configurações de Impostos',
+    taxType: 'Tipo de Imposto',
+    taxPercentage: 'Porcentagem (%)',
+    taxFixedAmount: 'Valor Fixo',
+    taxValue: 'Valor do Imposto',
   },
   zh: {
     appTitle: '库存管理',
@@ -914,6 +944,11 @@ const languageConfigs = {
     unmarkAsVoided: '取消作废标记',
     receiptNumber: '收据 #',
     viewReceiptHistory: '查看收据历史',
+    taxSettings: '税务设置',
+    taxType: '税务类型',
+    taxPercentage: '百分比 (%)',
+    taxFixedAmount: '固定金额',
+    taxValue: '税值',
   },
   ja: {
     appTitle: '在庫管理',
@@ -1014,6 +1049,11 @@ const languageConfigs = {
     unmarkAsVoided: '無効マークを解除',
     receiptNumber: 'レシート #',
     viewReceiptHistory: 'レシート履歴を表示',
+    taxSettings: '税金設定',
+    taxType: '税金タイプ',
+    taxPercentage: 'パーセンテージ (%)',
+    taxFixedAmount: '固定金額',
+    taxValue: '税額',
   },
   ko: {
     appTitle: '재고 관리',
@@ -1120,6 +1160,11 @@ const languageConfigs = {
     unmarkAsVoided: '무효 표시 해제',
     receiptNumber: '영수증 #',
     viewReceiptHistory: '영수증 내역 보기',
+    taxSettings: '세금 설정',
+    taxType: '세금 유형',
+    taxPercentage: '백분율 (%)',
+    taxFixedAmount: '고정 금액',
+    taxValue: '세금 값',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1226,6 +1271,11 @@ const languageConfigs = {
     unmarkAsVoided: 'ยกเลิกการทำเครื่องหมาย',
     receiptNumber: 'ใบเสร็จ #',
     viewReceiptHistory: 'ดูประวัติใบเสร็จ',
+    taxSettings: 'การตั้งค่าภาษี',
+    taxType: 'ประเภทภาษี',
+    taxPercentage: 'เปอร์เซ็นต์ (%)',
+    taxFixedAmount: 'จำนวนคงที่',
+    taxValue: 'มูลค่าภาษี',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1332,6 +1382,11 @@ const languageConfigs = {
     unmarkAsVoided: 'Bỏ Đánh Dấu Đã Hủy',
     receiptNumber: 'Hóa Đơn #',
     viewReceiptHistory: 'Xem lịch sử hóa đơn',
+    taxSettings: 'Cài Đặt Thuế',
+    taxType: 'Loại Thuế',
+    taxPercentage: 'Phần Trăm (%)',
+    taxFixedAmount: 'Số Tiền Cố Định',
+    taxValue: 'Giá Trị Thuế',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1438,6 +1493,11 @@ const languageConfigs = {
     unmarkAsVoided: 'Hapus Tanda Dibatalkan',
     receiptNumber: 'Struk #',
     viewReceiptHistory: 'Lihat riwayat struk',
+    taxSettings: 'Pengaturan Pajak',
+    taxType: 'Jenis Pajak',
+    taxPercentage: 'Persentase (%)',
+    taxFixedAmount: 'Jumlah Tetap',
+    taxValue: 'Nilai Pajak',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1544,6 +1604,11 @@ const languageConfigs = {
     unmarkAsVoided: 'रद्द चिह्न हटाएं',
     receiptNumber: 'रसीद #',
     viewReceiptHistory: 'रसीद इतिहास देखें',
+    taxSettings: 'कर सेटिंग्स',
+    taxType: 'कर प्रकार',
+    taxPercentage: 'प्रतिशत (%)',
+    taxFixedAmount: 'निश्चित राशि',
+    taxValue: 'कर मूल्य',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1649,6 +1714,11 @@ const languageConfigs = {
     unmarkAsVoided: 'ပယ်ဖျက်မှတ်သား ဖယ်ရှားရန်',
     receiptNumber: 'ရောင်းချမှတ်တမ်း #',
     viewReceiptHistory: 'ရောင်းချမှတ်တမ်းမှတ်တမ်း ကြည့်ရန်',
+    taxSettings: 'အခွန်ဆက်တင်များ',
+    taxType: 'အခွန်အမျိုးအစား',
+    taxPercentage: 'ရာခိုင်နှုန်း (%)',
+    taxFixedAmount: 'သတ်မှတ်ငွေပမာဏ',
+    taxValue: 'အခွန်တန်ဖိုး',
   },
 };
 
@@ -2001,7 +2071,7 @@ const InventoryApp = () => {
 
   const generateExistingReceiptHTML = (receipt) => {
     const currentStore = stores.find(s => s.id === selectedStore);
-    const storeName = currentStore?.name || language.appTitle;
+    const storeName = currentStore?.name || customAppTitle || language.appTitle;
     
     return `
       <!DOCTYPE html>
@@ -2276,12 +2346,8 @@ const InventoryApp = () => {
 
   // Format number with thousand separator
   const formatCurrency = (amount) => {
-    if (!amount || isNaN(amount)) return '0';
-    // Round down and format with thousand separators, no decimals
-    return Math.floor(parseFloat(amount)). toLocaleString('en-US', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    });
+    const num = parseFloat(amount) || 0;
+    return num.toFixed(2); // Always show 2 decimal places
   };
 
   // Get days in month with day names
@@ -3507,6 +3573,7 @@ const InventoryApp = () => {
       await AsyncStorage.setItem('selectedLanguage', selectedLanguage);
       await AsyncStorage.setItem('selectedCurrency', selectedCurrency);
       await AsyncStorage.setItem('combineIdenticalItems', combineIdenticalItems.toString());
+      await AsyncStorage.setItem('tax_settings', JSON.stringify(taxSettings));
       if (customAppTitle.trim()) {
         await AsyncStorage.setItem('customAppTitle', customAppTitle.trim());
         setLanguage(prev => ({ ...prev, appTitle: customAppTitle.trim() }));
@@ -5325,6 +5392,54 @@ const InventoryApp = () => {
                       </View>
                     )}
                   </View>
+                  
+                  {/* Tax Settings */}
+                  <View style={styles.settingItem}>
+                    <Text style={styles.settingLabel}>{language.taxSettings || 'Tax Settings'}</Text>
+                    
+                    {/* Tax Type Selector */}
+                    <View style={styles.taxTypeContainer}>
+                      <TouchableOpacity
+                        style={[
+                          styles.taxTypeButton,
+                          taxSettings.type === 'percentage' && styles.taxTypeButtonActive
+                        ]}
+                        onPress={() => setTaxSettings({ ...taxSettings, type: 'percentage' })}
+                      >
+                        <Text style={[
+                          styles.taxTypeButtonText,
+                          taxSettings.type === 'percentage' && styles.taxTypeButtonTextActive
+                        ]}>
+                          {language.taxPercentage || 'Percentage (%)'}
+                        </Text>
+                      </TouchableOpacity>
+                      
+                      <TouchableOpacity
+                        style={[
+                          styles.taxTypeButton,
+                          taxSettings.type === 'fixed' && styles.taxTypeButtonActive
+                        ]}
+                        onPress={() => setTaxSettings({ ...taxSettings, type: 'fixed' })}
+                      >
+                        <Text style={[
+                          styles.taxTypeButtonText,
+                          taxSettings.type === 'fixed' && styles.taxTypeButtonTextActive
+                        ]}>
+                          {language.taxFixedAmount || 'Fixed Amount'}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    
+                    {/* Tax Value Input */}
+                    <TextInput
+                      style={styles.settingInput}
+                      placeholder={taxSettings.type === 'percentage' ? '7' : '2.50'}
+                      value={taxSettings.value.toString()}
+                      onChangeText={(text) => setTaxSettings({ ...taxSettings, value: parseFloat(text) || 0 })}
+                      keyboardType="decimal-pad"
+                    />
+                  </View>
+                  
                   {/* Combine Items Setting */}
                   <View style={styles.settingItem}>
                     <Text style={styles.settingLabel}>{language.combineItems || 'Combine Identical Items'}</Text>
@@ -7400,6 +7515,34 @@ const styles = StyleSheet.create({
     padding: 12,
     fontSize: 16,
     backgroundColor: '#f8f9fa',
+  },
+  taxTypeContainer: {
+    flexDirection: 'row',
+    marginTop: 8,
+    marginBottom: 8,
+    gap: 8,
+  },
+  taxTypeButton: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#f5f5f5',
+    alignItems: 'center',
+  },
+  taxTypeButtonActive: {
+    backgroundColor: '#2196f3',
+    borderColor: '#2196f3',
+  },
+  taxTypeButtonText: {
+    fontSize: 14,
+    color: '#666',
+  },
+  taxTypeButtonTextActive: {
+    color: '#fff',
+    fontWeight: '600',
   },
   languageSelector: {
     flexDirection: 'row',
