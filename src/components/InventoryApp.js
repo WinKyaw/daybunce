@@ -2071,9 +2071,14 @@ const InventoryApp = () => {
 
   const generateExistingReceiptHTML = (receipt) => {
     // Use store name from receipt if available, otherwise try to find it
-    const storeName = receipt.storeName || 
-      (receipt.storeId ? stores.find(s => s.id === receipt.storeId)?.name : null) ||
-      language.appTitle;
+    let storeName = receipt.storeName;
+    if (!storeName && receipt.storeId) {
+      const store = stores.find(s => s.id === receipt.storeId);
+      storeName = store?.name;
+    }
+    if (!storeName) {
+      storeName = language.appTitle;
+    }
     
     return `
       <!DOCTYPE html>
