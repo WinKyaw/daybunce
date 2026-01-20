@@ -2575,7 +2575,7 @@ const InventoryApp = () => {
             </tr>
           </thead>
           <tbody>
-            ${receiptsHTML || '<tr><td colspan="6" style="text-align: center; color: #666;">No receipts</td></tr>'}
+            ${receiptsHTML || `<tr><td colspan="6" style="text-align: center; color: #666;">${language.noReceiptsOnDate || 'No receipts on this date'}</td></tr>`}
           </tbody>
         </table>
         
