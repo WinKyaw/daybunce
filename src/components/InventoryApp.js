@@ -6489,7 +6489,7 @@ const InventoryApp = () => {
           setShowSalesTrackingModal(true);
         }}
       >
-        <TouchableWithoutFeedback onPress={Keyboard. dismiss}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.modalOverlay}>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -6654,13 +6654,13 @@ const InventoryApp = () => {
                         onScroll={({ nativeEvent }) => {
                           const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
                           const paddingToBottom = 20;
-                          if (layoutMeasurement.height + contentOffset.y >= contentSize. height - paddingToBottom) {
+                          if (layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom) {
                             loadMoreItems();
                           }
                         }}
                         scrollEventThrottle={400}
                       >
-                        {getFilteredPredefinedItems. length === 0 ? (
+                        {getFilteredPredefinedItems.length === 0 ? (
                           <View style={styles.noPredefinedItemsContainer}>
                             <Text style={styles.noPredefinedItemsText}>
                               No items found matching your search
@@ -6806,7 +6806,7 @@ const InventoryApp = () => {
               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.modalOverlay}>
                   <KeyboardAvoidingView
-                    behavior={Platform. OS === 'ios' ? 'padding' : 'height'}
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                     style={styles.keyboardAvoidingView}
                   >
                     <View style={styles.modernModalContent}>
