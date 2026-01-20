@@ -4347,7 +4347,10 @@ const InventoryApp = () => {
       </View>
 
       {/* Items List */}
-      <ScrollView style={styles.itemsList}>
+      <ScrollView 
+        style={styles.itemsList}
+        scrollEnabled={true}
+      >
         {filteredItems.length === 0 ? (
           <View style={styles.noItemsContainer}>
             <Text style={styles.noItemsText}>{language.noItems}</Text>
@@ -4835,7 +4838,10 @@ const InventoryApp = () => {
                         {language.managePredefined}
                       </Text>
                       
-                      <ScrollView style={styles.bulkActionsScrollView}>
+                      <ScrollView 
+                        style={styles.bulkActionsScrollView}
+                        scrollEnabled={true}
+                      >
 
                         {/* Bulk Add Items */}
                         <TouchableOpacity
@@ -5129,7 +5135,11 @@ const InventoryApp = () => {
                 <View style={styles.overlayModalContent}>
                   <Text style={styles.overlayModalTitle}>{language.selectCategory}</Text>
                   
-                  <ScrollView style={styles.overlayScrollView}>
+                  <ScrollView 
+                    style={styles.overlayScrollView}
+                    nestedScrollEnabled={true}
+                    scrollEnabled={true}
+                  >
                     {getDynamicCategories().filter(cat => cat !== 'All').map(cat => (
                       <TouchableOpacity
                         key={cat}
@@ -5197,7 +5207,11 @@ const InventoryApp = () => {
                 <View style={styles.overlayModalContent}>
                   <Text style={styles.overlayModalTitle}>{language.selectUnitType}</Text>
                   
-                  <ScrollView style={styles.overlayScrollView}>
+                  <ScrollView 
+                    style={styles.overlayScrollView}
+                    nestedScrollEnabled={true}
+                    scrollEnabled={true}
+                  >
                     {getDynamicUnitTypes().map(unit => (
                       <TouchableOpacity
                         key={unit}
@@ -5581,6 +5595,7 @@ const InventoryApp = () => {
                         <ScrollView 
                           style={styles.languageDropdownScroll}
                           nestedScrollEnabled={true}
+                          scrollEnabled={true}
                         >
                           {availableLanguages.map(lang => (
                             <TouchableOpacity
@@ -5629,6 +5644,7 @@ const InventoryApp = () => {
                         <ScrollView 
                           style={styles.languageDropdownScroll}
                           nestedScrollEnabled={true}
+                          scrollEnabled={true}
                         >
                           {availableCurrencies.map(curr => (
                             <TouchableOpacity
@@ -6176,6 +6192,7 @@ const InventoryApp = () => {
                     <ScrollView 
                       style={styles.storeDropdownScroll} 
                       nestedScrollEnabled={true}
+                      scrollEnabled={true}
                     >
                       {stores.map(store => (
                         <View key={store.id} style={styles.storeDropdownItemContainer}>
