@@ -2462,8 +2462,14 @@ const InventoryApp = () => {
   const getReceiptsForDate = (date) => {
     const dateKey = formatDate(date);
     return receiptHistory.filter(receipt => {
-      const receiptDateKey = formatDate(new Date(receipt.timestamp));
-      return receiptDateKey === dateKey;
+      if (!receipt.timestamp) return false; // Skip receipts with invalid timestamps
+      try {
+        const receiptDateKey = formatDate(new Date(receipt.timestamp));
+        return receiptDateKey === dateKey;
+      } catch (error) {
+        console.warn('Invalid receipt timestamp:', receipt.timestamp);
+        return false;
+      }
     });
   };
 
@@ -2592,7 +2598,7 @@ const InventoryApp = () => {
   const exportDailyReceipts = async (date) => {
     try {
       const receiptsForDate = getReceiptsForDate(date);
-      const nonVoidedReceipts = receiptsForDate.filter(r => !r.voided);
+      const nonVoidedReceipts = receiptsForDate.filter(r => r.voided !== true);
       
       if (nonVoidedReceipts.length === 0) {
         Alert.alert(
@@ -6050,7 +6056,7 @@ const InventoryApp = () => {
                   current={formatDate(receiptHistoryDate)}
                   onDayPress={(day) => {
                     const [year, month, dayNum] = day.dateString.split('-');
-                    const newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(dayNum), 12, 0, 0);
+                    const newDate = new Date(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(dayNum, 10), 12, 0, 0);
                     setReceiptHistoryDate(newDate);
                     setLoadedReceiptsCount(20); // Reset pagination when date changes
                     setShowReceiptCalendarModal(false);
