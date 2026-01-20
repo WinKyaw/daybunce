@@ -5874,10 +5874,9 @@ const InventoryApp = () => {
                                 loadYearlyTotal(selectedYear);
                               }}
                               onLongPress={() => {
-                                if (store.id !== 'main_store') { // Prevent editing Main Store name
-                                  setEditingStore(store);
-                                  setNewStoreName(store.name);
-                                }
+                                // Allow editing all stores including main_store
+                                setEditingStore(store);
+                                setNewStoreName(store.name);
                               }}
                             >
                               <Text style={[
