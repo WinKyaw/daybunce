@@ -5809,7 +5809,12 @@ const InventoryApp = () => {
                   <Text style={styles.settingsTitle}>{language.receiptHistory || 'Receipt History'}</Text>
                   <TouchableOpacity
                     style={styles.receiptDateButton}
-                    onPress={() => setShowReceiptCalendarModal(true)}
+                    onPress={() => {
+                      setShowReceiptHistoryModal(false); // Close history modal first
+                      setTimeout(() => {
+                        setShowReceiptCalendarModal(true); // Then open calendar
+                      }, 100);
+                    }}
                   >
                     <Text style={styles.receiptDateText}>
                       📅 {receiptHistoryDate.toLocaleDateString()}
@@ -6060,6 +6065,10 @@ const InventoryApp = () => {
                     setReceiptHistoryDate(newDate);
                     setLoadedReceiptsCount(20); // Reset pagination when date changes
                     setShowReceiptCalendarModal(false);
+                    // Re-open Receipt History after a short delay
+                    setTimeout(() => {
+                      setShowReceiptHistoryModal(true);
+                    }, 100);
                   }}
                   markedDates={{
                     [formatDate(receiptHistoryDate)]: {
