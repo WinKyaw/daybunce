@@ -6699,7 +6699,7 @@ const InventoryApp = () => {
                         style={styles.cartViewList}
                         scrollEnabled={true}
                       >
-                        {cartItems. length === 0 ? (
+                        {cartItems.length === 0 ? (
                           <View style={styles.emptyCartContainer}>
                             <Text style={styles.emptyCartIcon}>🛒</Text>
                             <Text style={styles.emptyCartText}>{language.emptyCart}</Text>
