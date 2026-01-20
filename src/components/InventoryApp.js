@@ -2070,8 +2070,15 @@ const InventoryApp = () => {
   };
 
   const generateExistingReceiptHTML = (receipt) => {
-    const currentStore = stores.find(s => s.id === selectedStore);
-    const storeName = currentStore?.name || customAppTitle || language.appTitle;
+    // Use store name from receipt if available, otherwise try to find it
+    let storeName = receipt.storeName;
+    if (!storeName && receipt.storeId) {
+      const store = stores.find(s => s.id === receipt.storeId);
+      storeName = store?.name;
+    }
+    if (!storeName) {
+      storeName = language.appTitle;
+    }
     
     return `
       <!DOCTYPE html>
@@ -2159,6 +2166,7 @@ const InventoryApp = () => {
 
       // Create receipt for history
       const totals = calculateCartTotals();
+      const currentStore = stores.find(s => s.id === selectedStore);
       const receipt = {
         id: Date.now().toString(),
         receiptNumber: `R${Date.now().toString().slice(-8)}`,
@@ -2166,6 +2174,8 @@ const InventoryApp = () => {
         date: formatDate(selectedDate),
         customerName: cartCustomerName || 'Walk-in Customer',
         receiptCreator: receiptCreator || '',
+        storeId: selectedStore,
+        storeName: currentStore?.name || language.appTitle,
         items: cartItems,
         subtotal: totals.subtotal,
         tax: totals.tax,
