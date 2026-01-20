@@ -4551,32 +4551,34 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => setShowItemTypeModal(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.selectionModalContent}>
-            <Text style={styles.selectionModalTitle}>{language.selectItemType}</Text>
-            
-            <TouchableOpacity
-              style={styles.customItemOption}
-              onPress={() => handleItemTypeSelection(true)}
-            >
-              <Text style={styles.customItemText}>{language.customItem}</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={styles.predefinedItemOption}
-              onPress={() => handleItemTypeSelection(false)}
-            >
-              <Text style={styles.predefinedItemText}>{language.predefinedItems}</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={styles.closeModalButton}
-              onPress={() => setShowItemTypeModal(false)}
-            >
-              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
-            </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={() => setShowItemTypeModal(false)}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.selectionModalContent}>
+              <Text style={styles.selectionModalTitle}>{language.selectItemType}</Text>
+              
+              <TouchableOpacity
+                style={styles.customItemOption}
+                onPress={() => handleItemTypeSelection(true)}
+              >
+                <Text style={styles.customItemText}>{language.customItem}</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={styles.predefinedItemOption}
+                onPress={() => handleItemTypeSelection(false)}
+              >
+                <Text style={styles.predefinedItemText}>{language.predefinedItems}</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={styles.closeModalButton}
+                onPress={() => setShowItemTypeModal(false)}
+              >
+                <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
 
       {/* Predefined Items Modal */}
