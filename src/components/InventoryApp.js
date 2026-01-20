@@ -5756,6 +5756,8 @@ const InventoryApp = () => {
                   style={styles.salesTrackingButton}
                   onPress={() => {
                     setShowSettingsModal(false);
+                    setReceiptHistoryDate(new Date()); // Reset to today
+                    setLoadedReceiptsCount(20); // Reset pagination
                     setShowReceiptHistoryModal(true);
                   }}
                 >
