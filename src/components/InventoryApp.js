@@ -2000,9 +2000,10 @@ const InventoryApp = () => {
     }
   }, [showCartView]);
 
-  // Reset receipt history pagination when modal opens
+  // Reset receipt history pagination and date when modal opens
   useEffect(() => {
     if (showReceiptHistoryModal) {
+      setReceiptHistoryDate(new Date());
       setLoadedReceiptsCount(20);
     }
   }, [showReceiptHistoryModal]);
@@ -4262,24 +4263,26 @@ const InventoryApp = () => {
       >
         <TouchableWithoutFeedback onPress={() => setShowCalendarModal(false)}>
           <View style={styles.calendarModalOverlay}>
-            <View style={styles.calendarModalContent}>
-              <Calendar
-                current={formatDate(selectedDate)}
-                onDayPress={(day) => {
-                  const [year, month, dayNum] = day.dateString.split('-');
-                  // Create date at noon local time to avoid timezone issues
-                  const newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(dayNum), 12, 0, 0);
-                  setSelectedDate(newDate);
-                  setShowCalendarModal(false);
-                }}
-                markedDates={{
-                  [formatDate(selectedDate)]: {
-                    selected: true,
-                    selectedColor: '#2196f3'
-                  }
-                }}
-              />
-            </View>
+            <TouchableWithoutFeedback>
+              <View style={styles.calendarModalContent}>
+                <Calendar
+                  current={formatDate(selectedDate)}
+                  onDayPress={(day) => {
+                    const [year, month, dayNum] = day.dateString.split('-');
+                    // Create date at noon local time to avoid timezone issues
+                    const newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(dayNum), 12, 0, 0);
+                    setSelectedDate(newDate);
+                    setShowCalendarModal(false);
+                  }}
+                  markedDates={{
+                    [formatDate(selectedDate)]: {
+                      selected: true,
+                      selectedColor: '#2196f3'
+                    }
+                  }}
+                />
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -4347,10 +4350,7 @@ const InventoryApp = () => {
       </View>
 
       {/* Items List */}
-      <ScrollView 
-        style={styles.itemsList}
-        scrollEnabled={true}
-      >
+      <ScrollView style={styles.itemsList}>
         {filteredItems.length === 0 ? (
           <View style={styles.noItemsContainer}>
             <Text style={styles.noItemsText}>{language.noItems}</Text>
@@ -4446,26 +4446,24 @@ const InventoryApp = () => {
       >
         <TouchableWithoutFeedback onPress={() => setShowReceiptModal(false)}>
           <View style={styles.modalOverlay}>
-            <View style={styles.receiptModalContent}>
-              <View style={styles.receiptTitleContainer}>
-                <Text style={styles.receiptTitle}>{language.dailySummary}</Text>
-                {isDayConfirmed && (
-                  <View style={styles.confirmedBadge}>
-                    <Text style={styles.confirmedBadgeIcon}>✅</Text>
-                    <Text style={styles.confirmedBadgeText}>Confirmed</Text>
-                  </View>
-                )}
-              </View>
-              <Text style={styles.receiptDate}>
-                {selectedDate.toLocaleDateString()} • {new Date().toLocaleTimeString()}
-              </Text>
-              
-              <View style={styles.receiptDivider} />
-              
-              <ScrollView 
-                style={styles.receiptItemsList}
-                scrollEnabled={true}
-              >
+            <TouchableWithoutFeedback>
+              <View style={styles.receiptModalContent}>
+                <View style={styles.receiptTitleContainer}>
+                  <Text style={styles.receiptTitle}>{language.dailySummary}</Text>
+                  {isDayConfirmed && (
+                    <View style={styles.confirmedBadge}>
+                      <Text style={styles.confirmedBadgeIcon}>✅</Text>
+                      <Text style={styles.confirmedBadgeText}>Confirmed</Text>
+                    </View>
+                  )}
+                </View>
+                <Text style={styles.receiptDate}>
+                  {selectedDate.toLocaleDateString()} • {new Date().toLocaleTimeString()}
+                </Text>
+                
+                <View style={styles.receiptDivider} />
+                
+                <ScrollView style={styles.receiptItemsList}>
                   {filteredItems.length === 0 ? (
                     <Text style={styles.noReceiptItems}>No items sold on this date</Text>
                   ) : (
@@ -4539,7 +4537,7 @@ const InventoryApp = () => {
                   <Text style={styles.closeReceiptButtonText}>{language.close}</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -4551,34 +4549,32 @@ const InventoryApp = () => {
         transparent={true}
         onRequestClose={() => setShowItemTypeModal(false)}
       >
-        <TouchableWithoutFeedback onPress={() => setShowItemTypeModal(false)}>
-          <View style={styles.modalOverlay}>
-            <View style={styles.selectionModalContent}>
-              <Text style={styles.selectionModalTitle}>{language.selectItemType}</Text>
-              
-              <TouchableOpacity
-                style={styles.customItemOption}
-                onPress={() => handleItemTypeSelection(true)}
-              >
-                <Text style={styles.customItemText}>{language.customItem}</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity
-                style={styles.predefinedItemOption}
-                onPress={() => handleItemTypeSelection(false)}
-              >
-                <Text style={styles.predefinedItemText}>{language.predefinedItems}</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity
-                style={styles.closeModalButton}
-                onPress={() => setShowItemTypeModal(false)}
-              >
-                <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
-              </TouchableOpacity>
-            </View>
+        <View style={styles.modalOverlay}>
+          <View style={styles.selectionModalContent}>
+            <Text style={styles.selectionModalTitle}>{language.selectItemType}</Text>
+            
+            <TouchableOpacity
+              style={styles.customItemOption}
+              onPress={() => handleItemTypeSelection(true)}
+            >
+              <Text style={styles.customItemText}>{language.customItem}</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.predefinedItemOption}
+              onPress={() => handleItemTypeSelection(false)}
+            >
+              <Text style={styles.predefinedItemText}>{language.predefinedItems}</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.closeModalButton}
+              onPress={() => setShowItemTypeModal(false)}
+            >
+              <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
+            </TouchableOpacity>
           </View>
-        </TouchableWithoutFeedback>
+        </View>
       </Modal>
 
       {/* Predefined Items Modal */}
@@ -4610,8 +4606,9 @@ const InventoryApp = () => {
           setActiveSwipeId(null);
         }}>
           <View style={styles.modalOverlay}>
-            <View style={styles.enhancedPredefinedModalContent}>
-              <Text style={styles.selectionModalTitle}>{language.predefinedItems}</Text>
+            <TouchableWithoutFeedback>
+              <View style={styles.enhancedPredefinedModalContent}>
+                <Text style={styles.selectionModalTitle}>{language.predefinedItems}</Text>
                 
 
                 
@@ -4655,7 +4652,6 @@ const InventoryApp = () => {
                 
                 <ScrollView 
                   style={styles.predefinedItemsList}
-                  scrollEnabled={true}
                   onScroll={({ nativeEvent }) => {
                     const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
                     const paddingToBottom = 20;
@@ -4840,10 +4836,7 @@ const InventoryApp = () => {
                         {language.managePredefined}
                       </Text>
                       
-                      <ScrollView 
-                        style={styles.bulkActionsScrollView}
-                        scrollEnabled={true}
-                      >
+                      <ScrollView style={styles.bulkActionsScrollView}>
 
                         {/* Bulk Add Items */}
                         <TouchableOpacity
@@ -4997,7 +4990,7 @@ const InventoryApp = () => {
                   </View>
                 )}
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -5137,11 +5130,7 @@ const InventoryApp = () => {
                 <View style={styles.overlayModalContent}>
                   <Text style={styles.overlayModalTitle}>{language.selectCategory}</Text>
                   
-                  <ScrollView 
-                    style={styles.overlayScrollView}
-                    nestedScrollEnabled={true}
-                    scrollEnabled={true}
-                  >
+                  <ScrollView style={styles.overlayScrollView}>
                     {getDynamicCategories().filter(cat => cat !== 'All').map(cat => (
                       <TouchableOpacity
                         key={cat}
@@ -5209,11 +5198,7 @@ const InventoryApp = () => {
                 <View style={styles.overlayModalContent}>
                   <Text style={styles.overlayModalTitle}>{language.selectUnitType}</Text>
                   
-                  <ScrollView 
-                    style={styles.overlayScrollView}
-                    nestedScrollEnabled={true}
-                    scrollEnabled={true}
-                  >
+                  <ScrollView style={styles.overlayScrollView}>
                     {getDynamicUnitTypes().map(unit => (
                       <TouchableOpacity
                         key={unit}
@@ -5288,7 +5273,8 @@ const InventoryApp = () => {
       >
         <TouchableWithoutFeedback onPress={() => setShowFilterModal(false)}>
           <View style={styles.filterModalOverlay}>
-            <View style={styles.filterModalContent}>
+            <TouchableWithoutFeedback>
+              <View style={styles.filterModalContent}>
                 {/* Header */}
                 <View style={styles.filterModalHeader}>
                   <View style={styles.filterHeaderLeft}>
@@ -5407,7 +5393,7 @@ const InventoryApp = () => {
                   <Text style={styles.applyButtonText}>Apply</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -5421,10 +5407,11 @@ const InventoryApp = () => {
       >
         <TouchableWithoutFeedback onPress={() => setShowSortModal(false)}>
           <View style={styles.modalOverlay}>
-            <View style={styles.selectionModalContent}>
-              <Text style={styles.selectionModalTitle}>{language.selectSortOption}</Text>
-              
-              <ScrollView scrollEnabled={true}>
+            <TouchableWithoutFeedback>
+              <View style={styles.selectionModalContent}>
+                <Text style={styles.selectionModalTitle}>{language.selectSortOption}</Text>
+                
+                <ScrollView>
                   {sortOptions.map(option => (
                     <TouchableOpacity
                       key={option.value}
@@ -5448,7 +5435,7 @@ const InventoryApp = () => {
                   <Text style={styles.closeModalButtonText}>{language.cancel}</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -5558,15 +5545,15 @@ const InventoryApp = () => {
           setShowCurrencyDropdown(false);
         }}>
           <View style={styles.modalOverlay}>
-            <View style={styles.fixedSettingsModalContent}>
-              <Text style={styles.settingsTitle}>{language.settings || 'Settings'}</Text>
-              
-              <ScrollView 
-                style={styles.settingsScrollView}
-                scrollEnabled={true}
-                showsVerticalScrollIndicator={true}
-                contentContainerStyle={{ paddingBottom: 20 }}
-              >
+            <TouchableWithoutFeedback>
+              <View style={styles.fixedSettingsModalContent}>
+                <Text style={styles.settingsTitle}>{language.settings || 'Settings'}</Text>
+                
+                <ScrollView 
+                  style={styles.settingsScrollView}
+                  showsVerticalScrollIndicator={true}
+                  contentContainerStyle={{ paddingBottom: 20 }}
+                >
                   {/* App Title Setting */}
                   <View style={styles.settingItem}>
                     <Text style={styles.settingLabel}>{language.appTitleSetting || 'App Title'}</Text>
@@ -5597,7 +5584,6 @@ const InventoryApp = () => {
                         <ScrollView 
                           style={styles.languageDropdownScroll}
                           nestedScrollEnabled={true}
-                          scrollEnabled={true}
                         >
                           {availableLanguages.map(lang => (
                             <TouchableOpacity
@@ -5646,7 +5632,6 @@ const InventoryApp = () => {
                         <ScrollView 
                           style={styles.languageDropdownScroll}
                           nestedScrollEnabled={true}
-                          scrollEnabled={true}
                         >
                           {availableCurrencies.map(curr => (
                             <TouchableOpacity
@@ -5804,8 +5789,8 @@ const InventoryApp = () => {
                     <Text style={styles.settingsSaveButtonText}>{language.save}</Text>
                   </TouchableOpacity>
                 </View>
-              </ScrollView>
-            </View>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -5819,47 +5804,47 @@ const InventoryApp = () => {
       >
         <TouchableWithoutFeedback onPress={() => setShowReceiptHistoryModal(false)}>
           <View style={styles.modalOverlay}>
-            <View style={styles.fixedSettingsModalContent}>
-              {/* Header with Date Selector */}
-              <View style={styles.receiptHistoryHeader}>
-                <Text style={styles.settingsTitle}>{language.receiptHistory || 'Receipt History'}</Text>
-                <TouchableOpacity
-                  style={styles.receiptDateButton}
-                  onPress={() => {
-                    setShowReceiptHistoryModal(false); // Close history modal first
-                    setTimeout(() => {
-                      setShowReceiptCalendarModal(true); // Then open calendar
-                    }, 100);
-                  }}
-                >
-                  <Text style={styles.receiptDateText}>
-                    📅 {receiptHistoryDate.toLocaleDateString()}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              
-              {/* Receipt Count Indicator */}
-              {(() => {
-                const filteredReceipts = getReceiptsForDate(receiptHistoryDate);
-                const displayedReceipts = filteredReceipts.slice(0, loadedReceiptsCount);
-                
-                return (
-                  <>
-                    <Text style={styles.receiptCountText}>
-                      {filteredReceipts.length > 0
-                        ? (language.receiptsOnDate || '{{count}} receipts on {{date}}')
-                            .replace('{{count}}', filteredReceipts.length)
-                            .replace('{{date}}', receiptHistoryDate.toLocaleDateString())
-                        : (language.noReceiptsOnDate || 'No receipts on this date')
-                      }
+            <TouchableWithoutFeedback>
+              <View style={styles.fixedSettingsModalContent}>
+                {/* Header with Date Selector */}
+                <View style={styles.receiptHistoryHeader}>
+                  <Text style={styles.settingsTitle}>{language.receiptHistory || 'Receipt History'}</Text>
+                  <TouchableOpacity
+                    style={styles.receiptDateButton}
+                    onPress={() => {
+                      setShowReceiptHistoryModal(false); // Close history modal first
+                      setTimeout(() => {
+                        setShowReceiptCalendarModal(true); // Then open calendar
+                      }, 100);
+                    }}
+                  >
+                    <Text style={styles.receiptDateText}>
+                      📅 {receiptHistoryDate.toLocaleDateString()}
                     </Text>
-                    
-                    <ScrollView 
-                      style={styles.settingsScrollView}
-                      scrollEnabled={true}
-                      showsVerticalScrollIndicator={true}
-                      contentContainerStyle={{ paddingBottom: 20 }}
-                    >
+                  </TouchableOpacity>
+                </View>
+                
+                {/* Receipt Count Indicator */}
+                {(() => {
+                  const filteredReceipts = getReceiptsForDate(receiptHistoryDate);
+                  const displayedReceipts = filteredReceipts.slice(0, loadedReceiptsCount);
+                  
+                  return (
+                    <>
+                      <Text style={styles.receiptCountText}>
+                        {filteredReceipts.length > 0
+                          ? (language.receiptsOnDate || '{{count}} receipts on {{date}}')
+                              .replace('{{count}}', filteredReceipts.length)
+                              .replace('{{date}}', receiptHistoryDate.toLocaleDateString())
+                          : (language.noReceiptsOnDate || 'No receipts on this date')
+                        }
+                      </Text>
+                      
+                      <ScrollView 
+                        style={styles.settingsScrollView}
+                        showsVerticalScrollIndicator={true}
+                        contentContainerStyle={{ paddingBottom: 20 }}
+                      >
                         {displayedReceipts.length === 0 ? (
                           <Text style={styles.noItemsText}>{language.noReceiptsOnDate || 'No receipts on this date'}</Text>
                         ) : (
@@ -5947,7 +5932,7 @@ const InventoryApp = () => {
                   <Text style={styles.receiptHistoryCloseButtonText}>{language.close || 'Close'}</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -5961,26 +5946,26 @@ const InventoryApp = () => {
       >
         <TouchableWithoutFeedback onPress={() => setSelectedReceiptDetail(null)}>
           <View style={styles.modalOverlay}>
-            <View style={styles.fixedSettingsModalContent}>
-              {selectedReceiptDetail && (
-                <>
-                  <View style={styles.receiptDetailHeader}>
-                    <Text style={styles.settingsTitle}>
-                      {language.receiptNumber || 'Receipt #'}{selectedReceiptDetail.receiptNumber}
-                    </Text>
-                    {selectedReceiptDetail.voided && (
-                      <View style={styles.voidedBadge}>
-                        <Text style={styles.voidedBadgeText}>{language.voided || 'VOIDED'}</Text>
-                      </View>
-                    )}
-                  </View>
-                  
-                  <ScrollView 
-                    style={styles.settingsScrollView}
-                    scrollEnabled={true}
-                    showsVerticalScrollIndicator={true}
-                    contentContainerStyle={{ paddingBottom: 20 }}
-                  >
+            <TouchableWithoutFeedback>
+              <View style={styles.fixedSettingsModalContent}>
+                {selectedReceiptDetail && (
+                  <>
+                    <View style={styles.receiptDetailHeader}>
+                      <Text style={styles.settingsTitle}>
+                        {language.receiptNumber || 'Receipt #'}{selectedReceiptDetail.receiptNumber}
+                      </Text>
+                      {selectedReceiptDetail.voided && (
+                        <View style={styles.voidedBadge}>
+                          <Text style={styles.voidedBadgeText}>{language.voided || 'VOIDED'}</Text>
+                        </View>
+                      )}
+                    </View>
+                    
+                    <ScrollView 
+                      style={styles.settingsScrollView}
+                      showsVerticalScrollIndicator={true}
+                      contentContainerStyle={{ paddingBottom: 20 }}
+                    >
                       <View style={styles.receiptDetailSection}>
                         <Text style={styles.receiptDetailLabel}>{language.date || 'Date'}:</Text>
                         <Text style={styles.receiptDetailValue}>
@@ -6058,7 +6043,7 @@ const InventoryApp = () => {
                   </>
                 )}
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -6072,7 +6057,8 @@ const InventoryApp = () => {
       >
         <TouchableWithoutFeedback onPress={() => setShowReceiptCalendarModal(false)}>
           <View style={styles.calendarModalOverlay}>
-            <View style={styles.calendarModalContent}>
+            <TouchableWithoutFeedback>
+              <View style={styles.calendarModalContent}>
                 <Calendar
                   current={formatDate(receiptHistoryDate)}
                   onDayPress={(day) => {
@@ -6094,7 +6080,7 @@ const InventoryApp = () => {
                   }}
                 />
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -6108,10 +6094,11 @@ const InventoryApp = () => {
       >
         <TouchableWithoutFeedback onPress={() => setShowLanguageModal(false)}>
           <View style={styles.modalOverlay}>
-            <View style={styles.selectionModalContent}>
-              <Text style={styles.selectionModalTitle}>{language.language || 'Select Language'}</Text>
-              
-              <ScrollView scrollEnabled={true}>
+            <TouchableWithoutFeedback>
+              <View style={styles.selectionModalContent}>
+                <Text style={styles.selectionModalTitle}>{language.language || 'Select Language'}</Text>
+                
+                <ScrollView>
                   {availableLanguages.map(lang => (
                     <TouchableOpacity
                       key={lang.code}
@@ -6149,7 +6136,7 @@ const InventoryApp = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -6165,7 +6152,8 @@ const InventoryApp = () => {
           setShowStoreDropdown(false);
         }}>
           <View style={styles.modalOverlay}>
-            <View style={styles.salesTrackingModalContent}>
+            <TouchableWithoutFeedback>
+              <View style={styles.salesTrackingModalContent}>
                 {/* Store Selector */}
                 <View style={styles.storeSelectorContainer}>
                   <TouchableOpacity
@@ -6194,7 +6182,6 @@ const InventoryApp = () => {
                     <ScrollView 
                       style={styles.storeDropdownScroll} 
                       nestedScrollEnabled={true}
-                      scrollEnabled={true}
                     >
                       {stores.map(store => (
                         <View key={store.id} style={styles.storeDropdownItemContainer}>
@@ -6333,10 +6320,7 @@ const InventoryApp = () => {
                 </View>
                 
                 {/* Months Grid */}
-                <ScrollView 
-                  style={styles.monthsGridScroll}
-                  scrollEnabled={true}
-                >
+                <ScrollView style={styles.monthsGridScroll}>
                   <View style={styles.monthsCalendarGrid}>
                     {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((monthIndex) => {
                       const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -6372,7 +6356,7 @@ const InventoryApp = () => {
                   <Text style={styles.closeModalButtonText}>{language.close}</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -6491,7 +6475,7 @@ const InventoryApp = () => {
           setShowSalesTrackingModal(true);
         }}
       >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback onPress={Keyboard. dismiss}>
           <View style={styles.modalOverlay}>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -6534,7 +6518,6 @@ const InventoryApp = () => {
                 {/* Scrollable Table Body */}
                 <ScrollView 
                   style={styles.tableBody}
-                  scrollEnabled={true}
                   showsVerticalScrollIndicator={true}
                 >
                   {monthlyData && Array.isArray(monthlyData) && monthlyData.map((day, index) => (
@@ -6596,7 +6579,8 @@ const InventoryApp = () => {
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
               style={styles.keyboardAvoidingView}
             >
-              <View style={styles.takeOrderModalContent}>
+              <TouchableWithoutFeedback>
+                <View style={styles.takeOrderModalContent}>
                   
                   {/* Header with Cart Icon */}
                   <View style={styles.takeOrderHeader}>
@@ -6652,17 +6636,16 @@ const InventoryApp = () => {
                       <Text style={styles.sectionTitle}>{language.predefinedItems || 'Select Items'}</Text>
                       <ScrollView 
                         style={styles.takeOrderItemsList}
-                        scrollEnabled={true}
                         onScroll={({ nativeEvent }) => {
                           const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
                           const paddingToBottom = 20;
-                          if (layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom) {
+                          if (layoutMeasurement.height + contentOffset.y >= contentSize. height - paddingToBottom) {
                             loadMoreItems();
                           }
                         }}
                         scrollEventThrottle={400}
                       >
-                        {getFilteredPredefinedItems.length === 0 ? (
+                        {getFilteredPredefinedItems. length === 0 ? (
                           <View style={styles.noPredefinedItemsContainer}>
                             <Text style={styles.noPredefinedItemsText}>
                               No items found matching your search
@@ -6697,11 +6680,8 @@ const InventoryApp = () => {
                   ) : (
                     <>
                       {/* Cart View */}
-                      <ScrollView 
-                        style={styles.cartViewList}
-                        scrollEnabled={true}
-                      >
-                        {cartItems.length === 0 ? (
+                      <ScrollView style={styles.cartViewList}>
+                        {cartItems. length === 0 ? (
                           <View style={styles.emptyCartContainer}>
                             <Text style={styles.emptyCartIcon}>🛒</Text>
                             <Text style={styles.emptyCartText}>{language.emptyCart}</Text>
@@ -6793,7 +6773,8 @@ const InventoryApp = () => {
                     <Text style={styles.closeTakeOrderButtonText}>{language.close || 'Close'}</Text>
                   </TouchableOpacity>
                 </View>
-              </KeyboardAvoidingView>
+              </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
 
             {/* Add to Cart Modal */}
             <Modal
@@ -6808,7 +6789,7 @@ const InventoryApp = () => {
               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.modalOverlay}>
                   <KeyboardAvoidingView
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    behavior={Platform. OS === 'ios' ? 'padding' : 'height'}
                     style={styles.keyboardAvoidingView}
                   >
                     <View style={styles.modernModalContent}>
