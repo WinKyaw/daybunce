@@ -7069,6 +7069,7 @@ const styles = StyleSheet.create({
   bottomNav: {
     backgroundColor: '#fff',
     padding: 16,
+    paddingBottom: Platform.OS === 'android' ? 80 : 16,
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
     alignItems: 'center',
@@ -8995,7 +8996,7 @@ const styles = StyleSheet.create({
   },
   takeOrderButton: {
     position: 'absolute',
-    bottom: 100,
+    bottom: Platform.OS === 'android' ? 90 : 20,
     right: 20,
     backgroundColor: '#4caf50',
     borderRadius: 50,
