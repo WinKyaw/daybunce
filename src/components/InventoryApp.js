@@ -6520,7 +6520,7 @@ const InventoryApp = () => {
                       </View>
                       <TextInput
                         style={styles.amountInput}
-                        value={day.amount ?  formatCurrency(day.amount) : ''}
+                        value={day.amount ? day.amount.toString() : ''}
                         onChangeText={(text) => updateDailyAmount(index, text)}
                         keyboardType="number-pad"
                         placeholder="0"
