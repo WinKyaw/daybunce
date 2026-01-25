@@ -2,7 +2,7 @@
   "expo": {
     "name": "DayBunce",
     "slug": "daybunce",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -22,8 +22,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.inventsight.daybunce",
       "icon": "./assets/icon.png",
-      "buildNumber": "21",
-      "runtimeVersion": "1.5.0"
+      "buildNumber": "22",
+      "runtimeVersion": "1.6.0"
     },
     "android": {
       "adaptiveIcon": {
@@ -32,7 +32,7 @@
       },
       "permissions": [],
       "package": "com.inventsight.daybounce",
-      "versionCode": 3
+      "versionCode": 5
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -44,6 +44,6 @@
       }
     },
     "owner": "kywin",
-    "runtimeVersion": "1.5.0"
+    "runtimeVersion": "1.6.0"
   }
 }
