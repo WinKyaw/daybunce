@@ -31,8 +31,8 @@
         "backgroundColor": "#8B5CF6"
       },
       "permissions": [],
-      "package": "com.inventsight.daybounce",
-      "versionCode": 6
+      "package": "com.inventsight.daybunce",
+      "versionCode": 7
     },
     "web": {
       "favicon": "./assets/favicon.png"
