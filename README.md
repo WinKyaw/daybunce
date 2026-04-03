@@ -11,6 +11,7 @@ Please read our [Privacy Policy](https://winkyaw.github.io/daybunce/PRIVACY-POLI
 ### Core Features
 - ✅ Daily inventory tracking with date navigation
 - ✅ Add, edit, and delete inventory items
+- ✅ Optional barcode field per item (stored locally, no scanning required)
 - ✅ Search and filter items by category
 - ✅ Sort items by name, price, or total amount
 - ✅ Expandable item details view
@@ -100,6 +101,7 @@ inventory-management-app/
    - **Units Sold**: Quantity sold
    - **Category**: Select from available categories
    - **Unit Type**: Choose measurement unit
+   - **Barcode** *(optional)*: Enter a barcode string if available
 3. Save the item
 
 ### Navigation
@@ -159,6 +161,7 @@ await LanguageService.updateTranslations({
       "unitsSold": "10",
       "category": "Food",
       "unitType": "lb",
+      "barcode": "012345678901",
       "totalAmount": "25.00",
       "timestamp": "2024-01-15T10:30:00.000Z"
     }
@@ -171,6 +174,8 @@ await LanguageService.updateTranslations({
   "unit_types": ["lb", "oz", "kg", "g", "pieces"]
 }
 ```
+
+> **Note:** The `barcode` field is optional. Existing items without a `barcode` field continue to work normally — no data migration is required. All data is stored locally on the device.
 
 ### Data Management API
 ```javascript

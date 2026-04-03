@@ -38,6 +38,8 @@ const DEFAULT_TRANSLATIONS = {
     totalAmount: 'Total Amount',
     category: 'Category',
     unitType: 'Unit Type',
+    barcode: 'Barcode',
+    barcodeOptional: 'Barcode (optional)',
     
     // Actions
     save: 'Save',
@@ -126,6 +128,8 @@ const DEFAULT_TRANSLATIONS = {
     totalAmount: 'စုစုပေါင်းငွေ',
     category: 'အမျိုးအစား',
     unitType: 'ယူနစ်အမျိုးအစား',
+    barcode: 'Barcode',
+    barcodeOptional: 'Barcode (optional)',
     
     // Actions
     save: 'သိမ်းဆည်းပါ',

@@ -120,6 +120,7 @@ const defaultLanguage = {
   unmarkAsVoided: 'Unmark as Voided',
   receiptNumber: 'Receipt #',
   viewReceiptHistory: 'View receipt history',
+  barcodeOptional: 'Barcode (optional)',
 };
 
 const availableLanguages = [
@@ -283,6 +284,7 @@ const languageConfigs = {
     loadMoreReceipts: 'Load More Receipts',
     dailyReceiptsReport: 'Daily Receipts Report',
     totalReceipts: 'Total Receipts',
+    barcodeOptional: 'Barcode (optional)',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -412,6 +414,7 @@ const languageConfigs = {
     loadMoreReceipts: 'Cargar Más Recibos',
     dailyReceiptsReport: 'Informe de Recibos Diarios',
     totalReceipts: 'Total de Recibos',
+    barcodeOptional: 'Barcode (optional)',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -529,6 +532,7 @@ const languageConfigs = {
     loadMoreReceipts: 'Charger Plus de Reçus',
     dailyReceiptsReport: 'Rapport des Reçus Quotidiens',
     totalReceipts: 'Total des Reçus',
+    barcodeOptional: 'Barcode (optional)',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -646,6 +650,7 @@ const languageConfigs = {
     loadMoreReceipts: 'Weitere Belege Laden',
     dailyReceiptsReport: 'Täglicher Belegbericht',
     totalReceipts: 'Gesamtbelege',
+    barcodeOptional: 'Barcode (optional)',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -763,6 +768,7 @@ const languageConfigs = {
     loadMoreReceipts: 'Carica Più Ricevute',
     dailyReceiptsReport: 'Rapporto Ricevute Giornaliere',
     totalReceipts: 'Totale Ricevute',
+    barcodeOptional: 'Barcode (optional)',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -880,6 +886,7 @@ const languageConfigs = {
     loadMoreReceipts: 'Carregar Mais Recibos',
     dailyReceiptsReport: 'Relatório de Recibos Diários',
     totalReceipts: 'Total de Recibos',
+    barcodeOptional: 'Barcode (optional)',
   },
   zh: {
     appTitle: '库存管理',
@@ -991,6 +998,7 @@ const languageConfigs = {
     loadMoreReceipts: '加载更多收据',
     dailyReceiptsReport: '每日收据报告',
     totalReceipts: '收据总数',
+    barcodeOptional: 'Barcode (optional)',
   },
   ja: {
     appTitle: '在庫管理',
@@ -1102,6 +1110,7 @@ const languageConfigs = {
     loadMoreReceipts: 'さらにレシートを読み込む',
     dailyReceiptsReport: '日次レシートレポート',
     totalReceipts: 'レシート総数',
+    barcodeOptional: 'Barcode (optional)',
   },
   ko: {
     appTitle: '재고 관리',
@@ -1219,6 +1228,7 @@ const languageConfigs = {
     loadMoreReceipts: '더 많은 영수증 로드',
     dailyReceiptsReport: '일일 영수증 보고서',
     totalReceipts: '총 영수증',
+    barcodeOptional: 'Barcode (optional)',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1336,6 +1346,7 @@ const languageConfigs = {
     loadMoreReceipts: 'โหลดใบเสร็จเพิ่มเติม',
     dailyReceiptsReport: 'รายงานใบเสร็จรายวัน',
     totalReceipts: 'ใบเสร็จทั้งหมด',
+    barcodeOptional: 'Barcode (optional)',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1453,6 +1464,7 @@ const languageConfigs = {
     loadMoreReceipts: 'Tải Thêm Hóa Đơn',
     dailyReceiptsReport: 'Báo Cáo Hóa Đơn Hàng Ngày',
     totalReceipts: 'Tổng Hóa Đơn',
+    barcodeOptional: 'Barcode (optional)',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1570,6 +1582,7 @@ const languageConfigs = {
     loadMoreReceipts: 'Muat Lebih Banyak Struk',
     dailyReceiptsReport: 'Laporan Struk Harian',
     totalReceipts: 'Total Struk',
+    barcodeOptional: 'Barcode (optional)',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1687,6 +1700,7 @@ const languageConfigs = {
     loadMoreReceipts: 'अधिक रसीदें लोड करें',
     dailyReceiptsReport: 'दैनिक रसीद रिपोर्ट',
     totalReceipts: 'कुल रसीदें',
+    barcodeOptional: 'Barcode (optional)',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1803,6 +1817,7 @@ const languageConfigs = {
     loadMoreReceipts: 'နောက်ထပ် ရောင်းချမှတ်တမ်း များ ဖွင့်ပါ',
     dailyReceiptsReport: 'နေ့စဉ် ရောင်းချမှတ်တမ်း အစီရင်ခံစာ',
     totalReceipts: 'စုစုပေါင်း ရောင်းချမှတ်တမ်းများ',
+    barcodeOptional: 'Barcode (optional)',
   },
 };
 
@@ -1927,6 +1942,7 @@ const InventoryApp = () => {
     unitsSold: '',
     category: defaultCategories[4], // Default to "Other"
     unitType: defaultUnitTypes[4], // Default to "pcs"
+    barcode: '',
   });
 
   useEffect(() => {
@@ -3059,6 +3075,7 @@ const InventoryApp = () => {
       unitsSold: '',
       category: predefinedItem.category,
       unitType: predefinedItem.unitType,
+      barcode: '',
     });
     setShowPredefinedItemsModal(false);
     setShowAddModal(true);
@@ -3159,6 +3176,7 @@ const InventoryApp = () => {
       unitsSold: '',
       category: defaultCategories[4],
       unitType: defaultUnitTypes[4],
+      barcode: '',
     });
     setIsCustomItem(true);
     setShowAddModal(false);
@@ -5078,6 +5096,13 @@ const InventoryApp = () => {
                   </View>
                 )}
 
+                <TextInput
+                  style={styles.modernInput}
+                  placeholder={language.barcodeOptional}
+                  value={newItem.barcode}
+                  onChangeText={(text) => setNewItem(prev => ({ ...prev, barcode: text }))}
+                />
+
                 <View style={styles.totalAmountContainer}>
                   <Text style={styles.totalAmountText}>
                     Total Amount: {language.currency}{calculateTotal()}
@@ -5100,6 +5125,7 @@ const InventoryApp = () => {
                         unitsSold: '',
                         category: defaultCategories[4],
                         unitType: defaultUnitTypes[4],
+                        barcode: '',
                       });
                     }}
                   >
