@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import StoreIndexService from './StoreIndexService';
 
 class DataService {
   static STORAGE_KEYS = {
@@ -57,6 +58,7 @@ class DataService {
       
       items.push(newItem);
       await this.saveItemsByDate(date, items);
+      StoreIndexService.rebuildIndex().catch(console.warn); // Non-blocking background rebuild
       return newItem;
     } catch (error) {
       console.error('Error adding item:', error);
