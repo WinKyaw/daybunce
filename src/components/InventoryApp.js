@@ -4244,14 +4244,18 @@ const InventoryApp = () => {
   ];
 
   const handleAITabPress = async () => {
-    const unlocked = await IAPService.checkUnlockStatus();
-    if (!unlocked) {
-      setAiSubScreen('paywall');
-    } else {
-      const downloaded = await ModelDownloadService.isModelDownloaded();
-      setAiSubScreen(downloaded ? 'chat' : 'download');
+    try {
+      const unlocked = await IAPService.checkUnlockStatus();
+      if (!unlocked) {
+        setAiSubScreen('paywall');
+      } else {
+        const downloaded = await ModelDownloadService.isModelDownloaded();
+        setAiSubScreen(downloaded ? 'chat' : 'download');
+      }
+      setShowAIModal(true);
+    } catch (e) {
+      Alert.alert('Error', 'Could not open AI Expert. Please try again.');
     }
-    setShowAIModal(true);
   };
 
   return (
@@ -4485,7 +4489,7 @@ const InventoryApp = () => {
             activeOpacity={0.7}
           >
             <Text style={styles.aiTabIcon}>🤖</Text>
-            <Text style={styles.aiTabLabel}>{language.aiExpert || 'AI Expert'}</Text>
+            <Text style={styles.aiTabLabel}>{language.aiExpert}</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -6972,9 +6976,13 @@ const InventoryApp = () => {
               <TouchableOpacity
                 style={styles.paywallUnlockBtn}
                 onPress={async () => {
-                  const ok = await IAPService.purchaseAIUnlock();
-                  if (ok) {
-                    setAiSubScreen('download');
+                  try {
+                    const ok = await IAPService.purchaseAIUnlock();
+                    if (ok) {
+                      setAiSubScreen('download');
+                    }
+                  } catch (e) {
+                    Alert.alert('Purchase Failed', 'Could not complete purchase. Please try again.');
                   }
                 }}
                 activeOpacity={0.8}
@@ -6984,10 +6992,16 @@ const InventoryApp = () => {
               <TouchableOpacity
                 style={styles.paywallRestoreBtn}
                 onPress={async () => {
-                  const restored = await IAPService.restorePurchases();
-                  if (restored) {
-                    const downloaded = await ModelDownloadService.isModelDownloaded();
-                    setAiSubScreen(downloaded ? 'chat' : 'download');
+                  try {
+                    const restored = await IAPService.restorePurchases();
+                    if (restored) {
+                      const downloaded = await ModelDownloadService.isModelDownloaded();
+                      setAiSubScreen(downloaded ? 'chat' : 'download');
+                    } else {
+                      Alert.alert('Not Found', 'No previous purchase found for this Apple ID.');
+                    }
+                  } catch (e) {
+                    Alert.alert('Restore Failed', 'Could not restore purchase. Please try again.');
                   }
                 }}
                 activeOpacity={0.7}
@@ -7214,7 +7228,6 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingBottom: Platform.OS === 'android' ? 80 : 16,
     borderTopWidth: 0,
-    borderTopColor: '#e0e0e0',
     alignItems: 'center',
   },
   bottomNavRow: {
@@ -7227,7 +7240,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingVertical: 10,
     paddingHorizontal: 16,
-    paddingBottom: Platform.OS === 'android' ? 80 : 10,
     alignItems: 'center',
     justifyContent: 'center',
     borderLeftWidth: 1,
