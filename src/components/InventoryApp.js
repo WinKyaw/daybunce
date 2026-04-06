@@ -21,6 +21,10 @@ import { PanResponder, Animated, Dimensions } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
+import AIExpertScreen from './AIExpertScreen';
+import ModelDownloadScreen from './ModelDownloadScreen';
+import IAPService from '../services/IAPService';
+import ModelDownloadService from '../services/ModelDownloadService';
 
 // Language Configuration
 const defaultLanguage = {
@@ -121,6 +125,7 @@ const defaultLanguage = {
   receiptNumber: 'Receipt #',
   viewReceiptHistory: 'View receipt history',
   barcodeOptional: 'Barcode (optional)',
+  aiExpert: 'AI Expert',
 };
 
 const availableLanguages = [
@@ -285,6 +290,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'Daily Receipts Report',
     totalReceipts: 'Total Receipts',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -415,6 +421,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'Informe de Recibos Diarios',
     totalReceipts: 'Total de Recibos',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -533,6 +540,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'Rapport des Reçus Quotidiens',
     totalReceipts: 'Total des Reçus',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -651,6 +659,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'Täglicher Belegbericht',
     totalReceipts: 'Gesamtbelege',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -769,6 +778,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'Rapporto Ricevute Giornaliere',
     totalReceipts: 'Totale Ricevute',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -887,6 +897,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'Relatório de Recibos Diários',
     totalReceipts: 'Total de Recibos',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   zh: {
     appTitle: '库存管理',
@@ -999,6 +1010,7 @@ const languageConfigs = {
     dailyReceiptsReport: '每日收据报告',
     totalReceipts: '收据总数',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   ja: {
     appTitle: '在庫管理',
@@ -1111,6 +1123,7 @@ const languageConfigs = {
     dailyReceiptsReport: '日次レシートレポート',
     totalReceipts: 'レシート総数',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   ko: {
     appTitle: '재고 관리',
@@ -1229,6 +1242,7 @@ const languageConfigs = {
     dailyReceiptsReport: '일일 영수증 보고서',
     totalReceipts: '총 영수증',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1347,6 +1361,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'รายงานใบเสร็จรายวัน',
     totalReceipts: 'ใบเสร็จทั้งหมด',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1465,6 +1480,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'Báo Cáo Hóa Đơn Hàng Ngày',
     totalReceipts: 'Tổng Hóa Đơn',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1583,6 +1599,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'Laporan Struk Harian',
     totalReceipts: 'Total Struk',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1701,6 +1718,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'दैनिक रसीद रिपोर्ट',
     totalReceipts: 'कुल रसीदें',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1818,6 +1836,7 @@ const languageConfigs = {
     dailyReceiptsReport: 'နေ့စဉ် ရောင်းချမှတ်တမ်း အစီရင်ခံစာ',
     totalReceipts: 'စုစုပေါင်း ရောင်းချမှတ်တမ်းများ',
     barcodeOptional: 'Barcode (optional)',
+    aiExpert: 'AI Expert',
   },
 };
 
@@ -1930,8 +1949,9 @@ const InventoryApp = () => {
   const [receiptHistoryDate, setReceiptHistoryDate] = useState(new Date());
   const [loadedReceiptsCount, setLoadedReceiptsCount] = useState(20);
   const [showReceiptCalendarModal, setShowReceiptCalendarModal] = useState(false);
+  const [showAIModal, setShowAIModal] = useState(false);
+  const [aiSubScreen, setAiSubScreen] = useState('paywall'); // 'paywall' | 'download' | 'chat'
 
-  
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
 
@@ -4223,6 +4243,21 @@ const InventoryApp = () => {
     { label: language.sortByAmount, value: 'amount' },
   ];
 
+  const handleAITabPress = async () => {
+    try {
+      const unlocked = await IAPService.checkUnlockStatus();
+      if (!unlocked) {
+        setAiSubScreen('paywall');
+      } else {
+        const downloaded = await ModelDownloadService.isModelDownloaded();
+        setAiSubScreen(downloaded ? 'chat' : 'download');
+      }
+      setShowAIModal(true);
+    } catch (e) {
+      Alert.alert('Error', 'Could not open AI Expert. Please try again.');
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
@@ -4434,18 +4469,30 @@ const InventoryApp = () => {
       </TouchableOpacity>
 
       {/* Bottom Navigation Bar */}
-      <TouchableOpacity 
-        style={styles.bottomNav}
-        onPress={() => setShowReceiptModal(true)}
-        activeOpacity={0.7}
-      >
-        <Text style={styles.totalText}>
-          {language.dailyTotal}: {language.currency}{getDailyTotal()}
-        </Text>
-        <Text style={styles.tapToViewReceipt}>
-          {language.tapToViewReceipt}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.bottomNavRow}>
+        <TouchableOpacity 
+          style={[styles.bottomNav, { flex: 1 }]}
+          onPress={() => setShowReceiptModal(true)}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.totalText}>
+            {language.dailyTotal}: {language.currency}{getDailyTotal()}
+          </Text>
+          <Text style={styles.tapToViewReceipt}>
+            {language.tapToViewReceipt}
+          </Text>
+        </TouchableOpacity>
+        {Platform.OS === 'ios' && (
+          <TouchableOpacity
+            style={styles.aiTabButton}
+            onPress={handleAITabPress}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.aiTabIcon}>🤖</Text>
+            <Text style={styles.aiTabLabel}>{language.aiExpert}</Text>
+          </TouchableOpacity>
+        )}
+      </View>
 
       {/* Receipt Modal */}
       <Modal
@@ -6892,6 +6939,90 @@ const InventoryApp = () => {
         </TouchableWithoutFeedback>
       </Modal>
 
+      {/* AI Expert Modal */}
+      <Modal
+        visible={showAIModal}
+        animationType="slide"
+        onRequestClose={() => setShowAIModal(false)}
+      >
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#f8f8fc' }}>
+          {/* AI Modal Header with close button */}
+          <View style={styles.aiModalHeader}>
+            <TouchableOpacity
+              onPress={() => setShowAIModal(false)}
+              style={styles.aiModalCloseBtn}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.aiModalCloseBtnText}>✕</Text>
+            </TouchableOpacity>
+          </View>
+
+          {aiSubScreen === 'paywall' && (
+            <ScrollView contentContainerStyle={styles.paywallContainer}>
+              <Text style={styles.paywallTitle}>DayBunce AI Expert</Text>
+              <Text style={styles.paywallSubtitle}>
+                Your personal on-device store consultant, powered by Microsoft Phi-4 Mini.
+              </Text>
+              <View style={styles.paywallFeatures}>
+                {[
+                  '📊 Analyze your sales trends',
+                  '📦 Get restocking recommendations',
+                  '💡 Pricing & bundling insights',
+                  '🔒 100% private — runs on your device',
+                ].map((feat, i) => (
+                  <Text key={i} style={styles.paywallFeatureItem}>{feat}</Text>
+                ))}
+              </View>
+              <TouchableOpacity
+                style={styles.paywallUnlockBtn}
+                onPress={async () => {
+                  try {
+                    const ok = await IAPService.purchaseAIUnlock();
+                    if (ok) {
+                      setAiSubScreen('download');
+                    }
+                  } catch (e) {
+                    Alert.alert('Purchase Failed', 'Could not complete purchase. Please try again.');
+                  }
+                }}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.paywallUnlockBtnText}>Unlock AI Expert</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.paywallRestoreBtn}
+                onPress={async () => {
+                  try {
+                    const restored = await IAPService.restorePurchases();
+                    if (restored) {
+                      const downloaded = await ModelDownloadService.isModelDownloaded();
+                      setAiSubScreen(downloaded ? 'chat' : 'download');
+                    } else {
+                      Alert.alert('Not Found', 'No previous purchase found for this Apple ID.');
+                    }
+                  } catch (e) {
+                    Alert.alert('Restore Failed', 'Could not restore purchase. Please try again.');
+                  }
+                }}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.paywallRestoreBtnText}>Restore Purchase</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          )}
+
+          {aiSubScreen === 'download' && (
+            <ModelDownloadScreen
+              onComplete={() => setAiSubScreen('chat')}
+            />
+          )}
+
+          {aiSubScreen === 'chat' && (
+            <AIExpertScreen />
+          )}
+        </SafeAreaView>
+      </Modal>
+
       
     </SafeAreaView>
   );
@@ -7096,9 +7227,102 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 16,
     paddingBottom: Platform.OS === 'android' ? 80 : 16,
+    borderTopWidth: 0,
+    alignItems: 'center',
+  },
+  bottomNavRow: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
+  },
+  aiTabButton: {
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
     alignItems: 'center',
+    justifyContent: 'center',
+    borderLeftWidth: 1,
+    borderLeftColor: '#e0e0e0',
+    minWidth: 72,
+  },
+  aiTabIcon: {
+    fontSize: 22,
+  },
+  aiTabLabel: {
+    fontSize: 11,
+    color: '#2196f3',
+    marginTop: 2,
+    fontWeight: '600',
+  },
+  aiModalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  aiModalCloseBtn: {
+    padding: 6,
+  },
+  aiModalCloseBtnText: {
+    fontSize: 18,
+    color: '#666',
+    fontWeight: '600',
+  },
+  paywallContainer: {
+    flexGrow: 1,
+    padding: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paywallTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#1a1a2e',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  paywallSubtitle: {
+    fontSize: 15,
+    color: '#555',
+    textAlign: 'center',
+    lineHeight: 22,
+    marginBottom: 28,
+  },
+  paywallFeatures: {
+    width: '100%',
+    marginBottom: 32,
+  },
+  paywallFeatureItem: {
+    fontSize: 15,
+    color: '#333',
+    marginBottom: 10,
+    lineHeight: 22,
+  },
+  paywallUnlockBtn: {
+    backgroundColor: '#2196f3',
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 40,
+    marginBottom: 16,
+    width: '100%',
+    alignItems: 'center',
+  },
+  paywallUnlockBtnText: {
+    color: '#fff',
+    fontSize: 17,
+    fontWeight: '700',
+  },
+  paywallRestoreBtn: {
+    paddingVertical: 10,
+  },
+  paywallRestoreBtnText: {
+    color: '#2196f3',
+    fontSize: 14,
+    textDecorationLine: 'underline',
   },
   totalText: {
     fontSize: 18,
