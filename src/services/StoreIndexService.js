@@ -209,11 +209,47 @@ const StoreIndexService = {
       const monthlySummaries = rawMonthly ? JSON.parse(rawMonthly) : {};
 
       for (const [monthKey, daySummaries] of Object.entries(toCompress)) {
+        const newMonthly = _mergeToMonthlySummary(monthKey, daySummaries);
         if (monthlySummaries[monthKey]) {
-          // Merge into existing monthly summary
-          daySummaries.push(monthlySummaries[monthKey]);
+          // Merge two monthly summary objects by adding numeric totals
+          const existing = monthlySummaries[monthKey];
+          const combined = {
+            month: monthKey,
+            totalRevenue: existing.totalRevenue + newMonthly.totalRevenue,
+            totalQty: existing.totalQty + newMonthly.totalQty,
+            activeDays: existing.activeDays + newMonthly.activeDays,
+          };
+          combined.avgDailyRevenue =
+            combined.activeDays > 0 ? combined.totalRevenue / combined.activeDays : 0;
+          // Merge top categories
+          const catMap = {};
+          for (const c of [...(existing.topCategories || []), ...(newMonthly.topCategories || [])]) {
+            catMap[c.cat] = (catMap[c.cat] || 0) + c.qty;
+          }
+          combined.topCategories = Object.entries(catMap)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([cat, qty]) => ({ cat, qty }));
+          // Merge top products
+          const prodMap = {};
+          for (const [name, info] of [
+            ...Object.entries(existing.topProducts || {}),
+            ...Object.entries(newMonthly.topProducts || {}),
+          ]) {
+            if (!prodMap[name]) {
+              prodMap[name] = { qty: 0, revenue: 0, category: info.category };
+            }
+            prodMap[name].qty += info.qty;
+            prodMap[name].revenue += info.revenue;
+          }
+          combined.topProducts = Object.entries(prodMap)
+            .sort((a, b) => b[1].revenue - a[1].revenue)
+            .slice(0, 15)
+            .reduce((acc, [name, info]) => { acc[name] = info; return acc; }, {});
+          monthlySummaries[monthKey] = combined;
+        } else {
+          monthlySummaries[monthKey] = newMonthly;
         }
-        monthlySummaries[monthKey] = _mergeToMonthlySummary(monthKey, daySummaries);
       }
 
       await AsyncStorage.setItem(
@@ -354,7 +390,7 @@ const StoreIndexService = {
           const range = profile.dataRange;
           parts.push(
             `[Your Store Profile — Personalized]\n` +
-            `Data spans: ${range.firstDate || 'N/A'} · ${range.totalActiveDays} active days · ${range.totalMonths} months of history\n` +
+            `Data spans: ${range.firstDate || 'N/A'} | ${range.totalActiveDays} active days | ${range.totalMonths} months of history\n` +
             `Top product categories:\n${catLines || '  (none yet)'}\n` +
             `All-time best sellers:\n${productLines}`,
           );
