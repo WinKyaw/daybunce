@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import AIService from '../services/AIService';
 import IAPService from '../services/IAPService';
+import StoreIndexService from '../services/StoreIndexService';
 import AIDisclaimerModal, { hasAcceptedDisclaimer } from './AIDisclaimerModal';
 import LegalCreditsView from './LegalCreditsView';
 
@@ -27,8 +28,12 @@ const AIExpertScreen = () => {
   // Tracks the index of the AI message currently being streamed
   const streamingIndexRef = useRef(null);
 
-  // On mount: check disclaimer and load model
+  // On mount: trigger non-blocking index rebuild + check disclaimer
   useEffect(() => {
+    // Rebuild the store index and run the nightly personalization update (non-blocking)
+    StoreIndexService.rebuildIndex().catch(console.warn);
+    StoreIndexService.runNightlyIndex().catch(console.warn);
+
     (async () => {
       const accepted = await hasAcceptedDisclaimer();
       if (!accepted) {

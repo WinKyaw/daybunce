@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DISCLAIMER_ACCEPTED_KEY = 'ai_disclaimer_accepted';
+const DISCLAIMER_ACCEPTED_KEY = 'ai_disclaimer_acknowledged';
 
 // Helper to check whether the user has already accepted the disclaimer
 export const hasAcceptedDisclaimer = async () => {

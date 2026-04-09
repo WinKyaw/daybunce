@@ -125,7 +125,12 @@ const defaultLanguage = {
   receiptNumber: 'Receipt #',
   viewReceiptHistory: 'View receipt history',
   barcodeOptional: 'Barcode (optional)',
-  aiExpert: 'AI Expert',
+  aiExpert: 'AI Store Expert',
+  aiUnlock: 'Unlock AI Expert',
+  aiRestorePurchases: 'Restore Purchases',
+  aiDownloadModel: 'Download AI Model',
+  aiDisclaimer: 'AI Disclaimer',
+  aiLegalCredits: 'Legal & Credits',
 };
 
 const availableLanguages = [
@@ -290,7 +295,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'Daily Receipts Report',
     totalReceipts: 'Total Receipts',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -421,7 +431,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'Informe de Recibos Diarios',
     totalReceipts: 'Total de Recibos',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -540,7 +555,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'Rapport des Reçus Quotidiens',
     totalReceipts: 'Total des Reçus',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -659,7 +679,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'Täglicher Belegbericht',
     totalReceipts: 'Gesamtbelege',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -778,7 +803,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'Rapporto Ricevute Giornaliere',
     totalReceipts: 'Totale Ricevute',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -897,7 +927,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'Relatório de Recibos Diários',
     totalReceipts: 'Total de Recibos',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   zh: {
     appTitle: '库存管理',
@@ -1010,7 +1045,12 @@ const languageConfigs = {
     dailyReceiptsReport: '每日收据报告',
     totalReceipts: '收据总数',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   ja: {
     appTitle: '在庫管理',
@@ -1123,7 +1163,12 @@ const languageConfigs = {
     dailyReceiptsReport: '日次レシートレポート',
     totalReceipts: 'レシート総数',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   ko: {
     appTitle: '재고 관리',
@@ -1242,7 +1287,12 @@ const languageConfigs = {
     dailyReceiptsReport: '일일 영수증 보고서',
     totalReceipts: '총 영수증',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1361,7 +1411,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'รายงานใบเสร็จรายวัน',
     totalReceipts: 'ใบเสร็จทั้งหมด',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1480,7 +1535,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'Báo Cáo Hóa Đơn Hàng Ngày',
     totalReceipts: 'Tổng Hóa Đơn',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1599,7 +1659,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'Laporan Struk Harian',
     totalReceipts: 'Total Struk',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1718,7 +1783,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'दैनिक रसीद रिपोर्ट',
     totalReceipts: 'कुल रसीदें',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1836,7 +1906,12 @@ const languageConfigs = {
     dailyReceiptsReport: 'နေ့စဉ် ရောင်းချမှတ်တမ်း အစီရင်ခံစာ',
     totalReceipts: 'စုစုပေါင်း ရောင်းချမှတ်တမ်းများ',
     barcodeOptional: 'Barcode (optional)',
-    aiExpert: 'AI Expert',
+    aiExpert: 'AI Store Expert',
+    aiUnlock: 'Unlock AI Expert',
+    aiRestorePurchases: 'Restore Purchases',
+    aiDownloadModel: 'Download AI Model',
+    aiDisclaimer: 'AI Disclaimer',
+    aiLegalCredits: 'Legal & Credits',
   },
 };
 
@@ -6959,7 +7034,7 @@ const InventoryApp = () => {
 
           {aiSubScreen === 'paywall' && (
             <ScrollView contentContainerStyle={styles.paywallContainer}>
-              <Text style={styles.paywallTitle}>DayBunce AI Expert</Text>
+              <Text style={styles.paywallTitle}>{language.aiExpert}</Text>
               <Text style={styles.paywallSubtitle}>
                 Your personal on-device store consultant, powered by Microsoft Phi-4 Mini.
               </Text>
@@ -6987,7 +7062,7 @@ const InventoryApp = () => {
                 }}
                 activeOpacity={0.8}
               >
-                <Text style={styles.paywallUnlockBtnText}>Unlock AI Expert</Text>
+                <Text style={styles.paywallUnlockBtnText}>{language.aiUnlock}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.paywallRestoreBtn}
@@ -7006,7 +7081,7 @@ const InventoryApp = () => {
                 }}
                 activeOpacity={0.7}
               >
-                <Text style={styles.paywallRestoreBtnText}>Restore Purchase</Text>
+                <Text style={styles.paywallRestoreBtnText}>{language.aiRestorePurchases}</Text>
               </TouchableOpacity>
             </ScrollView>
           )}
