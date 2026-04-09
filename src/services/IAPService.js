@@ -1,10 +1,13 @@
-import {
-  getProducts,
-  getPurchaseHistory,
-  requestPurchase,
-  finishTransaction,
-} from 'expo-iap';
 import AIService from './AIService';
+
+function _getIAP() {
+  try {
+    return require('react-native-iap');
+  } catch (e) {
+    console.warn('IAPService: IAP module not available in this build.');
+    return null;
+  }
+}
 
 // The App Store product ID for the one-time AI Expert unlock.
 // This is a NON-CONSUMABLE product, which means:
@@ -31,8 +34,12 @@ const IAPService = {
     }
 
     // Fall back to App Store history verification
+    const iap = _getIAP();
+    if (!iap) {
+      return false;
+    }
     try {
-      const history = await getPurchaseHistory();
+      const history = await iap.getPurchaseHistory();
       if (history == null) {
         // Unexpected response — treat as unverified rather than not found
         return false;
@@ -51,8 +58,12 @@ const IAPService = {
   // Fetch the App Store product metadata (e.g. localised price string)
   // for display in the paywall UI.
   async getProductInfo() {
+    const iap = _getIAP();
+    if (!iap) {
+      return null;
+    }
     try {
-      const products = await getProducts([AI_PRODUCT_ID]);
+      const products = await iap.getProducts([AI_PRODUCT_ID]);
       return products && products.length > 0 ? products[0] : null;
     } catch (error) {
       console.error('IAPService: error fetching product info', error);
@@ -69,11 +80,15 @@ const IAPService = {
   // The product is treated as NON-CONSUMABLE (isConsumable: false) so that
   // StoreKit binds it to the Apple ID and allows cross-device restore.
   async purchaseAIUnlock(onDownloadStart) {
+    const iap = _getIAP();
+    if (!iap) {
+      return { success: false, error: 'IAP not available in this build' };
+    }
     try {
-      const purchase = await requestPurchase({ sku: AI_PRODUCT_ID });
+      const purchase = await iap.requestPurchase({ sku: AI_PRODUCT_ID });
 
       // Acknowledge the transaction with the App Store
-      await finishTransaction({ purchase, isConsumable: false });
+      await iap.finishTransaction({ purchase, isConsumable: false });
 
       // Persist the unlock flag locally
       await AIService.setUnlocked(true);
@@ -105,8 +120,12 @@ const IAPService = {
   //
   // Returns true if the entitlement was found and restored, false otherwise.
   async restorePurchases() {
+    const iap = _getIAP();
+    if (!iap) {
+      return false;
+    }
     try {
-      const history = await getPurchaseHistory();
+      const history = await iap.getPurchaseHistory();
       if (history == null) {
         return false;
       }

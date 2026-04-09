@@ -1,5 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LLM } from 'react-native-executorch';
+let LLM = null;
+try {
+  LLM = require('react-native-executorch').LLM;
+} catch (e) {
+  console.warn('AIService: react-native-executorch not available in this build. AI chat will be disabled.');
+}
 import StoreIndexService from './StoreIndexService';
 
 const STORAGE_KEYS = {
@@ -72,6 +77,10 @@ const AIService = {
 
   // Load the quantized Phi-4 Mini model using react-native-executorch
   async loadModel(modelPath) {
+    if (!LLM) {
+      console.warn('AIService: LLM module not available');
+      return false;
+    }
     try {
       llmInstance = await LLM.load(modelPath);
       return true;

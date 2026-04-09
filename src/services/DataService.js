@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import StoreIndexService from './StoreIndexService';
 
 class DataService {
   static STORAGE_KEYS = {
@@ -58,7 +57,15 @@ class DataService {
       
       items.push(newItem);
       await this.saveItemsByDate(date, items);
-      StoreIndexService.rebuildIndex().catch(console.warn); // Non-blocking background rebuild
+
+      // Lazy require to break circular dependency with StoreIndexService
+      try {
+        const StoreIndexService = require('./StoreIndexService').default;
+        StoreIndexService.rebuildIndex().catch(console.warn);
+      } catch (e) {
+        console.warn('DataService: Failed to load StoreIndexService', e);
+      }
+
       return newItem;
     } catch (error) {
       console.error('Error adding item:', error);
