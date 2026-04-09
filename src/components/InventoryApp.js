@@ -4470,6 +4470,16 @@ const InventoryApp = () => {
 
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavRow}>
+        {Platform.OS === 'ios' && (
+          <TouchableOpacity
+            style={styles.aiTabButton}
+            onPress={handleAITabPress}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.aiTabIcon}>🤖</Text>
+            <Text style={styles.aiTabLabel}>{language.aiExpert}</Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity 
           style={[styles.bottomNav, { flex: 1 }]}
           onPress={() => setShowReceiptModal(true)}
@@ -4482,16 +4492,6 @@ const InventoryApp = () => {
             {language.tapToViewReceipt}
           </Text>
         </TouchableOpacity>
-        {Platform.OS === 'ios' && (
-          <TouchableOpacity
-            style={styles.aiTabButton}
-            onPress={handleAITabPress}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.aiTabIcon}>🤖</Text>
-            <Text style={styles.aiTabLabel}>{language.aiExpert}</Text>
-          </TouchableOpacity>
-        )}
       </View>
 
       {/* Receipt Modal */}
@@ -7242,8 +7242,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    borderLeftWidth: 1,
-    borderLeftColor: '#e0e0e0',
+    borderRightWidth: 1,
+    borderRightColor: '#e0e0e0',
     minWidth: 72,
   },
   aiTabIcon: {
