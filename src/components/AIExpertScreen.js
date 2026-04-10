@@ -17,9 +17,9 @@ import StoreIndexService from '../services/StoreIndexService';
 import AIDisclaimerModal, { hasAcceptedDisclaimer } from './AIDisclaimerModal';
 import LegalCreditsView from './LegalCreditsView';
 
-const AIExpertScreen = () => {
+const AIExpertScreen = ({ initialQuestion }) => {
   const [messages, setMessages] = useState([]);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState(initialQuestion || '');
   const [isGenerating, setIsGenerating] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [showLegal, setShowLegal] = useState(false);
