@@ -1,5 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DataService from './DataService';
+// Phase 2: lazy-require InsightEngine to avoid circular dependency issues
+// (InsightEngine itself lazy-requires StoreIndexService)
+let _InsightEngine = null;
+function getInsightEngine() {
+  if (!_InsightEngine) {
+    try { _InsightEngine = require('./InsightEngine').default; } catch (e) {
+      console.warn('StoreIndexService: Failed to load InsightEngine:', e);
+    }
+  }
+  return _InsightEngine;
+}
 
 const STORAGE_KEYS = {
   STORE_INDEX: 'ai_store_index',
@@ -146,6 +157,10 @@ const StoreIndexService = {
 
       // Append today's data to the permanent daily journal (non-blocking update)
       this._updateDailyJournal(today, hotItems).catch(console.warn);
+
+      // Phase 2: trigger insight analysis non-blockingly
+      const InsightEngine = getInsightEngine();
+      if (InsightEngine) { InsightEngine.analyzeAndPersist().catch(console.warn); }
 
       return index;
     } catch (error) {

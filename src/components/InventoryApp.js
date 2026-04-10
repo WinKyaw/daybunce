@@ -23,8 +23,10 @@ import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import AIExpertScreen from './AIExpertScreen';
 import ModelDownloadScreen from './ModelDownloadScreen';
+import InsightsDashboard from './InsightsDashboard';
 import IAPService from '../services/IAPService';
 import ModelDownloadService from '../services/ModelDownloadService';
+import InsightEngine from '../services/InsightEngine';
 
 // Language Configuration
 const defaultLanguage = {
@@ -131,6 +133,19 @@ const defaultLanguage = {
   aiDownloadModel: 'Download AI Model',
   aiDisclaimer: 'AI Disclaimer',
   aiLegalCredits: 'Legal & Credits',
+  storeInsights: 'Store Insights',
+  insightsDashboard: 'Insights Dashboard',
+  noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+  insightSeverityWarning: 'Warning',
+  insightSeverityInfo: 'Info',
+  insightSeverityCritical: 'Critical',
+  askAI: 'Ask AI →',
+  dismissInsight: 'Dismiss',
+  refreshInsights: 'Refresh',
+  insightLowStockRisk: 'Low Stock Risk',
+  insightRestockWindow: 'Restock Window',
+  insightRevenueAnomaly: 'Revenue Anomaly',
+  insightSlowMover: 'Slow Mover',
 };
 
 const availableLanguages = [
@@ -301,6 +316,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -437,6 +465,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   fr: {
     appTitle: 'Gestion d\'Inventaire',
@@ -561,6 +602,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   de: {
     appTitle: 'Inventarverwaltung',
@@ -685,6 +739,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   it: {
     appTitle: 'Gestione Inventario',
@@ -809,6 +876,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   pt: {
     appTitle: 'Gestão de Inventário',
@@ -933,6 +1013,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   zh: {
     appTitle: '库存管理',
@@ -1051,6 +1144,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   ja: {
     appTitle: '在庫管理',
@@ -1169,6 +1275,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   ko: {
     appTitle: '재고 관리',
@@ -1293,6 +1412,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   th: {
     appTitle: 'การจัดการสินค้าคงคลัง',
@@ -1417,6 +1549,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   vi: {
     appTitle: 'Quản Lý Hàng Tồn Kho',
@@ -1541,6 +1686,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   id: {
     appTitle: 'Manajemen Inventaris',
@@ -1665,6 +1823,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   hi: {
     appTitle: 'इन्वेंटरी प्रबंधन',
@@ -1789,6 +1960,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
   my: {
     appTitle: 'ပစ္စည်းလက်ကျန်စီမံခန့်ခွဲမှု',
@@ -1912,6 +2096,19 @@ const languageConfigs = {
     aiDownloadModel: 'Download AI Model',
     aiDisclaimer: 'AI Disclaimer',
     aiLegalCredits: 'Legal & Credits',
+    storeInsights: 'Store Insights',
+    insightsDashboard: 'Insights Dashboard',
+    noInsightsYet: 'No insights yet. Keep adding sales data and check back soon.',
+    insightSeverityWarning: 'Warning',
+    insightSeverityInfo: 'Info',
+    insightSeverityCritical: 'Critical',
+    askAI: 'Ask AI →',
+    dismissInsight: 'Dismiss',
+    refreshInsights: 'Refresh',
+    insightLowStockRisk: 'Low Stock Risk',
+    insightRestockWindow: 'Restock Window',
+    insightRevenueAnomaly: 'Revenue Anomaly',
+    insightSlowMover: 'Slow Mover',
   },
 };
 
@@ -2026,6 +2223,9 @@ const InventoryApp = () => {
   const [showReceiptCalendarModal, setShowReceiptCalendarModal] = useState(false);
   const [showAIModal, setShowAIModal] = useState(false);
   const [aiSubScreen, setAiSubScreen] = useState('paywall'); // 'paywall' | 'download' | 'chat'
+  const [aiPrefillQuestion, setAiPrefillQuestion] = useState('');
+  const [showInsightsDashboard, setShowInsightsDashboard] = useState(false);
+  const [insightsBadgeCount, setInsightsBadgeCount] = useState(0);
 
   // New state for dynamic predefined items
   const [predefinedItems, setPredefinedItems] = useState([]);
@@ -2096,7 +2296,21 @@ const InventoryApp = () => {
 
   useEffect(() => {
     loadStores();
+    // Phase 2: warm up InsightEngine on app mount
+    InsightEngine.analyzeAndPersist().catch(console.warn);
   }, []);
+
+  // Phase 2: refresh badge count whenever the insights dashboard is closed
+  useEffect(() => {
+    if (!showInsightsDashboard) {
+      InsightEngine.loadInsights().then(list => {
+        const count = list.filter(
+          ins => !ins.dismissed && (ins.severity === 'warning' || ins.severity === 'critical'),
+        ).length;
+        setInsightsBadgeCount(count);
+      }).catch(console.warn);
+    }
+  }, [showInsightsDashboard]);
 
   useEffect(() => {
     if (selectedStore) {
@@ -4333,6 +4547,27 @@ const InventoryApp = () => {
     }
   };
 
+  // Phase 2: open AI modal pre-filled with an insight question
+  const handleOpenAIFromInsight = async (question) => {
+    setShowInsightsDashboard(false);
+    try {
+      const unlocked = await IAPService.checkUnlockStatus();
+      if (!unlocked) {
+        Alert.alert(
+          'Unlock AI Expert',
+          'Unlock AI Expert to get personalised advice on this insight.',
+        );
+        return;
+      }
+      const downloaded = await ModelDownloadService.isModelDownloaded();
+      setAiSubScreen(downloaded ? 'chat' : 'download');
+      setAiPrefillQuestion(question || '');
+      setShowAIModal(true);
+    } catch (e) {
+      Alert.alert('Error', 'Could not open AI Expert. Please try again.');
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
@@ -4555,6 +4790,22 @@ const InventoryApp = () => {
             <Text style={styles.aiTabLabel}>{language.aiExpert}</Text>
           </TouchableOpacity>
         )}
+        {/* Insights Button with badge */}
+        <TouchableOpacity
+          style={styles.insightsTabButton}
+          onPress={() => setShowInsightsDashboard(true)}
+          activeOpacity={0.7}
+        >
+          <View>
+            <Text style={styles.aiTabIcon}>💡</Text>
+            {insightsBadgeCount > 0 && (
+              <View style={styles.insightsBadge}>
+                <Text style={styles.insightsBadgeText}>{insightsBadgeCount}</Text>
+              </View>
+            )}
+          </View>
+          <Text style={styles.insightsTabLabel}>{language.storeInsights}</Text>
+        </TouchableOpacity>
         <TouchableOpacity 
           style={[styles.bottomNav, { flex: 1 }]}
           onPress={() => setShowReceiptModal(true)}
@@ -7093,10 +7344,17 @@ const InventoryApp = () => {
           )}
 
           {aiSubScreen === 'chat' && (
-            <AIExpertScreen />
+            <AIExpertScreen initialQuestion={aiPrefillQuestion} />
           )}
         </SafeAreaView>
       </Modal>
+
+      {/* Insights Dashboard Modal */}
+      <InsightsDashboard
+        visible={showInsightsDashboard}
+        onClose={() => setShowInsightsDashboard(false)}
+        onOpenAI={handleOpenAIFromInsight}
+      />
 
       
     </SafeAreaView>
@@ -7329,6 +7587,39 @@ const styles = StyleSheet.create({
     color: '#2196f3',
     marginTop: 2,
     fontWeight: '600',
+  },
+  insightsTabButton: {
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRightWidth: 1,
+    borderRightColor: '#e0e0e0',
+    minWidth: 72,
+  },
+  insightsTabLabel: {
+    fontSize: 11,
+    color: '#f59e0b',
+    marginTop: 2,
+    fontWeight: '600',
+  },
+  insightsBadge: {
+    position: 'absolute',
+    top: -4,
+    right: -8,
+    backgroundColor: '#ef4444',
+    borderRadius: 8,
+    minWidth: 16,
+    height: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 3,
+  },
+  insightsBadgeText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: '700',
   },
   aiModalHeader: {
     flexDirection: 'row',
