@@ -5,7 +5,9 @@ import DataService from './DataService';
 let _InsightEngine = null;
 function getInsightEngine() {
   if (!_InsightEngine) {
-    try { _InsightEngine = require('./InsightEngine').default; } catch (e) { /* ignore */ }
+    try { _InsightEngine = require('./InsightEngine').default; } catch (e) {
+      console.warn('StoreIndexService: Failed to load InsightEngine:', e);
+    }
   }
   return _InsightEngine;
 }

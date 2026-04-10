@@ -41,7 +41,8 @@ function checkLowStockRisk(index) {
         if (!itemMap[name]) {
           itemMap[name] = { days: [], category: item.category || null };
         }
-        const qty = parseFloat(item.unitsSold || 1);
+        const qty = parseFloat(item.unitsSold);
+        if (!item.unitsSold || isNaN(qty) || qty <= 0) { continue; }
         itemMap[name].days.push({ date: dayEntry.date, qty });
       }
     }
@@ -156,7 +157,7 @@ function checkRevenueAnomaly(index) {
     if (!todayEntry) { return insights; }
 
     const todayRevenue = (todayEntry.items || []).reduce(
-      (sum, item) => sum + parseFloat(item.price || 0) * parseFloat(item.unitsSold || 1),
+      (sum, item) => sum + parseFloat(item.price || 0) * parseFloat(item.unitsSold || 0),
       0,
     );
 

@@ -4804,7 +4804,7 @@ const InventoryApp = () => {
               </View>
             )}
           </View>
-          <Text style={styles.insightsTabLabel}>{language.storeInsights || 'Insights'}</Text>
+          <Text style={styles.insightsTabLabel}>{language.storeInsights}</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={[styles.bottomNav, { flex: 1 }]}
