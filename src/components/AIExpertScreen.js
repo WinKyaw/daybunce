@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  ScrollView,
   StyleSheet,
   Alert,
   ActivityIndicator,
@@ -14,8 +15,18 @@ import {
 import AIService from '../services/AIService';
 import IAPService from '../services/IAPService';
 import StoreIndexService from '../services/StoreIndexService';
+import ConversationMemoryService from '../services/ConversationMemoryService';
+import FeedbackService from '../services/FeedbackService';
 import AIDisclaimerModal, { hasAcceptedDisclaimer } from './AIDisclaimerModal';
 import LegalCreditsView from './LegalCreditsView';
+
+const WHAT_IF_SCENARIOS = [
+  "What if I raised prices by 10%?",
+  "What if I ran a 2-for-1 promotion?",
+  "What if I stopped stocking my slowest seller?",
+  "What if I added a new product category?",
+  "What if I gave bulk discounts?",
+];
 
 const AIExpertScreen = ({ initialQuestion }) => {
   const [messages, setMessages] = useState([]);
@@ -24,15 +35,19 @@ const AIExpertScreen = ({ initialQuestion }) => {
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [showLegal, setShowLegal] = useState(false);
   const [modelReady, setModelReady] = useState(false);
+  const [feedback, setFeedback] = useState({});
   const flatListRef = useRef(null);
   // Tracks the index of the AI message currently being streamed
   const streamingIndexRef = useRef(null);
 
-  // On mount: trigger non-blocking index rebuild + check disclaimer
+  // On mount: trigger non-blocking index rebuild + check disclaimer + load feedback
   useEffect(() => {
     // Rebuild the store index and run the nightly personalization update (non-blocking)
     StoreIndexService.rebuildIndex().catch(console.warn);
     StoreIndexService.runNightlyIndex().catch(console.warn);
+
+    // Load persisted feedback ratings
+    FeedbackService.getAllFeedback().then(all => setFeedback(all)).catch(console.warn);
 
     (async () => {
       const accepted = await hasAcceptedDisclaimer();
@@ -131,14 +146,44 @@ const AIExpertScreen = ({ initialQuestion }) => {
     }
   }, []);
 
-  const renderMessage = ({ item }) => {
+  const renderMessage = ({ item, index }) => {
     const isUser = item.role === 'user';
+    const isStreaming = streamingIndexRef.current === index;
+    const showFeedback = !isUser && item.content && !isStreaming;
+    const currentRating = feedback[item.id];
+
     return (
       <View style={[styles.bubbleRow, isUser ? styles.bubbleRowUser : styles.bubbleRowAI]}>
-        <View style={[styles.bubble, isUser ? styles.bubbleUser : styles.bubbleAI]}>
-          <Text style={[styles.bubbleText, isUser ? styles.bubbleTextUser : styles.bubbleTextAI]}>
-            {item.content || (isGenerating && streamingIndexRef.current !== null ? '…' : '')}
-          </Text>
+        <View>
+          <View style={[styles.bubble, isUser ? styles.bubbleUser : styles.bubbleAI]}>
+            <Text style={[styles.bubbleText, isUser ? styles.bubbleTextUser : styles.bubbleTextAI]}>
+              {item.content || (isGenerating && streamingIndexRef.current !== null ? '…' : '')}
+            </Text>
+          </View>
+          {showFeedback && (
+            <View style={styles.feedbackRow}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => {
+                  FeedbackService.recordFeedback(item.id, 'up', item.content)
+                    .then(() => setFeedback(prev => ({ ...prev, [item.id]: 'up' })))
+                    .catch(console.warn);
+                }}
+              >
+                <Text style={[styles.feedbackBtn, currentRating === 'up' && styles.feedbackSelected]}>👍</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => {
+                  FeedbackService.recordFeedback(item.id, 'down', item.content)
+                    .then(() => setFeedback(prev => ({ ...prev, [item.id]: 'down' })))
+                    .catch(console.warn);
+                }}
+              >
+                <Text style={[styles.feedbackBtn, currentRating === 'down' && styles.feedbackSelected]}>👎</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     );
@@ -155,6 +200,15 @@ const AIExpertScreen = ({ initialQuestion }) => {
           </TouchableOpacity>
           <TouchableOpacity onPress={handleRestorePurchase} style={styles.headerBtn}>
             <Text style={styles.headerBtnText}>Restore</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={async () => {
+              await ConversationMemoryService.clearHistory();
+              setMessages([]);
+            }}
+            style={styles.headerBtn}
+          >
+            <Text style={styles.headerBtnText}>New Chat</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -183,6 +237,29 @@ const AIExpertScreen = ({ initialQuestion }) => {
         <View style={styles.thinkingRow}>
           <ActivityIndicator size="small" color="#4f46e5" />
           <Text style={styles.thinkingText}>Store Expert is thinking…</Text>
+        </View>
+      )}
+
+      {/* What-If scenario chips */}
+      {modelReady && !isGenerating && (
+        <View style={styles.whatIfContainer}>
+          <Text style={styles.whatIfLabel}>What-If:</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.whatIfScroll}
+          >
+            {WHAT_IF_SCENARIOS.map(scenario => (
+              <TouchableOpacity
+                key={scenario}
+                style={styles.whatIfChip}
+                onPress={() => setInputText(scenario)}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.whatIfChipText}>{scenario}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
       )}
 
@@ -381,6 +458,50 @@ const styles = StyleSheet.create({
     color: '#4f46e5',
     fontSize: 16,
     fontWeight: '600',
+  },
+  whatIfContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#e5e7eb',
+  },
+  whatIfLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#4f46e5',
+    marginRight: 8,
+    flexShrink: 0,
+  },
+  whatIfScroll: {
+    gap: 8,
+    paddingRight: 8,
+  },
+  whatIfChip: {
+    backgroundColor: '#ede9fe',
+    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  whatIfChipText: {
+    color: '#4f46e5',
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  feedbackRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 4,
+    paddingLeft: 4,
+  },
+  feedbackBtn: {
+    fontSize: 16,
+    color: '#aaa',
+  },
+  feedbackSelected: {
+    color: '#4f46e5',
   },
 });
 
