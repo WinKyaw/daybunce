@@ -2,9 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system/legacy';
 import AIService from './AIService';
 
-// Placeholder CDN URL — replace with the actual CDN location before release
+// Phi-4 Mini quantized model hosted by Software Mansion on Hugging Face.
+// Swap this URL for your own CDN (e.g. NAS + Cloudflare) before production release.
 export const MODEL_CDN_URL =
-  'https://your-cdn.example.com/phi4-mini-4bit-q4_k_m.pte';
+  'https://huggingface.co/software-mansion/react-native-executorch-phi-4-mini/resolve/main/phi-4-mini-instruct-quantized.pte';
 
 export const MODEL_FILENAME = 'phi4_mini_4bit.pte';
 
