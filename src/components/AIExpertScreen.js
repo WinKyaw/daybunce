@@ -60,6 +60,11 @@ const AIExpertScreen = ({ initialQuestion }) => {
   }, []);
 
   const initModel = async () => {
+    if (!AIService.isLLMAvailable()) {
+      console.warn('AIExpertScreen: LLM module not available, AI features disabled.');
+      setModelReady(false);
+      return;
+    }
     const modelPath = await AIService.getModelPath();
     if (!modelPath) {
       Alert.alert(
@@ -222,7 +227,11 @@ const AIExpertScreen = ({ initialQuestion }) => {
         contentContainerStyle={styles.messageList}
         onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
         ListEmptyComponent={
-          modelReady ? (
+          !AIService.isLLMAvailable() ? (
+            <Text style={styles.emptyText}>
+              AI features require a rebuild with New Architecture enabled. Run: npx expo prebuild --clean &amp;&amp; cd ios &amp;&amp; pod install
+            </Text>
+          ) : modelReady ? (
             <Text style={styles.emptyText}>
               Ask your Store Expert anything about your inventory or sales…
             </Text>
