@@ -1,4 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import StoreIndexService from './StoreIndexService';
+import ConversationMemoryService from './ConversationMemoryService';
+
 let LLM = null;
 let _llmLoadAttempted = false;
 
@@ -14,15 +17,23 @@ function getLLM() {
   _llmLoadAttempted = true;
   try {
     const executorch = require('react-native-executorch');
-    LLM = executorch.LLM || null;
+    // react-native-executorch v0.4.x exports a static class called LLMModule, not LLM
+    LLM = executorch.LLMModule || null;
   } catch (e) {
     console.warn('AIService: react-native-executorch not available in this build. AI chat will be disabled.', e.message);
     LLM = null;
   }
   return LLM;
 }
-import StoreIndexService from './StoreIndexService';
-import ConversationMemoryService from './ConversationMemoryService';
+
+// Tokenizer resources for Phi-4 Mini (fetched and cached by react-native-executorch on first model load)
+const PHI_4_MINI_TOKENIZER_URL =
+  'https://huggingface.co/software-mansion/react-native-executorch-phi-4-mini/resolve/v0.4.0/tokenizer.json';
+const PHI_4_MINI_TOKENIZER_CONFIG_URL =
+  'https://huggingface.co/software-mansion/react-native-executorch-phi-4-mini/resolve/v0.4.0/tokenizer_config.json';
+
+// Reusable no-op for optional callbacks
+const _noop = () => {};
 
 const STORAGE_KEYS = {
   UNLOCKED: 'ai_pro_unlocked',
@@ -107,7 +118,15 @@ const AIService = {
       return false;
     }
     try {
-      llmInstance = await LLMModule.load(modelPath);
+      // LLMModule.load() requires the model binary plus separate tokenizer files.
+      // The tokenizer JSON files are small and fetched/cached by react-native-executorch.
+      await LLMModule.load({
+        modelSource: modelPath,
+        tokenizerSource: PHI_4_MINI_TOKENIZER_URL,
+        tokenizerConfigSource: PHI_4_MINI_TOKENIZER_CONFIG_URL,
+      });
+      // LLMModule is a static class — store it as the instance reference
+      llmInstance = LLMModule;
       return true;
     } catch (error) {
       console.error('AIService: error loading model', error);
@@ -125,10 +144,11 @@ const AIService = {
   unloadModel() {
     if (llmInstance) {
       try {
-        llmInstance = null;
+        llmInstance.delete();
       } catch (error) {
         console.error('AIService: error unloading model', error);
       }
+      llmInstance = null;
     }
   },
 
@@ -137,6 +157,9 @@ const AIService = {
     if (!llmInstance) {
       throw new Error('Model is not loaded. Call loadModel() first.');
     }
+
+    // Register the per-query streaming callback before generating
+    llmInstance.setTokenCallback({ tokenCallback: onToken || _noop });
 
     // Build RAG context from the store index (Tier 3 → Tier 2 → Tier 1)
     const storeContext = await StoreIndexService.buildContext();
@@ -153,13 +176,9 @@ ${storeContext}
 ${memoryContext ? memoryContext + '\n\n' : ''}User: ${userMessage}
 Assistant:`;
 
-    let fullResponse = '';
-    await llmInstance.generate(fullPrompt, token => {
-      fullResponse += token;
-      if (onToken) {
-        onToken(token);
-      }
-    });
+    // forward() sends the raw prompt directly to the model and returns the full response.
+    // Streaming tokens are delivered via the tokenCallback registered above.
+    const fullResponse = await llmInstance.forward(fullPrompt);
 
     // Persist this exchange to conversation memory
     await ConversationMemoryService.addTurn('user', userMessage);
