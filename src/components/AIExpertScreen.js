@@ -14,11 +14,13 @@ import {
 } from 'react-native';
 import AIService from '../services/AIService';
 import IAPService from '../services/IAPService';
+import ModelDownloadService from '../services/ModelDownloadService';
 import StoreIndexService from '../services/StoreIndexService';
 import ConversationMemoryService from '../services/ConversationMemoryService';
 import FeedbackService from '../services/FeedbackService';
 import AIDisclaimerModal, { hasAcceptedDisclaimer } from './AIDisclaimerModal';
 import LegalCreditsView from './LegalCreditsView';
+import ModelDownloadScreen from './ModelDownloadScreen';
 
 const WHAT_IF_SCENARIOS = [
   "What if I raised prices by 10%?",
@@ -34,6 +36,7 @@ const AIExpertScreen = ({ initialQuestion }) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [showLegal, setShowLegal] = useState(false);
+  const [showDownload, setShowDownload] = useState(false);
   const [modelReady, setModelReady] = useState(false);
   const [feedback, setFeedback] = useState({});
   const flatListRef = useRef(null);
@@ -67,10 +70,15 @@ const AIExpertScreen = ({ initialQuestion }) => {
     }
     const modelPath = await AIService.getModelPath();
     if (!modelPath) {
-      Alert.alert(
-        'Model Not Downloaded',
-        'Please complete the model download before using DayBunce AI.',
-      );
+      // Show download screen instead of an alert
+      setShowDownload(true);
+      return;
+    }
+    // Also check the file actually exists on disk (guards against stale AsyncStorage paths)
+    const downloaded = await ModelDownloadService.isModelDownloaded();
+    if (!downloaded) {
+      await AIService.setModelPath(null); // clear stale path
+      setShowDownload(true);
       return;
     }
     const ok = await AIService.loadModel(modelPath);
@@ -194,6 +202,18 @@ const AIExpertScreen = ({ initialQuestion }) => {
     );
   };
 
+  if (showDownload) {
+    return (
+      <ModelDownloadScreen
+        onComplete={async (uri) => {
+          setShowDownload(false);
+          await AIService.setModelPath(uri);
+          await initModel();
+        }}
+      />
+    );
+  }
+
   return (
     <SafeAreaView style={styles.safe}>
       {/* Header */}
@@ -229,7 +249,7 @@ const AIExpertScreen = ({ initialQuestion }) => {
         ListEmptyComponent={
           !AIService.isLLMAvailable() ? (
             <Text style={styles.emptyText}>
-              AI features require a rebuild with New Architecture enabled. Run: npx expo prebuild --clean &amp;&amp; cd ios &amp;&amp; pod install
+              AI features are not available in this build. Please contact support.
             </Text>
           ) : modelReady ? (
             <Text style={styles.emptyText}>
