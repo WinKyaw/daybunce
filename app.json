@@ -38,6 +38,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [],
+    "newArchEnabled": true,
     "extra": {
       "eas": {
         "projectId": "1272de7d-84f4-495f-827a-7521ac3ae2f7"

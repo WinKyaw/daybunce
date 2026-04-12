@@ -1,6 +1,13 @@
 import AIService from './AIService';
 
+// TODO: Remove this flag before App Store submission.
+// Set to true to bypass IAP checks during local development/testing.
+const DEV_BYPASS_IAP = true;
+
 function _getIAP() {
+  // NitroModules (used by react-native-iap v12+) throw a native bridge error
+  // before JS require() can catch it when New Architecture is not yet active.
+  // This wrapper returns null gracefully so the app does not crash.
   try {
     return require('react-native-iap');
   } catch (e) {
@@ -39,6 +46,11 @@ const IAPService = {
   // the App Store. After a successful restore, the flag is written to
   // AsyncStorage so subsequent launches are instant.
   async checkUnlockStatus() {
+    // TODO: Remove DEV_BYPASS_IAP before release.
+    if (DEV_BYPASS_IAP) {
+      return true;
+    }
+
     const localFlag = await AIService.isUnlocked();
     if (localFlag) {
       return true;
@@ -95,6 +107,15 @@ const IAPService = {
   // The product is treated as NON-CONSUMABLE (isConsumable: false) so that
   // StoreKit binds it to the Apple ID and allows cross-device restore.
   async purchaseAIUnlock(onDownloadStart) {
+    // TODO: Remove DEV_BYPASS_IAP before release.
+    if (DEV_BYPASS_IAP) {
+      await AIService.setUnlocked(true);
+      if (onDownloadStart) {
+        onDownloadStart();
+      }
+      return { success: true };
+    }
+
     const iap = _getIAP();
     if (!iap) {
       return { success: false, error: 'IAP not available in this build' };
@@ -137,6 +158,11 @@ const IAPService = {
   //
   // Returns true if the entitlement was found and restored, false otherwise.
   async restorePurchases() {
+    // TODO: Remove DEV_BYPASS_IAP before release.
+    if (DEV_BYPASS_IAP) {
+      return true;
+    }
+
     const iap = _getIAP();
     if (!iap) {
       return false;
