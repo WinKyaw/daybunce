@@ -17,6 +17,7 @@ const ModelDownloadScreen = ({ onComplete }) => {
   const [totalBytes, setTotalBytes] = useState(0);
   const [paused, setPaused] = useState(false);
   const [started, setStarted] = useState(false);
+  const [error, setError] = useState(null);
 
   const percent =
     totalBytes > 0 ? Math.min(100, (downloadedBytes / totalBytes) * 100) : 0;
@@ -33,12 +34,8 @@ const ModelDownloadScreen = ({ onComplete }) => {
     [onComplete],
   );
 
-  const handleError = useCallback(error => {
-    Alert.alert(
-      'Download Failed',
-      `An error occurred while downloading the model: ${error?.message || error}`,
-      [{ text: 'OK' }],
-    );
+  const handleError = useCallback(err => {
+    setError(err?.message || 'Download failed');
   }, []);
 
   // Start the download as soon as the screen mounts
@@ -110,6 +107,25 @@ const ModelDownloadScreen = ({ onComplete }) => {
 
         {paused && (
           <Text style={styles.pausedLabel}>Download paused</Text>
+        )}
+
+        {error && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+            <TouchableOpacity
+              style={[styles.button, styles.pauseButton]}
+              onPress={async () => {
+                await ModelDownloadService.clearDownloadState();
+                setError(null);
+                setDownloadedBytes(0);
+                setTotalBytes(0);
+                setStarted(false);
+              }}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.pauseButtonText}>Retry Download</Text>
+            </TouchableOpacity>
+          </View>
         )}
 
         {/* Controls */}
@@ -227,6 +243,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 18,
     marginTop: 28,
+  },
+  errorContainer: {
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  errorText: {
+    fontSize: 13,
+    color: '#dc2626',
+    textAlign: 'center',
+    marginBottom: 12,
   },
 });
 

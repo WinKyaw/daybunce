@@ -67,22 +67,49 @@ const ModelDownloadService = {
       const savedSnapshot = await AsyncStorage.getItem(DOWNLOAD_PROGRESS_KEY);
 
       if (savedSnapshot) {
-        const snapshot = JSON.parse(savedSnapshot);
-        downloadResumable = new FileSystem.DownloadResumable(
-          snapshot.url,
-          snapshot.fileUri,
-          snapshot.options,
-          _buildProgressCallback(onProgress),
-          snapshot.resumeData,
-        );
-      } else {
-        downloadResumable = FileSystem.createDownloadResumable(
-          MODEL_CDN_URL,
-          destPath,
-          {},
-          _buildProgressCallback(onProgress),
-        );
+        // Try to resume first
+        try {
+          const snapshot = JSON.parse(savedSnapshot);
+          downloadResumable = new FileSystem.DownloadResumable(
+            snapshot.url,
+            snapshot.fileUri,
+            snapshot.options,
+            _buildProgressCallback(onProgress),
+            snapshot.resumeData,
+          );
+          const result = await downloadResumable.downloadAsync();
+          if (result && result.uri) {
+            // Success — persist path and clear progress snapshot
+            await AIService.setModelPath(result.uri);
+            await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
+            downloadResumable = null;
+            if (onComplete) { onComplete(result.uri); }
+            return;
+          }
+        } catch (resumeError) {
+          // Resume failed — clear stale snapshot and partial file, then do fresh download
+          console.warn('ModelDownloadService: resume failed, starting fresh download', resumeError.message);
+          await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
+          downloadResumable = null;
+          // Delete partial file if it exists
+          try {
+            const info = await FileSystem.getInfoAsync(destPath);
+            if (info.exists) {
+              await FileSystem.deleteAsync(destPath, { idempotent: true });
+            }
+          } catch (deleteError) {
+            console.warn('ModelDownloadService: could not delete partial file', deleteError.message);
+          }
+        }
       }
+
+      // Fresh download
+      downloadResumable = FileSystem.createDownloadResumable(
+        MODEL_CDN_URL,
+        destPath,
+        {},
+        _buildProgressCallback(onProgress),
+      );
 
       const result = await downloadResumable.downloadAsync();
 
@@ -127,6 +154,23 @@ const ModelDownloadService = {
       }
     } catch (error) {
       console.error('ModelDownloadService: error cancelling download', error);
+    }
+  },
+
+  // Clear all download state (stale snapshots + partial files)
+  // Call this when the user explicitly wants to restart the download from scratch
+  async clearDownloadState() {
+    try {
+      await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
+      downloadResumable = null;
+      const path = this._modelFilePath();
+      const info = await FileSystem.getInfoAsync(path);
+      if (info.exists) {
+        await FileSystem.deleteAsync(path, { idempotent: true });
+      }
+      await AIService.setModelPath(null);
+    } catch (error) {
+      console.error('ModelDownloadService: error clearing download state', error);
     }
   },
 };
