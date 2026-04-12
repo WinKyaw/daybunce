@@ -178,7 +178,13 @@ Assistant:`;
 
     // forward() sends the raw prompt directly to the model and returns the full response.
     // Streaming tokens are delivered via the tokenCallback registered above.
-    const fullResponse = await llmInstance.forward(fullPrompt);
+    let fullResponse;
+    try {
+      fullResponse = await llmInstance.forward(fullPrompt);
+    } catch (error) {
+      console.error('AIService query error:', JSON.stringify(error), error?.message, error?.stack);
+      throw (error instanceof Error) ? error : new Error(error?.message || String(error));
+    }
 
     // Persist this exchange to conversation memory
     await ConversationMemoryService.addTurn('user', userMessage);

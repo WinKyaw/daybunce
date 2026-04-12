@@ -11,6 +11,8 @@ import {
   ActivityIndicator,
   SafeAreaView,
   Modal,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import AIService from '../services/AIService';
 import IAPService from '../services/IAPService';
@@ -129,13 +131,14 @@ const AIExpertScreen = ({ initialQuestion }) => {
         flatListRef.current?.scrollToEnd({ animated: false });
       });
     } catch (error) {
+      console.error('AIExpertScreen: handleSend error:', error?.message, error);
       setMessages(prev => {
         const updated = [...prev];
         const idx = streamingIndexRef.current;
         if (idx !== null && updated[idx]) {
           updated[idx] = {
             ...updated[idx],
-            content: 'Sorry, an error occurred. Please try again.',
+            content: `Error: ${error?.message || 'An error occurred. Please try again.'}`,
           };
         }
         return updated;
@@ -239,6 +242,10 @@ const AIExpertScreen = ({ initialQuestion }) => {
       </View>
 
       {/* Message list */}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
       <FlatList
         ref={flatListRef}
         data={messages}
@@ -317,6 +324,8 @@ const AIExpertScreen = ({ initialQuestion }) => {
           <Text style={styles.sendButtonText}>Send</Text>
         </TouchableOpacity>
       </View>
+
+      </KeyboardAvoidingView>
 
       {/* First-use disclaimer gate */}
       <AIDisclaimerModal visible={showDisclaimer} onAccept={handleDisclaimerAccept} />
