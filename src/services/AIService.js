@@ -6,6 +6,7 @@ try {
   console.warn('AIService: react-native-executorch not available in this build. AI chat will be disabled.');
 }
 import StoreIndexService from './StoreIndexService';
+import ConversationMemoryService from './ConversationMemoryService';
 
 const STORAGE_KEYS = {
   UNLOCKED: 'ai_pro_unlocked',
@@ -118,20 +119,29 @@ const AIService = {
     // Build RAG context from the store index (Tier 3 → Tier 2 → Tier 1)
     const storeContext = await StoreIndexService.buildContext();
 
+    // Inject prior conversation turns so the model has short-term memory
+    const memoryContext = await ConversationMemoryService.buildMemoryContext();
+
     const fullPrompt = `${SYSTEM_PROMPT}
 
 --- STORE CONTEXT START ---
 ${storeContext}
 --- STORE CONTEXT END ---
 
-User: ${userMessage}
+${memoryContext ? memoryContext + '\n\n' : ''}User: ${userMessage}
 Assistant:`;
 
+    let fullResponse = '';
     await llmInstance.generate(fullPrompt, token => {
+      fullResponse += token;
       if (onToken) {
         onToken(token);
       }
     });
+
+    // Persist this exchange to conversation memory
+    await ConversationMemoryService.addTurn('user', userMessage);
+    await ConversationMemoryService.addTurn('assistant', fullResponse);
   },
 };
 
