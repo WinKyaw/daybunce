@@ -9,6 +9,17 @@ function _getIAP() {
   }
 }
 
+// react-native-iap v12 requires initConnection() before any store calls and
+// endConnection() when done. This helper manages that lifecycle automatically.
+async function _withConnection(iap, fn) {
+  await iap.initConnection();
+  try {
+    return await fn();
+  } finally {
+    await iap.endConnection();
+  }
+}
+
 // The App Store product ID for the one-time AI Expert unlock.
 // This is a NON-CONSUMABLE product, which means:
 //   - It is tied to the user's Apple ID, NOT the device.
@@ -39,16 +50,18 @@ const IAPService = {
       return false;
     }
     try {
-      const history = await iap.getPurchaseHistory();
-      if (history == null) {
-        // Unexpected response — treat as unverified rather than not found
-        return false;
-      }
-      const found = history.some(p => p.productId === AI_PRODUCT_ID);
-      if (found) {
-        await AIService.setUnlocked(true);
-      }
-      return found;
+      return await _withConnection(iap, async () => {
+        const history = await iap.getAvailablePurchases();
+        if (history == null) {
+          // Unexpected response — treat as unverified rather than not found
+          return false;
+        }
+        const found = history.some(p => p.productId === AI_PRODUCT_ID);
+        if (found) {
+          await AIService.setUnlocked(true);
+        }
+        return found;
+      });
     } catch (error) {
       console.warn('IAPService: unable to verify purchase history', error);
       return false;
@@ -63,8 +76,10 @@ const IAPService = {
       return null;
     }
     try {
-      const products = await iap.getProducts([AI_PRODUCT_ID]);
-      return products && products.length > 0 ? products[0] : null;
+      return await _withConnection(iap, async () => {
+        const products = await iap.getProducts({ productIds: [AI_PRODUCT_ID] });
+        return products && products.length > 0 ? products[0] : null;
+      });
     } catch (error) {
       console.error('IAPService: error fetching product info', error);
       return null;
@@ -85,20 +100,22 @@ const IAPService = {
       return { success: false, error: 'IAP not available in this build' };
     }
     try {
-      const purchase = await iap.requestPurchase({ sku: AI_PRODUCT_ID });
+      return await _withConnection(iap, async () => {
+        const purchase = await iap.requestPurchase({ sku: AI_PRODUCT_ID });
 
-      // Acknowledge the transaction with the App Store
-      await iap.finishTransaction({ purchase, isConsumable: false });
+        // Acknowledge the transaction with the App Store
+        await iap.finishTransaction({ purchase, isConsumable: false });
 
-      // Persist the unlock flag locally
-      await AIService.setUnlocked(true);
+        // Persist the unlock flag locally
+        await AIService.setUnlocked(true);
 
-      // Trigger model download
-      if (onDownloadStart) {
-        onDownloadStart();
-      }
+        // Trigger model download
+        if (onDownloadStart) {
+          onDownloadStart();
+        }
 
-      return { success: true };
+        return { success: true };
+      });
     } catch (error) {
       console.error('IAPService: purchase error', error);
       return { success: false, error };
@@ -110,7 +127,7 @@ const IAPService = {
   // HOW CROSS-DEVICE RESTORE WORKS:
   //   1. User installs the app on a new device (AsyncStorage is empty).
   //   2. User navigates to the AI Expert screen and taps "Restore Purchases".
-  //   3. This method calls getPurchaseHistory() — StoreKit verifies the
+  //   3. This method calls getAvailablePurchases() — StoreKit verifies the
   //      Apple ID with Apple's servers and returns prior non-consumable
   //      purchases.
   //   4. If AI_PRODUCT_ID is found, we set the local unlock flag to true.
@@ -125,16 +142,18 @@ const IAPService = {
       return false;
     }
     try {
-      const history = await iap.getPurchaseHistory();
-      if (history == null) {
+      return await _withConnection(iap, async () => {
+        const history = await iap.getAvailablePurchases();
+        if (history == null) {
+          return false;
+        }
+        const found = history.some(p => p.productId === AI_PRODUCT_ID);
+        if (found) {
+          await AIService.setUnlocked(true);
+          return true;
+        }
         return false;
-      }
-      const found = history.some(p => p.productId === AI_PRODUCT_ID);
-      if (found) {
-        await AIService.setUnlocked(true);
-        return true;
-      }
-      return false;
+      });
     } catch (error) {
       console.error('IAPService: error restoring purchases', error);
       return false;
