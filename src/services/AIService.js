@@ -1,15 +1,25 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 let LLM = null;
-try {
-  // NOTE: This require() will throw a NitroModules native bridge error if the
-  // app was built without New Architecture enabled. After adding
-  // "newArchEnabled": true to app.json and running `npx expo prebuild --clean`
-  // followed by `pod install`, NitroModules will be properly linked and LLM
-  // will load successfully. Until then, LLM remains null and AI chat is
-  // disabled gracefully.
-  LLM = require('react-native-executorch').LLM;
-} catch (e) {
-  console.warn('AIService: react-native-executorch not available in this build. AI chat will be disabled.');
+let _llmLoadAttempted = false;
+
+// NOTE: react-native-executorch uses NitroModules which can throw a native
+// bridge error before JavaScript's try/catch can intercept it if the app is
+// built without New Architecture enabled. Using a lazy getter defers the
+// require() until first use, which avoids the crash at module load time.
+// After adding "newArchEnabled": true to app.json and running
+// `npx expo prebuild --clean` followed by `pod install`, NitroModules will be
+// properly linked and LLM will load successfully.
+function getLLM() {
+  if (_llmLoadAttempted) return LLM;
+  _llmLoadAttempted = true;
+  try {
+    const executorch = require('react-native-executorch');
+    LLM = executorch.LLM || null;
+  } catch (e) {
+    console.warn('AIService: react-native-executorch not available in this build. AI chat will be disabled.', e.message);
+    LLM = null;
+  }
+  return LLM;
 }
 import StoreIndexService from './StoreIndexService';
 import ConversationMemoryService from './ConversationMemoryService';
@@ -91,18 +101,24 @@ const AIService = {
 
   // Load the quantized Phi-4 Mini model using react-native-executorch
   async loadModel(modelPath) {
-    if (!LLM) {
+    const LLMModule = getLLM();
+    if (!LLMModule) {
       console.warn('AIService: LLM module not available');
       return false;
     }
     try {
-      llmInstance = await LLM.load(modelPath);
+      llmInstance = await LLMModule.load(modelPath);
       return true;
     } catch (error) {
       console.error('AIService: error loading model', error);
       llmInstance = null;
       return false;
     }
+  },
+
+  // Returns true if the react-native-executorch LLM module is available
+  isLLMAvailable() {
+    return getLLM() !== null;
   },
 
   // Free the model instance to reclaim memory
