@@ -1,6 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 let LLM = null;
 try {
+  // NOTE: This require() will throw a NitroModules native bridge error if the
+  // app was built without New Architecture enabled. After adding
+  // "newArchEnabled": true to app.json and running `npx expo prebuild --clean`
+  // followed by `pod install`, NitroModules will be properly linked and LLM
+  // will load successfully. Until then, LLM remains null and AI chat is
+  // disabled gracefully.
   LLM = require('react-native-executorch').LLM;
 } catch (e) {
   console.warn('AIService: react-native-executorch not available in this build. AI chat will be disabled.');
