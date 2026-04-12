@@ -23,7 +23,6 @@
     "expo-dev-client": "~6.0.13",
     "expo-document-picker": "~14.0.7",
     "expo-file-system": "~19.0.14",
-    "expo-iap": "^1.0.4",
     "expo-linking": "^8.0.8",
     "expo-modules-core": "~3.0.15",
     "expo-print": "~15.0.7",
@@ -41,8 +40,7 @@
     "react-native-screens": "^4.16.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.21.0",
-    "react-native-executorch": "^0.4.0",
-    "expo-iap": "^1.0.0"
+    "react-native-iap": "^12.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
