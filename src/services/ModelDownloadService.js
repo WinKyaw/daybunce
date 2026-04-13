@@ -22,8 +22,9 @@ const ModelDownloadService = {
   // Check whether the model file already exists on-device
   async isModelDownloaded() {
     try {
-      const info = await FileSystem.getInfoAsync(this._modelFilePath());
-      return info.exists;
+      const info = await FileSystem.getInfoAsync(this._modelFilePath(), { size: true });
+      // Must exist AND be at least 1 GB — guards against corrupt/partial downloads
+      return info.exists && (info.size ?? 0) > 1_000_000_000;
     } catch {
       return false;
     }

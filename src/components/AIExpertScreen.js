@@ -84,10 +84,14 @@ const AIExpertScreen = ({ initialQuestion }) => {
       return;
     }
     const ok = await AIService.loadModel(modelPath);
-    setModelReady(ok);
     if (!ok) {
-      Alert.alert('Load Error', 'Failed to load the AI model. Please restart the app.');
+      // Model file is likely corrupt — delete it and prompt re-download
+      await ModelDownloadService.clearDownloadState();
+      setModelReady(false);
+      setShowDownload(true);
+      return;
     }
+    setModelReady(ok);
   };
 
   const handleDisclaimerAccept = useCallback(async () => {
@@ -237,6 +241,29 @@ const AIExpertScreen = ({ initialQuestion }) => {
             style={styles.headerBtn}
           >
             <Text style={styles.headerBtnText}>New Chat</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert(
+                'Reset AI Model',
+                'This will delete the downloaded AI model (~2.2 GB) from your device. You will need to re-download it to use AI features.',
+                [
+                  { text: 'Cancel', style: 'cancel' },
+                  {
+                    text: 'Delete & Reset',
+                    style: 'destructive',
+                    onPress: async () => {
+                      await ModelDownloadService.clearDownloadState();
+                      setModelReady(false);
+                      setShowDownload(true);
+                    },
+                  },
+                ],
+              );
+            }}
+            style={styles.headerBtn}
+          >
+            <Text style={styles.headerBtnText}>Reset AI</Text>
           </TouchableOpacity>
         </View>
       </View>
