@@ -32,9 +32,6 @@ const PHI_4_MINI_TOKENIZER_URL =
 const PHI_4_MINI_TOKENIZER_CONFIG_URL =
   'https://huggingface.co/software-mansion/react-native-executorch-phi-4-mini/resolve/v0.4.0/tokenizer_config.json';
 
-// Reusable no-op for optional callbacks
-const _noop = () => {};
-
 const STORAGE_KEYS = {
   UNLOCKED: 'ai_pro_unlocked',
   MODEL_PATH: 'ai_model_local_uri',
@@ -158,29 +155,39 @@ const AIService = {
       throw new Error('Model is not loaded. Call loadModel() first.');
     }
 
-    // Register the per-query streaming callback before generating
-    llmInstance.setTokenCallback({ tokenCallback: onToken || _noop });
-
     // Build RAG context from the store index (Tier 3 → Tier 2 → Tier 1)
     const storeContext = await StoreIndexService.buildContext();
 
     // Inject prior conversation turns so the model has short-term memory
     const memoryContext = await ConversationMemoryService.buildMemoryContext();
 
-    const fullPrompt = `${SYSTEM_PROMPT}
+    let fullResponse = '';
+    try {
+      // generate() is the correct public API — it applies the Phi-4 Mini chat template
+      // (adds special instruction tokens) before calling the native runner, then streams
+      // tokens via the callback. forward() is a low-level native method that bypasses
+      // the tokenizer and prompt formatting, causing LLaMARunnerErrorDomain error 34.
+      llmInstance.setTokenCallback({
+        tokenCallback: (token) => {
+          fullResponse += token;
+          if (onToken) {
+            onToken(token);
+          }
+        },
+      });
+      await llmInstance.generate([
+        {
+          role: 'system',
+          content: `${SYSTEM_PROMPT}
 
 --- STORE CONTEXT START ---
 ${storeContext}
 --- STORE CONTEXT END ---
 
-${memoryContext ? memoryContext + '\n\n' : ''}User: ${userMessage}
-Assistant:`;
-
-    // forward() sends the raw prompt directly to the model and returns the full response.
-    // Streaming tokens are delivered via the tokenCallback registered above.
-    let fullResponse;
-    try {
-      fullResponse = await llmInstance.forward(fullPrompt);
+${memoryContext ? memoryContext + '\n\n' : ''}`,
+        },
+        { role: 'user', content: userMessage },
+      ]);
     } catch (error) {
       console.error('AIService query error:', JSON.stringify(error), error?.message, error?.stack);
       throw (error instanceof Error) ? error : new Error(error?.message || String(error));
