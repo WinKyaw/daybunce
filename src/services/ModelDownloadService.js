@@ -10,6 +10,7 @@ export const MODEL_CDN_URL =
 export const MODEL_FILENAME = 'phi4_mini_4bit.pte';
 
 const DOWNLOAD_PROGRESS_KEY = 'ai_download_progress';
+const MIN_MODEL_FILE_SIZE_BYTES = 1_000_000_000;
 
 let downloadResumable = null;
 
@@ -24,7 +25,7 @@ const ModelDownloadService = {
     try {
       const info = await FileSystem.getInfoAsync(this._modelFilePath(), { size: true });
       // Must exist AND be at least 1 GB — guards against corrupt/partial downloads
-      return info.exists && (info.size ?? 0) > 1_000_000_000;
+      return info.exists && (info.size ?? 0) > MIN_MODEL_FILE_SIZE_BYTES;
     } catch {
       return false;
     }
