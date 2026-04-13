@@ -45,26 +45,13 @@ const AIExpertScreen = ({ initialQuestion }) => {
   // Tracks the index of the AI message currently being streamed
   const streamingIndexRef = useRef(null);
 
-  // On mount: trigger non-blocking index rebuild + check disclaimer + load feedback
-  useEffect(() => {
-    // Rebuild the store index and run the nightly personalization update (non-blocking)
-    StoreIndexService.rebuildIndex().catch(console.warn);
-    StoreIndexService.runNightlyIndex().catch(console.warn);
-
-    // Load persisted feedback ratings
-    FeedbackService.getAllFeedback().then(all => setFeedback(all)).catch(console.warn);
-
-    (async () => {
-      const accepted = await hasAcceptedDisclaimer();
-      if (!accepted) {
-        setShowDisclaimer(true);
-        return;
-      }
-      await initModel();
-    })();
+  const resetModelAndShowDownload = useCallback(async () => {
+    await ModelDownloadService.clearDownloadState();
+    setModelReady(false);
+    setShowDownload(true);
   }, []);
 
-  const initModel = async () => {
+  const initModel = useCallback(async () => {
     if (!AIService.isLLMAvailable()) {
       console.warn('AIExpertScreen: LLM module not available, AI features disabled.');
       setModelReady(false);
@@ -84,16 +71,37 @@ const AIExpertScreen = ({ initialQuestion }) => {
       return;
     }
     const ok = await AIService.loadModel(modelPath);
-    setModelReady(ok);
     if (!ok) {
-      Alert.alert('Load Error', 'Failed to load the AI model. Please restart the app.');
+      // Model file is likely corrupt — delete it and prompt re-download
+      await resetModelAndShowDownload();
+      return;
     }
-  };
+    setModelReady(ok);
+  }, [resetModelAndShowDownload]);
+
+  // On mount: trigger non-blocking index rebuild + check disclaimer + load feedback
+  useEffect(() => {
+    // Rebuild the store index and run the nightly personalization update (non-blocking)
+    StoreIndexService.rebuildIndex().catch(console.warn);
+    StoreIndexService.runNightlyIndex().catch(console.warn);
+
+    // Load persisted feedback ratings
+    FeedbackService.getAllFeedback().then(all => setFeedback(all)).catch(console.warn);
+
+    (async () => {
+      const accepted = await hasAcceptedDisclaimer();
+      if (!accepted) {
+        setShowDisclaimer(true);
+        return;
+      }
+      await initModel();
+    })();
+  }, [initModel]);
 
   const handleDisclaimerAccept = useCallback(async () => {
     setShowDisclaimer(false);
     await initModel();
-  }, []);
+  }, [initModel]);
 
   const handleSend = useCallback(async () => {
     const text = inputText.trim();
@@ -237,6 +245,25 @@ const AIExpertScreen = ({ initialQuestion }) => {
             style={styles.headerBtn}
           >
             <Text style={styles.headerBtnText}>New Chat</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert(
+                'Reset AI Model',
+                'This will delete the downloaded AI model (~2.2 GB) from your device. You will need to re-download it to use AI features.',
+                [
+                  { text: 'Cancel', style: 'cancel' },
+                  {
+                    text: 'Delete & Reset',
+                    style: 'destructive',
+                    onPress: resetModelAndShowDownload,
+                  },
+                ],
+              );
+            }}
+            style={styles.headerBtn}
+          >
+            <Text style={styles.headerBtnText}>Reset AI</Text>
           </TouchableOpacity>
         </View>
       </View>
