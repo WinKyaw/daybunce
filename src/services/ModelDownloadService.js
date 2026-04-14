@@ -83,7 +83,10 @@ const ModelDownloadService = {
           const result = await downloadResumable.downloadAsync();
           if (result && result.uri) {
             const isComplete = await _validateDownloadedFile(result.uri, onError);
-            if (!isComplete) { return; }
+            if (!isComplete) {
+              downloadResumable = null;
+              return;
+            }
             // Success — persist path and clear progress snapshot
             await AIService.setModelPath(result.uri);
             await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
@@ -120,7 +123,10 @@ const ModelDownloadService = {
 
       if (result && result.uri) {
         const isComplete = await _validateDownloadedFile(result.uri, onError);
-        if (!isComplete) { return; }
+        if (!isComplete) {
+          downloadResumable = null;
+          return;
+        }
         // Success — persist path and clear progress snapshot
         await AIService.setModelPath(result.uri);
         await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
@@ -203,11 +209,13 @@ async function _resolveFinalUrl(url) {
 
 async function _validateDownloadedFile(uri, onError) {
   const sizeInfo = await FileSystem.getInfoAsync(uri, { size: true });
-  if (!sizeInfo.exists || (sizeInfo.size ?? 0) < MIN_MODEL_FILE_SIZE_BYTES) {
+  const fileSize = sizeInfo.size ?? 0;
+  if (!sizeInfo.exists || fileSize < MIN_MODEL_FILE_SIZE_BYTES) {
     await FileSystem.deleteAsync(uri, { idempotent: true });
     await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
-    downloadResumable = null;
-    if (onError) { onError(new Error('Download failed: incomplete file. Please retry.')); }
+    if (onError) {
+      onError(new Error(`Download failed: file size (${fileSize} bytes) is below minimum required size (${MIN_MODEL_FILE_SIZE_BYTES} bytes). Please retry.`));
+    }
     return false;
   }
 
