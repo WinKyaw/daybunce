@@ -63,6 +63,7 @@ const ModelDownloadService = {
   // onError(error)                         — called on failure
   async startDownload(onProgress, onComplete, onError) {
     try {
+      const resolvedUrl = await _resolveFinalUrl(MODEL_CDN_URL);
       const destPath = this._modelFilePath();
 
       // Re-hydrate a previously saved resumable snapshot if one exists
@@ -73,7 +74,7 @@ const ModelDownloadService = {
         try {
           const snapshot = JSON.parse(savedSnapshot);
           downloadResumable = new FileSystem.DownloadResumable(
-            snapshot.url,
+            resolvedUrl,
             snapshot.fileUri,
             snapshot.options,
             _buildProgressCallback(onProgress),
@@ -81,6 +82,14 @@ const ModelDownloadService = {
           );
           const result = await downloadResumable.downloadAsync();
           if (result && result.uri) {
+            const sizeInfo = await FileSystem.getInfoAsync(result.uri, { size: true });
+            if (!sizeInfo.exists || (sizeInfo.size ?? 0) < 1_000_000_000) {
+              await FileSystem.deleteAsync(result.uri, { idempotent: true });
+              await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
+              downloadResumable = null;
+              if (onError) { onError(new Error('Download failed: incomplete file. Please retry.')); }
+              return;
+            }
             // Success — persist path and clear progress snapshot
             await AIService.setModelPath(result.uri);
             await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
@@ -107,7 +116,7 @@ const ModelDownloadService = {
 
       // Fresh download
       downloadResumable = FileSystem.createDownloadResumable(
-        MODEL_CDN_URL,
+        resolvedUrl,
         destPath,
         {},
         _buildProgressCallback(onProgress),
@@ -116,6 +125,14 @@ const ModelDownloadService = {
       const result = await downloadResumable.downloadAsync();
 
       if (result && result.uri) {
+        const sizeInfo = await FileSystem.getInfoAsync(result.uri, { size: true });
+        if (!sizeInfo.exists || (sizeInfo.size ?? 0) < 1_000_000_000) {
+          await FileSystem.deleteAsync(result.uri, { idempotent: true });
+          await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
+          downloadResumable = null;
+          if (onError) { onError(new Error('Download failed: incomplete file. Please retry.')); }
+          return;
+        }
         // Success — persist path and clear progress snapshot
         await AIService.setModelPath(result.uri);
         await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
@@ -184,6 +201,15 @@ function _buildProgressCallback(onProgress) {
       onProgress(totalBytesWritten, totalBytesExpectedToWrite);
     }
   };
+}
+
+async function _resolveFinalUrl(url) {
+  try {
+    const response = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+    return response.url || url;
+  } catch {
+    return url;
+  }
 }
 
 export default ModelDownloadService;
