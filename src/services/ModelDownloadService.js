@@ -208,18 +208,25 @@ async function _resolveFinalUrl(url) {
 }
 
 async function _validateDownloadedFile(uri, onError) {
-  const sizeInfo = await FileSystem.getInfoAsync(uri, { size: true });
-  const fileSize = sizeInfo.size ?? 0;
-  if (!sizeInfo.exists || fileSize < MIN_MODEL_FILE_SIZE_BYTES) {
+  try {
+    const sizeInfo = await FileSystem.getInfoAsync(uri, { size: true });
+    const fileSize = sizeInfo.size ?? 0;
+    if (!sizeInfo.exists || fileSize < MIN_MODEL_FILE_SIZE_BYTES) {
+      await FileSystem.deleteAsync(uri, { idempotent: true });
+      await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
+      if (onError) {
+        onError(new Error(`Download failed: file size (${fileSize} bytes) is below minimum required size (${MIN_MODEL_FILE_SIZE_BYTES} bytes). Please retry.`));
+      }
+      return false;
+    }
+
+    return true;
+  } catch (error) {
     await FileSystem.deleteAsync(uri, { idempotent: true });
     await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
-    if (onError) {
-      onError(new Error(`Download failed: file size (${fileSize} bytes) is below minimum required size (${MIN_MODEL_FILE_SIZE_BYTES} bytes). Please retry.`));
-    }
+    if (onError) { onError(error); }
     return false;
   }
-
-  return true;
 }
 
 export default ModelDownloadService;
