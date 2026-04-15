@@ -88,7 +88,7 @@ const ModelDownloadScreen = ({ onComplete }) => {
         <Text style={styles.title}>Downloading DayBunce AI</Text>
         <Text style={styles.subtitle}>
           Microsoft Phi-4 Mini is being downloaded to your device.{'\n'}
-          This is a one-time download of approximately 2.2 GB.
+          This is a one-time download of approximately 4.2 GB.
         </Text>
 
         {/* Progress bar */}

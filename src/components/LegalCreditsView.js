@@ -61,7 +61,7 @@ const LegalCreditsView = () => (
 
       <Text style={styles.sectionTitle}>Model Information</Text>
       <Text style={styles.body}>
-        Model: Microsoft Phi-4 Mini (3.8B), 4-bit quantized. Bundled under the MIT License.
+        Model: Microsoft Phi-4 Mini (3.8B), 8-bit activations / 4-bit weights (8da4w). Bundled under the MIT License.
       </Text>
 
       <Text style={styles.sectionTitle}>MIT License</Text>
