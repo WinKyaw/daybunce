@@ -5,7 +5,7 @@ import AIService from './AIService';
 // Phi-4 Mini quantized model hosted by Software Mansion on Hugging Face.
 // Swap this URL for your own CDN (e.g. NAS + Cloudflare) before production release.
 export const MODEL_CDN_URL =
-  'https://huggingface.co/software-mansion/react-native-executorch-phi-4-mini/resolve/v0.4.0/phi-4-mini-instruct-quantized.pte';
+  'https://huggingface.co/software-mansion/react-native-executorch-phi-4-mini/resolve/v0.4.0/quantized/phi-4-mini_8da4w.pte';
 
 export const MODEL_FILENAME = 'phi4_mini_4bit.pte';
 
