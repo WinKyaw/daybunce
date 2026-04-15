@@ -63,6 +63,7 @@ const ModelDownloadService = {
   // onError(error)                         — called on failure
   async startDownload(onProgress, onComplete, onError) {
     try {
+      const resolvedUrl = await _resolveFinalUrl(MODEL_CDN_URL);
       const destPath = this._modelFilePath();
 
       // Re-hydrate a previously saved resumable snapshot if one exists
@@ -73,7 +74,7 @@ const ModelDownloadService = {
         try {
           const snapshot = JSON.parse(savedSnapshot);
           downloadResumable = new FileSystem.DownloadResumable(
-            snapshot.url,
+            resolvedUrl,
             snapshot.fileUri,
             snapshot.options,
             _buildProgressCallback(onProgress),
@@ -81,6 +82,11 @@ const ModelDownloadService = {
           );
           const result = await downloadResumable.downloadAsync();
           if (result && result.uri) {
+            const isComplete = await _validateDownloadedFile(result.uri, onError);
+            if (!isComplete) {
+              downloadResumable = null;
+              return;
+            }
             // Success — persist path and clear progress snapshot
             await AIService.setModelPath(result.uri);
             await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
@@ -107,7 +113,7 @@ const ModelDownloadService = {
 
       // Fresh download
       downloadResumable = FileSystem.createDownloadResumable(
-        MODEL_CDN_URL,
+        resolvedUrl,
         destPath,
         {},
         _buildProgressCallback(onProgress),
@@ -116,6 +122,11 @@ const ModelDownloadService = {
       const result = await downloadResumable.downloadAsync();
 
       if (result && result.uri) {
+        const isComplete = await _validateDownloadedFile(result.uri, onError);
+        if (!isComplete) {
+          downloadResumable = null;
+          return;
+        }
         // Success — persist path and clear progress snapshot
         await AIService.setModelPath(result.uri);
         await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
@@ -184,6 +195,38 @@ function _buildProgressCallback(onProgress) {
       onProgress(totalBytesWritten, totalBytesExpectedToWrite);
     }
   };
+}
+
+async function _resolveFinalUrl(url) {
+  try {
+    const response = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+    return response.url || url;
+  } catch (error) {
+    console.warn('ModelDownloadService: could not resolve final download URL', error?.message);
+    return url;
+  }
+}
+
+async function _validateDownloadedFile(uri, onError) {
+  try {
+    const sizeInfo = await FileSystem.getInfoAsync(uri, { size: true });
+    const fileSize = sizeInfo.size ?? 0;
+    if (!sizeInfo.exists || fileSize < MIN_MODEL_FILE_SIZE_BYTES) {
+      await FileSystem.deleteAsync(uri, { idempotent: true });
+      await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
+      if (onError) {
+        onError(new Error(`Download failed: file size (${fileSize} bytes) is below minimum required size (${MIN_MODEL_FILE_SIZE_BYTES} bytes). Please retry.`));
+      }
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    await FileSystem.deleteAsync(uri, { idempotent: true });
+    await AsyncStorage.removeItem(DOWNLOAD_PROGRESS_KEY);
+    if (onError) { onError(error); }
+    return false;
+  }
 }
 
 export default ModelDownloadService;
