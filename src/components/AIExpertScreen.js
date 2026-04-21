@@ -161,7 +161,7 @@ const AIExpertScreen = ({ initialQuestion }) => {
   const handleRestorePurchase = useCallback(async () => {
     const restored = await IAPService.restorePurchases();
     if (restored) {
-      Alert.alert('Restored', 'Your DayBunce AI purchase has been restored.');
+      Alert.alert('Restored', 'Your DB Bunbun purchase has been restored.');
     } else {
       Alert.alert(
         'Not Found',
@@ -229,7 +229,7 @@ const AIExpertScreen = ({ initialQuestion }) => {
     <SafeAreaView style={styles.safe}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>DayBunce Store Expert</Text>
+        <Text style={styles.headerTitle}>DB Bunbun 🐰</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity onPress={() => setShowLegal(true)} style={styles.headerBtn}>
             <Text style={styles.headerBtnText}>About AI</Text>
@@ -250,7 +250,7 @@ const AIExpertScreen = ({ initialQuestion }) => {
             onPress={() => {
               Alert.alert(
                 'Reset AI Model',
-                'This will delete the downloaded AI model (~2.2 GB) from your device. You will need to re-download it to use AI features.',
+                 'This will delete DB Bunbun (~1.9 GB) from your device. You will need to re-download it to use AI features.',
                 [
                   { text: 'Cancel', style: 'cancel' },
                   {
@@ -286,9 +286,9 @@ const AIExpertScreen = ({ initialQuestion }) => {
               AI features are not available in this build. Please contact support.
             </Text>
           ) : modelReady ? (
-            <Text style={styles.emptyText}>
-              Ask your Store Expert anything about your inventory or sales…
-            </Text>
+              <Text style={styles.emptyText}>
+               Ask DB Bunbun anything about your inventory or sales…
+              </Text>
           ) : (
             <Text style={styles.emptyText}>Loading AI model…</Text>
           )
@@ -299,7 +299,7 @@ const AIExpertScreen = ({ initialQuestion }) => {
       {isGenerating && (
         <View style={styles.thinkingRow}>
           <ActivityIndicator size="small" color="#4f46e5" />
-          <Text style={styles.thinkingText}>Store Expert is thinking…</Text>
+          <Text style={styles.thinkingText}>DB Bunbun is thinking…</Text>
         </View>
       )}
 

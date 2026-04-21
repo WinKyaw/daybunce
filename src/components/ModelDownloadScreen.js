@@ -85,10 +85,10 @@ const ModelDownloadScreen = ({ onComplete }) => {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
-        <Text style={styles.title}>Downloading DayBunce AI</Text>
+        <Text style={styles.title}>Downloading DB Bunbun</Text>
         <Text style={styles.subtitle}>
-          Microsoft Phi-4 Mini is being downloaded to your device.{'\n'}
-          This is a one-time download of approximately 4.2 GB.
+          DB Bunbun — DayBunce's AI Store Expert is being downloaded to your device.{'\n'}
+          This is a one-time download of approximately 1.9 GB.
         </Text>
 
         {/* Progress bar */}

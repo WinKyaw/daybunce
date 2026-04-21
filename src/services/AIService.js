@@ -1,46 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { initLlama } from 'llama.rn';
 import StoreIndexService from './StoreIndexService';
 import ConversationMemoryService from './ConversationMemoryService';
-
-let LLM = null;
-let _llmLoadAttempted = false;
-
-// NOTE: react-native-executorch uses NitroModules which can throw a native
-// bridge error before JavaScript's try/catch can intercept it if the app is
-// built without New Architecture enabled. Using a lazy getter defers the
-// require() until first use, which avoids the crash at module load time.
-// After adding "newArchEnabled": true to app.json and running
-// `npx expo prebuild --clean` followed by `pod install`, NitroModules will be
-// properly linked and LLM will load successfully.
-function getLLM() {
-  if (_llmLoadAttempted) return LLM;
-  _llmLoadAttempted = true;
-  try {
-    const executorch = require('react-native-executorch');
-    // react-native-executorch v0.4.x exports a static class called LLMModule, not LLM
-    LLM = executorch.LLMModule || null;
-  } catch (e) {
-    console.warn('AIService: react-native-executorch not available in this build. AI chat will be disabled.', e.message);
-    LLM = null;
-  }
-  return LLM;
-}
-
-// Tokenizer resources for Phi-4 Mini (fetched and cached by react-native-executorch on first model load)
-const PHI_4_MINI_TOKENIZER_URL =
-  'https://huggingface.co/software-mansion/react-native-executorch-phi-4-mini/resolve/v0.4.0/tokenizer.json';
-const PHI_4_MINI_TOKENIZER_CONFIG_URL =
-  'https://huggingface.co/software-mansion/react-native-executorch-phi-4-mini/resolve/v0.4.0/tokenizer_config.json';
 
 const STORAGE_KEYS = {
   UNLOCKED: 'ai_pro_unlocked',
   MODEL_PATH: 'ai_model_local_uri',
 };
 
-// System prompt defining the AI persona as a focused Store Management Expert.
-// The model is intentionally scoped to store/inventory/sales topics only —
-// this keeps responses accurate and prevents hallucination outside its domain.
-const SYSTEM_PROMPT = `You are the DayBunce Store Expert — a focused inventory and retail management AI embedded inside DayBunce, a private daily sales tracker for small business owners.
+const SYSTEM_PROMPT = `You are DB Bunbun — DayBunce's AI Store Expert, a focused inventory and retail management AI embedded inside DayBunce, a private daily sales tracker for small business owners.
 
 Your ONLY domain is: sales analysis, inventory management, restocking decisions, pricing strategy, and daily store operations.
 
@@ -61,10 +29,9 @@ Hard Rules:
 - You are NOT a financial advisor. All projections are probabilistic estimates.
 - If you see a [Your Store Profile] section, treat it as the user's personalized business history and reference it.`;
 
-let llmInstance = null;
+let llamaContext = null;
 
 const AIService = {
-  // Check whether the AI feature has been unlocked (local flag)
   async isUnlocked() {
     try {
       const value = await AsyncStorage.getItem(STORAGE_KEYS.UNLOCKED);
@@ -75,7 +42,6 @@ const AIService = {
     }
   },
 
-  // Persist the unlock state to AsyncStorage
   async setUnlocked(unlocked) {
     try {
       await AsyncStorage.setItem(STORAGE_KEYS.UNLOCKED, unlocked ? 'true' : 'false');
@@ -84,7 +50,6 @@ const AIService = {
     }
   },
 
-  // Read the locally stored model file path
   async getModelPath() {
     try {
       return await AsyncStorage.getItem(STORAGE_KEYS.MODEL_PATH);
@@ -94,7 +59,6 @@ const AIService = {
     }
   },
 
-  // Persist the path to the downloaded model file
   async setModelPath(modelPath) {
     try {
       if (modelPath == null) {
@@ -107,93 +71,86 @@ const AIService = {
     }
   },
 
-  // Load the quantized Phi-4 Mini model using react-native-executorch
   async loadModel(modelPath) {
-    const LLMModule = getLLM();
-    if (!LLMModule) {
-      console.warn('AIService: LLM module not available');
-      return false;
-    }
     try {
-      // LLMModule.load() requires the model binary plus separate tokenizer files.
-      // The tokenizer JSON files are small and fetched/cached by react-native-executorch.
-      await LLMModule.load({
-        modelSource: modelPath,
-        tokenizerSource: PHI_4_MINI_TOKENIZER_URL,
-        tokenizerConfigSource: PHI_4_MINI_TOKENIZER_CONFIG_URL,
+      if (llamaContext) {
+        await llamaContext.release();
+        llamaContext = null;
+      }
+
+      llamaContext = await initLlama({
+        model: modelPath,
+        n_ctx: 4096,
+        n_threads: 4,
+        n_gpu_layers: 0,
       });
-      // LLMModule is a static class — store it as the instance reference
-      llmInstance = LLMModule;
       return true;
     } catch (error) {
       console.error('AIService: error loading model', error);
-      llmInstance = null;
+      llamaContext = null;
       return false;
     }
   },
 
-  // Returns true if the react-native-executorch LLM module is available
   isLLMAvailable() {
-    return getLLM() !== null;
+    return true;
   },
 
-  // Free the model instance to reclaim memory
-  unloadModel() {
-    if (llmInstance) {
+  async unloadModel() {
+    if (llamaContext) {
       try {
-        llmInstance.delete();
+        await llamaContext.release();
       } catch (error) {
         console.error('AIService: error unloading model', error);
       }
-      llmInstance = null;
+      llamaContext = null;
     }
   },
 
-  // Send a user message with RAG-augmented context; streams tokens via onToken callback
   async query(userMessage, onToken) {
-    if (!llmInstance) {
+    if (!llamaContext) {
       throw new Error('Model is not loaded. Call loadModel() first.');
     }
 
-    // Build RAG context from the store index (Tier 3 → Tier 2 → Tier 1)
     const storeContext = await StoreIndexService.buildContext();
-
-    // Inject prior conversation turns so the model has short-term memory
     const memoryContext = await ConversationMemoryService.buildMemoryContext();
 
-    let fullResponse = '';
-    try {
-      // generate() is the correct public API — it applies the Phi-4 Mini chat template
-      // (adds special instruction tokens) before calling the native runner, then streams
-      // tokens via the callback. forward() is a low-level native method that bypasses
-      // the tokenizer and prompt formatting, causing LLaMARunnerErrorDomain error 34.
-      llmInstance.setTokenCallback({
-        tokenCallback: (token) => {
-          fullResponse += token;
-          if (onToken) {
-            onToken(token);
-          }
-        },
-      });
-      await llmInstance.generate([
-        {
-          role: 'system',
-          content: `${SYSTEM_PROMPT}
+    const systemContent = `${SYSTEM_PROMPT}
 
 --- STORE CONTEXT START ---
 ${storeContext}
 --- STORE CONTEXT END ---
 
-${memoryContext ? memoryContext + '\n\n' : ''}`,
+${memoryContext ? memoryContext + '\n\n' : ''}`;
+
+    let fullResponse = '';
+
+    try {
+      await llamaContext.completion(
+        {
+          messages: [
+            { role: 'system', content: systemContent },
+            { role: 'user', content: userMessage },
+          ],
+          stream: true,
+          n_predict: 512,
+          temperature: 0.7,
+          top_p: 0.9,
+          stop: ['<|eot_id|>', '<|end_of_text|>', '</s>'],
         },
-        { role: 'user', content: userMessage },
-      ]);
+        (data) => {
+          const token = data.token;
+          fullResponse += token;
+          if (onToken) {
+            onToken(token);
+          }
+        },
+      );
     } catch (error) {
-      console.error('AIService query error:', JSON.stringify(error), error?.message, error?.stack);
-      throw (error instanceof Error) ? error : new Error(error?.message || String(error));
+      console.error('AIService query error:', error?.message, error?.stack);
+      throw error instanceof Error ? error : new Error(error?.message || String(error));
     }
 
-    // Persist this exchange to conversation memory
     await ConversationMemoryService.addTurn('user', userMessage);
     await ConversationMemoryService.addTurn('assistant', fullResponse);
   },

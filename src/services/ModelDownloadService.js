@@ -2,15 +2,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system/legacy';
 import AIService from './AIService';
 
-// Phi-4 Mini quantized model hosted by Software Mansion on Hugging Face.
-// Swap this URL for your own CDN (e.g. NAS + Cloudflare) before production release.
+// For LOCAL TESTING — points to developer's Mac on local WiFi
+// TODO: Replace YOUR_MAC_IP with actual Mac IP from: ipconfig getifaddr en0
 export const MODEL_CDN_URL =
-  'https://huggingface.co/software-mansion/react-native-executorch-phi-4-mini/resolve/v0.4.0/quantized/phi-4-mini_8da4w.pte';
+  'http://YOUR_MAC_IP:8080/daybunce-bunbun-q4.gguf';
 
-export const MODEL_FILENAME = 'phi4_mini_4bit.pte';
+export const MODEL_FILENAME = 'daybunce-bunbun-q4.gguf';
 
 const DOWNLOAD_PROGRESS_KEY = 'ai_download_progress';
-const MIN_MODEL_FILE_SIZE_BYTES = 1_000_000_000;
+const MIN_MODEL_FILE_SIZE_BYTES = 1_500_000_000;
 
 let downloadResumable = null;
 
