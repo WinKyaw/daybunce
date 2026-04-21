@@ -50,10 +50,10 @@ const AIDisclaimerModal = ({ visible, onAccept }) => {
     >
       <View style={styles.overlay}>
         <View style={styles.card}>
-          <Text style={styles.title}>DayBunce AI — Important Notice</Text>
+          <Text style={styles.title}>DB Bunbun — Important Notice</Text>
           <ScrollView contentContainerStyle={styles.bodyContainer}>
             <Text style={styles.body}>
-              DayBunce AI is an automated assistant, not a financial advisor. All
+              DB Bunbun is an automated assistant, not a financial advisor. All
               inventory and sales suggestions are probabilistic estimates. Always
               verify AI suggestions against physical stock before making major
               business decisions.
