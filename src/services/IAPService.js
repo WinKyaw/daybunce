@@ -2,7 +2,7 @@ import AIService from './AIService';
 
 // TODO: Remove this flag before App Store submission.
 // Set to true to bypass IAP checks during local development/testing.
-const DEV_BYPASS_IAP = true;
+const DEV_BYPASS_IAP = false;
 
 function _getIAP() {
   // NitroModules (used by react-native-iap v12+) throw a native bridge error
