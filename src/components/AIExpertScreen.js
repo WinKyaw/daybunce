@@ -40,6 +40,7 @@ const AIExpertScreen = ({ initialQuestion }) => {
   const [showLegal, setShowLegal] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
   const [modelReady, setModelReady] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
   const [feedback, setFeedback] = useState({});
   const flatListRef = useRef(null);
   // Tracks the index of the AI message currently being streamed
@@ -57,6 +58,12 @@ const AIExpertScreen = ({ initialQuestion }) => {
       setModelReady(false);
       return;
     }
+    const isUnlocked = await AIService.isUnlocked();
+    if (!isUnlocked) {
+      setUnlocked(false);
+      return; // Don't touch downloads — user hasn't paid yet
+    }
+    setUnlocked(true);
     const modelPath = await AIService.getModelPath();
     if (!modelPath) {
       // Show download screen instead of an alert
@@ -89,6 +96,8 @@ const AIExpertScreen = ({ initialQuestion }) => {
     FeedbackService.getAllFeedback().then(all => setFeedback(all)).catch(console.warn);
 
     (async () => {
+      const isUnlocked = await AIService.isUnlocked();
+      setUnlocked(isUnlocked);
       const accepted = await hasAcceptedDisclaimer();
       if (!accepted) {
         setShowDisclaimer(true);
@@ -213,7 +222,7 @@ const AIExpertScreen = ({ initialQuestion }) => {
     );
   };
 
-  if (showDownload) {
+  if (showDownload && unlocked) {
     return (
       <ModelDownloadScreen
         onComplete={async (uri) => {
@@ -284,6 +293,10 @@ const AIExpertScreen = ({ initialQuestion }) => {
           !AIService.isLLMAvailable() ? (
             <Text style={styles.emptyText}>
               AI features are not available in this build. Please contact support.
+            </Text>
+          ) : !unlocked ? (
+            <Text style={styles.emptyText}>
+              Unlock DB Bunbun 🐰 to get AI-powered insights for your store.{'\n\n'}Tap Restore if you've already purchased.
             </Text>
           ) : modelReady ? (
               <Text style={styles.emptyText}>
