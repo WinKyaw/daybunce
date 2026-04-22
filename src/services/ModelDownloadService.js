@@ -200,10 +200,13 @@ function _buildProgressCallback(onProgress) {
 async function _resolveFinalUrl(url) {
   try {
     const response = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+    if (!response.ok) {
+      throw new Error(`Server returned ${response.status} for model URL. Please check your network or CDN configuration.`);
+    }
     return response.url || url;
   } catch (error) {
     console.warn('ModelDownloadService: could not resolve final download URL', error?.message);
-    return url;
+    throw error;
   }
 }
 
