@@ -1,0 +1,4094 @@
+[
+  {
+    "id": "fuji_apple",
+    "name": "Fuji Apple",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "gala_apple",
+    "name": "Gala Apple",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "granny_smith_apple",
+    "name": "Granny Smith Apple",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "honeycrisp_apple",
+    "name": "Honeycrisp Apple",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "red_delicious_apple",
+    "name": "Red Delicious Apple",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "pink_lady_apple",
+    "name": "Pink Lady Apple",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "braeburn_apple",
+    "name": "Braeburn Apple",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "mcintosh_apple",
+    "name": "McIntosh Apple",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "regular_banana",
+    "name": "Regular Banana",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "plantain",
+    "name": "Plantain",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "baby_banana",
+    "name": "Baby Banana",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "red_grapes",
+    "name": "Red Grapes",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "green_grapes",
+    "name": "Green Grapes",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "black_grapes",
+    "name": "Black Grapes",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "seedless_grapes",
+    "name": "Seedless Grapes",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "strawberries",
+    "name": "Strawberries",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "blueberries",
+    "name": "Blueberries",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "raspberries",
+    "name": "Raspberries",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "blackberries",
+    "name": "Blackberries",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "cranberries",
+    "name": "Cranberries",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "navel_orange",
+    "name": "Navel Orange",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "blood_orange",
+    "name": "Blood Orange",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "mandarin_orange",
+    "name": "Mandarin Orange",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "clementine",
+    "name": "Clementine",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "grapefruit",
+    "name": "Grapefruit",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "meyer_lemon",
+    "name": "Meyer Lemon",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "key_lime",
+    "name": "Key Lime",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "watermelon",
+    "name": "Watermelon",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "cantaloupe",
+    "name": "Cantaloupe",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "honeydew_melon",
+    "name": "Honeydew Melon",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "mango",
+    "name": "Mango",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "pineapple",
+    "name": "Pineapple",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "papaya",
+    "name": "Papaya",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "guava",
+    "name": "Guava",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "dragon_fruit",
+    "name": "Dragon Fruit",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "lychee",
+    "name": "Lychee",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "coconut",
+    "name": "Coconut",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "peach",
+    "name": "Peach",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "nectarine",
+    "name": "Nectarine",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "plum",
+    "name": "Plum",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "apricot",
+    "name": "Apricot",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "cherry",
+    "name": "Cherry",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "pear",
+    "name": "Pear",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "kiwi",
+    "name": "Kiwi",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "fig",
+    "name": "Fig",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "pomegranate",
+    "name": "Pomegranate",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "passion_fruit",
+    "name": "Passion Fruit",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "russet_potato",
+    "name": "Russet Potato",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "yukon_gold_potato",
+    "name": "Yukon Gold Potato",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "red_potato",
+    "name": "Red Potato",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "sweet_potato",
+    "name": "Sweet Potato",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "purple_potato",
+    "name": "Purple Potato",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "roma_tomato",
+    "name": "Roma Tomato",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "cherry_tomato",
+    "name": "Cherry Tomato",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "beefsteak_tomato",
+    "name": "Beefsteak Tomato",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "grape_tomato",
+    "name": "Grape Tomato",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "heirloom_tomato",
+    "name": "Heirloom Tomato",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "red_bell_pepper",
+    "name": "Red Bell Pepper",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "green_bell_pepper",
+    "name": "Green Bell Pepper",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "yellow_bell_pepper",
+    "name": "Yellow Bell Pepper",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "jalape_o",
+    "name": "Jalapeño",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "serrano_pepper",
+    "name": "Serrano Pepper",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "habanero",
+    "name": "Habanero",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "romaine_lettuce",
+    "name": "Romaine Lettuce",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "iceberg_lettuce",
+    "name": "Iceberg Lettuce",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "butter_lettuce",
+    "name": "Butter Lettuce",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "arugula",
+    "name": "Arugula",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "kale",
+    "name": "Kale",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "baby_spinach",
+    "name": "Baby Spinach",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "swiss_chard",
+    "name": "Swiss Chard",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "yellow_onion",
+    "name": "Yellow Onion",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "red_onion",
+    "name": "Red Onion",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "white_onion",
+    "name": "White Onion",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "green_onion",
+    "name": "Green Onion",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "shallot",
+    "name": "Shallot",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "leek",
+    "name": "Leek",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "button_mushroom",
+    "name": "Button Mushroom",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "portobello_mushroom",
+    "name": "Portobello Mushroom",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "shiitake_mushroom",
+    "name": "Shiitake Mushroom",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "oyster_mushroom",
+    "name": "Oyster Mushroom",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "cremini_mushroom",
+    "name": "Cremini Mushroom",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "broccoli",
+    "name": "Broccoli",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "cauliflower",
+    "name": "Cauliflower",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "brussels_sprouts",
+    "name": "Brussels Sprouts",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "asparagus",
+    "name": "Asparagus",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "zucchini",
+    "name": "Zucchini",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "yellow_squash",
+    "name": "Yellow Squash",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "eggplant",
+    "name": "Eggplant",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "artichoke",
+    "name": "Artichoke",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "celery",
+    "name": "Celery",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "fennel",
+    "name": "Fennel",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "radish",
+    "name": "Radish",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "turnip",
+    "name": "Turnip",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "beet",
+    "name": "Beet",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "parsnip",
+    "name": "Parsnip",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "corn_on_the_cob",
+    "name": "Corn on the Cob",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "chicken_breast",
+    "name": "Chicken Breast",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "chicken_thigh",
+    "name": "Chicken Thigh",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "chicken_wings",
+    "name": "Chicken Wings",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "whole_chicken",
+    "name": "Whole Chicken",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "ground_chicken",
+    "name": "Ground Chicken",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "chicken_drumstick",
+    "name": "Chicken Drumstick",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "ground_beef",
+    "name": "Ground Beef",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "beef_steak",
+    "name": "Beef Steak",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "beef_ribeye",
+    "name": "Beef Ribeye",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "sirloin_steak",
+    "name": "Sirloin Steak",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "beef_tenderloin",
+    "name": "Beef Tenderloin",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "beef_brisket",
+    "name": "Beef Brisket",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "beef_short_ribs",
+    "name": "Beef Short Ribs",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "beef_chuck_roast",
+    "name": "Beef Chuck Roast",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "pork_chop",
+    "name": "Pork Chop",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "pork_tenderloin",
+    "name": "Pork Tenderloin",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "pork_belly",
+    "name": "Pork Belly",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "pork_ribs",
+    "name": "Pork Ribs",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "ground_pork",
+    "name": "Ground Pork",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "bacon",
+    "name": "Bacon",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "ham",
+    "name": "Ham",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "pork_sausage",
+    "name": "Pork Sausage",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "salmon_fillet",
+    "name": "Salmon Fillet",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "tilapia",
+    "name": "Tilapia",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "cod_fillet",
+    "name": "Cod Fillet",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "shrimp",
+    "name": "Shrimp",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "lobster_tail",
+    "name": "Lobster Tail",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "crab",
+    "name": "Crab",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "tuna_steak",
+    "name": "Tuna Steak",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "mahi_mahi",
+    "name": "Mahi-Mahi",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "halibut",
+    "name": "Halibut",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "sardines",
+    "name": "Sardines",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "lamb_chop",
+    "name": "Lamb Chop",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "ground_turkey",
+    "name": "Ground Turkey",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "turkey_breast",
+    "name": "Turkey Breast",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "duck_breast",
+    "name": "Duck Breast",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "whole_milk",
+    "name": "Whole Milk",
+    "category": "Food",
+    "unitType": "liters"
+  },
+  {
+    "id": "2_percent_milk",
+    "name": "2% Milk",
+    "category": "Food",
+    "unitType": "liters"
+  },
+  {
+    "id": "skim_milk",
+    "name": "Skim Milk",
+    "category": "Food",
+    "unitType": "liters"
+  },
+  {
+    "id": "chocolate_milk",
+    "name": "Chocolate Milk",
+    "category": "Food",
+    "unitType": "liters"
+  },
+  {
+    "id": "lactose_free_milk",
+    "name": "Lactose-Free Milk",
+    "category": "Food",
+    "unitType": "liters"
+  },
+  {
+    "id": "organic_milk",
+    "name": "Organic Milk",
+    "category": "Food",
+    "unitType": "liters"
+  },
+  {
+    "id": "cheddar_cheese",
+    "name": "Cheddar Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "mozzarella_cheese",
+    "name": "Mozzarella Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "parmesan_cheese",
+    "name": "Parmesan Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "swiss_cheese",
+    "name": "Swiss Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "gouda_cheese",
+    "name": "Gouda Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "brie_cheese",
+    "name": "Brie Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "cream_cheese",
+    "name": "Cream Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "feta_cheese",
+    "name": "Feta Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "blue_cheese",
+    "name": "Blue Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "provolone_cheese",
+    "name": "Provolone Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "plain_greek_yogurt",
+    "name": "Plain Greek Yogurt",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "vanilla_yogurt",
+    "name": "Vanilla Yogurt",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "strawberry_yogurt",
+    "name": "Strawberry Yogurt",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "blueberry_yogurt",
+    "name": "Blueberry Yogurt",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "large_white_eggs",
+    "name": "Large White Eggs",
+    "category": "Food",
+    "unitType": "dozen"
+  },
+  {
+    "id": "large_brown_eggs",
+    "name": "Large Brown Eggs",
+    "category": "Food",
+    "unitType": "dozen"
+  },
+  {
+    "id": "organic_eggs",
+    "name": "Organic Eggs",
+    "category": "Food",
+    "unitType": "dozen"
+  },
+  {
+    "id": "free_range_eggs",
+    "name": "Free-Range Eggs",
+    "category": "Food",
+    "unitType": "dozen"
+  },
+  {
+    "id": "extra_large_eggs",
+    "name": "Extra Large Eggs",
+    "category": "Food",
+    "unitType": "dozen"
+  },
+  {
+    "id": "unsalted_butter",
+    "name": "Unsalted Butter",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "salted_butter",
+    "name": "Salted Butter",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "heavy_cream",
+    "name": "Heavy Cream",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "sour_cream",
+    "name": "Sour Cream",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "whipped_cream",
+    "name": "Whipped Cream",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "cottage_cheese",
+    "name": "Cottage Cheese",
+    "category": "Food",
+    "unitType": "lb"
+  },
+  {
+    "id": "white_bread",
+    "name": "White Bread",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "whole_wheat_bread",
+    "name": "Whole Wheat Bread",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sourdough_bread",
+    "name": "Sourdough Bread",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "rye_bread",
+    "name": "Rye Bread",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "multigrain_bread",
+    "name": "Multigrain Bread",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "ciabatta",
+    "name": "Ciabatta",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "baguette",
+    "name": "Baguette",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "pita_bread",
+    "name": "Pita Bread",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "naan",
+    "name": "Naan",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "tortilla",
+    "name": "Tortilla",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "jasmine_rice",
+    "name": "Jasmine Rice",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "basmati_rice",
+    "name": "Basmati Rice",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "brown_rice",
+    "name": "Brown Rice",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "white_rice",
+    "name": "White Rice",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "sushi_rice",
+    "name": "Sushi Rice",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "wild_rice",
+    "name": "Wild Rice",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "spaghetti",
+    "name": "Spaghetti",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "penne",
+    "name": "Penne",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "fettuccine",
+    "name": "Fettuccine",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "rigatoni",
+    "name": "Rigatoni",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "farfalle",
+    "name": "Farfalle",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "linguine",
+    "name": "Linguine",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "angel_hair",
+    "name": "Angel Hair",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "lasagna_sheets",
+    "name": "Lasagna Sheets",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "orzo",
+    "name": "Orzo",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "oatmeal",
+    "name": "Oatmeal",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "rolled_oats",
+    "name": "Rolled Oats",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "granola",
+    "name": "Granola",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "cornflakes",
+    "name": "Cornflakes",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "muesli",
+    "name": "Muesli",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "all_purpose_flour",
+    "name": "All-Purpose Flour",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "bread_flour",
+    "name": "Bread Flour",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "cake_flour",
+    "name": "Cake Flour",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "almond_flour",
+    "name": "Almond Flour",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "whole_wheat_flour",
+    "name": "Whole Wheat Flour",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "rice_flour",
+    "name": "Rice Flour",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "extra_virgin_olive_oil",
+    "name": "Extra Virgin Olive Oil",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "vegetable_oil",
+    "name": "Vegetable Oil",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "coconut_oil",
+    "name": "Coconut Oil",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "canola_oil",
+    "name": "Canola Oil",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "sesame_oil",
+    "name": "Sesame Oil",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "avocado_oil",
+    "name": "Avocado Oil",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "soy_sauce",
+    "name": "Soy Sauce",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "hot_sauce",
+    "name": "Hot Sauce",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "ketchup",
+    "name": "Ketchup",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "mustard",
+    "name": "Mustard",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "mayonnaise",
+    "name": "Mayonnaise",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "barbecue_sauce",
+    "name": "Barbecue Sauce",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "worcestershire_sauce",
+    "name": "Worcestershire Sauce",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "fish_sauce",
+    "name": "Fish Sauce",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "oyster_sauce",
+    "name": "Oyster Sauce",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "teriyaki_sauce",
+    "name": "Teriyaki Sauce",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "ranch_dressing",
+    "name": "Ranch Dressing",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "caesar_dressing",
+    "name": "Caesar Dressing",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "balsamic_vinegar",
+    "name": "Balsamic Vinegar",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "black_pepper",
+    "name": "Black Pepper",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "cayenne_pepper",
+    "name": "Cayenne Pepper",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "paprika",
+    "name": "Paprika",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "cumin",
+    "name": "Cumin",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "coriander",
+    "name": "Coriander",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "turmeric",
+    "name": "Turmeric",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "cinnamon",
+    "name": "Cinnamon",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "oregano",
+    "name": "Oregano",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "basil",
+    "name": "Basil",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "thyme",
+    "name": "Thyme",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "rosemary",
+    "name": "Rosemary",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "garlic_powder",
+    "name": "Garlic Powder",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "onion_powder",
+    "name": "Onion Powder",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "chili_powder",
+    "name": "Chili Powder",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "italian_seasoning",
+    "name": "Italian Seasoning",
+    "category": "Food",
+    "unitType": "packets"
+  },
+  {
+    "id": "canned_diced_tomatoes",
+    "name": "Canned Diced Tomatoes",
+    "category": "Food",
+    "unitType": "cans"
+  },
+  {
+    "id": "canned_tomato_paste",
+    "name": "Canned Tomato Paste",
+    "category": "Food",
+    "unitType": "cans"
+  },
+  {
+    "id": "canned_chickpeas",
+    "name": "Canned Chickpeas",
+    "category": "Food",
+    "unitType": "cans"
+  },
+  {
+    "id": "canned_black_beans",
+    "name": "Canned Black Beans",
+    "category": "Food",
+    "unitType": "cans"
+  },
+  {
+    "id": "canned_kidney_beans",
+    "name": "Canned Kidney Beans",
+    "category": "Food",
+    "unitType": "cans"
+  },
+  {
+    "id": "canned_corn",
+    "name": "Canned Corn",
+    "category": "Food",
+    "unitType": "cans"
+  },
+  {
+    "id": "canned_coconut_milk",
+    "name": "Canned Coconut Milk",
+    "category": "Food",
+    "unitType": "cans"
+  },
+  {
+    "id": "chicken_broth",
+    "name": "Chicken Broth",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "beef_broth",
+    "name": "Beef Broth",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "vegetable_broth",
+    "name": "Vegetable Broth",
+    "category": "Food",
+    "unitType": "boxes"
+  },
+  {
+    "id": "potato_chips",
+    "name": "Potato Chips",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "tortilla_chips",
+    "name": "Tortilla Chips",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "pita_chips",
+    "name": "Pita Chips",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "rice_cakes",
+    "name": "Rice Cakes",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "popcorn",
+    "name": "Popcorn",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "almonds",
+    "name": "Almonds",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "cashews",
+    "name": "Cashews",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "walnuts",
+    "name": "Walnuts",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "peanuts",
+    "name": "Peanuts",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "pistachios",
+    "name": "Pistachios",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "macadamia_nuts",
+    "name": "Macadamia Nuts",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "pecans",
+    "name": "Pecans",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "mixed_nuts",
+    "name": "Mixed Nuts",
+    "category": "Food",
+    "unitType": "bags"
+  },
+  {
+    "id": "peanut_butter",
+    "name": "Peanut Butter",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "almond_butter",
+    "name": "Almond Butter",
+    "category": "Food",
+    "unitType": "bottles"
+  },
+  {
+    "id": "dark_chocolate_bar",
+    "name": "Dark Chocolate Bar",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "milk_chocolate_bar",
+    "name": "Milk Chocolate Bar",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "white_chocolate_bar",
+    "name": "White Chocolate Bar",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "gummy_bears",
+    "name": "Gummy Bears",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "hard_candy",
+    "name": "Hard Candy",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "lollipop",
+    "name": "Lollipop",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "marshmallows",
+    "name": "Marshmallows",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "caramel",
+    "name": "Caramel",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "brownie",
+    "name": "Brownie",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "muffin",
+    "name": "Muffin",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "croissant",
+    "name": "Croissant",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "donut",
+    "name": "Donut",
+    "category": "Food",
+    "unitType": "pieces"
+  },
+  {
+    "id": "still_water_500ml",
+    "name": "Still Water 500ml",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "still_water_1l",
+    "name": "Still Water 1L",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "sparkling_water_500ml",
+    "name": "Sparkling Water 500ml",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "sparkling_water_1l",
+    "name": "Sparkling Water 1L",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "flavored_sparkling_water",
+    "name": "Flavored Sparkling Water",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "espresso_beans",
+    "name": "Espresso Beans",
+    "category": "Beverages",
+    "unitType": "bags"
+  },
+  {
+    "id": "medium_roast_coffee",
+    "name": "Medium Roast Coffee",
+    "category": "Beverages",
+    "unitType": "bags"
+  },
+  {
+    "id": "dark_roast_coffee",
+    "name": "Dark Roast Coffee",
+    "category": "Beverages",
+    "unitType": "bags"
+  },
+  {
+    "id": "light_roast_coffee",
+    "name": "Light Roast Coffee",
+    "category": "Beverages",
+    "unitType": "bags"
+  },
+  {
+    "id": "decaf_coffee",
+    "name": "Decaf Coffee",
+    "category": "Beverages",
+    "unitType": "bags"
+  },
+  {
+    "id": "instant_coffee",
+    "name": "Instant Coffee",
+    "category": "Beverages",
+    "unitType": "bags"
+  },
+  {
+    "id": "cold_brew_coffee",
+    "name": "Cold Brew Coffee",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "cappuccino_mix",
+    "name": "Cappuccino Mix",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "latte_mix",
+    "name": "Latte Mix",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "green_tea",
+    "name": "Green Tea",
+    "category": "Beverages",
+    "unitType": "boxes"
+  },
+  {
+    "id": "black_tea",
+    "name": "Black Tea",
+    "category": "Beverages",
+    "unitType": "boxes"
+  },
+  {
+    "id": "chamomile_tea",
+    "name": "Chamomile Tea",
+    "category": "Beverages",
+    "unitType": "boxes"
+  },
+  {
+    "id": "peppermint_tea",
+    "name": "Peppermint Tea",
+    "category": "Beverages",
+    "unitType": "boxes"
+  },
+  {
+    "id": "earl_grey_tea",
+    "name": "Earl Grey Tea",
+    "category": "Beverages",
+    "unitType": "boxes"
+  },
+  {
+    "id": "oolong_tea",
+    "name": "Oolong Tea",
+    "category": "Beverages",
+    "unitType": "boxes"
+  },
+  {
+    "id": "hibiscus_tea",
+    "name": "Hibiscus Tea",
+    "category": "Beverages",
+    "unitType": "boxes"
+  },
+  {
+    "id": "ginger_tea",
+    "name": "Ginger Tea",
+    "category": "Beverages",
+    "unitType": "boxes"
+  },
+  {
+    "id": "matcha_powder",
+    "name": "Matcha Powder",
+    "category": "Beverages",
+    "unitType": "packets"
+  },
+  {
+    "id": "orange_juice",
+    "name": "Orange Juice",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "apple_juice",
+    "name": "Apple Juice",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "grape_juice",
+    "name": "Grape Juice",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "cranberry_juice",
+    "name": "Cranberry Juice",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "pineapple_juice",
+    "name": "Pineapple Juice",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "mango_juice",
+    "name": "Mango Juice",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "pomegranate_juice",
+    "name": "Pomegranate Juice",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "lemon_juice",
+    "name": "Lemon Juice",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "grapefruit_juice",
+    "name": "Grapefruit Juice",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "whole_milk_beverage",
+    "name": "Whole Milk Beverage",
+    "category": "Beverages",
+    "unitType": "liters"
+  },
+  {
+    "id": "almond_milk",
+    "name": "Almond Milk",
+    "category": "Beverages",
+    "unitType": "liters"
+  },
+  {
+    "id": "soy_milk",
+    "name": "Soy Milk",
+    "category": "Beverages",
+    "unitType": "liters"
+  },
+  {
+    "id": "oat_milk",
+    "name": "Oat Milk",
+    "category": "Beverages",
+    "unitType": "liters"
+  },
+  {
+    "id": "coconut_milk_beverage",
+    "name": "Coconut Milk Beverage",
+    "category": "Beverages",
+    "unitType": "liters"
+  },
+  {
+    "id": "chocolate_milk_beverage",
+    "name": "Chocolate Milk Beverage",
+    "category": "Beverages",
+    "unitType": "liters"
+  },
+  {
+    "id": "cola",
+    "name": "Cola",
+    "category": "Beverages",
+    "unitType": "cans"
+  },
+  {
+    "id": "diet_cola",
+    "name": "Diet Cola",
+    "category": "Beverages",
+    "unitType": "cans"
+  },
+  {
+    "id": "lemon_lime_soda",
+    "name": "Lemon-Lime Soda",
+    "category": "Beverages",
+    "unitType": "cans"
+  },
+  {
+    "id": "ginger_ale",
+    "name": "Ginger Ale",
+    "category": "Beverages",
+    "unitType": "cans"
+  },
+  {
+    "id": "root_beer",
+    "name": "Root Beer",
+    "category": "Beverages",
+    "unitType": "cans"
+  },
+  {
+    "id": "orange_soda",
+    "name": "Orange Soda",
+    "category": "Beverages",
+    "unitType": "cans"
+  },
+  {
+    "id": "grape_soda",
+    "name": "Grape Soda",
+    "category": "Beverages",
+    "unitType": "cans"
+  },
+  {
+    "id": "club_soda",
+    "name": "Club Soda",
+    "category": "Beverages",
+    "unitType": "cans"
+  },
+  {
+    "id": "tonic_water",
+    "name": "Tonic Water",
+    "category": "Beverages",
+    "unitType": "cans"
+  },
+  {
+    "id": "energy_drink",
+    "name": "Energy Drink",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "sugar_free_energy_drink",
+    "name": "Sugar-Free Energy Drink",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "sports_drink",
+    "name": "Sports Drink",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "electrolyte_drink",
+    "name": "Electrolyte Drink",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "coconut_water",
+    "name": "Coconut Water",
+    "category": "Beverages",
+    "unitType": "bottles"
+  },
+  {
+    "id": "usb_a_to_usb_c_cable",
+    "name": "USB-A to USB-C Cable",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "usb_c_to_usb_c_cable",
+    "name": "USB-C to USB-C Cable",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "usb_a_to_micro_usb_cable",
+    "name": "USB-A to Micro-USB Cable",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "lightning_to_usb_a_cable",
+    "name": "Lightning to USB-A Cable",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "lightning_to_usb_c_cable",
+    "name": "Lightning to USB-C Cable",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "usb_a_to_usb_b_cable",
+    "name": "USB-A to USB-B Cable",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "usb_3_0_extension_cable",
+    "name": "USB 3.0 Extension Cable",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "5w_usb_charger",
+    "name": "5W USB Charger",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "18w_fast_charger",
+    "name": "18W Fast Charger",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "20w_usb_c_charger",
+    "name": "20W USB-C Charger",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "30w_gan_charger",
+    "name": "30W GaN Charger",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "65w_gan_charger",
+    "name": "65W GaN Charger",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "magsafe_charger",
+    "name": "MagSafe Charger",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "wireless_charging_pad",
+    "name": "Wireless Charging Pad",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "car_usb_charger",
+    "name": "Car USB Charger",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "car_usb_c_charger",
+    "name": "Car USB-C Charger",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "usb_c_to_hdmi_adapter",
+    "name": "USB-C to HDMI Adapter",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "usb_c_to_usb_a_adapter",
+    "name": "USB-C to USB-A Adapter",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "usb_c_hub",
+    "name": "USB-C Hub",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "hdmi_to_vga_adapter",
+    "name": "HDMI to VGA Adapter",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "displayport_to_hdmi_adapter",
+    "name": "DisplayPort to HDMI Adapter",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "3_5mm_to_usb_c_adapter",
+    "name": "3.5mm to USB-C Adapter",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "lightning_to_3_5mm_adapter",
+    "name": "Lightning to 3.5mm Adapter",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "wired_earphones_3_5mm",
+    "name": "Wired Earphones 3.5mm",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "wired_earphones_usb_c",
+    "name": "Wired Earphones USB-C",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "wired_earphones_lightning",
+    "name": "Wired Earphones Lightning",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "true_wireless_earbuds",
+    "name": "True Wireless Earbuds",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "wireless_earbuds_with_anc",
+    "name": "Wireless Earbuds with ANC",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sports_wireless_earbuds",
+    "name": "Sports Wireless Earbuds",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "over_ear_headphones",
+    "name": "Over-Ear Headphones",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "on_ear_headphones",
+    "name": "On-Ear Headphones",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "noise_cancelling_headphones",
+    "name": "Noise-Cancelling Headphones",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "wireless_headphones",
+    "name": "Wireless Headphones",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "portable_bluetooth_speaker",
+    "name": "Portable Bluetooth Speaker",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "waterproof_bluetooth_speaker",
+    "name": "Waterproof Bluetooth Speaker",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "desktop_speaker",
+    "name": "Desktop Speaker",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "phone_case",
+    "name": "Phone Case",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "clear_phone_case",
+    "name": "Clear Phone Case",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "wallet_phone_case",
+    "name": "Wallet Phone Case",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "tempered_glass_screen_protector",
+    "name": "Tempered Glass Screen Protector",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "privacy_screen_protector",
+    "name": "Privacy Screen Protector",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "pop_socket",
+    "name": "Pop Socket",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "phone_ring_holder",
+    "name": "Phone Ring Holder",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "32gb_micro_sd_card",
+    "name": "32GB Micro SD Card",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "64gb_micro_sd_card",
+    "name": "64GB Micro SD Card",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "128gb_micro_sd_card",
+    "name": "128GB Micro SD Card",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "256gb_micro_sd_card",
+    "name": "256GB Micro SD Card",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "32gb_usb_drive",
+    "name": "32GB USB Drive",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "64gb_usb_drive",
+    "name": "64GB USB Drive",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "128gb_usb_drive",
+    "name": "128GB USB Drive",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "256gb_usb_drive",
+    "name": "256GB USB Drive",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "10000mah_power_bank",
+    "name": "10000mAh Power Bank",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "20000mah_power_bank",
+    "name": "20000mAh Power Bank",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "aa_batteries_4_pack",
+    "name": "AA Batteries 4-Pack",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "aaa_batteries_4_pack",
+    "name": "AAA Batteries 4-Pack",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "9v_battery",
+    "name": "9V Battery",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "cr2032_battery",
+    "name": "CR2032 Battery",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "hdmi_cable_1_8m",
+    "name": "HDMI Cable 1.8m",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "hdmi_cable_3m",
+    "name": "HDMI Cable 3m",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "ethernet_cable",
+    "name": "Ethernet Cable",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "extension_cord_1_8m",
+    "name": "Extension Cord 1.8m",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "extension_cord_3m",
+    "name": "Extension Cord 3m",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "surge_protector",
+    "name": "Surge Protector",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "cable_organizer",
+    "name": "Cable Organizer",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "laptop_stand",
+    "name": "Laptop Stand",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "mouse_pad",
+    "name": "Mouse Pad",
+    "category": "Electronics",
+    "unitType": "pieces"
+  },
+  {
+    "id": "vitamin_c_500mg",
+    "name": "Vitamin C 500mg",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "vitamin_c_1000mg",
+    "name": "Vitamin C 1000mg",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "vitamin_d3",
+    "name": "Vitamin D3",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "vitamin_b12",
+    "name": "Vitamin B12",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "vitamin_e",
+    "name": "Vitamin E",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "vitamin_a",
+    "name": "Vitamin A",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "vitamin_k2",
+    "name": "Vitamin K2",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "zinc_supplement",
+    "name": "Zinc Supplement",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "magnesium_supplement",
+    "name": "Magnesium Supplement",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "iron_supplement",
+    "name": "Iron Supplement",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "calcium_supplement",
+    "name": "Calcium Supplement",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "biotin",
+    "name": "Biotin",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "folic_acid",
+    "name": "Folic Acid",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "omega_3_fish_oil",
+    "name": "Omega-3 Fish Oil",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "multivitamin_men",
+    "name": "Multivitamin Men",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "multivitamin_women",
+    "name": "Multivitamin Women",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "probiotic",
+    "name": "Probiotic",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "collagen_powder",
+    "name": "Collagen Powder",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "whey_protein_powder",
+    "name": "Whey Protein Powder",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "plant_protein_powder",
+    "name": "Plant Protein Powder",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "bcaa_supplement",
+    "name": "BCAA Supplement",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "creatine",
+    "name": "Creatine",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "melatonin",
+    "name": "Melatonin",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "adhesive_bandages",
+    "name": "Adhesive Bandages",
+    "category": "Health",
+    "unitType": "boxes"
+  },
+  {
+    "id": "gauze_pads",
+    "name": "Gauze Pads",
+    "category": "Health",
+    "unitType": "boxes"
+  },
+  {
+    "id": "medical_tape",
+    "name": "Medical Tape",
+    "category": "Health",
+    "unitType": "pieces"
+  },
+  {
+    "id": "antiseptic_wipes",
+    "name": "Antiseptic Wipes",
+    "category": "Health",
+    "unitType": "pieces"
+  },
+  {
+    "id": "antiseptic_cream",
+    "name": "Antiseptic Cream",
+    "category": "Health",
+    "unitType": "pieces"
+  },
+  {
+    "id": "hydrogen_peroxide",
+    "name": "Hydrogen Peroxide",
+    "category": "Health",
+    "unitType": "pieces"
+  },
+  {
+    "id": "rubbing_alcohol",
+    "name": "Rubbing Alcohol",
+    "category": "Health",
+    "unitType": "pieces"
+  },
+  {
+    "id": "disposable_gloves",
+    "name": "Disposable Gloves",
+    "category": "Health",
+    "unitType": "boxes"
+  },
+  {
+    "id": "digital_thermometer",
+    "name": "Digital Thermometer",
+    "category": "Health",
+    "unitType": "pieces"
+  },
+  {
+    "id": "blood_pressure_monitor",
+    "name": "Blood Pressure Monitor",
+    "category": "Health",
+    "unitType": "pieces"
+  },
+  {
+    "id": "pain_reliever_tablets",
+    "name": "Pain Reliever Tablets",
+    "category": "Health",
+    "unitType": "boxes"
+  },
+  {
+    "id": "ibuprofen",
+    "name": "Ibuprofen",
+    "category": "Health",
+    "unitType": "boxes"
+  },
+  {
+    "id": "antihistamine",
+    "name": "Antihistamine",
+    "category": "Health",
+    "unitType": "boxes"
+  },
+  {
+    "id": "antacid_tablets",
+    "name": "Antacid Tablets",
+    "category": "Health",
+    "unitType": "boxes"
+  },
+  {
+    "id": "cough_syrup",
+    "name": "Cough Syrup",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "throat_lozenges",
+    "name": "Throat Lozenges",
+    "category": "Health",
+    "unitType": "boxes"
+  },
+  {
+    "id": "nasal_spray",
+    "name": "Nasal Spray",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "eye_drops",
+    "name": "Eye Drops",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "ear_drops",
+    "name": "Ear Drops",
+    "category": "Health",
+    "unitType": "bottles"
+  },
+  {
+    "id": "antidiarrheal",
+    "name": "Antidiarrheal",
+    "category": "Health",
+    "unitType": "boxes"
+  },
+  {
+    "id": "moisturizing_shampoo",
+    "name": "Moisturizing Shampoo",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "volumizing_shampoo",
+    "name": "Volumizing Shampoo",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "anti_dandruff_shampoo",
+    "name": "Anti-Dandruff Shampoo",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "color_safe_shampoo",
+    "name": "Color-Safe Shampoo",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "deep_conditioner",
+    "name": "Deep Conditioner",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "leave_in_conditioner",
+    "name": "Leave-In Conditioner",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "hair_oil",
+    "name": "Hair Oil",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "hair_serum",
+    "name": "Hair Serum",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "hair_spray",
+    "name": "Hair Spray",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "hair_gel",
+    "name": "Hair Gel",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "hair_wax",
+    "name": "Hair Wax",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "dry_shampoo",
+    "name": "Dry Shampoo",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "hair_mask",
+    "name": "Hair Mask",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "facial_cleanser",
+    "name": "Facial Cleanser",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "foaming_face_wash",
+    "name": "Foaming Face Wash",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "micellar_water",
+    "name": "Micellar Water",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "face_toner",
+    "name": "Face Toner",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "vitamin_c_serum",
+    "name": "Vitamin C Serum",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "retinol_serum",
+    "name": "Retinol Serum",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "hyaluronic_acid_serum",
+    "name": "Hyaluronic Acid Serum",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "daily_moisturizer",
+    "name": "Daily Moisturizer",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "night_cream",
+    "name": "Night Cream",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "eye_cream",
+    "name": "Eye Cream",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "face_mask_sheet",
+    "name": "Face Mask Sheet",
+    "category": "Beauty",
+    "unitType": "packets"
+  },
+  {
+    "id": "clay_mask",
+    "name": "Clay Mask",
+    "category": "Beauty",
+    "unitType": "packets"
+  },
+  {
+    "id": "spf_30_sunscreen",
+    "name": "SPF 30 Sunscreen",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "spf_50_sunscreen",
+    "name": "SPF 50 Sunscreen",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "bb_cream",
+    "name": "BB Cream",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "body_lotion",
+    "name": "Body Lotion",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "body_butter",
+    "name": "Body Butter",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "body_scrub",
+    "name": "Body Scrub",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "hand_cream",
+    "name": "Hand Cream",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "foot_cream",
+    "name": "Foot Cream",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "talcum_powder",
+    "name": "Talcum Powder",
+    "category": "Beauty",
+    "unitType": "packets"
+  },
+  {
+    "id": "whitening_toothpaste",
+    "name": "Whitening Toothpaste",
+    "category": "Beauty",
+    "unitType": "boxes"
+  },
+  {
+    "id": "sensitive_toothpaste",
+    "name": "Sensitive Toothpaste",
+    "category": "Beauty",
+    "unitType": "boxes"
+  },
+  {
+    "id": "kids_toothpaste",
+    "name": "Kids Toothpaste",
+    "category": "Beauty",
+    "unitType": "boxes"
+  },
+  {
+    "id": "electric_toothbrush_head",
+    "name": "Electric Toothbrush Head",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "soft_toothbrush",
+    "name": "Soft Toothbrush",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "floss",
+    "name": "Floss",
+    "category": "Beauty",
+    "unitType": "boxes"
+  },
+  {
+    "id": "water_flosser",
+    "name": "Water Flosser",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "whitening_strips",
+    "name": "Whitening Strips",
+    "category": "Beauty",
+    "unitType": "boxes"
+  },
+  {
+    "id": "tongue_scraper",
+    "name": "Tongue Scraper",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "foundation",
+    "name": "Foundation",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "concealer",
+    "name": "Concealer",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "mascara",
+    "name": "Mascara",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "eyeliner",
+    "name": "Eyeliner",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "eyeshadow_palette",
+    "name": "Eyeshadow Palette",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "blush",
+    "name": "Blush",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "highlighter",
+    "name": "Highlighter",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "lipstick",
+    "name": "Lipstick",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "lip_gloss",
+    "name": "Lip Gloss",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "lip_liner",
+    "name": "Lip Liner",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "setting_spray",
+    "name": "Setting Spray",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "makeup_brush_set",
+    "name": "Makeup Brush Set",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "shaving_foam",
+    "name": "Shaving Foam",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "shaving_gel",
+    "name": "Shaving Gel",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "safety_razor",
+    "name": "Safety Razor",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "razor_blades_5_pack",
+    "name": "Razor Blades 5-Pack",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "aftershave_lotion",
+    "name": "Aftershave Lotion",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "beard_oil",
+    "name": "Beard Oil",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "beard_balm",
+    "name": "Beard Balm",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "beard_trimmer",
+    "name": "Beard Trimmer",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "women_s_perfume",
+    "name": "Women's Perfume",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "men_s_cologne",
+    "name": "Men's Cologne",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "body_mist",
+    "name": "Body Mist",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "roll_on_perfume",
+    "name": "Roll-On Perfume",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "nail_polish",
+    "name": "Nail Polish",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "nail_polish_remover",
+    "name": "Nail Polish Remover",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "nail_file",
+    "name": "Nail File",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "nail_clipper_set",
+    "name": "Nail Clipper Set",
+    "category": "Beauty",
+    "unitType": "pieces"
+  },
+  {
+    "id": "cuticle_oil",
+    "name": "Cuticle Oil",
+    "category": "Beauty",
+    "unitType": "bottles"
+  },
+  {
+    "id": "dish_soap",
+    "name": "Dish Soap",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "dishwasher_pods",
+    "name": "Dishwasher Pods",
+    "category": "Home",
+    "unitType": "boxes"
+  },
+  {
+    "id": "laundry_detergent_liquid",
+    "name": "Laundry Detergent Liquid",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "laundry_detergent_powder",
+    "name": "Laundry Detergent Powder",
+    "category": "Home",
+    "unitType": "boxes"
+  },
+  {
+    "id": "laundry_pods",
+    "name": "Laundry Pods",
+    "category": "Home",
+    "unitType": "boxes"
+  },
+  {
+    "id": "fabric_softener",
+    "name": "Fabric Softener",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "bleach",
+    "name": "Bleach",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "bathroom_cleaner",
+    "name": "Bathroom Cleaner",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "kitchen_degreaser",
+    "name": "Kitchen Degreaser",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "glass_cleaner",
+    "name": "Glass Cleaner",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "floor_cleaner",
+    "name": "Floor Cleaner",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "toilet_bowl_cleaner",
+    "name": "Toilet Bowl Cleaner",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "drain_cleaner",
+    "name": "Drain Cleaner",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "mold_remover",
+    "name": "Mold Remover",
+    "category": "Home",
+    "unitType": "bottles"
+  },
+  {
+    "id": "toilet_paper_4_roll",
+    "name": "Toilet Paper 4-Roll",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "toilet_paper_12_roll",
+    "name": "Toilet Paper 12-Roll",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "paper_towels_single_roll",
+    "name": "Paper Towels Single Roll",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "paper_towels_6_pack",
+    "name": "Paper Towels 6-Pack",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "facial_tissues",
+    "name": "Facial Tissues",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "napkins",
+    "name": "Napkins",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "plastic_wrap",
+    "name": "Plastic Wrap",
+    "category": "Home",
+    "unitType": "boxes"
+  },
+  {
+    "id": "aluminum_foil",
+    "name": "Aluminum Foil",
+    "category": "Home",
+    "unitType": "boxes"
+  },
+  {
+    "id": "baking_paper",
+    "name": "Baking Paper",
+    "category": "Home",
+    "unitType": "boxes"
+  },
+  {
+    "id": "zip_lock_bags_small",
+    "name": "Zip Lock Bags Small",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "zip_lock_bags_large",
+    "name": "Zip Lock Bags Large",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "food_storage_containers",
+    "name": "Food Storage Containers",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "plastic_cups",
+    "name": "Plastic Cups",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "paper_plates",
+    "name": "Paper Plates",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "disposable_cutlery",
+    "name": "Disposable Cutlery",
+    "category": "Home",
+    "unitType": "packets"
+  },
+  {
+    "id": "light_bulb_led_60w",
+    "name": "Light Bulb LED 60W",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "light_bulb_led_100w",
+    "name": "Light Bulb LED 100W",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "smart_light_bulb",
+    "name": "Smart Light Bulb",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "candle_scented",
+    "name": "Candle Scented",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "candle_unscented",
+    "name": "Candle Unscented",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "air_freshener_spray",
+    "name": "Air Freshener Spray",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "air_freshener_plug_in",
+    "name": "Air Freshener Plug-In",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "mouse_trap",
+    "name": "Mouse Trap",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "fly_trap",
+    "name": "Fly Trap",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "wd_40_lubricant",
+    "name": "WD-40 Lubricant",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "super_glue",
+    "name": "Super Glue",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "duct_tape",
+    "name": "Duct Tape",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "double_sided_tape",
+    "name": "Double-Sided Tape",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "picture_hooks",
+    "name": "Picture Hooks",
+    "category": "Home",
+    "unitType": "pieces"
+  },
+  {
+    "id": "yoga_mat",
+    "name": "Yoga Mat",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "foam_roller",
+    "name": "Foam Roller",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "resistance_band_light",
+    "name": "Resistance Band Light",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "resistance_band_medium",
+    "name": "Resistance Band Medium",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "resistance_band_heavy",
+    "name": "Resistance Band Heavy",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "jump_rope",
+    "name": "Jump Rope",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "pull_up_bar",
+    "name": "Pull-Up Bar",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "ab_wheel",
+    "name": "Ab Wheel",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "push_up_handles",
+    "name": "Push-Up Handles",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "dumbbell_5lb",
+    "name": "Dumbbell 5lb",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "dumbbell_10lb",
+    "name": "Dumbbell 10lb",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "dumbbell_15lb",
+    "name": "Dumbbell 15lb",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "dumbbell_20lb",
+    "name": "Dumbbell 20lb",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "kettlebell_10lb",
+    "name": "Kettlebell 10lb",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "kettlebell_20lb",
+    "name": "Kettlebell 20lb",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "running_socks",
+    "name": "Running Socks",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "compression_socks",
+    "name": "Compression Socks",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sports_bra",
+    "name": "Sports Bra",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "athletic_shorts",
+    "name": "Athletic Shorts",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "workout_leggings",
+    "name": "Workout Leggings",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "gym_gloves",
+    "name": "Gym Gloves",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "wrist_wraps",
+    "name": "Wrist Wraps",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "knee_sleeve",
+    "name": "Knee Sleeve",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "ankle_support",
+    "name": "Ankle Support",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "pre_workout",
+    "name": "Pre-Workout",
+    "category": "Sports",
+    "unitType": "packets"
+  },
+  {
+    "id": "post_workout_recovery",
+    "name": "Post-Workout Recovery",
+    "category": "Sports",
+    "unitType": "packets"
+  },
+  {
+    "id": "sports_energy_gel",
+    "name": "Sports Energy Gel",
+    "category": "Sports",
+    "unitType": "packets"
+  },
+  {
+    "id": "electrolyte_tablets",
+    "name": "Electrolyte Tablets",
+    "category": "Sports",
+    "unitType": "packets"
+  },
+  {
+    "id": "sports_water_bottle_500ml",
+    "name": "Sports Water Bottle 500ml",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sports_water_bottle_1l",
+    "name": "Sports Water Bottle 1L",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "insulated_water_bottle",
+    "name": "Insulated Water Bottle",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "gym_bag",
+    "name": "Gym Bag",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "yoga_block",
+    "name": "Yoga Block",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "skipping_rope",
+    "name": "Skipping Rope",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "resistance_loop_band",
+    "name": "Resistance Loop Band",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "exercise_ball",
+    "name": "Exercise Ball",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "weight_lifting_belt",
+    "name": "Weight Lifting Belt",
+    "category": "Sports",
+    "unitType": "pieces"
+  },
+  {
+    "id": "plain_t_shirt",
+    "name": "Plain T-Shirt",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "graphic_t_shirt",
+    "name": "Graphic T-Shirt",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "polo_shirt",
+    "name": "Polo Shirt",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "long_sleeve_t_shirt",
+    "name": "Long Sleeve T-Shirt",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "tank_top",
+    "name": "Tank Top",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "henley_shirt",
+    "name": "Henley Shirt",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "button_down_shirt",
+    "name": "Button-Down Shirt",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "flannel_shirt",
+    "name": "Flannel Shirt",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "hoodie",
+    "name": "Hoodie",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "crewneck_sweatshirt",
+    "name": "Crewneck Sweatshirt",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "slim_jeans",
+    "name": "Slim Jeans",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "straight_jeans",
+    "name": "Straight Jeans",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "skinny_jeans",
+    "name": "Skinny Jeans",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "jogger_pants",
+    "name": "Jogger Pants",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "chino_pants",
+    "name": "Chino Pants",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "shorts",
+    "name": "Shorts",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "cargo_shorts",
+    "name": "Cargo Shorts",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "leggings",
+    "name": "Leggings",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sweatpants",
+    "name": "Sweatpants",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "rain_jacket",
+    "name": "Rain Jacket",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "windbreaker",
+    "name": "Windbreaker",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "puffer_jacket",
+    "name": "Puffer Jacket",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "denim_jacket",
+    "name": "Denim Jacket",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "fleece_jacket",
+    "name": "Fleece Jacket",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "trench_coat",
+    "name": "Trench Coat",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "baseball_cap",
+    "name": "Baseball Cap",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "beanie_hat",
+    "name": "Beanie Hat",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "bucket_hat",
+    "name": "Bucket Hat",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "scarf",
+    "name": "Scarf",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "gloves",
+    "name": "Gloves",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sunglasses",
+    "name": "Sunglasses",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "watch",
+    "name": "Watch",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "wallet",
+    "name": "Wallet",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "backpack",
+    "name": "Backpack",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "tote_bag",
+    "name": "Tote Bag",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "belt",
+    "name": "Belt",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "ankle_socks",
+    "name": "Ankle Socks",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "crew_socks",
+    "name": "Crew Socks",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "no_show_socks",
+    "name": "No-Show Socks",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "boxer_briefs",
+    "name": "Boxer Briefs",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "boxers",
+    "name": "Boxers",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "briefs",
+    "name": "Briefs",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sports_bra_clothing",
+    "name": "Sports Bra Clothing",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "bralette",
+    "name": "Bralette",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "running_shoes",
+    "name": "Running Shoes",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "casual_sneakers",
+    "name": "Casual Sneakers",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sandals",
+    "name": "Sandals",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "flip_flops",
+    "name": "Flip Flops",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "boots",
+    "name": "Boots",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "loafers",
+    "name": "Loafers",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "slip_on_shoes",
+    "name": "Slip-On Shoes",
+    "category": "Clothing",
+    "unitType": "pieces"
+  },
+  {
+    "id": "ballpoint_pen",
+    "name": "Ballpoint Pen",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "gel_pen",
+    "name": "Gel Pen",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "fountain_pen",
+    "name": "Fountain Pen",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "mechanical_pencil",
+    "name": "Mechanical Pencil",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "graphite_pencil_2b",
+    "name": "Graphite Pencil 2B",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "graphite_pencil_hb",
+    "name": "Graphite Pencil HB",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "colored_pencils",
+    "name": "Colored Pencils",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "markers_set",
+    "name": "Markers Set",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "highlighter_yellow",
+    "name": "Highlighter Yellow",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "highlighter_multi_pack",
+    "name": "Highlighter Multi-Pack",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "whiteboard_marker",
+    "name": "Whiteboard Marker",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "spiral_notebook",
+    "name": "Spiral Notebook",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "hardcover_notebook",
+    "name": "Hardcover Notebook",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "composition_book",
+    "name": "Composition Book",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "a4_lined_paper",
+    "name": "A4 Lined Paper",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "graph_paper",
+    "name": "Graph Paper",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sticky_notes_3x3",
+    "name": "Sticky Notes 3x3",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sticky_notes_4x6",
+    "name": "Sticky Notes 4x6",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "index_cards",
+    "name": "Index Cards",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "sketchbook",
+    "name": "Sketchbook",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "stapler",
+    "name": "Stapler",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "staple_refills",
+    "name": "Staple Refills",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "paper_clips",
+    "name": "Paper Clips",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "binder_clips_small",
+    "name": "Binder Clips Small",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "binder_clips_large",
+    "name": "Binder Clips Large",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "scissors",
+    "name": "Scissors",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "box_cutter",
+    "name": "Box Cutter",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "tape_dispenser",
+    "name": "Tape Dispenser",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "scotch_tape",
+    "name": "Scotch Tape",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "packing_tape",
+    "name": "Packing Tape",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "rubber_bands",
+    "name": "Rubber Bands",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "hole_puncher",
+    "name": "Hole Puncher",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "binder_a4",
+    "name": "Binder A4",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "file_folder",
+    "name": "File Folder",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "envelope_white",
+    "name": "Envelope White",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "envelope_padded",
+    "name": "Envelope Padded",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "correction_fluid",
+    "name": "Correction Fluid",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "correction_tape",
+    "name": "Correction Tape",
+    "category": "Books",
+    "unitType": "pieces"
+  },
+  {
+    "id": "dog_food_dry",
+    "name": "Dog Food Dry",
+    "category": "Other",
+    "unitType": "bags"
+  },
+  {
+    "id": "dog_food_wet",
+    "name": "Dog Food Wet",
+    "category": "Other",
+    "unitType": "cans"
+  },
+  {
+    "id": "cat_food_dry",
+    "name": "Cat Food Dry",
+    "category": "Other",
+    "unitType": "bags"
+  },
+  {
+    "id": "cat_food_wet",
+    "name": "Cat Food Wet",
+    "category": "Other",
+    "unitType": "cans"
+  },
+  {
+    "id": "pet_treats",
+    "name": "Pet Treats",
+    "category": "Other",
+    "unitType": "bags"
+  },
+  {
+    "id": "baby_diapers_size_1",
+    "name": "Baby Diapers Size 1",
+    "category": "Other",
+    "unitType": "packets"
+  },
+  {
+    "id": "baby_diapers_size_2",
+    "name": "Baby Diapers Size 2",
+    "category": "Other",
+    "unitType": "packets"
+  },
+  {
+    "id": "baby_wipes",
+    "name": "Baby Wipes",
+    "category": "Other",
+    "unitType": "packets"
+  },
+  {
+    "id": "baby_formula",
+    "name": "Baby Formula",
+    "category": "Other",
+    "unitType": "cans"
+  },
+  {
+    "id": "gift_wrap",
+    "name": "Gift Wrap",
+    "category": "Other",
+    "unitType": "pieces"
+  }
+]
