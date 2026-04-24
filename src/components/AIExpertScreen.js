@@ -32,7 +32,7 @@ const WHAT_IF_SCENARIOS = [
   "What if I gave bulk discounts?",
 ];
 
-const AIExpertScreen = ({ initialQuestion }) => {
+const AIExpertScreen = ({ initialQuestion, onOpenInsights }) => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState(initialQuestion || '');
   const [isGenerating, setIsGenerating] = useState(false);
@@ -240,6 +240,11 @@ const AIExpertScreen = ({ initialQuestion }) => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>DB Bunbun 🐰</Text>
         <View style={styles.headerActions}>
+          {onOpenInsights && (
+            <TouchableOpacity onPress={onOpenInsights} style={styles.headerBtn}>
+              <Text style={styles.headerBtnText}>📊 Insights</Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity onPress={() => setShowLegal(true)} style={styles.headerBtn}>
             <Text style={styles.headerBtnText}>About AI</Text>
           </TouchableOpacity>
