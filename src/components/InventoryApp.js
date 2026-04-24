@@ -4570,12 +4570,15 @@ const InventoryApp = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="light-content" />
 
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <Text style={styles.headerTitle}>{language.appTitle}</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.headerTitle}>DayBunce</Text>
+            <Text style={styles.headerSubtitle}>Sales Tracker</Text>
+          </View>
           <TouchableOpacity
             style={styles.profileButton}
             onPress={() => setShowSettingsModal(true)}
@@ -4588,25 +4591,39 @@ const InventoryApp = () => {
       {/* Date Selector */}
       <View style={styles.dateContainer}>
         <TouchableOpacity
+          style={styles.dateNavArrow}
+          onPress={() => {
+            const prev = new Date(selectedDate);
+            prev.setDate(prev.getDate() - 1);
+            setSelectedDate(prev);
+          }}
+        >
+          <Text style={styles.dateNavArrowText}>‹</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={styles.dateButton}
           onPress={() => setShowCalendarModal(true)}
         >
           <Text style={styles.dateText}>📅 {selectedDate.toDateString()}</Text>
         </TouchableOpacity>
-        
-        {/* + Add Item Button */}
         <TouchableOpacity
-          style={styles.headerAddItemButton}
+          style={styles.dateNavArrow}
           onPress={() => {
-            console.log('Add Item button clicked'); // Debug log
-            // setShowPredefinedItemsModal(true);
-            setShowTakeOrderModal(false); // Close Take Order if open
-            setShowAddToCartModal(false); // Close cart modal if open  
-            openAddModal();
+            const next = new Date(selectedDate);
+            next.setDate(next.getDate() + 1);
+            setSelectedDate(next);
           }}
         >
-          <Text style={styles.headerAddItemButtonText}>+ {language.addItem}</Text>
+          <Text style={styles.dateNavArrowText}>›</Text>
         </TouchableOpacity>
+        {formatDate(selectedDate) !== formatDate(new Date()) && (
+          <TouchableOpacity
+            style={styles.todayButton}
+            onPress={() => setSelectedDate(new Date())}
+          >
+            <Text style={styles.todayButtonText}>Today</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       {/* Conditional DateTimePicker with error handling */}
@@ -4690,25 +4707,29 @@ const InventoryApp = () => {
 
       {/* Search */}
       <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder={language.searchPlaceholder}
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-        <TouchableOpacity
-          style={styles.filterButton}
-          onPress={() => setShowFilterModal(true)}
-        >
-          <Text style={styles.filterIcon}>☰</Text>
-        </TouchableOpacity>
+        <View style={styles.searchInputWrapper}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder={language.searchPlaceholder}
+            value={searchText}
+            onChangeText={setSearchText}
+          />
+          <TouchableOpacity
+            style={styles.filterIconButton}
+            onPress={() => setShowFilterModal(true)}
+          >
+            <Text style={styles.filterIcon}>☰</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Items List */}
       <ScrollView style={styles.itemsList}>
         {filteredItems.length === 0 ? (
           <View style={styles.noItemsContainer}>
-            <Text style={styles.noItemsText}>{language.noItems}</Text>
+            <Text style={styles.noItemsEmoji}>📦</Text>
+            <Text style={styles.noItemsBold}>No sales recorded yet</Text>
+            <Text style={styles.noItemsSubtitle}>Tap + to add your first item</Text>
           </View>
         ) : (
           filteredItems.map((item, index) => (
@@ -4756,13 +4777,17 @@ const InventoryApp = () => {
         )}
       </ScrollView>
 
-      {/* Add Item Button */}
-      {/* <TouchableOpacity
-        style={styles.addButton}
-        onPress={openAddModal}
+      {/* Add Item FAB */}
+      <TouchableOpacity
+        style={styles.addItemFAB}
+        onPress={() => {
+          setShowTakeOrderModal(false);
+          setShowAddToCartModal(false);
+          openAddModal();
+        }}
       >
-        <Text style={styles.addButtonText}>+ {language.addItem}</Text>
-      </TouchableOpacity> */}
+        <Text style={styles.addItemFABText}>+</Text>
+      </TouchableOpacity>
 
       {/* Take Order Button */}
       <TouchableOpacity
@@ -4780,32 +4805,35 @@ const InventoryApp = () => {
 
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavRow}>
-        {Platform.OS === 'ios' && (
+        <View style={styles.bottomNavTabs}>
+          {Platform.OS === 'ios' && (
+            <TouchableOpacity
+              style={styles.aiTabButton}
+              onPress={handleAITabPress}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.aiTabIcon}>🤖</Text>
+              <Text style={styles.aiTabLabel}>{language.aiExpert}</Text>
+            </TouchableOpacity>
+          )}
+          {/* Insights Button with badge */}
           <TouchableOpacity
-            style={styles.aiTabButton}
-            onPress={handleAITabPress}
+            style={styles.insightsTabButton}
+            onPress={() => setShowInsightsDashboard(true)}
             activeOpacity={0.7}
           >
-            <Text style={styles.aiTabIcon}>🤖</Text>
-            <Text style={styles.aiTabLabel}>{language.aiExpert}</Text>
+            <View>
+              <Text style={styles.aiTabIcon}>💡</Text>
+              {insightsBadgeCount > 0 && (
+                <View style={styles.insightsBadge}>
+                  <Text style={styles.insightsBadgeText}>{insightsBadgeCount}</Text>
+                </View>
+              )}
+            </View>
+            <Text style={styles.insightsTabLabel}>{language.storeInsights}</Text>
           </TouchableOpacity>
-        )}
-        {/* Insights Button with badge */}
-        <TouchableOpacity
-          style={styles.insightsTabButton}
-          onPress={() => setShowInsightsDashboard(true)}
-          activeOpacity={0.7}
-        >
-          <View>
-            <Text style={styles.aiTabIcon}>💡</Text>
-            {insightsBadgeCount > 0 && (
-              <View style={styles.insightsBadge}>
-                <Text style={styles.insightsBadgeText}>{insightsBadgeCount}</Text>
-              </View>
-            )}
-          </View>
-          <Text style={styles.insightsTabLabel}>{language.storeInsights}</Text>
-        </TouchableOpacity>
+        </View>
+        <View style={styles.bottomNavSeparator} />
         <TouchableOpacity 
           style={[styles.bottomNav, { flex: 1 }]}
           onPress={() => setShowReceiptModal(true)}
@@ -7367,31 +7395,61 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: '#4f46e5',
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomWidth: 0,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#fff',
+  },
+  headerSubtitle: {
+    fontSize: 13,
+    color: 'rgba(255,255,255,0.8)',
+    marginTop: 1,
   },
   dateContainer: {
     backgroundColor: '#fff',
-    padding: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    gap: 6,
+  },
+  dateNavArrow: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#f3f4f6',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dateNavArrowText: {
+    fontSize: 20,
+    color: '#4f46e5',
+    fontWeight: 'bold',
+    lineHeight: 22,
+  },
+  todayButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    backgroundColor: '#4f46e5',
+    borderRadius: 12,
+    marginLeft: 4,
+  },
+  todayButtonText: {
+    fontSize: 12,
+    color: '#fff',
+    fontWeight: '600',
   },
   dateButton: {
     padding: 8,
     backgroundColor: '#e3f2fd',
     borderRadius: 8,
     flex: 1,
-    marginRight: 12,
     alignItems: 'center',
   },
   // confirmDayToggle: {
@@ -7425,17 +7483,27 @@ const styles = StyleSheet.create({
     padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
+  },
+  searchInputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  searchInput: {
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 8,
+    backgroundColor: '#fff',
+  },
+  searchInput: {
     padding: 12,
     fontSize: 16,
     flex: 1,
-    marginRight: 12,
+  },
+  filterIconButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderLeftWidth: 1,
+    borderLeftColor: '#e0e0e0',
   },
   filterButton: {
     backgroundColor: '#5A7FFF',
@@ -7446,20 +7514,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterIcon: {
-    color: '#fff',
+    color: '#4f46e5',
     fontSize: 18,
     fontWeight: 'bold',
     lineHeight: 18,
   },
   itemsList: {
     flex: 1,
-    padding: 12,
+    paddingTop: 8,
   },
   noItemsContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 60,
+    paddingTop: 80,
+  },
+  noItemsEmoji: {
+    fontSize: 48,
+    marginBottom: 12,
+  },
+  noItemsBold: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 6,
+  },
+  noItemsSubtitle: {
+    fontSize: 14,
+    color: '#888',
   },
   noItemsText: {
     fontSize: 16,
@@ -7467,14 +7549,15 @@ const styles = StyleSheet.create({
   },
   itemCard: {
     backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 16,
+    borderRadius: 12,
+    padding: 14,
     marginBottom: 8,
-    elevation: 2,
+    marginHorizontal: 16,
+    elevation: 3,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   itemHeader: {
     flexDirection: 'row',
@@ -7556,6 +7639,29 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  addItemFAB: {
+    position: 'absolute',
+    bottom: 90,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#4f46e5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    zIndex: 1000,
+  },
+  addItemFABText: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: '300',
+    lineHeight: 34,
+  },
   bottomNav: {
     backgroundColor: '#fff',
     padding: 16,
@@ -7568,6 +7674,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
+  },
+  bottomNavTabs: {
+    flexDirection: 'row',
+  },
+  bottomNavSeparator: {
+    width: 1,
+    backgroundColor: '#d1d5db',
+    marginVertical: 8,
   },
   aiTabButton: {
     backgroundColor: '#fff',
@@ -7594,8 +7708,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRightWidth: 1,
-    borderRightColor: '#e0e0e0',
     minWidth: 72,
   },
   insightsTabLabel: {
@@ -8457,7 +8569,7 @@ const styles = StyleSheet.create({
   profileButton: {
     padding: 8,
     borderRadius: 20,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: 'rgba(255,255,255,0.2)',
   },
   profileIcon: {
     fontSize: 20,
