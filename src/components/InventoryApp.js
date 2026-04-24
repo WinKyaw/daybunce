@@ -146,6 +146,9 @@ const defaultLanguage = {
   insightRestockWindow: 'Restock Window',
   insightRevenueAnomaly: 'Revenue Anomaly',
   insightSlowMover: 'Slow Mover',
+  today: 'Today',
+  noSalesRecorded: 'No sales recorded yet',
+  tapPlusToAdd: 'Tap + to add your first item',
 };
 
 const availableLanguages = [
@@ -329,6 +332,9 @@ const languageConfigs = {
     insightRestockWindow: 'Restock Window',
     insightRevenueAnomaly: 'Revenue Anomaly',
     insightSlowMover: 'Slow Mover',
+    today: 'Today',
+    noSalesRecorded: 'No sales recorded yet',
+    tapPlusToAdd: 'Tap + to add your first item',
   },
   es: {
     appTitle: 'Gestión de Inventario',
@@ -4575,7 +4581,7 @@ const InventoryApp = () => {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <View style={{ flex: 1 }}>
+          <View style={styles.headerTitleWrapper}>
             <Text style={styles.headerTitle}>DayBunce</Text>
             <Text style={styles.headerSubtitle}>Sales Tracker</Text>
           </View>
@@ -4621,7 +4627,7 @@ const InventoryApp = () => {
             style={styles.todayButton}
             onPress={() => setSelectedDate(new Date())}
           >
-            <Text style={styles.todayButtonText}>Today</Text>
+            <Text style={styles.todayButtonText}>{language.today || 'Today'}</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -4728,8 +4734,8 @@ const InventoryApp = () => {
         {filteredItems.length === 0 ? (
           <View style={styles.noItemsContainer}>
             <Text style={styles.noItemsEmoji}>📦</Text>
-            <Text style={styles.noItemsBold}>No sales recorded yet</Text>
-            <Text style={styles.noItemsSubtitle}>Tap + to add your first item</Text>
+            <Text style={styles.noItemsBold}>{language.noSalesRecorded || 'No sales recorded yet'}</Text>
+            <Text style={styles.noItemsSubtitle}>{language.tapPlusToAdd || 'Tap + to add your first item'}</Text>
           </View>
         ) : (
           filteredItems.map((item, index) => (
@@ -8565,6 +8571,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  headerTitleWrapper: {
+    flex: 1,
   },
   profileButton: {
     padding: 8,
