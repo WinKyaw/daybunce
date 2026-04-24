@@ -4783,63 +4783,19 @@ const InventoryApp = () => {
         )}
       </ScrollView>
 
-      {/* Add Item FAB */}
-      <TouchableOpacity
-        style={styles.addItemFAB}
-        onPress={() => {
-          setShowTakeOrderModal(false);
-          setShowAddToCartModal(false);
-          openAddModal();
-        }}
-      >
-        <Text style={styles.addItemFABText}>+</Text>
-      </TouchableOpacity>
-
-      {/* Take Order Button */}
-      <TouchableOpacity
-        style={styles.takeOrderButton}
-        onPress={() => {
-          // Reset search/filters when opening
-          setPredefinedSearchText('');
-          setPredefinedFilterCategory('All');
-          setLoadedItemsCount(20);
-          setShowTakeOrderModal(true);
-        }}
-      >
-        <Text style={styles.takeOrderButtonText}>{language.takeOrder || 'Take Order'}</Text>
-      </TouchableOpacity>
-
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavRow}>
-        <View style={styles.bottomNavTabs}>
-          {Platform.OS === 'ios' && (
-            <TouchableOpacity
-              style={styles.aiTabButton}
-              onPress={handleAITabPress}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.aiTabIcon}>🤖</Text>
-              <Text style={styles.aiTabLabel}>{language.aiExpert}</Text>
-            </TouchableOpacity>
-          )}
-          {/* Insights Button with badge */}
+        {Platform.OS === 'ios' && (
           <TouchableOpacity
-            style={styles.insightsTabButton}
-            onPress={() => setShowInsightsDashboard(true)}
+            style={styles.aiTabButton}
+            onPress={handleAITabPress}
             activeOpacity={0.7}
           >
-            <View>
-              <Text style={styles.aiTabIcon}>💡</Text>
-              {insightsBadgeCount > 0 && (
-                <View style={styles.insightsBadge}>
-                  <Text style={styles.insightsBadgeText}>{insightsBadgeCount}</Text>
-                </View>
-              )}
-            </View>
-            <Text style={styles.insightsTabLabel}>{language.storeInsights}</Text>
+            <Text style={styles.aiTabIcon}>🤖</Text>
+            <Text style={styles.aiTabLabel}>{language.aiExpert}</Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.bottomNavSeparator} />
+        )}
+        {Platform.OS === 'ios' && <View style={styles.bottomNavSeparator} />}
         <TouchableOpacity 
           style={[styles.bottomNav, { flex: 1 }]}
           onPress={() => setShowReceiptModal(true)}
@@ -4851,6 +4807,19 @@ const InventoryApp = () => {
           <Text style={styles.tapToViewReceipt}>
             {language.tapToViewReceipt}
           </Text>
+        </TouchableOpacity>
+        <View style={styles.bottomNavSeparator} />
+        <TouchableOpacity
+          style={styles.takeOrderButtonInNav}
+          onPress={() => {
+            setPredefinedSearchText('');
+            setPredefinedFilterCategory('All');
+            setLoadedItemsCount(20);
+            setShowTakeOrderModal(true);
+          }}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.takeOrderButtonNavText}>{language.takeOrder || 'Take Order'}</Text>
         </TouchableOpacity>
       </View>
 
@@ -7057,8 +7026,20 @@ const InventoryApp = () => {
                         </TouchableOpacity>
                       </View>
 
+                      {/* Add New Item - sticky button below search bar */}
+                      <TouchableOpacity
+                        style={styles.addNewItemInOrderButton}
+                        onPress={() => {
+                          setShowTakeOrderModal(false);
+                          setIsCustomItem(true);
+                          setShowAddModal(true);
+                        }}
+                        activeOpacity={0.8}
+                      >
+                        <Text style={styles.addNewItemInOrderButtonText}>+ {language.addItem || 'Add New Item'}</Text>
+                      </TouchableOpacity>
+
                       {/* Predefined Items List */}
-                      <Text style={styles.sectionTitle}>{language.predefinedItems || 'Select Items'}</Text>
                       <ScrollView 
                         style={styles.takeOrderItemsList}
                         onScroll={({ nativeEvent }) => {
@@ -7378,7 +7359,7 @@ const InventoryApp = () => {
           )}
 
           {aiSubScreen === 'chat' && (
-            <AIExpertScreen initialQuestion={aiPrefillQuestion} />
+            <AIExpertScreen initialQuestion={aiPrefillQuestion} onOpenInsights={() => setShowInsightsDashboard(true)} />
           )}
         </SafeAreaView>
       </Modal>
@@ -7671,9 +7652,9 @@ const styles = StyleSheet.create({
   bottomNav: {
     backgroundColor: '#fff',
     padding: 16,
-    paddingBottom: Platform.OS === 'android' ? 80 : 16,
     borderTopWidth: 0,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomNavRow: {
     flexDirection: 'row',
@@ -7695,8 +7676,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRightWidth: 1,
-    borderRightColor: '#e0e0e0',
     minWidth: 72,
   },
   aiTabIcon: {
@@ -9750,6 +9729,35 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  takeOrderButtonInNav: {
+    backgroundColor: '#4caf50',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 8,
+    borderRadius: 10,
+    minWidth: 80,
+  },
+  takeOrderButtonNavText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 13,
+    textAlign: 'center',
+  },
+  addNewItemInOrderButton: {
+    backgroundColor: '#4f46e5',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    marginBottom: 8,
+    alignItems: 'center',
+  },
+  addNewItemInOrderButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
   },
   takeOrderModalContent: {
     width: '100%',
