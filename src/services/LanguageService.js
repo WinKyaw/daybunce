@@ -40,6 +40,9 @@ const DEFAULT_TRANSLATIONS = {
     unitType: 'Unit Type',
     barcode: 'Barcode',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     
     // Actions
     save: 'Save',
@@ -130,6 +133,9 @@ const DEFAULT_TRANSLATIONS = {
     unitType: 'ယူနစ်အမျိုးအစား',
     barcode: 'Barcode',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     
     // Actions
     save: 'သိမ်းဆည်းပါ',
