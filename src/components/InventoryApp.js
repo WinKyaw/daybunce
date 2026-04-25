@@ -5563,31 +5563,24 @@ const InventoryApp = () => {
                   <TouchableOpacity
                     style={[styles.modernButton, styles.modernCancelButton]}
                     onPress={() => {
+                      const resetItem = {
+                        name: '',
+                        price: '',
+                        unitsSold: '',
+                        category: defaultCategories[4],
+                        unitType: defaultUnitTypes[4],
+                        barcode: '',
+                        shortKey: '',
+                      };
                       if (!isCustomItem) {
                         // Back to predefined list
                         setShowAddModal(false);
-                        setNewItem({
-                          name: '',
-                          price: '',
-                          unitsSold: '',
-                          category: defaultCategories[4],
-                          unitType: defaultUnitTypes[4],
-                          barcode: '',
-                          shortKey: '',
-                        });
+                        setNewItem(resetItem);
                         setShowPredefinedItemsModal(true);
                       } else {
                         setShowAddModal(false);
                         setIsCustomItem(true);
-                        setNewItem({
-                          name: '',
-                          price: '',
-                          unitsSold: '',
-                          category: defaultCategories[4],
-                          unitType: defaultUnitTypes[4],
-                          barcode: '',
-                          shortKey: '',
-                        });
+                        setNewItem(resetItem);
                       }
                     }}
                   >
