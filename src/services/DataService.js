@@ -393,7 +393,8 @@ class DataService {
         const items = await this.getItemsByDate(date);
         const matchingItems = items.filter(item =>
           item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.category.toLowerCase().includes(searchTerm.toLowerCase())
+          item.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (item.shortKey && item.shortKey.toLowerCase().includes(searchTerm.toLowerCase()))
         );
         
         if (matchingItems.length > 0) {

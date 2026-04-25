@@ -127,6 +127,9 @@ const defaultLanguage = {
   receiptNumber: 'Receipt #',
   viewReceiptHistory: 'View receipt history',
   barcodeOptional: 'Barcode (optional)',
+  shortKey: 'Short Key',
+  shortKeyPlaceholder: 'e.g. FA, APL',
+  shortKeyHelper: 'Optional. Used for quick search.',
   aiExpert: 'AI Store Expert',
   aiUnlock: 'Unlock AI Expert',
   aiRestorePurchases: 'Restore Purchases',
@@ -313,6 +316,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'Daily Receipts Report',
     totalReceipts: 'Total Receipts',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -465,6 +471,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'Informe de Recibos Diarios',
     totalReceipts: 'Total de Recibos',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -602,6 +611,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'Rapport des Reçus Quotidiens',
     totalReceipts: 'Total des Reçus',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -739,6 +751,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'Täglicher Belegbericht',
     totalReceipts: 'Gesamtbelege',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -876,6 +891,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'Rapporto Ricevute Giornaliere',
     totalReceipts: 'Totale Ricevute',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -1013,6 +1031,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'Relatório de Recibos Diários',
     totalReceipts: 'Total de Recibos',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -1144,6 +1165,9 @@ const languageConfigs = {
     dailyReceiptsReport: '每日收据报告',
     totalReceipts: '收据总数',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -1275,6 +1299,9 @@ const languageConfigs = {
     dailyReceiptsReport: '日次レシートレポート',
     totalReceipts: 'レシート総数',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -1412,6 +1439,9 @@ const languageConfigs = {
     dailyReceiptsReport: '일일 영수증 보고서',
     totalReceipts: '총 영수증',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -1549,6 +1579,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'รายงานใบเสร็จรายวัน',
     totalReceipts: 'ใบเสร็จทั้งหมด',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -1686,6 +1719,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'Báo Cáo Hóa Đơn Hàng Ngày',
     totalReceipts: 'Tổng Hóa Đơn',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -1823,6 +1859,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'Laporan Struk Harian',
     totalReceipts: 'Total Struk',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -1960,6 +1999,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'दैनिक रसीद रिपोर्ट',
     totalReceipts: 'कुल रसीदें',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -2096,6 +2138,9 @@ const languageConfigs = {
     dailyReceiptsReport: 'နေ့စဉ် ရောင်းချမှတ်တမ်း အစီရင်ခံစာ',
     totalReceipts: 'စုစုပေါင်း ရောင်းချမှတ်တမ်းများ',
     barcodeOptional: 'Barcode (optional)',
+    shortKey: 'Short Key',
+    shortKeyPlaceholder: 'e.g. FA, APL',
+    shortKeyHelper: 'Optional. Used for quick search.',
     aiExpert: 'AI Store Expert',
     aiUnlock: 'Unlock AI Expert',
     aiRestorePurchases: 'Restore Purchases',
@@ -2244,6 +2289,7 @@ const InventoryApp = () => {
     category: defaultCategories[4], // Default to "Other"
     unitType: defaultUnitTypes[4], // Default to "pcs"
     barcode: '',
+    shortKey: '',
   });
 
   useEffect(() => {
@@ -2411,6 +2457,7 @@ const InventoryApp = () => {
           category: itemData.category,
           unitType: itemData.unitType,
           lastPrice: itemData.price,
+          shortKey: itemData.shortKey || '',
         };
 
         const updatedPredefinedItems = [...predefinedItems, newPredefinedItem];
@@ -3337,7 +3384,8 @@ const InventoryApp = () => {
 
   const filterAndSortItems = () => {
     let filtered = items.filter(item =>
-      item.name.toLowerCase().includes(searchText.toLowerCase()) &&
+      (item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+       (item.shortKey && item.shortKey.toLowerCase().includes(searchText.toLowerCase()))) &&
       (filterCategory === 'All' || item.category === filterCategory)
     );
 
@@ -3391,6 +3439,7 @@ const InventoryApp = () => {
       category: predefinedItem.category,
       unitType: predefinedItem.unitType,
       barcode: '',
+      shortKey: predefinedItem.shortKey || '',
     });
     setShowPredefinedItemsModal(false);
     setShowAddModal(true);
@@ -3472,11 +3521,13 @@ const InventoryApp = () => {
     );
 
     if (existingPredefinedIndex !== -1) {
-      // Update the price of existing predefined item
+      // Update the price and shortKey of existing predefined item
       const updatedPredefinedItems = [...predefinedItems];
+      const existingShortKey = updatedPredefinedItems[existingPredefinedIndex].shortKey || '';
       updatedPredefinedItems[existingPredefinedIndex] = {
         ...updatedPredefinedItems[existingPredefinedIndex],
         lastPrice: newItem.price,
+        shortKey: newItem.shortKey !== undefined ? newItem.shortKey : existingShortKey,
       };
       setPredefinedItems(updatedPredefinedItems);
       await savePredefinedItems(updatedPredefinedItems);
@@ -3492,6 +3543,7 @@ const InventoryApp = () => {
       category: defaultCategories[4],
       unitType: defaultUnitTypes[4],
       barcode: '',
+      shortKey: '',
     });
     setIsCustomItem(true);
     setShowAddModal(false);
@@ -3512,7 +3564,8 @@ const InventoryApp = () => {
 
   const getFilteredPredefinedItems = useMemo(() => {
     let filtered = predefinedItems.filter(item =>
-      item.name.toLowerCase().includes(debouncedSearchText.toLowerCase()) &&
+      (item.name.toLowerCase().includes(debouncedSearchText.toLowerCase()) ||
+       (item.shortKey && item.shortKey.toLowerCase().includes(debouncedSearchText.toLowerCase()))) &&
       (predefinedFilterCategory === 'All' || item.category === predefinedFilterCategory)
     );
 
@@ -4367,7 +4420,14 @@ const InventoryApp = () => {
             activeOpacity={0.7}
           >
             <View style={styles.predefinedItemInfo}>
-              <Text style={styles.predefinedItemName}>{item.name}</Text>
+              <View style={styles.predefinedItemNameRow}>
+                <Text style={styles.predefinedItemName}>{item.name}</Text>
+                {item.shortKey ? (
+                  <View style={styles.shortKeyBadge}>
+                    <Text style={styles.shortKeyBadgeText}>{item.shortKey}</Text>
+                  </View>
+                ) : null}
+              </View>
               <View style={styles.predefinedItemDetailsRow}>
                 <View style={styles.predefinedCategoryBadge}>
                   <Text style={styles.predefinedCategoryText}>{item.category}</Text>
@@ -4747,6 +4807,11 @@ const InventoryApp = () => {
               <View style={styles.itemHeader}>
                 <Text style={styles.itemNumber}>{index + 1}.</Text>
                 <Text style={styles.itemName}>{item.name}</Text>
+                {item.shortKey ? (
+                  <View style={styles.shortKeyBadge}>
+                    <Text style={styles.shortKeyBadgeText}>{item.shortKey}</Text>
+                  </View>
+                ) : null}
                 <Text style={styles.itemAmount}>
                   {language.currency}{formatNumber(parseFloat(item.price) * parseFloat(item.unitsSold), 2)}
                 </Text>
@@ -5479,6 +5544,16 @@ const InventoryApp = () => {
                   onChangeText={(text) => setNewItem(prev => ({ ...prev, barcode: text }))}
                 />
 
+                <TextInput
+                  style={styles.modernInput}
+                  placeholder={language.shortKeyPlaceholder || 'e.g. FA, APL'}
+                  value={newItem.shortKey}
+                  onChangeText={(text) => setNewItem(prev => ({ ...prev, shortKey: text }))}
+                  autoCapitalize="characters"
+                  maxLength={10}
+                />
+                <Text style={styles.shortKeyHelperText}>{language.shortKeyHelper || 'Optional. Used for quick search.'}</Text>
+
                 <View style={styles.totalAmountContainer}>
                   <Text style={styles.totalAmountText}>
                     Total Amount: {language.currency}{calculateTotal()}
@@ -5502,6 +5577,7 @@ const InventoryApp = () => {
                         category: defaultCategories[4],
                         unitType: defaultUnitTypes[4],
                         barcode: '',
+                        shortKey: '',
                       });
                     }}
                   >
@@ -7069,7 +7145,14 @@ const InventoryApp = () => {
                               activeOpacity={0.7}
                             >
                               <View style={styles.predefinedItemInfo}>
-                                <Text style={styles.predefinedItemName}>{item.name}</Text>
+                                <View style={styles.predefinedItemNameRow}>
+                                  <Text style={styles.predefinedItemName}>{item.name}</Text>
+                                  {item.shortKey ? (
+                                    <View style={styles.shortKeyBadge}>
+                                      <Text style={styles.shortKeyBadgeText}>{item.shortKey}</Text>
+                                    </View>
+                                  ) : null}
+                                </View>
                                 <View style={styles.predefinedItemDetailsRow}>
                                   <View style={styles.predefinedCategoryBadge}>
                                     <Text style={styles.predefinedCategoryText}>{item.category}</Text>
@@ -8202,11 +8285,18 @@ const styles = StyleSheet.create({
   predefinedItemInfo: {
     flex: 1,
   },
+  predefinedItemNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginBottom: 4,
+  },
   predefinedItemName: {
     fontSize: 16,
     fontWeight: '600',
     color: '#333',
-    marginBottom: 4,
+    marginBottom: 0,
   },
   predefinedItemDetailsRow: {
     flexDirection: 'row',
@@ -8223,6 +8313,25 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#2e7d32',
     fontWeight: '600',
+  },
+  shortKeyBadge: {
+    backgroundColor: '#e5e7eb',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 8,
+  },
+  shortKeyBadgeText: {
+    fontSize: 11,
+    color: '#374151',
+    fontWeight: '700',
+    fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
+  },
+  shortKeyHelperText: {
+    fontSize: 12,
+    color: '#9ca3af',
+    marginTop: -12,
+    marginBottom: 14,
+    marginLeft: 4,
   },
   predefinedUnitText: {
     fontSize: 12,
