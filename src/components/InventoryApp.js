@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  FlatList,
   TouchableOpacity,
   TextInput,
   Modal,
@@ -5180,7 +5181,6 @@ const InventoryApp = () => {
           setPredefinedFilterCategory('All');
           setPredefinedSortBy('name');
           setShowPredefinedCategoryModal(false);
-          setShowBulkActionsModal(false);
           setLoadedItemsCount(20);
           setActiveSwipeId(null);
         }}
@@ -5192,7 +5192,6 @@ const InventoryApp = () => {
           setPredefinedFilterCategory('All');
           setPredefinedSortBy('name');
           setShowPredefinedCategoryModal(false);
-          setShowBulkActionsModal(false);
           setLoadedItemsCount(20);
           setActiveSwipeId(null);
         }}>
@@ -5241,43 +5240,37 @@ const InventoryApp = () => {
                   )}
                 </ScrollView> */}
                 
-                <ScrollView 
+                <FlatList
                   style={styles.predefinedItemsList}
-                  onScroll={({ nativeEvent }) => {
-                    const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-                    const paddingToBottom = 20;
-                    if (layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom) {
-                      loadMoreItems();
-                    }
-                  }}
-                  scrollEventThrottle={400}
-                >
-                  {loadedPredefinedItems.length === 0 ? (
+                  data={loadedPredefinedItems}
+                  keyExtractor={(item) => item.id}
+                  renderItem={({ item }) => (
+                    <SwipeableItem
+                      item={item}
+                      onSelect={handlePredefinedItemSelection}
+                      onDelete={confirmDeleteItem}
+                      isActive={activeSwipeId === item.id}
+                      onSwipeStart={() => setActiveSwipeId(item.id)}
+                      onSwipeReset={() => setActiveSwipeId(null)}
+                    />
+                  )}
+                  ListEmptyComponent={
                     <View style={styles.noPredefinedItemsContainer}>
                       <Text style={styles.noPredefinedItemsText}>
                         No items found matching your search
                       </Text>
                     </View>
-                  ) : (
-                    loadedPredefinedItems.map(item => (
-                      <SwipeableItem
-                        key={item.id}
-                        item={item}
-                        onSelect={handlePredefinedItemSelection}
-                        onDelete={confirmDeleteItem}
-                        isActive={activeSwipeId === item.id}
-                        onSwipeStart={() => setActiveSwipeId(item.id)}
-                        onSwipeReset={() => setActiveSwipeId(null)}
-                      />
-                    ))
-                  )}
-                  
-                  {loadedItemsCount < getFilteredPredefinedItems.length && (
-                    <View style={styles.loadingMoreContainer}>
-                      <Text style={styles.loadingMoreText}>Loading more items...</Text>
-                    </View>
-                  )}
-                </ScrollView>
+                  }
+                  ListFooterComponent={
+                    loadedItemsCount < getFilteredPredefinedItems.length ? (
+                      <View style={styles.loadingMoreContainer}>
+                        <Text style={styles.loadingMoreText}>Loading more items...</Text>
+                      </View>
+                    ) : null
+                  }
+                  onEndReached={loadMoreItems}
+                  onEndReachedThreshold={0.3}
+                />
                 <Text style={styles.resultsCount}>
                   {language.showingItems
                     .replace('{{count}}', Math.min(loadedItemsCount, getFilteredPredefinedItems.length))
@@ -5287,7 +5280,35 @@ const InventoryApp = () => {
 
                 <TouchableOpacity
                   style={styles.bulkActionsButton}
-                  onPress={() => setShowBulkActionsModal(true)}
+                  onPress={() => {
+                    Alert.alert(
+                      language.bulkActions || 'Bulk Actions',
+                      null,
+                      [
+                        {
+                          text: 'Export CSV',
+                          onPress: handleExportCSV,
+                        },
+                        {
+                          text: 'Import CSV',
+                          onPress: handleImportCSV,
+                        },
+                        {
+                          text: 'Bulk Add',
+                          onPress: () => setShowDailyBulkAddModal(true),
+                        },
+                        {
+                          text: 'Add Custom Item',
+                          onPress: () => {
+                            setShowPredefinedItemsModal(false);
+                            setShowAddModal(true);
+                            setIsCustomItem(true);
+                          },
+                        },
+                        { text: 'Cancel', style: 'cancel' },
+                      ]
+                    );
+                  }}
                 >
                   <Text style={styles.bulkActionsButtonText}>⚙️ {language.bulkActions}</Text>
                 </TouchableOpacity>
@@ -5301,7 +5322,6 @@ const InventoryApp = () => {
                     setPredefinedFilterCategory('All');
                     setPredefinedSortBy('name');
                     setShowPredefinedCategoryModal(false);
-                    setShowBulkActionsModal(false);
                     setLoadedItemsCount(20);
                     setActiveSwipeId(null);
                   }}
@@ -5418,168 +5438,6 @@ const InventoryApp = () => {
                     </View>
                   </Modal>
                 )}
-              
-                {showBulkActionsModal && (
-                  <View style={styles.overlayModalContainer}>
-                    <View style={styles.bulkActionsModalContent}>
-                      <Text style={styles.overlayModalTitle}>{language.bulkActions}</Text>
-                      <Text style={styles.bulkActionsSubtitle}>
-                        {language.managePredefined}
-                      </Text>
-                      
-                      <ScrollView style={styles.bulkActionsScrollView}>
-
-                        {/* Bulk Add Items */}
-                        <TouchableOpacity
-                          style={styles.bulkActionOption}
-                          onPress={() => {
-                            setShowBulkActionsModal(false);
-                            setShowPredefinedItemsModal(false);
-                            setShowBulkAddModal(true);
-                          }}
-                        >
-                          <Text style={styles.bulkActionIcon}>➕</Text>
-                          <View style={styles.bulkActionContent}>
-                            <Text style={styles.bulkActionTitle}>{language.bulkAddItems}</Text>
-                            <Text style={styles.bulkActionDescription}>
-                              {language.bulkAddDescription}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-
-                        {/* Create Custom Item */}
-                        <TouchableOpacity
-                          style={styles.bulkActionOption}
-                          onPress={() => {
-                            setShowBulkActionsModal(false);
-                            setShowPredefinedItemsModal(false);
-                            setShowAddModal(true);
-                            setIsCustomItem(true);
-                          }}
-                        >
-                          <Text style={styles.bulkActionIcon}>✏️</Text>
-                          <View style={styles.bulkActionContent}>
-                            <Text style={styles.bulkActionTitle}>{language.createCustomItem}</Text>
-                            <Text style={styles.bulkActionDescription}>
-                              {language.createCustomDescription}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                        
-                        {/* Export Items */}
-                        {/* <TouchableOpacity
-                          style={styles.bulkActionOption}
-                          onPress={() => {
-                            setShowBulkActionsModal(false);
-                            exportPredefinedItems();
-                          }}
-                        >
-                          <Text style={styles.bulkActionIcon}>📤</Text>
-                          <View style={styles.bulkActionContent}>
-                            <Text style={styles.bulkActionTitle}>Export Items</Text>
-                            <Text style={styles.bulkActionDescription}>
-                              Save all items to JSON file
-                            </Text>
-                          </View>
-                        </TouchableOpacity> */}
-
-                        {/* Import JSON */}
-                        {/* <TouchableOpacity
-                          style={styles.bulkActionOption}
-                          onPress={() => {
-                            setShowBulkActionsModal(false);
-                            importPredefinedItems();
-                          }}
-                        >
-                          <Text style={styles.bulkActionIcon}>📥</Text>
-                          <View style={styles.bulkActionContent}>
-                            <Text style={styles.bulkActionTitle}>Import JSON</Text>
-                            <Text style={styles.bulkActionDescription}>
-                              Load items from JSON file
-                            </Text>
-                          </View>
-                        </TouchableOpacity> */}
-
-                        {/* Export CSV */}
-                          <TouchableOpacity
-                            style={styles.bulkActionOption}
-                            onPress={() => {
-                              setShowBulkActionsModal(false);
-                              exportPredefinedItemsCSV();
-                            }}
-                          >
-                            <Text style={styles.bulkActionIcon}>📊</Text>
-                            <View style={styles.bulkActionContent}>
-                              <Text style={styles.bulkActionTitle}>{language.exportCSV}</Text>
-                              <Text style={styles.bulkActionDescription}>
-                                {language.exportCSVDescription}
-                              </Text>
-                            </View>
-                          </TouchableOpacity>
-
-                        {/* Import CSV */}
-                        <TouchableOpacity
-                          style={styles.bulkActionOption}
-                          onPress={() => {
-                            setShowBulkActionsModal(false);
-                            importFromCSV();
-                          }}
-                        >
-                          <Text style={styles.bulkActionIcon}>📊</Text>
-                          <View style={styles.bulkActionContent}>
-                            <Text style={styles.bulkActionTitle}>{language.importCSV}</Text>
-                            <Text style={styles.bulkActionDescription}>
-                              {language.importCSVDescription}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-
-                        {/* CSV Template */}
-                        {/* <TouchableOpacity
-                          style={styles.bulkActionOption}
-                          onPress={() => {
-                            setShowBulkActionsModal(false);
-                            downloadCSVTemplate();
-                          }}
-                        >
-                          <Text style={styles.bulkActionIcon}>📋</Text>
-                          <View style={styles.bulkActionContent}>
-                            <Text style={styles.bulkActionTitle}>CSV Template</Text>
-                            <Text style={styles.bulkActionDescription}>
-                              Download CSV template file
-                            </Text>
-                          </View>
-                        </TouchableOpacity> */}
-
-                        {/* Delete All Items */}
-                        <TouchableOpacity
-                          style={[styles.bulkActionOption, styles.dangerousAction]}
-                          onPress={() => {
-                            setShowBulkActionsModal(false);
-                            confirmDeleteAllItems();
-                          }}
-                        >
-                          <Text style={styles.bulkActionIcon}>🗑️</Text>
-                          <View style={styles.bulkActionContent}>
-                            <Text style={[styles.bulkActionTitle, styles.dangerousActionText]}>
-                              {language.deleteAllItems}
-                            </Text>
-                            <Text style={[styles.bulkActionDescription, styles.dangerousActionText]}>
-                              {language.deleteAllDescription}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      </ScrollView>
-                      
-                      <TouchableOpacity
-                        style={styles.overlayCloseButton}
-                        onPress={() => setShowBulkActionsModal(false)}
-                      >
-                        <Text style={styles.overlayCloseButtonText}>{language.cancel}</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                )}
               </View>
             </TouchableWithoutFeedback>
           </View>
@@ -5677,15 +5535,19 @@ const InventoryApp = () => {
                   </View>
                 )}
 
-                <TextInput
-                  style={styles.modernInput}
-                  placeholder={language.shortKeyPlaceholder || 'e.g. FA, APL'}
-                  value={newItem.shortKey}
-                  onChangeText={(text) => setNewItem(prev => ({ ...prev, shortKey: text }))}
-                  autoCapitalize="characters"
-                  maxLength={10}
-                />
-                <Text style={styles.shortKeyHelperText}>{language.shortKeyHelper || 'Optional. Used for quick search.'}</Text>
+                {isCustomItem && (
+                  <>
+                    <TextInput
+                      style={styles.modernInput}
+                      placeholder={language.shortKeyPlaceholder || 'e.g. FA, APL'}
+                      value={newItem.shortKey}
+                      onChangeText={(text) => setNewItem(prev => ({ ...prev, shortKey: text }))}
+                      autoCapitalize="characters"
+                      maxLength={10}
+                    />
+                    <Text style={styles.shortKeyHelperText}>{language.shortKeyHelper || 'Optional. Used for quick search.'}</Text>
+                  </>
+                )}
 
                 <View style={styles.totalAmountContainer}>
                   <Text style={styles.totalAmountText}>
@@ -5701,9 +5563,7 @@ const InventoryApp = () => {
                   <TouchableOpacity
                     style={[styles.modernButton, styles.modernCancelButton]}
                     onPress={() => {
-                      setShowAddModal(false);
-                      setIsCustomItem(true); // Reset to default
-                      setNewItem({
+                      const resetItem = {
                         name: '',
                         price: '',
                         unitsSold: '',
@@ -5711,10 +5571,20 @@ const InventoryApp = () => {
                         unitType: defaultUnitTypes[4],
                         barcode: '',
                         shortKey: '',
-                      });
+                      };
+                      if (!isCustomItem) {
+                        // Back to predefined list
+                        setShowAddModal(false);
+                        setNewItem(resetItem);
+                        setShowPredefinedItemsModal(true);
+                      } else {
+                        setShowAddModal(false);
+                        setIsCustomItem(true);
+                        setNewItem(resetItem);
+                      }
                     }}
                   >
-                    <Text style={styles.modernCancelButtonText}>{language.cancel}</Text>
+                    <Text style={styles.modernCancelButtonText}>{isCustomItem ? language.cancel : 'Back'}</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
@@ -5722,24 +5592,6 @@ const InventoryApp = () => {
                     onPress={addItem}
                   >
                     <Text style={styles.modernSaveButtonText}>{language.save}</Text>
-                  </TouchableOpacity>
-                </View>
-
-                {/* Data Tools Section */}
-                <View style={styles.dataToolsDivider}>
-                  <View style={styles.dataToolsDividerLine} />
-                  <Text style={styles.dataToolsDividerText}>Data Tools</Text>
-                  <View style={styles.dataToolsDividerLine} />
-                </View>
-                <View style={styles.dataToolsRow}>
-                  <TouchableOpacity style={styles.dataToolButton} onPress={handleExportCSV}>
-                    <Text style={styles.dataToolButtonText}>📤 Export CSV</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.dataToolButton} onPress={handleImportCSV}>
-                    <Text style={styles.dataToolButtonText}>📥 Import CSV</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.dataToolButton} onPress={() => { setShowDailyBulkAddModal(true); }}>
-                    <Text style={styles.dataToolButtonText}>📋 Bulk Add</Text>
                   </TouchableOpacity>
                 </View>
               </View>
