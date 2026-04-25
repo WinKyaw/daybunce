@@ -2223,6 +2223,8 @@ const InventoryApp = () => {
   const [bulkAddText, setBulkAddText] = useState('');
   const [bulkAddCategory, setBulkAddCategory] = useState('Other');
   const [bulkAddUnitType, setBulkAddUnitType] = useState('pcs');
+  const [showDailyBulkAddModal, setShowDailyBulkAddModal] = useState(false);
+  const [dailyBulkAddText, setDailyBulkAddText] = useState('');
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [swipedItemId, setSwipedItemId] = useState(null);
@@ -4152,6 +4154,144 @@ const InventoryApp = () => {
     }
   };
 
+  const handleExportCSV = async () => {
+    try {
+      if (items.length === 0) {
+        Alert.alert('No Items', 'There are no items for this date to export.');
+        return;
+      }
+      const header = 'name,price,unitsSold,category,unitType,shortKey,totalAmount,timestamp';
+      const rows = items.map(item => {
+        const escape = (val) => {
+          const str = String(val || '');
+          return str.includes(',') ? `"${str.replace(/"/g, '""')}"` : str;
+        };
+        return [
+          escape(item.name),
+          escape(item.price),
+          escape(item.unitsSold),
+          escape(item.category),
+          escape(item.unitType),
+          escape(item.shortKey || ''),
+          escape(item.totalAmount),
+          escape(item.timestamp || ''),
+        ].join(',');
+      });
+      const csvContent = [header, ...rows].join('\n');
+      const dateKey = formatDate(selectedDate);
+      const fileUri = FileSystem.cacheDirectory + `inventory_${dateKey}.csv`;
+      await FileSystem.writeAsStringAsync(fileUri, csvContent, { encoding: FileSystem.EncodingType.UTF8 });
+      await Sharing.shareAsync(fileUri, { mimeType: 'text/csv', dialogTitle: 'Export CSV' });
+    } catch (error) {
+      Alert.alert('Export Error', 'Could not export CSV file.');
+    }
+  };
+
+  const handleImportCSV = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({ type: ['text/csv', 'text/comma-separated-values', 'application/csv', 'text/plain'] });
+      if (result.canceled || !result.assets || result.assets.length === 0) return;
+      const fileUri = result.assets[0].uri;
+      const csvText = await FileSystem.readAsStringAsync(fileUri, { encoding: FileSystem.EncodingType.UTF8 });
+      const lines = csvText.trim().split('\n');
+      if (lines.length < 2) {
+        Alert.alert('Import Error', 'CSV file appears to be empty or has no data rows.');
+        return;
+      }
+      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+      const nameIdx = headers.indexOf('name');
+      const priceIdx = headers.indexOf('price');
+      const unitsSoldIdx = headers.indexOf('unitsSold');
+      const categoryIdx = headers.indexOf('category');
+      const unitTypeIdx = headers.indexOf('unitType');
+      const shortKeyIdx = headers.indexOf('shortKey');
+      const totalAmountIdx = headers.indexOf('totalAmount');
+      const timestampIdx = headers.indexOf('timestamp');
+      const parsedItems = [];
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        const cols = line.match(/("(?:[^"]|"")*"|[^,]*)/g) || [];
+        const clean = (val) => (val || '').replace(/^"|"$/g, '').replace(/""/g, '"').trim();
+        const name = nameIdx >= 0 ? clean(cols[nameIdx]) : '';
+        const price = priceIdx >= 0 ? clean(cols[priceIdx]) : '';
+        const unitsSold = unitsSoldIdx >= 0 ? clean(cols[unitsSoldIdx]) : '';
+        if (!name || !price || !unitsSold) continue;
+        const category = categoryIdx >= 0 ? clean(cols[categoryIdx]) : 'Other';
+        const unitType = unitTypeIdx >= 0 ? clean(cols[unitTypeIdx]) : 'pcs';
+        const shortKey = shortKeyIdx >= 0 ? clean(cols[shortKeyIdx]) : '';
+        const priceParsed = parseFloat(price) || 0;
+        const unitsParsed = parseFloat(unitsSold) || 0;
+        const totalAmount = totalAmountIdx >= 0 ? clean(cols[totalAmountIdx]) : (priceParsed * unitsParsed).toFixed(2);
+        const timestamp = timestampIdx >= 0 ? clean(cols[timestampIdx]) : new Date().toISOString();
+        parsedItems.push({ id: `import_${Date.now()}_${i}`, name, price, unitsSold, category, unitType, shortKey, totalAmount, timestamp });
+      }
+      if (parsedItems.length === 0) {
+        Alert.alert('Import Error', 'No valid items found in the CSV file.');
+        return;
+      }
+      Alert.alert(
+        'Import Items',
+        `Import ${parsedItems.length} item${parsedItems.length !== 1 ? 's' : ''}? This will ADD them to today's list.`,
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Import',
+            onPress: async () => {
+              const updatedItems = [...items, ...parsedItems];
+              setItems(updatedItems);
+              await saveData(updatedItems);
+              setShowAddModal(false);
+              Alert.alert('Success', `Imported ${parsedItems.length} item${parsedItems.length !== 1 ? 's' : ''} successfully.`);
+            },
+          },
+        ]
+      );
+    } catch (error) {
+      Alert.alert('Import Error', 'Could not import CSV file.');
+    }
+  };
+
+  const parseDailyBulkItems = (text) => {
+    const lines = text.trim().split('\n').filter(l => l.trim());
+    const result = [];
+    lines.forEach((line, idx) => {
+      const parts = line.split(',').map(p => p.trim());
+      const name = parts[0];
+      const price = parseFloat(parts[1]) || 0;
+      const unitsSold = parseFloat(parts[2]) || 1;
+      if (!name) return;
+      const totalAmount = (price * unitsSold).toFixed(2);
+      result.push({
+        id: `dailybulk_${Date.now()}_${idx}`,
+        name,
+        price: String(price),
+        unitsSold: String(unitsSold),
+        category: 'Other',
+        unitType: 'pcs',
+        shortKey: '',
+        totalAmount,
+        timestamp: new Date().toISOString(),
+      });
+    });
+    return result;
+  };
+
+  const handleDailyBulkAdd = async () => {
+    const parsed = parseDailyBulkItems(dailyBulkAddText);
+    if (parsed.length === 0) {
+      Alert.alert('No Items', 'Please enter at least one item in the correct format.');
+      return;
+    }
+    const updatedItems = [...items, ...parsed];
+    setItems(updatedItems);
+    await saveData(updatedItems);
+    setDailyBulkAddText('');
+    setShowDailyBulkAddModal(false);
+    setShowAddModal(false);
+    Alert.alert('Success', `Added ${parsed.length} item${parsed.length !== 1 ? 's' : ''} successfully.`);
+  };
+
     const loadSettings = async () => {
       try {
         const savedLanguage = await AsyncStorage.getItem('selectedLanguage');
@@ -5539,13 +5679,6 @@ const InventoryApp = () => {
 
                 <TextInput
                   style={styles.modernInput}
-                  placeholder={language.barcodeOptional}
-                  value={newItem.barcode}
-                  onChangeText={(text) => setNewItem(prev => ({ ...prev, barcode: text }))}
-                />
-
-                <TextInput
-                  style={styles.modernInput}
                   placeholder={language.shortKeyPlaceholder || 'e.g. FA, APL'}
                   value={newItem.shortKey}
                   onChangeText={(text) => setNewItem(prev => ({ ...prev, shortKey: text }))}
@@ -5589,6 +5722,24 @@ const InventoryApp = () => {
                     onPress={addItem}
                   >
                     <Text style={styles.modernSaveButtonText}>{language.save}</Text>
+                  </TouchableOpacity>
+                </View>
+
+                {/* Data Tools Section */}
+                <View style={styles.dataToolsDivider}>
+                  <View style={styles.dataToolsDividerLine} />
+                  <Text style={styles.dataToolsDividerText}>Data Tools</Text>
+                  <View style={styles.dataToolsDividerLine} />
+                </View>
+                <View style={styles.dataToolsRow}>
+                  <TouchableOpacity style={styles.dataToolButton} onPress={handleExportCSV}>
+                    <Text style={styles.dataToolButtonText}>📤 Export CSV</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.dataToolButton} onPress={handleImportCSV}>
+                    <Text style={styles.dataToolButtonText}>📥 Import CSV</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.dataToolButton} onPress={() => { setShowDailyBulkAddModal(true); }}>
+                    <Text style={styles.dataToolButtonText}>📋 Bulk Add</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -5994,6 +6145,67 @@ const InventoryApp = () => {
                     }}
                   >
                     <Text style={styles.bulkAddSaveButtonText}>{language.bulkAddItems}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      {/* Daily Bulk Add Modal */}
+      <Modal
+        visible={showDailyBulkAddModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowDailyBulkAddModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.modalOverlay}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={styles.keyboardAvoidingView}
+            >
+              <View style={styles.bulkAddModalContent}>
+                <Text style={styles.bulkAddTitle}>📋 Bulk Add Items</Text>
+                <Text style={styles.bulkAddInstructions}>
+                  {'One item per line. Format: Name, Price, Qty\ne.g.\nApples, 1.50, 10\nBananas, 0.80, 5'}
+                </Text>
+                <TextInput
+                  style={styles.bulkAddTextArea}
+                  multiline={true}
+                  numberOfLines={8}
+                  placeholder={'One item per line. Format: Name, Price, Qty\ne.g.\nApples, 1.50, 10\nBananas, 0.80, 5'}
+                  value={dailyBulkAddText}
+                  onChangeText={setDailyBulkAddText}
+                  textAlignVertical="top"
+                  blurOnSubmit={false}
+                  returnKeyType="done"
+                />
+                {dailyBulkAddText.trim().length > 0 && (
+                  <Text style={styles.bulkAddInstructions}>
+                    {'Ready to add ' + parseDailyBulkItems(dailyBulkAddText).length + ' item(s)'}
+                  </Text>
+                )}
+                <View style={styles.bulkAddButtonRow}>
+                  <TouchableOpacity
+                    style={[styles.bulkAddButton, styles.bulkAddCancelButton]}
+                    onPress={() => {
+                      Keyboard.dismiss();
+                      setShowDailyBulkAddModal(false);
+                      setDailyBulkAddText('');
+                    }}
+                  >
+                    <Text style={styles.bulkAddCancelButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.bulkAddButton, styles.bulkAddSaveButton]}
+                    onPress={() => {
+                      Keyboard.dismiss();
+                      handleDailyBulkAdd();
+                    }}
+                  >
+                    <Text style={styles.bulkAddSaveButtonText}>Save</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -8567,6 +8779,46 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  dataToolsDivider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 10,
+  },
+  dataToolsDividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#e0e0e0',
+  },
+  dataToolsDividerText: {
+    fontSize: 11,
+    color: '#999',
+    marginHorizontal: 8,
+    fontWeight: '500',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  dataToolsRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 4,
+  },
+  dataToolButton: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
+  },
+  dataToolButtonText: {
+    fontSize: 12,
+    color: '#555',
+    fontWeight: '500',
+    textAlign: 'center',
   },
   enhancedPredefinedItemContainer: {
     flexDirection: 'row',
