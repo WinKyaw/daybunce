@@ -4232,7 +4232,7 @@ const InventoryApp = () => {
       }
       Alert.alert(
         'Import Items',
-        `Import ${parsedItems.length} item${parsedItems.length !== 1 ? 's' : ''}? This will ADD them to today's list.`,
+        `Import ${parsedItems.length} item${parsedItems.length !== 1 ? 's' : ''}? This will ADD them to the selected date's list.`,
         [
           { text: 'Cancel', style: 'cancel' },
           {
@@ -6175,7 +6175,7 @@ const InventoryApp = () => {
                   style={styles.bulkAddTextArea}
                   multiline={true}
                   numberOfLines={8}
-                  placeholder={'One item per line. Format: Name, Price, Qty\ne.g.\nApples, 1.50, 10\nBananas, 0.80, 5'}
+                  placeholder={'e.g.\nApples, 1.50, 10\nBananas, 0.80, 5'}
                   value={dailyBulkAddText}
                   onChangeText={setDailyBulkAddText}
                   textAlignVertical="top"
