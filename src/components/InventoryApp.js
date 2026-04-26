@@ -4931,7 +4931,7 @@ const InventoryApp = () => {
       </View>
 
       {/* Items List */}
-      <ScrollView style={styles.itemsList}>
+      <ScrollView style={styles.itemsList} contentContainerStyle={{ paddingBottom: 100 }}>
         {filteredItems.length === 0 ? (
           <View style={styles.noItemsContainer}>
             <Text style={styles.noItemsEmoji}>📦</Text>
@@ -5198,10 +5198,6 @@ const InventoryApp = () => {
           <View style={styles.modalOverlay}>
             <TouchableWithoutFeedback>
               <View style={styles.enhancedPredefinedModalContent}>
-                <Text style={styles.selectionModalTitle}>{language.predefinedItems}</Text>
-                
-
-                
                 <View style={styles.predefinedSearchContainer}>
                   <TextInput
                     style={styles.predefinedSearchInput}
@@ -7176,7 +7172,7 @@ const InventoryApp = () => {
                         }}
                         activeOpacity={0.8}
                       >
-                        <Text style={styles.addNewItemInOrderButtonText}>+ {language.addItem || 'Add New Item'}</Text>
+                        <Text style={styles.addNewItemInOrderButtonText}>+ {language.addCustomItem || 'Add Custom Item'}</Text>
                       </TouchableOpacity>
 
                       {/* Predefined Items List */}
