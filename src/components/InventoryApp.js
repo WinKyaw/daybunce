@@ -7166,13 +7166,37 @@ const InventoryApp = () => {
                       <TouchableOpacity
                         style={styles.addNewItemInOrderButton}
                         onPress={() => {
-                          setShowTakeOrderModal(false);
-                          setIsCustomItem(true);
-                          setShowAddModal(true);
+                          Alert.alert(
+                            language.bulkActions || 'Bulk Actions',
+                            null,
+                            [
+                              {
+                                text: 'Export CSV',
+                                onPress: handleExportCSV,
+                              },
+                              {
+                                text: 'Import CSV',
+                                onPress: handleImportCSV,
+                              },
+                              {
+                                text: 'Bulk Add',
+                                onPress: () => setShowDailyBulkAddModal(true),
+                              },
+                              {
+                                text: 'Add Custom Item',
+                                onPress: () => {
+                                  setShowTakeOrderModal(false);
+                                  setShowAddModal(true);
+                                  setIsCustomItem(true);
+                                },
+                              },
+                              { text: 'Cancel', style: 'cancel' },
+                            ]
+                          );
                         }}
                         activeOpacity={0.8}
                       >
-                        <Text style={styles.addNewItemInOrderButtonText}>+ {language.addCustomItem || 'Add Custom Item'}</Text>
+                        <Text style={styles.addNewItemInOrderButtonText}>+ Add new items</Text>
                       </TouchableOpacity>
 
                       {/* Predefined Items List */}
